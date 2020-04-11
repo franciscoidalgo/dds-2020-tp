@@ -5,5 +5,5 @@
 * *Nicolas Agustín Molina*
 * *Daniel Arnaldo Alderete*
 * *Francisco Idalgo*
-* *Adrián Julio Fraile*
+* *Adrián Fraile*
 * *Germán Andrés Vautier*
