@@ -46,4 +46,6 @@ public class Proveedor {
     public void setDirPostal(String dirPostal) {
         this.dirPostal = dirPostal;
     }
+
+
 }

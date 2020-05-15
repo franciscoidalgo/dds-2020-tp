@@ -82,10 +82,10 @@ public class Egreso {
         this.detalle.add(new Detalle(nuevoProducto,cantidad));
     }
 
-    public void precioTotal(){
+    public double precioTotal(){
      return  detalle.stream()
-             .mapToDouble({unItem -> unItem.subtotal()})
-             .sum();;//TODO: Tratar cuando no haya items.
+             .mapToDouble(unItem -> unItem.subtotal())
+             .sum();//TODO: Tratar cuando no haya items.
     }
 
     public void registrar(){

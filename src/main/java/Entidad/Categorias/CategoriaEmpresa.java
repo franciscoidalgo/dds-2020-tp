@@ -13,7 +13,7 @@ public class CategoriaEmpresa { // TODO: Pensado como vimos el patron Stage
         this.nombre = nombre;
     }
 
-    public CategoriaEmpresa categorizar(Empresa empresa){};
+    public CategoriaEmpresa categorizar(Empresa empresa){return this;};
 }
 
 
