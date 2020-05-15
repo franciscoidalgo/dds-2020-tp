@@ -49,4 +49,5 @@ public abstract class  EntidadJuridica {
     public void setCodIGJ(long codIGJ) {
         this.codIGJ = codIGJ;
     }
+
 }

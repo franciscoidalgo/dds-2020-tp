@@ -1,13 +1,10 @@
 package Usuario;
 
-public abstract class Rol {
+public class RolEstandar extends Rol {
     /*
     TODO La idea es que los roles funcionen como estados, porque asumo que ciertos criterios o comportamientos variaran.
      */
 
     //Metodos
-    abstract void comportamiento ();
-
-
-
+    public void comportamiento(){}
 }
