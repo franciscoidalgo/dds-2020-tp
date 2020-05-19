@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.*;
 
-@SuppressWarnings("static-access")
 public class TestEgreso {
 
     @Test
@@ -14,6 +13,6 @@ public class TestEgreso {
         lista.add(new Servicio(200));
 
         Detalle detalleTest = new Detalle(lista);
-        Assert.assertTrue(detalleTest.subtotal() == 1200);
+        Assert.assertTrue(detalleTest.total() == 1200);
     }
 }

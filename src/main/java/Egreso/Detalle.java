@@ -9,10 +9,14 @@ public class Detalle {
         this.listaItems = listaItems;
     }
 
-    public Integer subtotal(){
+    public void agregarItem (Item nuevoItem){
+        listaItems.add(nuevoItem);
+    }
+
+    public Integer total(){
         Integer total = 0;
-        for (int i = 0; i<listaItems.size(); i++){
-            total += listaItems.get(i).calcularPrecio();
+        for (Item listaItem : listaItems) {
+            total += listaItem.calcularPrecio();
         }
         return total;
     }
