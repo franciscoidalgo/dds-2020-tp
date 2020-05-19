@@ -24558,7 +24558,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFx3dClOOx44t8="
 									},
-									"name": "Empresa"
+									"name": "Empresa",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -24922,7 +24923,8 @@
 								"$ref": "AAAAAAFyKjzpKuSPn4k="
 							},
 							"name": "nombre",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -25001,7 +25003,8 @@
 								"$ref": "AAAAAAFyKj0CZeV2ISE="
 							},
 							"name": "nombre",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -25080,7 +25083,8 @@
 								"$ref": "AAAAAAFyKj0fWubl0d4="
 							},
 							"name": "nombre",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -25146,7 +25150,8 @@
 								"$ref": "AAAAAAFyKj03/efMP8k="
 							},
 							"name": "nombre",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
