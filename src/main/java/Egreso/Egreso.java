@@ -1,10 +1,9 @@
+
 package Egreso;
 
 import Usuario.Usuario;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-
 
 
 public class Egreso {
@@ -15,7 +14,7 @@ public class Egreso {
     private Proveedor proveedor;
     private Comprobante comprobante;
     private MedioDePago medioDePago;
-    private ArrayList<Detalle> detalle;
+    private Detalle detalle;
     private Usuario usuario;
 
     //Constructor
@@ -63,7 +62,7 @@ public class Egreso {
         this.medioDePago = medioDePago;
     }
 
-    public ArrayList<Detalle> getDetalle(){
+    public Detalle getDetalle(){
         return this.detalle;
     }
 
@@ -77,15 +76,13 @@ public class Egreso {
 
     //Metodos
 
-    public void agregarItem(Producto nuevoProducto, int cantidad){//TODO: Cambiar por un producto entero y una cantidad
+    public void agregarItem(Item nuevoItem){//TODO: Cambiar por un producto entero y una cantidad
         //Agregar try catch?
-        this.detalle.add(new Detalle(nuevoProducto,cantidad));
+        this.detalle.agregarItem(nuevoItem);
     }
 
     public double precioTotal(){
-     return  detalle.stream()
-             .mapToDouble(unItem -> unItem.subtotal())
-             .sum();//TODO: Tratar cuando no haya items.
+     return  detalle.total();
     }
 
     public void registrar(){

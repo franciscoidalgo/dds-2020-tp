@@ -1,36 +1,25 @@
 package Egreso;
 
+import java.util.List;
+
 public class Detalle {
+    private List<Item> listaItems;
 
+    public Detalle (List<Item> listaItems){
+        this.listaItems = listaItems;
+    }
 
-    private int cantidad;
-    //private float subtotal;
-    private Producto producto;
+    public void agregarItem (Item nuevoItem){
+        listaItems.add(nuevoItem);
+    }
 
-    //constructor
-    Detalle(Producto producto, int cantidad){
-        this.cantidad=cantidad;
-        this.producto = producto;
+    public Integer total(){
+        Integer total = 0;
+        for (Item listaItem : listaItems) {
+            total += listaItem.calcularSubtotal();
+        }
+        return total;
     }
 
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public float subtotal(){
-        return producto.getPrecioUnitario()*cantidad;
-    }
 }
