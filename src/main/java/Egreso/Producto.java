@@ -10,7 +10,7 @@ public class Producto implements Item{
         this.precioIndividual = precio;
     }
 
-    public Integer calcularPrecio() {
+    public Integer calcularSubtotal() {
         return cantidad * precioIndividual;
     }
 }

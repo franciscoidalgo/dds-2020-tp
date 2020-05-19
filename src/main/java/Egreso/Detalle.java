@@ -16,7 +16,7 @@ public class Detalle {
     public Integer total(){
         Integer total = 0;
         for (Item listaItem : listaItems) {
-            total += listaItem.calcularPrecio();
+            total += listaItem.calcularSubtotal();
         }
         return total;
     }

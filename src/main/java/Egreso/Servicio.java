@@ -8,7 +8,7 @@ public class Servicio implements Item {
         this.precioServicio = precioServicio;
     }
 
-    public Integer calcularPrecio() {
+    public Integer calcularSubtotal() {
         return this.precioServicio;
     }
 }
