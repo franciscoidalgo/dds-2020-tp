@@ -1,3 +1,4 @@
+/*
 package Egreso;
 
 import Usuario.Usuario;
@@ -92,3 +93,4 @@ public class Egreso {
         //TODO: Agregar logica de registro(No definiada).
     }
 }
+*/

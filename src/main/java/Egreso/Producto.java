@@ -1,40 +1,16 @@
 package Egreso;
 
-public class Producto {
-    //Atributos
-    private float precioUnitario;
-    private String nombre;
-    private String descripcion;
+public class Producto implements Item{
 
-    //Constructor
-    Producto(String nombre, String descripcion, float precio){
-        this.nombre=nombre;
-        this.descripcion=descripcion;
-        this.precioUnitario=precio;
+    private Integer cantidad;
+    private Integer precioIndividual;
+
+    public Producto (Integer precio, Integer cantidad){
+        this.cantidad = cantidad;
+        this.precioIndividual = precio;
     }
 
-    //Metodos
-    public float getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(float precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public Integer calcularPrecio() {
+        return cantidad * precioIndividual;
     }
 }
