@@ -1,5 +1,7 @@
+package Principal;
 
 import java.util.Scanner;
+import Contraseñas.PasswordPolicyValidator;
 
 public class Main
 {
