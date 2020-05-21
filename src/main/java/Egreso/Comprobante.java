@@ -2,7 +2,7 @@ package Egreso;
 
 public class Comprobante {
     private long nroComprobante;
-    private int tipo; //<---- TODO: Correccion Factura A, Factura a , factura A
+    private TipoComprobante tipoComprobante;
 
     public long getNroComprobante() {
         return nroComprobante;
@@ -12,13 +12,11 @@ public class Comprobante {
         this.nroComprobante = nroComprobante;
     }
 
-    public int getTipo() {
-        return tipo;
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
     }
 }
-
-

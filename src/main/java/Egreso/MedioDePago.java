@@ -1,16 +1,15 @@
 package Egreso;
 
 public class MedioDePago {
-    private String nombre;
+    private TipoDePago tipoDePago;
     private long nroPago;
 
-
-    public String getNombre() {
-        return nombre;
+    public TipoDePago getTipoDePago() {
+        return tipoDePago;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTipoDePago(TipoDePago tipoDePago) {
+        this.tipoDePago = tipoDePago;
     }
 
     public long getNroPago() {
