@@ -1,4 +1,4 @@
-package src.main.java.Egreso;
+package Egreso;
 
 public interface Item {
     public Integer calcularSubtotal();

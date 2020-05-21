@@ -1,5 +1,5 @@
 
-package src.main.java.Egreso;
+package Egreso;
 
 import Usuario.Usuario;
 

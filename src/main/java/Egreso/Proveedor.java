@@ -1,4 +1,4 @@
-package src.main.java.Egreso;
+package Egreso;
 
 public class Proveedor {
     private String nombre;
