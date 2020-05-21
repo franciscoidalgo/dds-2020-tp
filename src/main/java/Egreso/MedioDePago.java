@@ -1,4 +1,4 @@
-package Egreso;
+package src.main.java.Egreso;
 
 public class MedioDePago {
     private TipoDePago tipoDePago;

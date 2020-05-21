@@ -1,4 +1,4 @@
-package Egreso;
+package src.main.java.Egreso;
 
 import java.util.List;
 
