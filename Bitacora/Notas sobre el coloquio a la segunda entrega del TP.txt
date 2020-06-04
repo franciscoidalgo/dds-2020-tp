@@ -55,3 +55,14 @@ Atención a las clases vacías (tanto a nivel diagrama como a nivel código).
 Revisar sentido de las composiciones y su multiplicidad.
 No ensuciar el código de las clases con “prints” etc. Utilizar Test y/o Main.
 Tener preesente que en DDS no se evalúa simplemente el funcionamiento.
+
+
+
+
+######################
+
+Comentario de Eze:
+
+Primero que nada, les dejo una corrección sobre una de sus anotaciones:
+
+“5 sectores por cada una de la 4 categorías” -> Debería ser 4 categorías por cada sector. Si los sectores son 5, y por cada uno existen 4 categorías, en total hay 20 instancias de categorías.
