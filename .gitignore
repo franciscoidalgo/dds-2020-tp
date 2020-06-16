@@ -123,6 +123,6 @@ Temporary Items
 ehthumbs.db
 Thumbs.db
 
-*.txt
-
+# IntelliJ
+out/
 
