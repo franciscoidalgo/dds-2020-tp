@@ -1,11 +1,10 @@
 package Principal;
 
-import java.util.Scanner;
-import Contraseñas.PasswordPolicyValidator;
+// import java.util.Scanner;
 
-public class Main
-{
-    public static void main (String[] args)
+/*
+
+ public static void main (String[] args)
     {
         passwordCreation();
     }
@@ -62,13 +61,7 @@ public class Main
             }
         }
 
-        PasswordPolicyValidator passwordPolicyValidator = new PasswordPolicyValidator(
-                blackListPath, forceSpecialChar, forceCapitalLetter, forceNumber, minLength, maxLength
-        );
 
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-
-        passwordPolicyValidator.validatePassword(password);
-    }
 }
+
+*/
