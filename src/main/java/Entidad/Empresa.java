@@ -1,31 +1,23 @@
 package Entidad;
 
-import Entidad.Categorias.CategoriaEmpresa;
 
-public class Empresa extends EntidadJuridica {
+public class Empresa extends EntidadJuridica implements Categorizable {
     //Atributos
-    private String rubro;
     private String actividad;
-    private String sector;
+    private Sector sector;
     private int cantPersonal;
-    private double valorActivos;
-    private double promVentaAnual;
-    private CategoriaEmpresa categoria;
+    private int promVentasAnual;
+    private Categoria categoria;
 
     //Constructor
-    //TODO:AGREGAR CONSTRUCTOR
-
+    public Empresa(Integer cantPersonal, Integer promVentasAnual, Sector sector, Categorizador categorizador){
+        this.cantPersonal=cantPersonal;
+        this.promVentasAnual=promVentasAnual;
+        this.sector = sector;
+        this.categoria = categorizador.categoriza(this);
+    }
 
     //Getters-Setters
-
-
-    public String getRubro() {
-        return rubro;
-    }
-
-    public void setRubro(String rubro) {
-        this.rubro = rubro;
-    }
 
     public String getActividad() {
         return actividad;
@@ -35,43 +27,39 @@ public class Empresa extends EntidadJuridica {
         this.actividad = actividad;
     }
 
-    public String getSector() {
+    @Override
+    public Sector sector() {
         return sector;
     }
 
-    public void setSector(String sector) {
+    public void sector(Sector sector) {
         this.sector = sector;
     }
 
-    public int getCantPersonal() {
+    @Override
+    public Integer cantPersonal() {
         return cantPersonal;
     }
 
-    public void setCantPersonal(int cantPersonal) {
+    public void setCantPersonal(Integer cantPersonal) {
         this.cantPersonal = cantPersonal;
     }
 
-    public double getValorActivos() {
-        return valorActivos;
+    @Override
+    public Integer promVentasAnual() {
+        return promVentasAnual;
     }
 
-    public void setValorActivos(double valorActivos) {
-        this.valorActivos = valorActivos;
+    public void setPromVentaAnual(Integer promVentasAnual) {
+        this.promVentasAnual = promVentasAnual;
     }
 
-    public double getPromVentaAnual() {
-        return promVentaAnual;
-    }
 
-    public void setPromVentaAnual(double promVentaAnual) {
-        this.promVentaAnual = promVentaAnual;
-    }
-
-    public CategoriaEmpresa getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(CategoriaEmpresa categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 }
