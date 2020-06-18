@@ -10,6 +10,10 @@ public abstract class  EntidadJuridica {
     private long codIGJ;
     private ArrayList<EntidadBase> entidadesBases;
 
+    public ArrayList<EntidadBase> getEntidadesBases() { return entidadesBases; }
+
+    public void setEntidadesBases(ArrayList<EntidadBase> entidadesBases) { this.entidadesBases = entidadesBases; }
+
     public String getRazonSocial() {
         return razonSocial;
     }
@@ -48,6 +52,14 @@ public abstract class  EntidadJuridica {
 
     public void setCodIGJ(long codIGJ) {
         this.codIGJ = codIGJ;
+    }
+
+    private OperacionEgreso realizarOperacionEgreso(){
+        return new OperacionEgreso();
+    }
+
+    private OperacionIngreso realizarOperacionEgreso(){
+
     }
 
 }
