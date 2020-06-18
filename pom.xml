@@ -2,18 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>GeSoc</groupId>
   <artifactId>GeSoc</artifactId>
-  <version>0.0.1</version>
-
-<dependencies>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-    </dependency>
-
-</dependencies>
-
+  <version>1</version>
   <build>
     <plugins>
       <plugin>
@@ -26,4 +15,25 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
+    <dependency>
+      <groupId>com.squareup.retrofit2</groupId>
+      <artifactId>retrofit</artifactId>
+      <version>2.5.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson -->
+    <dependency>
+      <groupId>com.squareup.retrofit2</groupId>
+      <artifactId>converter-gson</artifactId>
+      <version>2.5.0</version>
+    </dependency>
+  </dependencies>
 </project>
