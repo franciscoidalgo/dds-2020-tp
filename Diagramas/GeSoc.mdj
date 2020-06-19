@@ -16013,7 +16013,7 @@
 											"top": 652,
 											"width": 330.9794921875,
 											"height": 13,
-											"text": "+creaCategoria(ComponenteCategorizacion)",
+											"text": "+agregateCategoria(ComponenteCategorizacion)",
 											"horizontalAlignment": 0
 										}
 									],
@@ -34077,7 +34077,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFx3aSk697qoRQ="
 							},
-							"name": "creaCategoria",
+							"name": "agregateCategoria",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -34085,8 +34085,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzSOJS940Cy4="
 									},
-									"name": "ComponenteCategorizacion",
-									"type": ""
+									"name": "ComponenteCategorizacion"
 								}
 							]
 						}
