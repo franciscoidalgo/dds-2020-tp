@@ -20310,9 +20310,9 @@
 										"$ref": "AAAAAAFydOXxLDX6CZ8="
 									},
 									"font": "Arial;13;0",
-									"left": 1920,
+									"left": 1919,
 									"top": 931,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": -0.12507243853257632,
 									"distance": 109.65856099730654,
@@ -20584,9 +20584,9 @@
 										"$ref": "AAAAAAFydOYa3DjUDv4="
 									},
 									"font": "Arial;13;0",
-									"left": 2176,
+									"left": 2175,
 									"top": 1016,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": -0.27829977076126955,
 									"distance": 50.96076922496363,
@@ -30858,9 +30858,9 @@
 										"$ref": "AAAAAAFyzgHU8Hn/kAo="
 									},
 									"font": "Arial;13;0",
-									"left": 1319,
+									"left": 1318,
 									"top": 630,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.11918519282108564,
 									"distance": 140.40655255364686,
@@ -31543,9 +31543,9 @@
 										"$ref": "AAAAAAFyzkT5ECnx93E="
 									},
 									"font": "Arial;13;0",
-									"left": 935,
+									"left": 934,
 									"top": 929,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.18802561720613964,
 									"distance": 61.98386886924694,
@@ -32027,9 +32027,9 @@
 										"$ref": "AAAAAAFyzk0PcYd0hO0="
 									},
 									"font": "Arial;13;0",
-									"left": 1018,
+									"left": 1017,
 									"top": 760,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": -0.16076280979842994,
 									"distance": 74.96665925596525,
@@ -33814,7 +33814,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyznKX57PpS9M="
 									},
-									"name": "pos"
+									"name": "pos",
+									"type": ""
 								}
 							]
 						}
@@ -34671,7 +34672,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyctcy7pgO8yQ="
 									},
-									"name": "OperacionEgreso"
+									"name": "OperacionEgreso",
+									"type": ""
 								}
 							]
 						},
@@ -34708,7 +34710,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzlkNDjndJn0="
 									},
-									"name": "Operacion"
+									"name": "Operacion",
+									"type": ""
 								}
 							]
 						},
@@ -34745,7 +34748,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzsn3OcpdiuI="
 									},
-									"name": "OperacionEgreso"
+									"name": "OperacionEgreso",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -34753,7 +34757,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzsn3OcpdiuI="
 									},
-									"name": "OperacionIngreso"
+									"name": "OperacionIngreso",
+									"type": ""
 								}
 							]
 						},
@@ -35082,6 +35087,7 @@
 								"reference": {
 									"$ref": "AAAAAAFx3aSk697qoRQ="
 								},
+								"navigable": false,
 								"multiplicity": "*"
 							},
 							"end2": {
@@ -35092,8 +35098,7 @@
 								},
 								"reference": {
 									"$ref": "AAAAAAFyymFgQKlevKA="
-								},
-								"navigable": false
+								}
 							}
 						},
 						{
@@ -35344,7 +35349,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyjHyPfleeZtE="
 									},
-									"name": "Operacion"
+									"name": "Operacion",
+									"type": ""
 								}
 							]
 						},
@@ -35400,7 +35406,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzSOJS940Cy4="
 									},
-									"name": "unaDescripcion"
+									"name": "unaDescripcion",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -35429,7 +35436,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzktijoKHhAw="
 									},
-									"name": "unNombre"
+									"name": "unNombre",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -35458,7 +35466,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzkrRtn7igh4="
 									},
-									"name": "Criterio"
+									"name": "Criterio",
+									"type": ""
 								}
 							]
 						},
@@ -35476,7 +35485,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzlL0PsTnV/Y="
 									},
-									"name": "OperacionEgreso"
+									"name": "OperacionEgreso",
+									"type": ""
 								}
 							]
 						}
@@ -38442,7 +38452,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyznHij58a/zI="
 									},
-									"name": "pos"
+									"name": "pos",
+									"type": ""
 								}
 							]
 						}
@@ -43338,7 +43349,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyznabXxP7RjU="
 									},
-									"name": "pos"
+									"name": "pos",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -43397,7 +43409,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFyzjcUMDeqUzY="
 							},
-							"name": "descripcion"
+							"name": "descripcion",
+							"type": ""
 						}
 					]
 				},
