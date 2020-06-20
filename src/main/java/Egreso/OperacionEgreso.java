@@ -6,7 +6,7 @@ import Usuario.Usuario;
 import java.sql.Timestamp;
 
 
-public class Egreso {
+public class OperacionEgreso {
 
     //Atributos
     private long nroEgreso;
@@ -18,16 +18,8 @@ public class Egreso {
     private Usuario usuario;
 
     //Constructor
-    public Egreso(long nroEgreso, Timestamp fecha, Proveedor proveedor, Comprobante comprobante,
-                  MedioDePago medioDePago, Detalle detalle, Usuario usuario){
-        this.nroEgreso = nroEgreso;
-        this.fecha = fecha;
-        this.proveedor = proveedor;
-        this.comprobante = comprobante;
-        this.medioDePago = medioDePago;
-        this.detalle = detalle;
-        this.usuario = usuario;
-    }
+
+
 
     //Getters-Setters
     public long getNroEgreso() {
@@ -87,13 +79,14 @@ public class Egreso {
     public void agregarItem(Item nuevoItem){//TODO: Cambiar por un producto entero y una cantidad
         //Agregar try catch?
         this.detalle.agregarItem(nuevoItem);
-    }//El item se agrega sobre el detalle
+    }
 
-    public double precioTotal(){
-     return  detalle.total();
+    public double costoTotal(){
+        return  detalle.total();
     }
 
     public void registrar(){
         //TODO: Agregar logica de registro(No definiada).
     }
+
 }
