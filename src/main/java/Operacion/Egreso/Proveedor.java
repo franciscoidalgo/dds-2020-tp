@@ -7,10 +7,10 @@ public class Proveedor {
     private long CUIT;
     private String dirPostal;
 
+    //Getter and Setter
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -18,7 +18,6 @@ public class Proveedor {
     public String getRazonSocial() {
         return razonSocial;
     }
-
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
     }
@@ -26,7 +25,6 @@ public class Proveedor {
     public int getDNI() {
         return DNI;
     }
-
     public void setDNI(int DNI) {
         this.DNI = DNI;
     }
@@ -34,7 +32,6 @@ public class Proveedor {
     public long getCUIT() {
         return CUIT;
     }
-
     public void setCUIT(long CUIT) {
         this.CUIT = CUIT;
     }
@@ -42,10 +39,7 @@ public class Proveedor {
     public String getDirPostal() {
         return dirPostal;
     }
-
     public void setDirPostal(String dirPostal) {
         this.dirPostal = dirPostal;
     }
-
-
 }

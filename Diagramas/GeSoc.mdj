@@ -13968,7 +13968,7 @@
 											"top": 1012,
 											"width": 289.427734375,
 											"height": 13,
-											"text": "-comprobante: List <Comprobante>",
+											"text": "-comprobantes: List <Comprobante>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -13985,7 +13985,7 @@
 											"top": 1027,
 											"width": 289.427734375,
 											"height": 13,
-											"text": "-presupuesto: List <Presupuesto>",
+											"text": "-presupuestos: List <Presupuesto>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14089,7 +14089,7 @@
 											"top": 1082,
 											"width": 289.427734375,
 											"height": 13,
-											"text": "+validarOperacion(Operacion): Boolean",
+											"text": "+validarOperacion(OperacionEgreso): Boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14391,7 +14391,7 @@
 											"top": 1246,
 											"width": 154.2734375,
 											"height": 13,
-											"text": "-Id: String",
+											"text": "-id: String",
 											"horizontalAlignment": 0
 										}
 									],
@@ -20310,9 +20310,9 @@
 										"$ref": "AAAAAAFydOXxLDX6CZ8="
 									},
 									"font": "Arial;13;0",
-									"left": 1920,
+									"left": 1919,
 									"top": 931,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": -0.12507243853257632,
 									"distance": 109.65856099730654,
@@ -20584,9 +20584,9 @@
 										"$ref": "AAAAAAFydOYa3DjUDv4="
 									},
 									"font": "Arial;13;0",
-									"left": 2176,
+									"left": 2175,
 									"top": 1016,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": -0.27829977076126955,
 									"distance": 50.96076922496363,
@@ -29913,7 +29913,7 @@
 											"top": 613,
 											"width": 209.9296875,
 											"height": 13,
-											"text": "-egresos: OperacionEgreso",
+											"text": "-egresos: <List>OperacionEgreso",
 											"horizontalAlignment": 0
 										}
 									],
@@ -30858,9 +30858,9 @@
 										"$ref": "AAAAAAFyzgHU8Hn/kAo="
 									},
 									"font": "Arial;13;0",
-									"left": 1319,
+									"left": 1318,
 									"top": 630,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.11918519282108564,
 									"distance": 140.40655255364686,
@@ -31153,7 +31153,7 @@
 											"top": 887,
 											"width": 256.876953125,
 											"height": 13,
-											"text": "-criteriosHijos: Criterios",
+											"text": "-criterioHijo: Criterio",
 											"horizontalAlignment": 0
 										},
 										{
@@ -31543,9 +31543,9 @@
 										"$ref": "AAAAAAFyzkT5ECnx93E="
 									},
 									"font": "Arial;13;0",
-									"left": 935,
+									"left": 934,
 									"top": 929,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.18802561720613964,
 									"distance": 61.98386886924694,
@@ -32027,9 +32027,9 @@
 										"$ref": "AAAAAAFyzk0PcYd0hO0="
 									},
 									"font": "Arial;13;0",
-									"left": 1018,
+									"left": 1017,
 									"top": 760,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": -0.16076280979842994,
 									"distance": 74.96665925596525,
@@ -33658,7 +33658,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFx3W0GRM07zGg="
 							},
-							"name": "comprobante",
+							"name": "comprobantes",
 							"visibility": "private",
 							"type": "List <Comprobante>"
 						},
@@ -33668,7 +33668,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFx3W0GRM07zGg="
 							},
-							"name": "presupuesto",
+							"name": "presupuestos",
 							"visibility": "private",
 							"type": "List <Presupuesto>"
 						},
@@ -33748,8 +33748,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyck1Zr28I1ts="
 									},
-									"name": "Operacion",
-									"type": ""
+									"name": "OperacionEgreso"
 								},
 								{
 									"_type": "UMLParameter",
@@ -33814,7 +33813,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyznKX57PpS9M="
 									},
-									"name": "pos"
+									"name": "pos",
+									"type": ""
 								}
 							]
 						}
@@ -33975,7 +33975,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFx3XzCShYEUAc="
 							},
-							"name": "Id",
+							"name": "id",
 							"visibility": "private",
 							"type": "String"
 						}
@@ -34671,7 +34671,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyctcy7pgO8yQ="
 									},
-									"name": "OperacionEgreso"
+									"name": "OperacionEgreso",
+									"type": ""
 								}
 							]
 						},
@@ -34708,7 +34709,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzlkNDjndJn0="
 									},
-									"name": "Operacion"
+									"name": "Operacion",
+									"type": ""
 								}
 							]
 						},
@@ -34745,7 +34747,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzsn3OcpdiuI="
 									},
-									"name": "OperacionEgreso"
+									"name": "OperacionEgreso",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -34753,7 +34756,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzsn3OcpdiuI="
 									},
-									"name": "OperacionIngreso"
+									"name": "OperacionIngreso",
+									"type": ""
 								}
 							]
 						},
@@ -35344,7 +35348,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyjHyPfleeZtE="
 									},
-									"name": "Operacion"
+									"name": "Operacion",
+									"type": ""
 								}
 							]
 						},
@@ -35400,7 +35405,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzSOJS940Cy4="
 									},
-									"name": "unaDescripcion"
+									"name": "unaDescripcion",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -35429,7 +35435,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzktijoKHhAw="
 									},
-									"name": "unNombre"
+									"name": "unNombre",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -35458,7 +35465,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzkrRtn7igh4="
 									},
-									"name": "Criterio"
+									"name": "Criterio",
+									"type": ""
 								}
 							]
 						},
@@ -35476,7 +35484,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzlL0PsTnV/Y="
 									},
-									"name": "OperacionEgreso"
+									"name": "OperacionEgreso",
+									"type": ""
 								}
 							]
 						}
@@ -38442,7 +38451,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyznHij58a/zI="
 									},
-									"name": "pos"
+									"name": "pos",
+									"type": ""
 								}
 							]
 						}
@@ -42380,9 +42390,7 @@
 							},
 							"name": "egresos",
 							"visibility": "private",
-							"type": {
-								"$ref": "AAAAAAFx3W0GRM07zGg="
-							}
+							"type": "<List>OperacionEgreso"
 						}
 					],
 					"operations": [
@@ -43241,9 +43249,11 @@
 							"_parent": {
 								"$ref": "AAAAAAFyzjVpwh/cXkI="
 							},
-							"name": "criteriosHijos",
+							"name": "criterioHijo",
 							"visibility": "private",
-							"type": "Criterios"
+							"type": {
+								"$ref": "AAAAAAFyzjVpwh/cXkI="
+							}
 						},
 						{
 							"_type": "UMLAttribute",
@@ -43338,7 +43348,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFyznabXxP7RjU="
 									},
-									"name": "pos"
+									"name": "pos",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -43397,7 +43408,8 @@
 							"_parent": {
 								"$ref": "AAAAAAFyzjcUMDeqUzY="
 							},
-							"name": "descripcion"
+							"name": "descripcion",
+							"type": ""
 						}
 					]
 				},
