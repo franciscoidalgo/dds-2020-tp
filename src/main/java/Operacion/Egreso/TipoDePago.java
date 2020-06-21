@@ -1,4 +1,4 @@
-package Egreso;
+package Operacion.Egreso;
 
 public enum TipoDePago {
     VISA,

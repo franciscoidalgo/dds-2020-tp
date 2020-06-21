@@ -1,23 +1,23 @@
-package Egreso;
+package Operacion.Egreso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Detalle {
     private List<Item> listaItems;
 
     //Constructor
-    public Detalle (List<Item> listaItems){
-        this.listaItems = listaItems;
+    public Detalle (){
+        this.listaItems = new ArrayList<>();
     }
 
     //Funcionalidad
-    public void agregarItem (Item nuevoItem){
-        listaItems.add(nuevoItem);
+    public void agregaItem(Item nuevoItem){
+       this.listaItems.add(nuevoItem);
     }
 
-    public float calcularSubtotal(){
-        float total = 0;
-        for (Item item : listaItems) { total += item.getPrecio(); }
-        return total;
+    public double calcularSubtotal(){
+       return this.listaItems.isEmpty()? 0: this.listaItems.stream().mapToDouble(Item::getPrecio)
+                    .sum();
+        }
     }
-}

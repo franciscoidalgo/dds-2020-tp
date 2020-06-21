@@ -1,10 +1,15 @@
-package java.Operacion.Egreso;
+package Operacion.Egreso;
 
-import java.Entidad.Criterio;
+import Entidad.CategorizacionOperacion.Criterio;
 
 public class Presupuesto {
     private Detalle detalle;
     private Criterio criterio;
+
+    public Presupuesto(Detalle detalle, Criterio criterio) {
+        this.detalle = detalle;
+        this.criterio = criterio;
+    }
 
     //Getter and Setter
     public Detalle getDetalle() { return detalle; }
@@ -13,8 +18,8 @@ public class Presupuesto {
     public Criterio getCriterio() { return criterio; }
     public void setCriterio(Criterio criterio) { this.criterio = criterio; }
 
-    //Funcionalidad
-    public float mostrarCosto(){ return this.detalle.calcularSubtotal(); }
 
-    //Falta mostraCategoria: Que carajo es eso?
+    //Funcionalidad
+    public double mostrarCosto(){ return this.detalle.calcularSubtotal(); }
+
 }

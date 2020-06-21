@@ -1,22 +1,44 @@
-/*
-import Egreso.*;
+import Operacion.Egreso.OperacionEgreso;
+import Operacion.Egreso.Presupuesto;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
 
 public class TestEgreso {
 
-    @Test
-    public void testDetalle(){
-        List<Item> lista = new ArrayList<Item>();
-        lista.add(new Producto(100, 10));
-        lista.add(new Servicio(200));
+    OperacionEgreso unEgreso;
 
-        Detalle detalleTest = new Detalle(lista);
-        Assert.assertTrue(detalleTest.total() == 1200);
+    Presupuesto presupuesto1;
+    Presupuesto presupuesto2;
+
+    @Before
+    public void setUp() throws Exception {
+         //Presupuesto1
+        presupuesto1 = new Generador().generaPresupuesto();
+
+        //Presupuesto2
+        presupuesto2 = new Generador().generaPresupuesto();
+
+        //Egreso ya viene con un detalle generado
+        unEgreso = new Generador().generaEgreso(false,0);
     }
+
+
+  /*
+    @Test
+    public void testEgresoTieneVariosRevisores(){
+        // Todo: Terminar test con validaciones!
+        Usuario revisor1 = new Usuario("Pepe","",new RolEstandar(),new Empresa(50,50000,null));
+        revisor1.darseDeAltaEn(unEgreso);
+    }
+*/
+    @Test
+    public void testCalculaMontoTotal_Con2Presupuestos1Detalle(){
+        unEgreso.agregaPresupuesto(presupuesto1);
+        unEgreso.agregaPresupuesto(presupuesto2);
+        Assert.assertEquals(unEgreso.montoTotal(),3*presupuesto1.mostrarCosto(),0);
+    }
+
+
 }
-
-
- */

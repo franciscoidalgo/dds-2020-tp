@@ -1,4 +1,4 @@
-package Entidad;
+package Entidad.CategorizacionEmpresa;
 
 import java.util.Comparator;
 import java.util.List;
