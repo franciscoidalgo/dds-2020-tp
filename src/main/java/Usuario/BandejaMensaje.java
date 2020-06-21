@@ -8,7 +8,9 @@ public class BandejaMensaje {
 
     private ArrayList<Mensaje> mensajes;
 
-
+    public BandejaMensaje() {
+        this.mensajes = new ArrayList<>();
+    }
 
     public void filtraPorLeido(){
         this.mensajes.stream()

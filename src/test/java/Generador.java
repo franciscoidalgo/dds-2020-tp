@@ -1,3 +1,4 @@
+import Entidad.CategorizacionEmpresa.Categoria;
 import Entidad.CategorizacionEmpresa.Sector;
 import Entidad.CategorizacionOperacion.Criterio;
 import Entidad.Empresa;
@@ -72,11 +73,13 @@ public class Generador {
     }
 
     public Empresa generaEmpresa(){
+        Sector unSector =new Sector("comercio","Algo de comercio");
+
+        unSector.agregateCategoria(new Categoria(132,321,"Categoria"));
 
         return new Empresa("unaEmpresa S.A","La empresa",302222221
                 ,"una simple empresa","Av.Siempre Empresa",1231231232
-                ,"Solo generamos empresas",new Sector("comercio"
-                ,"Algo de comercio"),5000,1000000);
+                ,"Solo generamos empresas",unSector,5000,1000000);
     }
 
 }

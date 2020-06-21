@@ -34,34 +34,34 @@ public class TestCategoria {
     }
 
     @Test
-    public void testNyqueComoMicro(){
-        nyque = new Empresa(5, 1000, comercial);
+    public void testNyqueMicro(){
+        nyque = new Empresa("Trucho Hnos","Nyque S.A" ,302229999,"Zapatilla de calidad","Truchin 1234",1654987, "Vendemos zapatillas", comercial,5,1000);
         Assert.assertEquals(nyque.getCategoria(),microCom);
     }
     @Test
-    public void testNyqueSuperaMedianaT2(){
-        nyque = new Empresa(100300, 2146910005, comercial);
+    public void testNyqueMT2_SuperaMedianaT2(){
+        nyque = new Empresa("Trucho Hnos","Nyque S.A" ,302229999,"Zapatilla de calidad","Truchin 1234",1654987, "Vendemos zapatillas", comercial,100300,2146910005);
         Assert.assertEquals(nyque.getCategoria(),mediana2Com);
     }
     @Test
-    public void testNyqueConPersonalMicroVentaPequena(){
-        nyque = new Empresa(5, 150000000, comercial);
+    public void testNyquePeq_ConPersonalMicroVentaPequena(){
+        nyque = new Empresa("Trucho Hnos","Nyque S.A" ,302229999,"Zapatilla de calidad","Truchin 1234",1654987, "Vendemos zapatillas", comercial,5,150000000);
         Assert.assertEquals(nyque.getCategoria(),pequenaCom);
     }
     @Test
-    public void testNyqueConPersonalMedianaT1VentasPequena(){
-        nyque = new Empresa(100, 150000000, comercial);
+    public void testNyqueMT1_ConPersonalMedianaT1VentasPequena(){
+        nyque = new Empresa("Trucho Hnos","Nyque S.A" ,302229999,"Zapatilla de calidad","Truchin 1234",1654987, "Vendemos zapatillas", comercial,100,150000000);
         Assert.assertEquals(nyque.getCategoria(),mediana1Com);
     }
     @Test
-    public void testNyquePersonalMedianaT1VentasSuperaMedianaT2(){
-        nyque = new Empresa(300, 2146810005, comercial);
+    public void testNyqueMT2_PersonalMedianaT1VentasSuperaMedianaT2(){
+        nyque = new Empresa("Trucho Hnos","Nyque S.A" ,302229999,"Zapatilla de calidad","Truchin 1234",1654987, "Vendemos zapatillas", comercial,300,2146810005);
         Assert.assertEquals(nyque.getCategoria(),mediana2Com);
     }
 
     @Test
-    public void testNyquePersonalMicroVentasMedianaT1(){
-        nyque = new Empresa(1, 1502740000, comercial);
+    public void testNyqueMT1_PersonalMicroVentasMedianaT1(){
+        nyque = new Empresa("Trucho Hnos","Nyque S.A" ,302229999,"Zapatilla de calidad","Truchin 1234",1654987, "Vendemos zapatillas", comercial,1,1502740000);
         Assert.assertEquals(nyque.getCategoria(),mediana1Com);
 
     }

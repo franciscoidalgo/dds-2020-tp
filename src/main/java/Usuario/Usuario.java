@@ -78,6 +78,7 @@ public class Usuario {
     //Funcionalidades
 
    public void realizaOperacion(Operacion unaOperacion){
+
         this.entidadPertenece.realizaOperacion(unaOperacion);
     }
 
@@ -93,10 +94,24 @@ public class Usuario {
         unEgreso.sacaRevisor(this);
     }
 
-    public void daleJerarquiA(Criterio unCriterio,int nivelJerarquia){
+    public void daleJerarquiA(Criterio unCriterio,int nivelJerarquia) throws Exception {
 
         if (this.rol.criterioCredenciales()) {
             unCriterio.setNivelJerarquia(nivelJerarquia);
+        }else {
+            throw new Exception("No tiene permiso para hacer esto");
         }
     }
+
+    public void entidadSeleccionada(Entidad seleccionada) throws Exception {
+
+        if (this.entidadPertenece == seleccionada || this.entidadPertenece.tieneEntidadBase(seleccionada)) {
+            this.entidadSeleccionada = seleccionada;
+        } else {
+            throw new Exception("No puede seleccionar esta entidad");
+        }
+
+
+    }
+
 }
