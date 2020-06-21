@@ -1,18 +1,35 @@
 package Entidad;
 
+
+import Entidad.CategorizacionOperacion.CategoriaOperacion;
+import Entidad.CategorizacionOperacion.Criterio;
+import Operacion.Operacion;
+
 import java.util.ArrayList;
 
-public abstract class  EntidadJuridica {
-    private String razonSocial;
-    private String nombre;
-    private long CUIT;
-    private String direccionPostal;
-    private long codIGJ;
-    private ArrayList<EntidadBase> entidadesBases;
+public abstract class  EntidadJuridica implements Entidad {
+    protected String razonSocial;
+    protected String nombre;
+    protected long CUIT;
+    protected String descripcion;
+    protected String direccionPostal;
+    protected long codIGJ;
+    protected ArrayList<EntidadBase> entidadesBases;
+    protected ArrayList<Operacion> operaciones;
+    protected ArrayList<Criterio> criterios;
 
-    public ArrayList<EntidadBase> getEntidadesBases() { return entidadesBases; }
 
-    public void setEntidadesBases(ArrayList<EntidadBase> entidadesBases) { this.entidadesBases = entidadesBases; }
+    public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, String direccionPostal, long codIGJ) {
+        this.razonSocial = razonSocial;
+        this.nombre = nombre;
+        this.CUIT = CUIT;
+        this.descripcion = descripcion;
+        this.direccionPostal = direccionPostal;
+        this.codIGJ = codIGJ;
+        this.entidadesBases = new ArrayList<>();
+        this.operaciones = new ArrayList<>();
+        this.criterios = new ArrayList<>();
+    }
 
     public String getRazonSocial() {
         return razonSocial;
@@ -54,12 +71,31 @@ public abstract class  EntidadJuridica {
         this.codIGJ = codIGJ;
     }
 
-    private OperacionEgreso realizarOperacionEgreso(){
-        return new OperacionEgreso();
+    public ArrayList<EntidadBase> getEntidadesBases() {
+        return entidadesBases;
     }
 
-    private OperacionIngreso realizarOperacionEgreso(){
+    public void setEntidadesBases(ArrayList<EntidadBase> entidadesBases) {
+        this.entidadesBases = entidadesBases;
+    }
+
+    public ArrayList<Operacion> getOperaciones() {
+        return operaciones;
+    }
+
+    public void setOperaciones(ArrayList<Operacion> operaciones) {
+        this.operaciones = operaciones;
+    }
+
+    public void  realizaOperacion(Operacion unaOperacion){
 
     }
 
+    public Criterio creaCriterio(String unNombre,Criterio criterio,int nivelJerarquia){
+        return new Criterio(unNombre,criterio,nivelJerarquia);
+    }
+
+    public void creaCategoria(Criterio unCriterio,String unNombre){
+        unCriterio.agregateCategoria(new CategoriaOperacion(unNombre));
+    }
 }
