@@ -1,6 +1,11 @@
 package Entidad;
 
 
+import Entidad.CategorizacionEmpresa.Categoria;
+import Entidad.CategorizacionEmpresa.Categorizable;
+import Entidad.CategorizacionEmpresa.Sector;
+import Entidad.CategorizacionEmpresa.Categorizador;
+
 public class Empresa extends EntidadJuridica implements Categorizable {
     //Atributos
     private String actividad;
@@ -10,12 +15,16 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     private Categoria categoria;
 
     //Constructor
-    public Empresa(Integer cantPersonal, Integer promVentasAnual, Sector sector, Categorizador categorizador){
-        this.cantPersonal=cantPersonal;
-        this.promVentasAnual=promVentasAnual;
+
+    public Empresa(String razonSocial, String nombre, long CUIT, String descripcion, String direccionPostal, long codIGJ, String actividad, Sector sector, int cantPersonal, int promVentasAnual) {
+        super(razonSocial, nombre, CUIT, descripcion, direccionPostal, codIGJ);
+        this.actividad = actividad;
         this.sector = sector;
-        this.categoria = categorizador.categoriza(this);
+        this.cantPersonal = cantPersonal;
+        this.promVentasAnual = promVentasAnual;
+        this.categoria = new Categorizador().categoriza(this);
     }
+
 
     //Getters-Setters
 
@@ -61,5 +70,15 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    @Override
+    public String nombre() {
+        return this.nombre;
+    }
+
+    @Override
+    public String descripcion() {
+        return this.descripcion;
     }
 }

@@ -1,6 +1,6 @@
 package Validadores;
 
-import Egreso.OperacionEgreso;
+import Operacion.Egreso.OperacionEgreso;
 
 public class ValidarDetalle implements CriterioValidacion {
 

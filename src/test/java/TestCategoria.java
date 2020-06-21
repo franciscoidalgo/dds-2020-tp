@@ -1,50 +1,69 @@
-import Entidad.Categoria;
-import Entidad.Categorizador;
+import Entidad.CategorizacionEmpresa.Categoria;
+import Entidad.CategorizacionEmpresa.Sector;
 import Entidad.Empresa;
-import Entidad.Sector;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestCategoria {
 
-    @Test
-    public void testCategorias(){
+    Categoria microCom ;
+    Categoria pequenaCom;
+    Categoria mediana1Com;
+    Categoria mediana2Com;
 
-       Categorizador categorizador = new Categorizador();
+    Sector comercial;
 
+    Empresa nyque;
+
+    @Before
+    public void setUp() throws Exception {
         /* A modelo de ejemplo de las 20 instancias */
-        Categoria microCom =    new Categoria(7,    29740000,   "Micro");
-        Categoria pequenaCom =  new Categoria(35,   178860000,  "Pequena");
-        Categoria mediana1Com = new Categoria(125,  1502750000,"Medianta-Tramo 1");
-        Categoria mediana2Com = new Categoria(345,  2146810000,"Medianta-Tramo 2");
-
+        microCom = new Categoria(7, 29740000, "Micro");
+        pequenaCom = new Categoria(35, 178860000, "Pequena");
+        mediana1Com = new Categoria(125, 1502750000, "Medianta-Tramo 1");
+        mediana2Com = new Categoria(345, 2146810000, "Medianta-Tramo 2");
 
         /* Sectores */
-        //Sector agropecuario = new Sector("Agropecuario","Vacas muchas vacas");
-        Sector comercial = new Sector("Comercial","Mucha gente");
-        //Sector construccion = new Sector("Construccion","Muchos ladrillos");
-        //Sector servicio = new Sector("Servicio","Se corto el wifi de nuevo!");
-        //Sector industria = new Sector("Industria","Muchas maquinitas... ah no era eso industrial?");
+        comercial = new Sector("Comercial", "Mucha gente");
 
         comercial.agregateCategoria(microCom);
         comercial.agregateCategoria(pequenaCom);
         comercial.agregateCategoria(mediana1Com);
         comercial.agregateCategoria(mediana2Com);
+    }
 
-
-        Empresa nyque = new Empresa(5,1000,comercial,categorizador);
-        Empresa abidaz = new Empresa(5,150000000,comercial,categorizador);
-        Empresa pumba = new Empresa(100,150000000,comercial,categorizador);
-        Empresa toppre = new Empresa(300,2146810005,comercial,categorizador);
-        Empresa piedra = new Empresa(1,2146810005,comercial,categorizador);
-
-
+    @Test
+    public void testNyqueComoMicro(){
+        nyque = new Empresa(5, 1000, comercial);
         Assert.assertEquals(nyque.getCategoria(),microCom);
-        Assert.assertEquals(abidaz.getCategoria(),pequenaCom);
-        Assert.assertEquals(pumba.getCategoria(),mediana1Com);
-        Assert.assertEquals(toppre.getCategoria(),mediana2Com);
-        Assert.assertEquals(piedra.getCategoria(),mediana2Com);
+    }
+    @Test
+    public void testNyqueSuperaMedianaT2(){
+        nyque = new Empresa(100300, 2146910005, comercial);
+        Assert.assertEquals(nyque.getCategoria(),mediana2Com);
+    }
+    @Test
+    public void testNyqueConPersonalMicroVentaPequena(){
+        nyque = new Empresa(5, 150000000, comercial);
+        Assert.assertEquals(nyque.getCategoria(),pequenaCom);
+    }
+    @Test
+    public void testNyqueConPersonalMedianaT1VentasPequena(){
+        nyque = new Empresa(100, 150000000, comercial);
+        Assert.assertEquals(nyque.getCategoria(),mediana1Com);
+    }
+    @Test
+    public void testNyquePersonalMedianaT1VentasSuperaMedianaT2(){
+        nyque = new Empresa(300, 2146810005, comercial);
+        Assert.assertEquals(nyque.getCategoria(),mediana2Com);
+    }
 
+    @Test
+    public void testNyquePersonalMicroVentasMedianaT1(){
+        nyque = new Empresa(1, 1502740000, comercial);
+        Assert.assertEquals(nyque.getCategoria(),mediana1Com);
 
     }
+
 }

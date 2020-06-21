@@ -1,6 +1,6 @@
 package Validadores;
 
-import Egreso.OperacionEgreso;
+import Operacion.Egreso.OperacionEgreso;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,6 @@ public class ValidadorDeTransparencia {
     public Boolean validaEgreso(OperacionEgreso unEgreso){
         return this.criteriosValidadores.stream()
                 .map(unCriterio -> unCriterio.validaEgreso(unEgreso))
-                .reduce((aBoolean, aBoolean2) ->  aBoolean && aBoolean2).get();
+                .reduce((aBoolean, aBoolean2) -> Boolean.logicalAnd(aBoolean,aBoolean2)).get();
     }
 }

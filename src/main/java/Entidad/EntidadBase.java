@@ -1,6 +1,6 @@
 package Entidad;
 
-public class EntidadBase {
+public class EntidadBase implements Entidad{
     //Atributos
     private String nombre;
     private String descripcion;
@@ -13,20 +13,21 @@ public class EntidadBase {
 
     //Getters-Setters
 
-    public String getNombre() {
-        return nombre;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    @Override
+    public String nombre() {
+        return nombre;
+    }
+
+    @Override
+    public String descripcion() {
+        return descripcion;
+    }
 }
