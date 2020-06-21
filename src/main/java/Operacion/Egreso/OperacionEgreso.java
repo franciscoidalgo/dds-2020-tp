@@ -3,8 +3,9 @@ package Egreso;
 
 import Usuario.Usuario;
 
-import java.Entidad.Criterio;
+import Entidad.CategorizacionOperacion.Criterio;
 import java.Operacion.Egreso.Presupuesto;
+
 import java.Operacion.Operacion;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -52,8 +53,8 @@ public class OperacionEgreso extends Operacion {
     public Detalle getDetalle() { return detalle; }
     public void setDetalle(Detalle detalle) { this.detalle = detalle; }
 
-    public ArrayList<Usuario.Usuario> getRevisores() { return revisores; }
-    public void setRevisores(ArrayList<Usuario.Usuario> revisores) { this.revisores = revisores; }
+    public ArrayList<Usuario> getRevisores() { return revisores; }
+    public void setRevisores(ArrayList<Usuario> revisores) { this.revisores = revisores; }
 
     public Integer getCantMinPresupuestos() { return cantMinPresupuestos; }
     public void setCantMinPresupuestos(Integer cantMinPresupuestos) { this.cantMinPresupuestos = cantMinPresupuestos; }
