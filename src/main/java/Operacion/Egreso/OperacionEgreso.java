@@ -8,6 +8,7 @@ import PlanificadorDeTareas.Tarea;
 import PlanificadorDeTareas.TareaValidacion;
 import Usuario.Mensaje;
 import Usuario.Usuario;
+import Validadores.ValidadorDeTransparencia;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -66,8 +67,8 @@ public class OperacionEgreso extends Operacion {
 
     //Metodos
     public boolean validarOperacion(OperacionEgreso operacionEgreso)
-    {//Todo: Terminar parte validaciones
-        return true;
+    {
+        return new ValidadorDeTransparencia().validaEgreso(this);
     }
 
 
