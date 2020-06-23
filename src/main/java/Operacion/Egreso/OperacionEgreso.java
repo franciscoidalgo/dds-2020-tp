@@ -1,50 +1,46 @@
 
-package Egreso;
+package Operacion.Egreso;
 
+import Entidad.CategorizacionOperacion.Criterio;
+import Operacion.Operacion;
+import Usuario.Mensaje;
 import Usuario.Usuario;
 
-import java.Entidad.Criterio;
-import java.Operacion.Egreso.Presupuesto;
-import java.Operacion.Operacion;
-import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class OperacionEgreso extends Operacion {
     //Atributos
-    private Egreso.Proveedor proveedor;
-    private ArrayList<Egreso.Comprobante> comprobantes;
-    private Egreso.MedioDePago medioDePago;
-    private Egreso.Detalle detalle;
+    private Proveedor proveedor;
+    private Comprobante comprobante;
+    private MedioDePago medioDePago;
+    private Detalle detalle;
     private ArrayList<Usuario> revisores;
     private Integer cantMinPresupuestos;
     private ArrayList<Presupuesto> presupuestos;
     private Criterio criterio;
+    private Usuario creadoPor;
 
     //Constructor
-    public OperacionEgreso(long montoTotal, long nroOperacion, Timestamp fecha,
-                           Egreso.Proveedor proveedor, ArrayList<Egreso.Comprobante> comprobantes,
-                           Egreso.MedioDePago medioDePago, Egreso.Detalle detalle,
-                           ArrayList<Usuario> revisores, Integer cantMinPresupuestos,
-                           ArrayList<Presupuesto> presupuestos, Criterio criterio){
-        this.montoTotal = montoTotal;
-        this.nroOperacion = nroOperacion;
-        this.fecha = fecha;
+
+    public OperacionEgreso(int i, LocalTime now, Proveedor proveedor, Comprobante comprobante, MedioDePago medioDePago, Detalle detalle, Integer cantMinPresupuestos, Criterio criterio) {
         this.proveedor = proveedor;
-        this.comprobantes = comprobantes;
+        this.comprobante = comprobante;
         this.medioDePago = medioDePago;
         this.detalle = detalle;
-        this.revisores = revisores;
+        this.revisores = new ArrayList<>();
         this.cantMinPresupuestos = cantMinPresupuestos;
-        this.presupuestos = presupuestos;
+        this.presupuestos = new ArrayList<>();
         this.criterio = criterio;
+        this.creadoPor = null;
     }
 
     //Getter Setter
     public Proveedor getProveedor() { return proveedor; }
     public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
 
-    public ArrayList<Comprobante> getComprobantes() { return comprobantes; }
-    public void setComprobantes(ArrayList<Comprobante> comprobantes) { this.comprobantes = comprobantes; }
+    public Comprobante getComprobantes() { return comprobante; }
+    public void setComprobantes(Comprobante comprobantes) { this.comprobante = comprobantes; }
 
     public MedioDePago getMedioDePago() { return medioDePago; }
     public void setMedioDePago(MedioDePago medioDePago) { this.medioDePago = medioDePago; }
@@ -52,8 +48,8 @@ public class OperacionEgreso extends Operacion {
     public Detalle getDetalle() { return detalle; }
     public void setDetalle(Detalle detalle) { this.detalle = detalle; }
 
-    public ArrayList<Usuario.Usuario> getRevisores() { return revisores; }
-    public void setRevisores(ArrayList<Usuario.Usuario> revisores) { this.revisores = revisores; }
+    public ArrayList<Usuario> getRevisores() { return revisores; }
+    public void setRevisores(ArrayList<Usuario> revisores) { this.revisores = revisores; }
 
     public Integer getCantMinPresupuestos() { return cantMinPresupuestos; }
     public void setCantMinPresupuestos(Integer cantMinPresupuestos) { this.cantMinPresupuestos = cantMinPresupuestos; }
@@ -65,14 +61,56 @@ public class OperacionEgreso extends Operacion {
     public void setCriterio(Criterio criterio) { this.criterio = criterio; }
 
     //Metodos
-    public boolean validarOperacion(OperacionEgreso operacionEgreso){
+    public boolean validarOperacion(OperacionEgreso operacionEgreso)
+    {//Todo: Terminar parte validaciones
         return true;
     }
 
-    public void generarEnviarMensaje(ArrayList<Usuario> revisores){
 
+    public void agregaPresupuesto(Presupuesto unPresupuesto){
+        presupuestos.add(unPresupuesto);
     }
 
-    //Falta mostrar categoria que no se que cuerno es...
+    public void sacaPresupuesto(Presupuesto unPresupuesto){
+        presupuestos.remove(unPresupuesto);
+    }
+
+    public void agregateRevisor(Usuario unRevisor){
+        this.revisores.add(unRevisor);
+    }
+
+    public void sacaRevisor(Usuario unRevisor){
+        this.revisores.remove(unRevisor);
+    }
+
+    @Override
+    public void registrate() {
+        //Todo:Falta esta parte de persistencia.
+        super.registrate();
+    }
+
+    @Override
+    public double montoTotal() {
+        return this.subtotalPresupuestos()+this.detalle.calcularSubtotal();
+    }
+
+    private double subtotalPresupuestos(){
+        //(aBoolean, aBoolean2) -> Boolean.logicalAnd(aBoolean,aBoolean2)
+        return this.presupuestos.stream()
+                .mapToDouble(presupuesto -> presupuesto.mostrarCosto())
+                .sum();
+    }
+
+    private Mensaje generaMensaje(){
+        //Todo: agregar en el 2do parametro cuales validaciones pasaron y cuales no
+        return new Mensaje("Operacion Egreso #"+Long.toString(this.nroOperacion),"Paso validaciones");
+    }
+    public void notificaRevisores(){
+        this.revisores.stream()
+                .forEach(usuario ->
+                            usuario.getBandejaDeMensajes().agregateMensaje(this.generaMensaje()) );
+    }
+
+
 
 }

@@ -1,4 +1,4 @@
-package Egreso;
+package Operacion.Egreso;
 
 public class Proveedor {
     private String nombre;

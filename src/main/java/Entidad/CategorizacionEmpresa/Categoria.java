@@ -1,4 +1,4 @@
-package Entidad;
+package Entidad.CategorizacionEmpresa;
 
 
 public class Categoria{

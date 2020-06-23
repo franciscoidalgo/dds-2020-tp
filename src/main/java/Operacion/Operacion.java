@@ -1,25 +1,41 @@
-package java.Operacion;
+package Operacion;
 
-import java.sql.Timestamp;
+import Usuario.Usuario;
 
+import java.time.LocalTime;
 public abstract class Operacion {
-    protected long montoTotal;
+
     protected long nroOperacion;
-    protected Timestamp fecha;
+    protected LocalTime fecha;
+    protected Usuario creadoPor;
+
+    public Operacion() {
+        this.nroOperacion = nroOperacion;
+        this.fecha = fecha;
+        this.creadoPor = creadoPor;
+    }
 
     //Getter Setter
-    public long getMontoTotal() { return montoTotal; }
-    public void setMontoTotal(long montoTotal) { this.montoTotal = montoTotal; }
-
     public long getNroOperacion() { return nroOperacion; }
     public void setNroOperacion(long nroOperacion) { this.nroOperacion = nroOperacion; }
 
-    public Timestamp getFecha() { return fecha; }
-    public void setFecha(Timestamp fecha) { this.fecha = fecha; }
+    public LocalTime getFecha() { return fecha; }
+    public void setFecha(LocalTime fecha) { this.fecha = fecha; }
 
     //Funcionalidad
-    public void registrar(){
+    public void registrate(){
         //TODO: Agregar logica de registro(No definiada).
     }
+
+    public Usuario getCreadoPor() {
+        return creadoPor;
+    }
+
+    public void setCreadoPor(Usuario creadoPor) {
+        this.creadoPor = creadoPor;
+    }
+
+    public abstract double montoTotal();
+
 
 }

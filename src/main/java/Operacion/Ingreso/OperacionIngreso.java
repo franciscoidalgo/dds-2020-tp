@@ -1,23 +1,27 @@
-package java.Operacion.Ingreso;
+package Operacion.Ingreso;
 
-import Egreso.OperacionEgreso;
 
-import java.Operacion.Operacion;
-import java.sql.Timestamp;
+import Operacion.Egreso.Detalle;
+import Operacion.Egreso.OperacionEgreso;
+import Operacion.Operacion;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class OperacionIngreso extends Operacion {
+
+    private long montoTotal;
     private String descripcion;
-    private ArrayList<Egreso.OperacionEgreso> egresos;
+    private ArrayList<OperacionEgreso> egresos;
 
     //Constructor
-    public OperacionIngreso(long montoTotal, long nroOperacion, Timestamp fecha,
-                           String descripcion, ArrayList<OperacionEgreso> egresos){
+    public OperacionIngreso(long montoTotal, long nroOperacion, LocalTime fecha,
+                           String descripcion){
         this.montoTotal = montoTotal;
         this.nroOperacion = nroOperacion;
         this.fecha = fecha;
         this.descripcion = descripcion;
-        this.egresos = egresos;
+        this.egresos = new ArrayList<>();
     }
 
     //Getter Setter
@@ -37,5 +41,10 @@ public class OperacionIngreso extends Operacion {
             operacionesEgreso += d.calcularSubtotal();
         }
         return this.montoTotal - operacionesEgreso;
+    }
+
+    @Override
+    public double montoTotal() {
+        return montoTotal;
     }
 }

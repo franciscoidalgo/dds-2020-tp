@@ -1,8 +1,8 @@
-package Egreso;
+package Operacion.Egreso;
 
 public class Comprobante {
     private long nroComprobante;
-    private Egreso.ComprobanteDePago tipoComprobante;
+    private ComprobanteDePago tipoComprobante;
 
     //Getter Setter
     public long getNroComprobante() {
@@ -12,15 +12,15 @@ public class Comprobante {
         this.nroComprobante = nroComprobante;
     }
 
-    public Egreso.ComprobanteDePago getTipoComprobante() {
+    public ComprobanteDePago getTipoComprobante() {
         return tipoComprobante;
     }
-    public void setTipoComprobante(Egreso.ComprobanteDePago tipoComprobante) {
+    public void setTipoComprobante(ComprobanteDePago tipoComprobante) {
         this.tipoComprobante = tipoComprobante;
     }
 
     //Constructor
-    public Comprobante(long nroComprobante, Egreso.ComprobanteDePago comprobanteDePago){
+    public Comprobante(long nroComprobante, ComprobanteDePago comprobanteDePago){
         this.nroComprobante = nroComprobante;
         this.tipoComprobante = comprobanteDePago;
     }
