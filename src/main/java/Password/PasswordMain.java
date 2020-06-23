@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class PasswordMain {
 
-    public static void main (String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         ValidatePasswordLength validatePasswordLength = new ValidatePasswordLength();
         ValidatePasswordNumber validatePasswordNumber = new ValidatePasswordNumber();
@@ -22,6 +22,7 @@ public class PasswordMain {
         passwordCriteria.add(validatePasswordDictionary);
 
         String password = "P4ssw0rd$";
+
 
         // Test password length
         if (validatePasswordLength.validatePassword(password))
@@ -52,5 +53,6 @@ public class PasswordMain {
             System.out.println("Password dictionary... OK");
         else
             System.out.println("Password dictionary... NOT OK");
+
     }
 }
