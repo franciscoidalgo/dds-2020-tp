@@ -19,22 +19,20 @@ public class OperacionEgreso extends Operacion {
     private Integer cantMinPresupuestos;
     private ArrayList<Presupuesto> presupuestos;
     private Criterio criterio;
+    private Usuario creadoPor;
 
     //Constructor
-    public OperacionEgreso(long nroOperacion, LocalTime fecha,
-                           Proveedor proveedor, Comprobante comprobante,
-                           MedioDePago medioDePago, Detalle detalle, Integer cantMinPresupuestos, Criterio criterio){
 
-        this.nroOperacion = nroOperacion;
-        this.fecha = fecha;
+    public OperacionEgreso(int i, LocalTime now, Proveedor proveedor, Comprobante comprobante, MedioDePago medioDePago, Detalle detalle, Integer cantMinPresupuestos, Criterio criterio) {
         this.proveedor = proveedor;
         this.comprobante = comprobante;
         this.medioDePago = medioDePago;
         this.detalle = detalle;
-        this.revisores = new ArrayList<Usuario>();
+        this.revisores = new ArrayList<>();
         this.cantMinPresupuestos = cantMinPresupuestos;
-        this.presupuestos = new ArrayList<Presupuesto>();
+        this.presupuestos = new ArrayList<>();
         this.criterio = criterio;
+        this.creadoPor = null;
     }
 
     //Getter Setter
@@ -107,9 +105,10 @@ public class OperacionEgreso extends Operacion {
         //Todo: agregar en el 2do parametro cuales validaciones pasaron y cuales no
         return new Mensaje("Operacion Egreso #"+Long.toString(this.nroOperacion),"Paso validaciones");
     }
-    private void enviaMensaje(Mensaje unMensaje){
+    public void notificaRevisores(){
         this.revisores.stream()
-                .forEach(usuario ->usuario.getBandejaDeMensajes().agregateMensaje(unMensaje) );
+                .forEach(usuario ->
+                            usuario.getBandejaDeMensajes().agregateMensaje(this.generaMensaje()) );
     }
 
 

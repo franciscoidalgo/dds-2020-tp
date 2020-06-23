@@ -55,6 +55,14 @@ public abstract class  EntidadJuridica implements Entidad {
         this.CUIT = CUIT;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public String getDireccionPostal() {
         return direccionPostal;
     }
@@ -87,15 +95,28 @@ public abstract class  EntidadJuridica implements Entidad {
         this.operaciones = operaciones;
     }
 
-    public void  realizaOperacion(Operacion unaOperacion){
-
+    public ArrayList<Criterio> getCriterios() {
+        return criterios;
     }
 
-    public Criterio creaCriterio(String unNombre,Criterio criterio,int nivelJerarquia){
-        return new Criterio(unNombre,criterio,nivelJerarquia);
+    public void setCriterios(ArrayList<Criterio> criterios) {
+        this.criterios = criterios;
+    }
+
+    //Funcionalidades!
+    public void  realizaOperacion(Operacion unaOperacion){
+        this.operaciones.add(unaOperacion);
+    }
+
+    public void creaCriterio(String unNombre, Criterio criterio, int nivelJerarquia){
+        this.criterios.add(new Criterio(unNombre,criterio,nivelJerarquia));
     }
 
     public void creaCategoria(Criterio unCriterio,String unNombre){
         unCriterio.agregateCategoria(new CategoriaOperacion(unNombre));
+    }
+
+    public boolean tieneEntidadBase(Entidad  base){
+        return this.entidadesBases.contains(base);
     }
 }
