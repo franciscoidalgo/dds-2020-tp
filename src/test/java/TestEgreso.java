@@ -21,7 +21,7 @@ public class TestEgreso {
         presupuesto2 = new Generador().generaPresupuesto();
 
         //Egreso ya viene con un detalle generado
-        unEgreso = new Generador().generaEgreso(false,0);
+        unEgreso = new Generador().generaEgreso(0);
     }
 
 

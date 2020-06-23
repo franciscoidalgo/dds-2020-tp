@@ -16,7 +16,7 @@ public class TestIngreso {
         unIngreso = new Generador().generaIngreso(100000);
 
         //Egreso con un detalle generico de 16000
-        unEgreso = new Generador().generaEgreso(false,0);
+        unEgreso = new Generador().generaEgreso(0);
     }
 
 
