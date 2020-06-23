@@ -1,13 +1,17 @@
 
 package Operacion.Egreso;
 
+
 import Entidad.CategorizacionOperacion.Criterio;
 import Operacion.Operacion;
+import PlanificadorDeTareas.Tarea;
+import PlanificadorDeTareas.TareaValidacion;
 import Usuario.Mensaje;
 import Usuario.Usuario;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 public class OperacionEgreso extends Operacion {
     //Atributos
@@ -110,7 +114,6 @@ public class OperacionEgreso extends Operacion {
                 .forEach(usuario ->
                             usuario.getBandejaDeMensajes().agregateMensaje(this.generaMensaje()) );
     }
-
 
 
 }

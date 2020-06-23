@@ -1,14 +1,43 @@
-package Password;
-
+/*
+import Password.*;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
 
-import static Password.PasswordValidator.*;
+import java.io.IOException;
+import java.util.ArrayList;
+
 
 public class TestPasswordValidator {
+
+    @Before
+    public void beforeTest () {
+    ValidatePasswordCapitalLetter validatePasswordCapitalLetter = new ValidatePasswordCapitalLetter();
+    ArrayList<PasswordCriteria> passwordCriteria = new ArrayList<PasswordCriteria>();
+    passwordCriteria.add(validatePasswordCapitalLetter);
+    }
+    //ValidatePasswordLength validatePasswordLength = new ValidatePasswordLength();
+
+    //ValidatePasswordDictionary validatePasswordDictionary = new ValidatePasswordDictionary();
+    //ValidatePasswordNumber validatePasswordNumber = new ValidatePasswordNumber();
+    // ValidatePasswordSpecialCharacter validatePasswordSpecialCharacter = new ValidatePasswordSpecialCharacter();
+
+    @Test()
+    public void testPasswordCriteria(PasswordCriteria passwordCriteria) {
+
+        Assert.assertTrue(validatePasswordCriteria.validatePassword("password"));
+    }
+
+        Assert.assertTrue(validatePasswordCapitalLetter.validatePassword(""));
+        Assert.assertTrue(ValidatePasswordCapitalLetter("passworD"));
+        Assert.assertTrue(ValidatePasswordCapitalLetter("passWord"));
+        Assert.assertFalse(ValidatePasswordCapitalLetter("password"));
+    }
+}
+
+*/
+    /*
 
     @Test
     public void TestPasswordValidator() throws IOException {
@@ -47,4 +76,4 @@ public class TestPasswordValidator {
 
     }
 }
-
+*/
