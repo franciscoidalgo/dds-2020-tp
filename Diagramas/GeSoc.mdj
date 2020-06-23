@@ -16245,6 +16245,23 @@
 										},
 										{
 											"_type": "UMLOperationView",
+											"_id": "AAAAAAFy4R18Olm1OqY=",
+											"_parent": {
+												"$ref": "AAAAAAFx3aSk797zQD4="
+											},
+											"model": {
+												"$ref": "AAAAAAFy4R18HlmyaLE="
+											},
+											"font": "Arial;13;0",
+											"left": 845,
+											"top": 652,
+											"width": 417.97412109375,
+											"height": 13,
+											"text": "+creaCriterio(unNombre)",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
 											"_id": "AAAAAAFyzkti1IKKPvE=",
 											"_parent": {
 												"$ref": "AAAAAAFx3aSk797zQD4="
@@ -16254,10 +16271,10 @@
 											},
 											"font": "Arial;13;0",
 											"left": 845,
-											"top": 652,
+											"top": 667,
 											"width": 417.97412109375,
 											"height": 13,
-											"text": "+creaCriterio(unNombre, criterioPadre, nivelJeraquia)",
+											"text": "+creaCriterio(unNombre, criterioPadre)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16307,7 +16324,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 845,
-											"top": 667,
+											"top": 682,
 											"width": 417.97412109375,
 											"height": 13,
 											"text": "+realizaOperacion(Operacion)",
@@ -16324,7 +16341,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 845,
-											"top": 682,
+											"top": 697,
 											"width": 417.97412109375,
 											"height": 13,
 											"text": "+tieneEntidadBase(Entidad): Boolean",
@@ -16353,7 +16370,7 @@
 									"left": 840,
 									"top": 630,
 									"width": 427.97412109375,
-									"height": 70
+									"height": 85
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -36677,6 +36694,25 @@
 						},
 						{
 							"_type": "UMLOperation",
+							"_id": "AAAAAAFy4R18HlmyaLE=",
+							"_parent": {
+								"$ref": "AAAAAAFx3aSk697qoRQ="
+							},
+							"name": "creaCriterio",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFy4R2vCFswgK4=",
+									"_parent": {
+										"$ref": "AAAAAAFy4R18HlmyaLE="
+									},
+									"name": "unNombre",
+									"type": ""
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
 							"_id": "AAAAAAFyzktijoKHhAw=",
 							"_parent": {
 								"$ref": "AAAAAAFx3aSk697qoRQ="
@@ -36689,8 +36725,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzktijoKHhAw="
 									},
-									"name": "unNombre",
-									"type": ""
+									"name": "unNombre"
 								},
 								{
 									"_type": "UMLParameter",
@@ -36698,17 +36733,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzktijoKHhAw="
 									},
-									"name": "criterioPadre",
-									"type": ""
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAFy1NWhXxb9Hfg=",
-									"_parent": {
-										"$ref": "AAAAAAFyzktijoKHhAw="
-									},
-									"name": "nivelJeraquia",
-									"type": ""
+									"name": "criterioPadre"
 								}
 							]
 						},
