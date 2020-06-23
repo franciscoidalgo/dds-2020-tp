@@ -108,8 +108,8 @@ public abstract class  EntidadJuridica implements Entidad {
         this.operaciones.add(unaOperacion);
     }
 
-    public void creaCriterio(String unNombre, Criterio criterio, int nivelJerarquia){
-        this.criterios.add(new Criterio(unNombre,criterio,nivelJerarquia));
+    public void creaCriterio(String unNombre){
+        this.criterios.add(new Criterio(unNombre));
     }
 
     public void creaCategoria(Criterio unCriterio,String unNombre){
