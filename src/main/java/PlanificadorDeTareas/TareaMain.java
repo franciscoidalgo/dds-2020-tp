@@ -8,7 +8,6 @@ public class TareaMain {
 
         tarea.planificarTareaValidacion (0, 5000);
 
-
-     }
+    }
 
 }

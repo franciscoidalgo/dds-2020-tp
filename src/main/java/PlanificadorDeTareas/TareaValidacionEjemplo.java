@@ -19,5 +19,5 @@ public class TareaValidacionEjemplo extends TimerTask {
                 System.out.println("Password special character... OK");
             else
                 System.out.println("Password special character... NOT OK");
-    }
+        }
 }
