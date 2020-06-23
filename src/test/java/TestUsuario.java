@@ -8,28 +8,36 @@ import org.junit.Test;
 
 public class TestUsuario {
 
-        Usuario unEstandar;
-        Usuario unAdmin;
+        private Usuario unEstandar;
+        private Usuario unAdmin;
+        private Criterio unCriterio;
+        private Criterio unCriterioHijo;
+
+    private OperacionEgreso unEgreso;
+    private OperacionIngreso unIngreso;
 
 
-    OperacionEgreso unEgreso;
-    OperacionIngreso unIngresoBajo;
-
-    OperacionIngreso unIngresoAlto;
-        @Before
-        public void setUp() throws Exception {
-
+    @Before
+        public void setUp() {
+            //Inicializo 2 tipos de usuarios genericos.
             unEstandar = new Generador().generaUsuarioEstandar();
             unAdmin= new Generador().generaUsuarioAdmin();
 
-            unEgreso = new Generador().generaEgreso(false,0);
-            unIngresoBajo = new Generador().generaIngreso(5000);
+            //Se crea 1 un ingreso y 1 egreso
+            unEgreso = new Generador().generaEgreso(0);
+            unIngreso = new Generador().generaIngreso(5000);
 
-            unEstandar.realizaOperacion(unEgreso);
+            //Se 2 crean los criterios
+            unEstandar.getEntidadPertenece().creaCriterio("Proyecto Nike");
+            unEstandar.getEntidadPertenece().creaCriterio("Proyecto Expansion");
+
+            unCriterio = unEstandar.getEntidadPertenece().getCriterios().get(0);
+            unCriterioHijo = unEstandar.getEntidadPertenece().getCriterios().get(1);
+
         }
     @Test
     public void testUsuarioRecibeMensaje_CuandoSeDaDeAltaEnOperacion(){
-
+            unEstandar.realizaOperacion(unEgreso);
             unEstandar.darseDeAltaEn(unEgreso);
             unEgreso.notificaRevisores();
 
@@ -37,17 +45,19 @@ public class TestUsuario {
     }
 
     @Test
+    public void testUsuario_AsociaEgresoAIngreso(){
+        unEstandar.asociaEgresoAIngreso(unEgreso,unIngreso);
+
+        Assert.assertEquals(unIngreso.getEgresos().size(),1);
+    }
+
+    @Test
     public void testUsuarioEstandar_NoPuedeModificarCriterio(){
 
             try {
-                Criterio unCriterio;
-                unEstandar.getEntidadPertenece().creaCriterio("Bonito", null, 0);
-
-                unCriterio = unEstandar.getEntidadPertenece().getCriterios().get(0);
-
-                unEstandar.daleJerarquiA(unCriterio, 1000);
+                unEstandar.daleJerarquiA(unCriterio, unCriterioHijo);
                 Assert.fail("No tiene permiso para hacer esto");
-            }catch (Exception e){
+            }catch (Exception ignored){
 
             }
     }
@@ -57,14 +67,14 @@ public class TestUsuario {
 
         try {
             Criterio unCriterio;
-            unEstandar.getEntidadPertenece().creaCriterio("Bonito", null, 0);
+            Criterio unCriterioHijo;
 
             unCriterio = unEstandar.getEntidadPertenece().getCriterios().get(0);
+            unCriterioHijo = unEstandar.getEntidadPertenece().getCriterios().get(1);
 
-            unAdmin.daleJerarquiA(unCriterio, 1000);
-            Assert.assertTrue(unCriterio.getNivelJerarquia()==1000);
-        }catch (Exception e){
-
+            unAdmin.daleJerarquiA(unCriterio, unCriterioHijo);
+            Assert.assertEquals(unCriterio.getCriterioHijo(),unCriterioHijo);
+        }catch (Exception ignored){
         }
     }
 

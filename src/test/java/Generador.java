@@ -10,12 +10,12 @@ import Usuario.Usuario;
 
 import java.time.LocalTime;
 
-public class Generador {
+class Generador {
 
 
 
 
-    public Detalle generaDetalle(){
+    Detalle generaDetalle(){
         Item item1;
         Item item2;
         Item item3;
@@ -33,46 +33,47 @@ public class Generador {
         return unDetalle;
     }
 
-    public OperacionEgreso generaEgreso(boolean tieneComprobante,int cantMinimaPresupuesto){
+    OperacionEgreso generaEgreso(int cantMinimaPresupuesto){
 
         Proveedor unProveedor = new Proveedor();
         MedioDePago unMedio = new MedioDePago("MaestroCard","123451234","1235123512354");
         Detalle unDetalle = this.generaDetalle();
-        Criterio unCriterio = new Criterio("Proyectito",null,0);
+        Criterio unCriterio = new Criterio("Proyectito");
 
         return new OperacionEgreso(1234567,LocalTime.now(),unProveedor,null,unMedio,unDetalle,cantMinimaPresupuesto,unCriterio);
     }
 
-    public OperacionEgreso generaEgresoConPresupuestos(boolean tieneComprobante,int cantMinimaPresupuesto,int cantPresupuestos){
+    OperacionEgreso generaEgresoConPresupuestos(int cantMinimaPresupuesto,int cantPresupuestos){
 
-        OperacionEgreso unEgreso = this.generaEgreso(tieneComprobante,cantMinimaPresupuesto);
+        OperacionEgreso unEgreso;
+        unEgreso = this.generaEgreso(cantMinimaPresupuesto);
         Presupuesto unPresupuesto = this.generaPresupuesto();
         for(int i = 0; i<cantMinimaPresupuesto;i++) unEgreso.agregaPresupuesto(unPresupuesto);
 
         return unEgreso;
     }
 
-    public Presupuesto generaPresupuesto(){
+    Presupuesto generaPresupuesto(){
        Detalle unDetallePresupuesto = new Generador().generaDetalle();
-        Criterio unCriterio = new Criterio("Proyectito",null,0);
+        Criterio unCriterio = new Criterio("Proyectito");
        return new Presupuesto(unDetallePresupuesto,unCriterio);
     }
 
-    public OperacionIngreso generaIngreso(long valorIngreso){
+    OperacionIngreso generaIngreso(long valorIngreso){
 
         return new OperacionIngreso(valorIngreso,123456,LocalTime.now(),
                 "Inversion de dudosa procedencia");
     }
 
-    public Usuario generaUsuarioEstandar(){
+    Usuario generaUsuarioEstandar(){
         return new Usuario("User","U23R274ND4R",new RolEstandar(),this.generaEmpresa());
     }
 
-    public Usuario generaUsuarioAdmin(){
+    Usuario generaUsuarioAdmin(){
         return new Usuario("Admin","El4dm1n",new RolAdministrador(),this.generaEmpresa());
     }
 
-    public Empresa generaEmpresa(){
+    Empresa generaEmpresa(){
         Sector unSector =new Sector("comercio","Algo de comercio");
 
         unSector.agregateCategoria(new Categoria(132,321,"Categoria"));

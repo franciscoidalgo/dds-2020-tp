@@ -94,10 +94,10 @@ public class Usuario {
         unEgreso.sacaRevisor(this);
     }
 
-    public void daleJerarquiA(Criterio unCriterio,int nivelJerarquia) throws Exception {
+    public void daleJerarquiA(Criterio unCriterioPadre,Criterio unCriterioHijo) throws Exception {
 
         if (this.rol.criterioCredenciales()) {
-            unCriterio.setNivelJerarquia(nivelJerarquia);
+            unCriterioPadre.setCriterioHijo(unCriterioHijo);
         }else {
             throw new Exception("No tiene permiso para hacer esto");
         }
