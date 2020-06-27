@@ -1,4 +1,4 @@
-package java.Operacion.Egreso.MediosDePago;
+package Operacion.Egreso.MediosDePago;
 
 public class ATM {
     public Integer getAtm() {

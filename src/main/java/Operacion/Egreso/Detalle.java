@@ -7,8 +7,8 @@ public class Detalle {
     private List<Item> listaItems;
 
     //Constructor
-    public Detalle (){
-        this.listaItems = new ArrayList<>();
+    public Detalle (List<Item> listaItems){
+        this.listaItems = listaItems;
     }
 
     //Funcionalidad

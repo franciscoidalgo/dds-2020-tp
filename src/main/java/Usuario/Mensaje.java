@@ -1,9 +1,12 @@
 package Usuario;
 
+import java.time.LocalTime;
+import java.util.Date;
+
 public class Mensaje {
 
-    private long fechaEnvio;
-    private long fechaLeido;
+    private LocalTime fechaEnvio;
+    private LocalTime fechaLeido;
     private String asunto;
     private String mensaje;
 
@@ -11,27 +14,25 @@ public class Mensaje {
     public Mensaje(String asunto, String mensaje) {
         this.asunto = asunto;
         this.mensaje = mensaje;
-        this.fechaEnvio = System.currentTimeMillis();
-        this.fechaLeido = System.currentTimeMillis();
+        this.fechaEnvio = LocalTime.now();
+        this.fechaLeido = null;
     }
 
-    public long getFechaEnvio() {
+    public LocalTime getFechaEnvio() {
         return fechaEnvio;
     }
-
-    public long getFechaLeido() {
+    public LocalTime getFechaLeido() {
         return fechaLeido;
     }
 
     public String getAsunto() {
         return asunto;
     }
-
     public String getMensaje() {
         return mensaje;
     }
 
     public void actualizateLeido(){
-        this.fechaLeido = System.currentTimeMillis();
+        this.fechaLeido = LocalTime.now();
     }
 }

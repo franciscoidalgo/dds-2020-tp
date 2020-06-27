@@ -11,15 +11,15 @@ import Operacion.Operacion;
 public class Usuario {
     //Atributo
     private String nombre;
-    private String contraseña;
+    private String password;
     private Rol rol;
     private EntidadJuridica entidadPertenece;//Entidad Juridica a la que pertenece el usuario
     private Entidad entidadSeleccionada;
     private BandejaMensaje bandejaDeMensajes;
 
-    public Usuario(String nombre, String contraseña, Rol rol, EntidadJuridica entidadPertenece) {
+    public Usuario(String nombre, String password, Rol rol, EntidadJuridica entidadPertenece) {
         this.nombre = nombre;
-        this.contraseña = contraseña;
+        this.password = password;
         this.rol = rol;
         this.entidadPertenece = entidadPertenece;
         this.entidadSeleccionada = entidadPertenece;
@@ -35,12 +35,12 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Rol getRol() {
@@ -77,11 +77,6 @@ public class Usuario {
 
     //Funcionalidades
 
-   public void realizaOperacion(Operacion unaOperacion){
-
-        this.entidadPertenece.realizaOperacion(unaOperacion);
-    }
-
     public  void asociaEgresoAIngreso(OperacionEgreso unEgreso, OperacionIngreso unIngreso){
         unIngreso.agregateEgreso(unEgreso);
     }
@@ -94,7 +89,7 @@ public class Usuario {
         unEgreso.sacaRevisor(this);
     }
 
-    public void daleJerarquiA(Criterio unCriterioPadre,Criterio unCriterioHijo) throws Exception {
+    public void daleJerarquiaA(Criterio unCriterioPadre,Criterio unCriterioHijo) throws Exception {
 
         if (this.rol.criterioCredenciales()) {
             unCriterioPadre.setCriterioHijo(unCriterioHijo);
@@ -104,14 +99,11 @@ public class Usuario {
     }
 
     public void entidadSeleccionada(Entidad seleccionada) throws Exception {
-
         if (this.entidadPertenece == seleccionada || this.entidadPertenece.tieneEntidadBase(seleccionada)) {
             this.entidadSeleccionada = seleccionada;
         } else {
             throw new Exception("No puede seleccionar esta entidad");
         }
-
-
     }
 
 }

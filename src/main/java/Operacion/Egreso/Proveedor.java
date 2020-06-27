@@ -7,6 +7,14 @@ public class Proveedor {
     private long CUIT;
     private String dirPostal;
 
+    public Proveedor(String nombre, String razonSocial, int DNI, long CUIT, String dirPostal){
+        this.nombre = nombre;
+        this.razonSocial = razonSocial;
+        this.DNI = DNI;
+        this.CUIT = CUIT;
+        this.dirPostal = dirPostal;
+    }
+
     //Getter and Setter
     public String getNombre() {
         return nombre;

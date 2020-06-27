@@ -12,6 +12,7 @@ import Validadores.ValidadorDeTransparencia;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 
 public class OperacionEgreso extends Operacion {
@@ -20,24 +21,27 @@ public class OperacionEgreso extends Operacion {
     private Comprobante comprobante;
     private MedioDePago medioDePago;
     private Detalle detalle;
-    private ArrayList<Usuario> revisores;
+    private List<Usuario> revisores;
     private Integer cantMinPresupuestos;
-    private ArrayList<Presupuesto> presupuestos;
+    private List<Presupuesto> presupuestos;
     private Criterio criterio;
     private Usuario creadoPor;
 
     //Constructor
-
-    public OperacionEgreso(int i, LocalTime now, Proveedor proveedor, Comprobante comprobante, MedioDePago medioDePago, Detalle detalle, Integer cantMinPresupuestos, Criterio criterio) {
+    public OperacionEgreso(Proveedor proveedor, Comprobante comprobante, MedioDePago medioDePago,
+                           Detalle detalle, Integer cantMinPresupuestos, Criterio criterio, Usuario creadoPor) {
         this.proveedor = proveedor;
         this.comprobante = comprobante;
         this.medioDePago = medioDePago;
         this.detalle = detalle;
-        this.revisores = new ArrayList<>();
+        //this.revisores = new List<>();
         this.cantMinPresupuestos = cantMinPresupuestos;
-        this.presupuestos = new ArrayList<>();
+        //this.presupuestos = new List<>();
         this.criterio = criterio;
-        this.creadoPor = null;
+
+        this.creadoPor = creadoPor;
+        this.fecha = LocalTime.now();
+        this.nroOperacion = 1; //Autogenerado
     }
 
     //Getter Setter
@@ -53,13 +57,13 @@ public class OperacionEgreso extends Operacion {
     public Detalle getDetalle() { return detalle; }
     public void setDetalle(Detalle detalle) { this.detalle = detalle; }
 
-    public ArrayList<Usuario> getRevisores() { return revisores; }
-    public void setRevisores(ArrayList<Usuario> revisores) { this.revisores = revisores; }
+    public List<Usuario> getRevisores() { return revisores; }
+    public void setRevisores(List<Usuario> revisores) { this.revisores = revisores; }
 
     public Integer getCantMinPresupuestos() { return cantMinPresupuestos; }
     public void setCantMinPresupuestos(Integer cantMinPresupuestos) { this.cantMinPresupuestos = cantMinPresupuestos; }
 
-    public ArrayList<Presupuesto> getPresupuestos() { return presupuestos; }
+    public List<Presupuesto> getPresupuestos() { return presupuestos; }
     public void setPresupuestos(ArrayList<Presupuesto> presupuestos) { this.presupuestos = presupuestos; }
 
     public Criterio getCriterio() { return criterio; }

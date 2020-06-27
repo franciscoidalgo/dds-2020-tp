@@ -1,8 +1,8 @@
 package Usuario;
 
-public class RolEstandar extends Rol {
+public class RolEstandar implements Rol {
     @Override
-    boolean criterioCredenciales() {
+    public boolean criterioCredenciales() {
         return false;
     }
 }

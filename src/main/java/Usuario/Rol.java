@@ -1,10 +1,6 @@
 package Usuario;
 
-public abstract class Rol {
-
+public interface Rol {
     //Metodos
-   abstract boolean criterioCredenciales();
-
-
-
+    boolean criterioCredenciales();
 }

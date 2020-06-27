@@ -18,7 +18,6 @@ public class Presupuesto {
     public Criterio getCriterio() { return criterio; }
     public void setCriterio(Criterio criterio) { this.criterio = criterio; }
 
-
     //Funcionalidad
     public double mostrarCosto(){ return this.detalle.calcularSubtotal(); }
 

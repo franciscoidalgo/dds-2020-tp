@@ -2,11 +2,12 @@ package Usuario;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BandejaMensaje {
 
-    private ArrayList<Mensaje> mensajes;
+    private List<Mensaje> mensajes;
 
     public BandejaMensaje() {
         this.mensajes = new ArrayList<>();
@@ -30,24 +31,30 @@ public class BandejaMensaje {
     }
 
     public void borrarMensaje(Mensaje unMensaje){
-        try{
-            this.mensajes.remove(unMensaje);
-        }catch (Exception e){
-            System.out.println("No se pudo eliminar mensaje. No existe");
-        }
+        this.mensajes.remove(unMensaje);
     }
+    /*
+    Despues haces
+    try{ borrarMensaje(mensaje) }
+    catch(Exception e){
+            System.out.println("No se pudo encontrar mensaje. No existe"); }
+     */
 
     public Mensaje mostraMensaje(int pos){
-        try{
-            mensajes.get(pos).actualizateLeido();
-            return mensajes.get(pos);
-        }catch (Exception e){
-            System.out.println("No se pudo encontrar mensaje. No existe");
-            return null;
-        }
+        mensajes.get(pos).actualizateLeido();
+        return mensajes.get(pos);
     }
+    /*
+    Despues haces
+    try{ mostraMensaje(pos) }
+    catch(Exception e){
+       System.out.println("No se pudo encontrar mensaje. No existe");
+    }
+     */
 
-    public ArrayList<Mensaje> getMensajes() {
+    //Estas dos pruebas en un main o un test
+
+    public List<Mensaje> getMensajes() {
         return mensajes;
     }
 }
