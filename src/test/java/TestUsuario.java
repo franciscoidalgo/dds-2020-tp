@@ -1,3 +1,4 @@
+/*
 import Entidad.CategorizacionOperacion.Criterio;
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Ingreso.OperacionIngreso;
@@ -79,3 +80,4 @@ public class TestUsuario {
     }
 
 }
+*/
