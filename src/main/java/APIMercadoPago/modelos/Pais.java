@@ -1,11 +1,8 @@
 package APIMercadoPago.modelos;
 
-import java.util.List;
-
-public class Pais extends PaisSimp {
-    public char decimal_separator;
-    public char thousand_separator;
-    public String time_zone;
-    public GeoInformation geo_information;
-    public List<ProvinciaSimp> states;
+public class Pais {
+    public String id;
+    public String name;
+    public String locale;
+    public String currency_id;
 }
