@@ -1,14 +1,12 @@
 package APIMercadoPago.services;
 
-import APIMercadoPago.modelos.Moneda;
-import APIMercadoPago.modelos.Pais;
-import APIMercadoPago.modelos.PaisExtendido;
-import APIMercadoPago.modelos.ProvinciaExtendida;
+import APIMercadoPago.modelos.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
-public interface MercadoPagoService {
+public interface MercadoLibreService {
 
     @GET("/countries")
     Call<Pais[]> paises();
@@ -21,6 +19,12 @@ public interface MercadoPagoService {
 
     @GET("currencies")
     Call<Moneda[]> monedas();
+
+    @GET("/currencies/{Currency_id}")
+    Call<Moneda> moneda();
+
+    @GET("/currency_conversions/search")
+    Call<ConversionDeMonedas> conversionDeMonedas(@Query("from") String fromId, @Query("to") String toId);
 
 
 
