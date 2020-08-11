@@ -1,8 +1,10 @@
 package Operacion.Egreso.MediosDePago;
 
+import Operacion.Egreso.MedioDePago;
+
 import java.sql.Timestamp;
 
-public class Tarjeta {
+public class Tarjeta extends MedioDePago {
     private Integer numeroTarjeta;
     private Timestamp fechaVencimiento;
     private Integer codSeguridad;
@@ -23,6 +25,11 @@ public class Tarjeta {
 
     //Funcionalidad
     public void verificarValidezTarjeta(){
+
+    }
+
+    @Override
+    protected void actualizarTiposDePago() {
 
     }
 }

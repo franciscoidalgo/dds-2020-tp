@@ -9,29 +9,20 @@ public abstract class Operacion {
     protected LocalTime fecha;
     protected Usuario creadoPor;
 
-    public Operacion(){}
-
     //Getter Setter
-    public long getNroOperacion() { return nroOperacion; }
-    public void setNroOperacion(long nroOperacion) { this.nroOperacion = nroOperacion; }
+    protected long getNroOperacion() { return nroOperacion; }
+    protected void setNroOperacion(long nroOperacion) { this.nroOperacion = nroOperacion; }
 
-    public LocalTime getFecha() { return fecha; }
-    public void setFecha(LocalTime fecha) { this.fecha = fecha; }
+    protected LocalTime getFecha() { return fecha; }
+    protected void setFecha(LocalTime fecha) { this.fecha = fecha; }
 
-    public Usuario getCreadoPor() {
+    protected Usuario getCreadoPor() {
         return creadoPor;
     }
-    public void setCreadoPor(Usuario creadoPor) {
+    protected void setCreadoPor(Usuario creadoPor) {
         this.creadoPor = creadoPor;
     }
 
     //Funcionalidad
-    public void registrate(){
-        //TODO: Agregar logica de registro(No definiada).
-        //El registrate puede ser que sea dentro de la logica para definir una nueva operacion (constructor)
-    }
-
-    public abstract double montoTotal();
-
-
+    protected abstract double montoTotal();
 }

@@ -1,7 +1,6 @@
 package Usuario;
 
 import java.time.LocalTime;
-import java.util.Date;
 
 public class Mensaje {
 

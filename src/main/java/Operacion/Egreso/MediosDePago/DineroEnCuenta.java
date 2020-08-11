@@ -1,19 +1,24 @@
 package Operacion.Egreso.MediosDePago;
 
-public class DineroEnCuenta {
+import Operacion.Egreso.MedioDePago;
+
+public class DineroEnCuenta extends MedioDePago {
+    private Integer dineroEnCuenta;
+
     public Integer getDineroEnCuenta() {
         return dineroEnCuenta;
     }
-
     public void setDineroEnCuenta(Integer dineroEnCuenta) {
         this.dineroEnCuenta = dineroEnCuenta;
     }
 
-    private Integer dineroEnCuenta;
-
     //Constructor
-    public DineroEnCuenta(){
-
+    public DineroEnCuenta(Integer dineroEnCuenta){
+        this.dineroEnCuenta = dineroEnCuenta;
     }
 
+    @Override
+    protected void actualizarTiposDePago() {
+
+    }
 }

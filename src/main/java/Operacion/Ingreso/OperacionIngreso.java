@@ -24,8 +24,9 @@ public class OperacionIngreso extends Operacion {
 
         this.montoTotal = montoTotal;
         this.descripcion = descripcion;
-        //this.egresos = new ArrayList<>();
+        this.egresos = new ArrayList<>();
     }
+    //Este es el proceso de registro de la operacion
 
     //Getter Setter
     public String getDescripcion() { return descripcion; }
@@ -47,7 +48,7 @@ public class OperacionIngreso extends Operacion {
     }
 
     @Override
-    public double montoTotal() {
+    protected double montoTotal() {
         return montoTotal;
     }
 }

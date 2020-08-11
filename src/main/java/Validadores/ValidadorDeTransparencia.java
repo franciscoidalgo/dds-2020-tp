@@ -1,14 +1,18 @@
 package Validadores;
 
+import Entidad.CategorizacionOperacion.Criterio;
 import Operacion.Egreso.OperacionEgreso;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ValidadorDeTransparencia {
 
-    private ArrayList<CriterioValidacion> criteriosValidadores;
+    private List<CriterioValidacion> criteriosValidadores;
 
+    public ValidadorDeTransparencia(List<CriterioValidacion> validadores){
+        criteriosValidadores = validadores;
+    }
 
     public Boolean validaEgreso(OperacionEgreso unEgreso){
         System.out.println("Ejecución validación egreso: " + new Date());
