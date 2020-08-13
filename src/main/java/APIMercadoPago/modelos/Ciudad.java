@@ -1,6 +1,7 @@
 package APIMercadoPago.modelos;
 
-public class Ciudad {
-    public String Id;
-    public String Name;
+public class Ciudad extends Identificador{
+    public Identificador state;
+    public Identificador country;
+    public GeoInformation geo_information;
 }

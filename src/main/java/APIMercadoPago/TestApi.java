@@ -24,20 +24,29 @@ public class TestApi {
         }
         */
 
-        //Prueba: mostrar paises
-        ListaDePaises listaDePaises = servicioMercadoLibre.listaDePaises();
-        System.out.println("De que pais desea buscar mas informacion?");
-        listaDePaises.mostrarNombres();
 
-        //Prueba: seleccionar un pais con un nombre determinado
+
+        //Prueba: Informacion del pais, la provincia y la ciudad basandose en el codigo postal.
+        servicioMercadoLibre.listaDePaises().mostrarNombres();
+        System.out.println("Ingrese el nombre de su pais: ");
         Scanner entradaScanner = new Scanner(System.in);
         String nombrePaisElegido = entradaScanner.nextLine();
-        PaisExtendido paisElegido = servicioMercadoLibre.paisDeNombre(nombrePaisElegido);
-        System.out.println("Moneda: " + paisElegido.currency_id +
-                "\nProvincias: ");
+        Pais paisElegido = servicioMercadoLibre.paisDeNombre(nombrePaisElegido);
+        servicioMercadoLibre.listaDeProvincias(paisElegido).mostrarNombres();
+        System.out.println("Ingrese el nombre de la provincia: ");
+        String nombreProvinciaElegida = entradaScanner.nextLine();
+        Provincia provinciaElegida = servicioMercadoLibre
+                .provinciaDeId(servicioMercadoLibre.listaDeProvincias(paisElegido).idDeIdentificador(nombreProvinciaElegida));
+        servicioMercadoLibre.listaDeCiudades(provinciaElegida).mostrarNombres();
+        System.out.println("Ingrese el nombre de la ciudad: ");
+        String nombreCiudadElegida = entradaScanner.nextLine();
+        Ciudad ciudadElegida = servicioMercadoLibre
+                .ciudadDeId(servicioMercadoLibre.listaDeCiudades(provinciaElegida).idDeIdentificador(nombreCiudadElegida));
+        System.out.println("Ingrese su codigo postal: ");
+        String codigoPostal = entradaScanner.nextLine();
 
-        //Prueba: mostrar provincias (states) de un pais
-        ListaDeProvincias provinciasDelPais = servicioMercadoLibre.listaDeProvincias(paisElegido);
+        CodigoPostalAPI informacionCodigoPostal = servicioMercadoLibre
+                .informacionCodigoPostal(servicioMercadoLibre.paisDeNombre(nombrePaisElegido).id, codigoPostal);
 
     }
 

@@ -26,45 +26,65 @@ public class ServicioMercadoLibre {
         return instancia;
     }
 
-    public ListaDePaises listaDePaises () throws IOException {
+    public CodigoPostalAPI informacionCodigoPostal (String idPais, String codigoPostal) throws IOException {
+        MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
+        Call<CodigoPostalAPI> requestCodigoPostal = mercadoLibreService.codigoPostalApi(idPais, codigoPostal);
+        Response<CodigoPostalAPI> responesCodigoPostal = requestCodigoPostal.execute();
+        CodigoPostalAPI informacionCodigoPostal = responesCodigoPostal.body();
+
+        return informacionCodigoPostal;
+
+    }
+
+    public ListaIdentificables listaDePaises () throws IOException {
 
         MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
-        Call<Pais[]> requestListaDePaises = mercadoLibreService.paises();
-        Response<Pais[]> responseListaDePaises = requestListaDePaises.execute();
-        ListaDePaises listaDePaises = new ListaDePaises(responseListaDePaises.body());
+        Call<PaisSimplificado[]> requestListaDePaises = mercadoLibreService.paises();
+        Response<PaisSimplificado[]> responseListaDePaises = requestListaDePaises.execute();
+        ListaIdentificables listaDePaises = new ListaIdentificables(responseListaDePaises.body());
 
         return listaDePaises;
 
     }
 
-    public PaisExtendido paisDeId (String cualId) throws IOException {
+    public ListaIdentificables listaDeProvincias (Pais deQuePais){
+        return new ListaIdentificables(deQuePais.states);
+    }
+
+    public ListaIdentificables listaDeCiudades (Provincia deQueProvincia){
+        return new ListaIdentificables(deQueProvincia.cities);
+    }
+
+    public Pais paisDeId (String cualId) throws IOException {
         MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
-        Call<PaisExtendido> requestPaisDeId = mercadoLibreService.pais(cualId);
-        Response<PaisExtendido> responsePaisDeId = requestPaisDeId.execute();
-        PaisExtendido paisDeNombre = responsePaisDeId.body();
+        Call<Pais> requestPaisDeId = mercadoLibreService.pais(cualId);
+        Response<Pais> responsePaisDeId = requestPaisDeId.execute();
+        Pais paisDeNombre = responsePaisDeId.body();
 
         return paisDeNombre;
     }
 
-    public PaisExtendido paisDeNombre (String cualNombre) throws Exception {
-        String idDelPais = this.listaDePaises().idDePais(cualNombre);
+    public Pais paisDeNombre (String cualNombre) throws Exception {
+        String idDelPais = this.listaDePaises().idDeIdentificador(cualNombre);
         return paisDeId(idDelPais);
     }
 
-    public ListaDeProvincias listaDeProvincias  (String idDeSuPais) throws IOException {
-        return new ListaDeProvincias(this.paisDeId(idDeSuPais).states);
-    }
-
-    public ListaDeProvincias listaDeProvincias (PaisExtendido pais) throws IOException {
-        return this.listaDeProvincias(pais.id);
-    }
-
-    public ProvinciaExtendida provinciaDeId (String cualId) throws IOException {
+    public Provincia provinciaDeId (String cualId) throws IOException {
         MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
-        Call<ProvinciaExtendida> requestProvinciaDeId = mercadoLibreService.provincia(cualId);
-        Response<ProvinciaExtendida> responseProvinciaDeId = requestProvinciaDeId.execute();
-        ProvinciaExtendida provinciaDeId = responseProvinciaDeId.body();
+        Call<Provincia> requestProvinciaDeId = mercadoLibreService.provincia(cualId);
+        Response<Provincia> responseProvinciaDeId = requestProvinciaDeId.execute();
+        Provincia provinciaDeId = responseProvinciaDeId.body();
         return provinciaDeId;
+    }
+
+    public Ciudad ciudadDeId (String cualId) throws IOException{
+        MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
+        Call<Ciudad> requestCiudad = mercadoLibreService.ciudad(cualId);
+        Response<Ciudad> responseCiudad = requestCiudad.execute();
+        Ciudad ciudadDeId = responseCiudad.body();
+
+        return ciudadDeId;
+
     }
 
     public ListaDeMonedas listaDeMonedas () throws IOException {
@@ -82,6 +102,7 @@ public class ServicioMercadoLibre {
         Call<Moneda> requestMonedaDeId = mercadoLibreService.moneda();
         Response<Moneda> reponseMonedaDeId = requestMonedaDeId.execute();
         Moneda monedaDeId = reponseMonedaDeId.body();
+
         return monedaDeId;
 
     }
@@ -91,6 +112,7 @@ public class ServicioMercadoLibre {
         Call<ConversionDeMonedas> requestConversionDeMonedas = mercadoLibreService.conversionDeMonedas(idFrom, idTo);
         Response<ConversionDeMonedas> responseConversionDeMonedas = requestConversionDeMonedas.execute();
         ConversionDeMonedas conversionDeMonedas = responseConversionDeMonedas.body();
+
         return conversionDeMonedas;
 
     }

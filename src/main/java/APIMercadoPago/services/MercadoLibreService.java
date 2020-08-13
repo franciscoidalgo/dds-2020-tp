@@ -8,14 +8,20 @@ import retrofit2.http.Query;
 
 public interface MercadoLibreService {
 
-    @GET("/countries")
-    Call<Pais[]> paises();
+    @GET("/countries/{Country_id}/zip_codes/{Zip_code}")
+    Call<CodigoPostalAPI> codigoPostalApi (@Path("Country_id") String countryId, @Path("Zip_code") String zipCode);
+
+    @GET("/classified_locations/countries")
+    Call<PaisSimplificado[]> paises();
 
     @GET("/classified_locations/countries/{Country_id}")
-    Call<PaisExtendido> pais(@Path("Country_id") String id);
+    Call<Pais> pais(@Path("Country_id") String id);
 
     @GET("/classified_locations/states/{State_id}")
-    Call<ProvinciaExtendida> provincia (@Path("State_id") String id);
+    Call<Provincia> provincia (@Path("State_id") String id);
+
+    @GET("/classified_locations/cities/{City_id}")
+    Call<Ciudad> ciudad (@Path("City_id") String id);
 
     @GET("currencies")
     Call<Moneda[]> monedas();
