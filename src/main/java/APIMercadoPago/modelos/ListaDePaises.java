@@ -21,6 +21,12 @@ public class ListaDePaises {
         else throw new Exception("No existe el pais buscado");
     }
 
+    public void mostrarNombres (){
+        for(Pais pais: paises){
+            System.out.println(pais.name);
+        }
+    }
+
     public List<Pais> paises() {
         return paises;
     }

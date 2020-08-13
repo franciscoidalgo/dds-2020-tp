@@ -1,10 +1,12 @@
 package APIMercadoPago.modelos;
 
+import java.util.List;
+
 public class ProvinciaExtendida extends Provincia{
     public PaisReducido country;
     public GeoInformation geo_information;
     public String time_zone;
-    public Ciudad[] cities;
+    public List<Ciudad> cities;
 
 
 

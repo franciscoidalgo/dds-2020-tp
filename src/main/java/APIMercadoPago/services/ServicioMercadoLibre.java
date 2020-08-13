@@ -51,6 +51,14 @@ public class ServicioMercadoLibre {
         return paisDeId(idDelPais);
     }
 
+    public ListaDeProvincias listaDeProvincias  (String idDeSuPais) throws IOException {
+        return new ListaDeProvincias(this.paisDeId(idDeSuPais).states);
+    }
+
+    public ListaDeProvincias listaDeProvincias (PaisExtendido pais) throws IOException {
+        return this.listaDeProvincias(pais.id);
+    }
+
     public ProvinciaExtendida provinciaDeId (String cualId) throws IOException {
         MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
         Call<ProvinciaExtendida> requestProvinciaDeId = mercadoLibreService.provincia(cualId);
