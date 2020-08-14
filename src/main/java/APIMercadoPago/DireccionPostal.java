@@ -1,5 +1,7 @@
 package APIMercadoPago;
 
+import APIMercadoPago.modelos.CodigoPostalAPI;
+
 import java.util.Optional;
 
 public class DireccionPostal {
@@ -7,7 +9,5 @@ public class DireccionPostal {
     private Integer altura;
     private Optional<Integer> piso;
     private Optional<String> depto;
-    private String ciudad;
-    private String provincia;
-    private String pais;
+    private CodigoPostalAPI codigoPostalAPI;
 }
