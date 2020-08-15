@@ -6,8 +6,6 @@ public class TareaMain {
 
         Tarea tarea = new Tarea();
 
-        tarea.planificarTareaValidacion (0, 5000);
-
     }
 
 }

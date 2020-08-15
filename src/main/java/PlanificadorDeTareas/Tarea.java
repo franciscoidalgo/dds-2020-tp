@@ -5,16 +5,55 @@
 
 package PlanificadorDeTareas;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.Timer;
 
 public class Tarea {
 
-    Timer timer = new Timer();
-    TareaValidacion task = new TareaValidacion();
+    private Timer timer;
+    private TareaValidacion task;
+    private int delay;
+    private int period;
+    private String path = "src/main/java/PlanificadorDeTareas/config.txt";
 
-    public void planificarTareaValidacion (int delay, int period) {
+    public Tarea (){
+        timer = new Timer();
+        task = new TareaValidacion();
+        this.planificarTareaValidacion();
+    }
 
+    private void planificarTareaValidacion () {
+
+        actualizarConfiguracion();
         timer.schedule(task, delay, period);
 
     }
+
+    private void actualizarConfiguracion () {
+        try {
+            File configFile = new File (path);
+            Scanner miScanner = new Scanner (configFile);
+
+            while (miScanner.hasNextLine()){
+                String data = miScanner.nextLine();
+                int indexOfTheNumber = data.indexOf("=") + 1;
+                String number = data.substring(indexOfTheNumber).trim();
+
+                if(data.contains("delay")){
+                    delay = Integer.parseInt(number);
+                }
+                if (data.contains("period")){
+                    period = Integer.parseInt(number);
+                }
+            }
+            miScanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("No se encontro el archivo de configuraciones.");
+            e.printStackTrace();
+        }
+    }
+
 }

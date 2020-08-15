@@ -48,6 +48,8 @@ public class TestApi {
         CodigoPostalAPI informacionCodigoPostal = servicioMercadoLibre
                 .informacionCodigoPostal(servicioMercadoLibre.paisDeNombre(nombrePaisElegido).id, codigoPostal);
 
+        entradaScanner.close();
+
     }
 
 }

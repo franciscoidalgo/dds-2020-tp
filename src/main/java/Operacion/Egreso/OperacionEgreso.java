@@ -105,11 +105,12 @@ public class OperacionEgreso extends Operacion {
     private List<Criterio> getCriterios(){
         return this.creadoPor.getEntidadPertenece().getCriterios();
     }
+   /*
     public boolean validarOperacion(OperacionEgreso operacionEgreso)
     {
         return new ValidadorDeTransparencia(getCriterios()).validaEgreso(this);
     }
-
+*/
     private Mensaje generaMensaje(){
         getCriterios();
 
