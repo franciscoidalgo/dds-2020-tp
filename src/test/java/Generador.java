@@ -1,3 +1,4 @@
+/*
 import Entidad.CategorizacionEmpresa.Categoria;
 import Entidad.CategorizacionEmpresa.Sector;
 import Entidad.CategorizacionOperacion.Criterio;
@@ -84,3 +85,4 @@ class Generador {
     }
 
 }
+*/

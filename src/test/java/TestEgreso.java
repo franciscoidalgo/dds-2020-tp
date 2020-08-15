@@ -1,3 +1,4 @@
+/*
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Egreso.Presupuesto;
 import org.junit.Assert;
@@ -33,6 +34,7 @@ public class TestEgreso {
         revisor1.darseDeAltaEn(unEgreso);
     }
 */
+/*
     @Test
     public void testCalculaMontoTotal_Con2Presupuestos1Detalle(){
         unEgreso.agregaPresupuesto(presupuesto1);
@@ -42,3 +44,4 @@ public class TestEgreso {
 
 
 }
+*/
