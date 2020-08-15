@@ -1,11 +1,9 @@
 package Usuario;
 
-import Entidad.CategorizacionOperacion.Criterio;
 import Entidad.Entidad;
 import Entidad.EntidadJuridica;
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Ingreso.OperacionIngreso;
-import Operacion.Operacion;
 
 
 public class Usuario {
@@ -89,21 +87,16 @@ public class Usuario {
         unEgreso.sacaRevisor(this);
     }
 
-    public void daleJerarquiaA(Criterio unCriterioPadre,Criterio unCriterioHijo) throws Exception {
-
-        if (this.rol.criterioCredenciales()) {
-            unCriterioPadre.setCriterioHijo(unCriterioHijo);
-        }else {
-            throw new Exception("No tiene permiso para hacer esto");
-        }
+    public void entidadSeleccionada(Entidad seleccionada){
+        this.entidadSeleccionada = seleccionada;
     }
-
+    /*
     public void entidadSeleccionada(Entidad seleccionada) throws Exception {
         if (this.entidadPertenece == seleccionada || this.entidadPertenece.tieneEntidadBase(seleccionada)) {
             this.entidadSeleccionada = seleccionada;
         } else {
             throw new Exception("No puede seleccionar esta entidad");
         }
-    }
-
+    }*/
+    //Los if y el throw van en el test
 }

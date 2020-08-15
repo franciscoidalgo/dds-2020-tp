@@ -1,19 +1,13 @@
 package Operacion.Egreso;
 
-public class MedioDePago {
-    private long id;
+public abstract class MedioDePago {
+    protected long id;
 
     //Getter Setter
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
-    //Constructor
-    public MedioDePago(){
-        this.id = 1; //Autogenerado
-    }
-
     //Funcionalidad
-    public void actualizarTiposDePago(){
-
-    }
+    protected abstract void actualizarTiposDePago();
+    //Ni idea que hace este metodo
 }

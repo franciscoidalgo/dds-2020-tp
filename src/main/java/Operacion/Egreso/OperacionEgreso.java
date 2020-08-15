@@ -2,6 +2,7 @@
 package Operacion.Egreso;
 
 
+import Entidad.CategorizacionOperacion.CategoriaOperacion;
 import Entidad.CategorizacionOperacion.Criterio;
 import Operacion.Operacion;
 import PlanificadorDeTareas.Tarea;
@@ -24,25 +25,30 @@ public class OperacionEgreso extends Operacion {
     private List<Usuario> revisores;
     private Integer cantMinPresupuestos;
     private List<Presupuesto> presupuestos;
-    private Criterio criterio;
+    private List<CategoriaOperacion> categorias;
     private Usuario creadoPor;
+    private double montoTotal;
 
     //Constructor
     public OperacionEgreso(Proveedor proveedor, Comprobante comprobante, MedioDePago medioDePago,
-                           Detalle detalle, Integer cantMinPresupuestos, Criterio criterio, Usuario creadoPor) {
+                           Detalle detalle, Integer cantMinPresupuestos, List<CategoriaOperacion> categorias,
+                           Usuario creadoPor) {
         this.proveedor = proveedor;
         this.comprobante = comprobante;
         this.medioDePago = medioDePago;
         this.detalle = detalle;
-        //this.revisores = new List<>();
+        this.revisores = new ArrayList<>();
         this.cantMinPresupuestos = cantMinPresupuestos;
-        //this.presupuestos = new List<>();
-        this.criterio = criterio;
+        this.presupuestos = new ArrayList<>();
+        this.categorias = categorias;
 
         this.creadoPor = creadoPor;
         this.fecha = LocalTime.now();
         this.nroOperacion = 1; //Autogenerado
+
+        this.montoTotal = montoTotal();
     }
+    //Este es el proceso de registro de la operacion
 
     //Getter Setter
     public Proveedor getProveedor() { return proveedor; }
@@ -66,20 +72,12 @@ public class OperacionEgreso extends Operacion {
     public List<Presupuesto> getPresupuestos() { return presupuestos; }
     public void setPresupuestos(ArrayList<Presupuesto> presupuestos) { this.presupuestos = presupuestos; }
 
-    public Criterio getCriterio() { return criterio; }
-    public void setCriterio(Criterio criterio) { this.criterio = criterio; }
-
-    //Metodos
-    public boolean validarOperacion(OperacionEgreso operacionEgreso)
-    {
-        return new ValidadorDeTransparencia().validaEgreso(this);
-    }
-
+    public List<CategoriaOperacion> getCategoria() { return categorias; }
+    public void setCategoriaOperacion(List<CategoriaOperacion> categorias) { this.categorias = categorias; }
 
     public void agregaPresupuesto(Presupuesto unPresupuesto){
         presupuestos.add(unPresupuesto);
     }
-
     public void sacaPresupuesto(Presupuesto unPresupuesto){
         presupuestos.remove(unPresupuesto);
     }
@@ -87,30 +85,35 @@ public class OperacionEgreso extends Operacion {
     public void agregateRevisor(Usuario unRevisor){
         this.revisores.add(unRevisor);
     }
-
     public void sacaRevisor(Usuario unRevisor){
         this.revisores.remove(unRevisor);
     }
 
+    //Metodos
+    public double getMontoTotal() { return montoTotal; }
     @Override
-    public void registrate() {
-        //Todo:Falta esta parte de persistencia.
-        super.registrate();
-    }
-
-    @Override
-    public double montoTotal() {
+    protected double montoTotal() {
         return this.subtotalPresupuestos()+this.detalle.calcularSubtotal();
     }
 
     private double subtotalPresupuestos(){
-        //(aBoolean, aBoolean2) -> Boolean.logicalAnd(aBoolean,aBoolean2)
         return this.presupuestos.stream()
                 .mapToDouble(presupuesto -> presupuesto.mostrarCosto())
                 .sum();
     }
 
+    private List<Criterio> getCriterios(){
+        return this.creadoPor.getEntidadPertenece().getCriterios();
+    }
+    public boolean validarOperacion(OperacionEgreso operacionEgreso)
+    {
+        return new ValidadorDeTransparencia(getCriterios()).validaEgreso(this);
+    }
+
     private Mensaje generaMensaje(){
+        getCriterios();
+
+
         //Todo: agregar en el 2do parametro cuales validaciones pasaron y cuales no
         return new Mensaje("Operacion Egreso #"+Long.toString(this.nroOperacion),"Paso validaciones");
     }
@@ -119,6 +122,4 @@ public class OperacionEgreso extends Operacion {
                 .forEach(usuario ->
                             usuario.getBandejaDeMensajes().agregateMensaje(this.generaMensaje()) );
     }
-
-
 }

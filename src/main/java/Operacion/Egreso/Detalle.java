@@ -1,6 +1,5 @@
 package Operacion.Egreso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Detalle {
@@ -17,7 +16,6 @@ public class Detalle {
     }
 
     public double calcularSubtotal(){
-       return this.listaItems.isEmpty()? 0: this.listaItems.stream().mapToDouble(Item::getPrecio)
-                    .sum();
-        }
+       return this.listaItems.isEmpty()? 0: this.listaItems.stream().mapToDouble(Item::getPrecio).sum();
     }
+}

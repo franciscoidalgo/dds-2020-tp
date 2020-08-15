@@ -6,6 +6,7 @@ import Entidad.CategorizacionOperacion.Criterio;
 import Operacion.Operacion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class  EntidadJuridica implements Entidad {
     protected String razonSocial;
@@ -14,9 +15,9 @@ public abstract class  EntidadJuridica implements Entidad {
     protected String descripcion;
     protected String direccionPostal;
     protected long codIGJ;
-    protected ArrayList<EntidadBase> entidadesBases;
-    protected ArrayList<Operacion> operaciones;
-    protected ArrayList<Criterio> criterios;
+    protected List<EntidadBase> entidadesBases;
+    protected List<Operacion> operaciones;
+    protected List<Criterio> criterios;
 
 
     public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, String direccionPostal, long codIGJ) {
@@ -34,7 +35,6 @@ public abstract class  EntidadJuridica implements Entidad {
     public String getRazonSocial() {
         return razonSocial;
     }
-
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
     }
@@ -42,7 +42,6 @@ public abstract class  EntidadJuridica implements Entidad {
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -50,7 +49,6 @@ public abstract class  EntidadJuridica implements Entidad {
     public long getCUIT() {
         return CUIT;
     }
-
     public void setCUIT(long CUIT) {
         this.CUIT = CUIT;
     }
@@ -58,7 +56,6 @@ public abstract class  EntidadJuridica implements Entidad {
     public String getDescripcion() {
         return descripcion;
     }
-
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -66,7 +63,6 @@ public abstract class  EntidadJuridica implements Entidad {
     public String getDireccionPostal() {
         return direccionPostal;
     }
-
     public void setDireccionPostal(String direccionPostal) {
         this.direccionPostal = direccionPostal;
     }
@@ -74,31 +70,27 @@ public abstract class  EntidadJuridica implements Entidad {
     public long getCodIGJ() {
         return codIGJ;
     }
-
     public void setCodIGJ(long codIGJ) {
         this.codIGJ = codIGJ;
     }
 
-    public ArrayList<EntidadBase> getEntidadesBases() {
+    public List<EntidadBase> getEntidadesBases() {
         return entidadesBases;
     }
-
     public void setEntidadesBases(ArrayList<EntidadBase> entidadesBases) {
         this.entidadesBases = entidadesBases;
     }
 
-    public ArrayList<Operacion> getOperaciones() {
+    public List<Operacion> getOperaciones() {
         return operaciones;
     }
-
     public void setOperaciones(ArrayList<Operacion> operaciones) {
         this.operaciones = operaciones;
     }
 
-    public ArrayList<Criterio> getCriterios() {
+    public List<Criterio> getCriterios() {
         return criterios;
     }
-
     public void setCriterios(ArrayList<Criterio> criterios) {
         this.criterios = criterios;
     }
