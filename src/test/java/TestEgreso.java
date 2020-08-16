@@ -1,4 +1,4 @@
-/*
+import Operacion.Egreso.Detalle;
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Egreso.Presupuesto;
 import org.junit.Assert;
@@ -26,22 +26,21 @@ public class TestEgreso {
     }
 
 
-  /*
     @Test
-    public void testEgresoTieneVariosRevisores(){
-        // Todo: Terminar test con validaciones!
-        Usuario revisor1 = new Usuario("Pepe","",new RolEstandar(),new Empresa(50,50000,null));
-        revisor1.darseDeAltaEn(unEgreso);
-    }
-*/
-/*
-    @Test
-    public void testCalculaMontoTotal_Con2Presupuestos1Detalle(){
+    public void testCalculaMontoTotal_Con2Presupuestos1Detalle() throws Exception {
         unEgreso.agregaPresupuesto(presupuesto1);
         unEgreso.agregaPresupuesto(presupuesto2);
-        Assert.assertEquals(unEgreso.montoTotal(),3*presupuesto1.mostrarCosto(),0);
+        Assert.assertEquals(unEgreso.montoTotal(),16000,0);
+    }
+
+    @Test
+    public void testCargaPresupuesto_NoSePuedeCargarPresupuestoSinHaberCargadoEgreso() throws Exception {
+        unEgreso.setDetalle(new Detalle());
+        try {
+            unEgreso.agregaPresupuesto(presupuesto1);
+            Assert.fail();
+        }catch (Exception ignored){}
     }
 
 
 }
-*/

@@ -1,13 +1,16 @@
 package Operacion.Egreso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Detalle {
+
+
     private List<Item> listaItems;
 
     //Constructor
-    public Detalle (List<Item> listaItems){
-        this.listaItems = listaItems;
+    public Detalle (){
+        this.listaItems = new ArrayList<>();
     }
 
     //Funcionalidad
@@ -18,4 +21,8 @@ public class Detalle {
     public double calcularSubtotal(){
        return this.listaItems.isEmpty()? 0: this.listaItems.stream().mapToDouble(Item::getPrecio).sum();
     }
+    public List<Item> getListaItems() {
+        return listaItems;
+    }
+
 }

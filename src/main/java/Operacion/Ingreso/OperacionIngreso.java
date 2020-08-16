@@ -1,27 +1,22 @@
 package Operacion.Ingreso;
 
 
-import Operacion.Egreso.Detalle;
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Operacion;
 import Usuario.Usuario;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OperacionIngreso extends Operacion {
 
-    private long montoTotal;
+    private double montoTotal;
     private String descripcion;
     private List<OperacionEgreso> egresos;
 
     //Constructor
-    public OperacionIngreso(long montoTotal, String descripcion, Usuario creadoPor){
-        this.nroOperacion = 1; //Autogenerado
-        this.fecha = LocalTime.now();
-        this.creadoPor = creadoPor;
-
+    public OperacionIngreso(double montoTotal, String descripcion, Usuario creadoPor){
+        super(creadoPor);
         this.montoTotal = montoTotal;
         this.descripcion = descripcion;
         this.egresos = new ArrayList<>();
@@ -38,17 +33,16 @@ public class OperacionIngreso extends Operacion {
     //Funcionalidad
     public void agregateEgreso(OperacionEgreso operacionEgreso){ this.egresos.add(operacionEgreso); }
 
-    public float saldoOperacion(){
-        float operacionesEgreso = 0;
-        for(OperacionEgreso e : egresos){
-            Detalle d = e.getDetalle();
-            operacionesEgreso += d.calcularSubtotal();
-        }
-        return this.montoTotal - operacionesEgreso;
+    public double saldoOperacion(){
+        return this.montoTotal - this.montoTotalEgresos();
     }
 
     @Override
-    protected double montoTotal() {
+    public double montoTotal() {
         return montoTotal;
+    }
+
+    private double montoTotalEgresos(){
+        return this.egresos.stream().mapToDouble(OperacionEgreso::montoTotal).sum();
     }
 }

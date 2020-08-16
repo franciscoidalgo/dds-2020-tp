@@ -22,13 +22,13 @@ public class Criterio {
     }
 
     //Getter and Setter
-    public String getNombre() { return nombre; }
+    public String getNombre() { return this.nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
     public Criterio getCriterioHijo() { return criterioHijo; }
     public void setCriterioHijo(Criterio criterioHijo) { this.criterioHijo = criterioHijo; }
 
-    public List<CategoriaOperacion> getCategorias() { return categorias; }
+    public List<CategoriaOperacion> getCategorias() { return this.categorias; }
     public void setCategorias(List<CategoriaOperacion> categorias) { this.categorias = categorias; }
 
     //Funcionalidad

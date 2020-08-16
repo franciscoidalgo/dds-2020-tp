@@ -7,14 +7,18 @@ import java.util.List;
 public class Presupuesto {
     private Detalle detalle;
     private List<CategoriaOperacion> categorias;
-    private double montoTotal;
+    private Proveedor proveedor;
 
-    public Presupuesto(Detalle detalle, List<CategoriaOperacion> categorias) {
+
+
+    private Comprobante comprobante;
+    public Presupuesto(Detalle detalle, List<CategoriaOperacion> categorias, Proveedor proveedor) {
         this.detalle = detalle;
         this.categorias = categorias;
-
-        this.montoTotal = montoTotal();
+        this.proveedor = proveedor;
+        this.comprobante = null;
     }
+
 
     //Getter and Setter
     public Detalle getDetalle() { return detalle; }
@@ -23,12 +27,24 @@ public class Presupuesto {
     public List<CategoriaOperacion> getCriterio() { return categorias; }
     public void setCategoriaOperacion(List<CategoriaOperacion> categorias) { this.categorias = categorias; }
 
-    public double getMontoTotal() { return montoTotal; }
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public Comprobante getComprobante() {
+        return comprobante;
+    }
+
+    public void setComprobante(Comprobante comprobante) {
+        this.comprobante = comprobante;
+    }
+    //Funcionalidad
     public double montoTotal() {
         return this.detalle.calcularSubtotal();
     }
-
-    //Funcionalidad
-    public double mostrarCosto(){ return this.detalle.calcularSubtotal(); }
 
 }

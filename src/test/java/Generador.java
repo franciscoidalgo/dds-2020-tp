@@ -1,15 +1,13 @@
-/*
 import Entidad.CategorizacionEmpresa.Categoria;
 import Entidad.CategorizacionEmpresa.Sector;
+import Entidad.CategorizacionOperacion.CategoriaOperacion;
 import Entidad.CategorizacionOperacion.Criterio;
 import Entidad.Empresa;
 import Operacion.Egreso.*;
 import Operacion.Ingreso.OperacionIngreso;
-import Usuario.RolEstandar;
 import Usuario.RolAdministrador;
+import Usuario.RolEstandar;
 import Usuario.Usuario;
-
-import java.time.LocalTime;
 
 class Generador {
 
@@ -36,19 +34,24 @@ class Generador {
 
     OperacionEgreso generaEgreso(int cantMinimaPresupuesto){
 
-        Proveedor unProveedor = new Proveedor();
-        MedioDePago unMedio = new MedioDePago("MaestroCard","123451234","1235123512354");
+        Proveedor unProveedor = new Proveedor(null,null,1231694,12356464,null);
+        //MedioDePago unMedio = new MedioDePago(null);
         Detalle unDetalle = this.generaDetalle();
         Criterio unCriterio = new Criterio("Proyectito");
+        unCriterio.agregateCategoria(new CategoriaOperacion("Proyectazo"));
 
-        return new OperacionEgreso(1234567,LocalTime.now(),unProveedor,null,unMedio,unDetalle,cantMinimaPresupuesto,unCriterio);
+        return new OperacionEgreso(unProveedor,null,null,unDetalle,1,unCriterio.getCategorias(),null);
     }
 
-    OperacionEgreso generaEgresoConPresupuestos(int cantMinimaPresupuesto,int cantPresupuestos){
-
+    OperacionEgreso generaEgresoConPresupuestos(int cantMinimaPresupuesto,int cantPresupuestos) throws Exception {
+        Detalle unDetalle;
         OperacionEgreso unEgreso;
+
+        unDetalle = this.generaDetalle();
         unEgreso = this.generaEgreso(cantMinimaPresupuesto);
+        unEgreso.setDetalle(unDetalle);
         Presupuesto unPresupuesto = this.generaPresupuesto();
+
         for(int i = 0; i<cantMinimaPresupuesto;i++) unEgreso.agregaPresupuesto(unPresupuesto);
 
         return unEgreso;
@@ -57,13 +60,13 @@ class Generador {
     Presupuesto generaPresupuesto(){
        Detalle unDetallePresupuesto = new Generador().generaDetalle();
         Criterio unCriterio = new Criterio("Proyectito");
-       return new Presupuesto(unDetallePresupuesto,unCriterio);
+        unCriterio.agregateCategoria(new CategoriaOperacion("Super Proyectito"));
+       return new Presupuesto(unDetallePresupuesto,unCriterio.getCategorias(),null);
     }
 
     OperacionIngreso generaIngreso(long valorIngreso){
 
-        return new OperacionIngreso(valorIngreso,123456,LocalTime.now(),
-                "Inversion de dudosa procedencia");
+        return new OperacionIngreso(valorIngreso,"Inversion de dudosa procedencia",null);
     }
 
     Usuario generaUsuarioEstandar(){
@@ -85,4 +88,3 @@ class Generador {
     }
 
 }
-*/

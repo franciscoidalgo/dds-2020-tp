@@ -1,4 +1,3 @@
-/*
 import Entidad.CategorizacionOperacion.Criterio;
 import Entidad.Empresa;
 import org.junit.Assert;
@@ -37,5 +36,3 @@ public class TestEntidades {
 
 
 }
-
- */

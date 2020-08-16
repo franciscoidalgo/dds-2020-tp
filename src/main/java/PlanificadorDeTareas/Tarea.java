@@ -18,15 +18,16 @@ public class Tarea {
     private int period;
     private String path = "src/main/java/PlanificadorDeTareas/config.txt";
 
-    public Tarea (){
-        timer = new Timer();
-        task = new TareaValidacion();
+    public Tarea (TareaValidacion tarea){
+        this.timer = new Timer();
+        this.task = tarea;
+        actualizarConfiguracion();
         this.planificarTareaValidacion();
     }
 
     private void planificarTareaValidacion () {
 
-        actualizarConfiguracion();
+
         timer.schedule(task, delay, period);
 
     }

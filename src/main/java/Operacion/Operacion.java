@@ -5,21 +5,29 @@ import Usuario.Usuario;
 import java.time.LocalTime;
 public abstract class Operacion {
 
+
+
     protected long nroOperacion;
     protected LocalTime fecha;
     protected Usuario creadoPor;
 
+    public Operacion(Usuario creadoPor) {
+        this.creadoPor = creadoPor;
+        this.fecha = LocalTime.now();
+        this.nroOperacion = 1; //Autogenerado
+    }
+
     //Getter Setter
-    protected long getNroOperacion() { return nroOperacion; }
-    protected void setNroOperacion(long nroOperacion) { this.nroOperacion = nroOperacion; }
+    public long getNroOperacion() { return nroOperacion; }
+    public void setNroOperacion(long nroOperacion) { this.nroOperacion = nroOperacion; }
 
-    protected LocalTime getFecha() { return fecha; }
-    protected void setFecha(LocalTime fecha) { this.fecha = fecha; }
+    public LocalTime getFecha() { return fecha; }
+    public void setFecha(LocalTime fecha) { this.fecha = fecha; }
 
-    protected Usuario getCreadoPor() {
+    public Usuario getCreadoPor() {
         return creadoPor;
     }
-    protected void setCreadoPor(Usuario creadoPor) {
+    public void setCreadoPor(Usuario creadoPor) {
         this.creadoPor = creadoPor;
     }
 

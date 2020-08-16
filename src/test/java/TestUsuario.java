@@ -1,4 +1,3 @@
-/*
 import Entidad.CategorizacionOperacion.Criterio;
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Ingreso.OperacionIngreso;
@@ -37,12 +36,29 @@ public class TestUsuario {
 
         }
     @Test
-    public void testUsuarioRecibeMensaje_CuandoSeDaDeAltaEnOperacion(){
-            unEstandar.realizaOperacion(unEgreso);
-            unEstandar.darseDeAltaEn(unEgreso);
-            unEgreso.notificaRevisores();
+    public void testRevisor_EstandarYAdminPuedeDarseDeAlta(){
+        unEstandar.getEntidadPertenece().realizaOperacion(unEgreso);
+        unEstandar.darseDeAltaEn(unEgreso);
+        unAdmin.darseDeAltaEn(unEgreso);
 
-        Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),1);
+        Assert.assertEquals(unEgreso.getRevisores().size(),2);
+    }
+    @Test
+    public void testUsuario_EsElReceptorMensaje(){
+        unEstandar.getEntidadPertenece().realizaOperacion(unEgreso);
+        unEstandar.darseDeAltaEn(unEgreso);
+
+        Assert.assertEquals(unEgreso.getRevisores().get(0),unEstandar);
+    }
+
+    @Test
+    public void testUsuarioRecibeMensaje_CuandoSeDaDeAltaEnOperacion() throws InterruptedException {
+            unEstandar.getEntidadPertenece().realizaOperacion(unEgreso);
+            unEstandar.darseDeAltaEn(unEgreso);
+            unEgreso.validaOperacion();
+            Thread.sleep(5000);
+
+          Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),1);
     }
 
     @Test
@@ -56,7 +72,7 @@ public class TestUsuario {
     public void testUsuarioEstandar_NoPuedeModificarCriterio(){
 
             try {
-                unEstandar.daleJerarquiA(unCriterio, unCriterioHijo);
+                unEstandar.getRol().daleJerarquiaA(unCriterio, unCriterioHijo);
                 Assert.fail("No tiene permiso para hacer esto");
             }catch (Exception ignored){
 
@@ -73,11 +89,10 @@ public class TestUsuario {
             unCriterio = unEstandar.getEntidadPertenece().getCriterios().get(0);
             unCriterioHijo = unEstandar.getEntidadPertenece().getCriterios().get(1);
 
-            unAdmin.daleJerarquiA(unCriterio, unCriterioHijo);
+            unAdmin.getRol().daleJerarquiaA(unCriterio, unCriterioHijo);
             Assert.assertEquals(unCriterio.getCriterioHijo(),unCriterioHijo);
         }catch (Exception ignored){
         }
     }
 
 }
-*/
