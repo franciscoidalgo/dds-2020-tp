@@ -21,25 +21,25 @@ public class ValidarCantidadPresupuesto implements CriterioValidacion {
 
     @Override
     public String resultado(OperacionEgreso unEgreso) {
-        if(this.validaEgreso(unEgreso)){
+        if (this.validaEgreso(unEgreso)) {
             return "Cantidad Presupuesto: Valida";
-        }else{
+        } else {
             return "Cantidad Presupuesto: Invalida";
         }
 
     }
 
 
-    private void actualizarConfiguracion () {
+    private void actualizarConfiguracion() {
         try {
-            File configFile = new File ("src/main/java/PlanificadorDeTareas/config.txt");
-            Scanner miScanner = new Scanner (configFile);
-            while (miScanner.hasNextLine()){
+            File configFile = new File("src/main/java/PlanificadorDeTareas/config.txt");
+            Scanner miScanner = new Scanner(configFile);
+            while (miScanner.hasNextLine()) {
                 String data = miScanner.nextLine();
                 int indexOfTheNumber = data.indexOf("=") + 1;
                 String number = data.substring(indexOfTheNumber).trim();
 
-                if(data.contains("cantPresupuestos")){
+                if (data.contains("cantPresupuestos")) {
                     limitePresupuestos = Integer.parseInt(number);
                 }
             }
@@ -50,8 +50,6 @@ public class ValidarCantidadPresupuesto implements CriterioValidacion {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

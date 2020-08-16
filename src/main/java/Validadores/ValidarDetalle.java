@@ -12,7 +12,7 @@ public class ValidarDetalle implements CriterioValidacion {
     @Override
     public Boolean validaEgreso(OperacionEgreso unEgreso) {
         //La validacion de la cant de presupuesto lo hace otro validador.
-    return this.requierePresupuesto(unEgreso)?this.verificaDetalleEgresoConAlgunPresupuesto(unEgreso):true;
+        return this.requierePresupuesto(unEgreso) ? this.verificaDetalleEgresoConAlgunPresupuesto(unEgreso) : true;
     }
 
 
@@ -40,23 +40,23 @@ public class ValidarDetalle implements CriterioValidacion {
     }
 
 
-    private Boolean verificaDetalleEgresoConAlgunPresupuesto(OperacionEgreso unEgreso){
-        return  unEgreso.getPresupuestos().stream().
-                anyMatch(p -> this.coincidenDetalles(unEgreso.getDetalle(),p.getDetalle()));
+    private Boolean verificaDetalleEgresoConAlgunPresupuesto(OperacionEgreso unEgreso) {
+        return unEgreso.getPresupuestos().stream().
+                anyMatch(p -> this.coincidenDetalles(unEgreso.getDetalle(), p.getDetalle()));
     }
 
-    private Boolean coincidenDetalles(Detalle unDetalle, Detalle otroDetalle){
+    private Boolean coincidenDetalles(Detalle unDetalle, Detalle otroDetalle) {
         return unDetalle.getListaItems().stream().
-                map(item -> this.perteneceItemADetalle(item,otroDetalle)).
+                map(item -> this.perteneceItemADetalle(item, otroDetalle)).
                 reduce(Boolean::logicalAnd).get();
     }
 
-    private Boolean perteneceItemADetalle(Item unItem, Detalle unDetalle){
-        return unDetalle.getListaItems().stream().anyMatch(item -> this.coincidenItems(unItem,item));
+    private Boolean perteneceItemADetalle(Item unItem, Detalle unDetalle) {
+        return unDetalle.getListaItems().stream().anyMatch(item -> this.coincidenItems(unItem, item));
     }
 
-    private Boolean coincidenItems(Item unItem, Item otroItem){
-        return unItem.getDescripcion().contentEquals(otroItem.getDescripcion())&& unItem.getPrecio()==otroItem.getPrecio();
+    private Boolean coincidenItems(Item unItem, Item otroItem) {
+        return unItem.getDescripcion().contentEquals(otroItem.getDescripcion()) && unItem.getPrecio() == otroItem.getPrecio();
     }
 
     @Override

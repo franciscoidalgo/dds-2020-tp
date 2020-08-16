@@ -63,7 +63,7 @@ public class TestValidaciones {
 
 
         /*Inicializo Egreso*/
-        unEgreso = new OperacionEgreso(pedro,null,null,null,3,null,null);
+        unEgreso = new OperacionEgreso(pedro,null,null,null,null,null);
         unEgreso.setDetalle(detalleEgreso);
         unEgreso.agregaPresupuesto(presupuesto1);
         unEgreso.agregaPresupuesto(presupuesto2);

@@ -40,7 +40,7 @@ class Generador {
         Criterio unCriterio = new Criterio("Proyectito");
         unCriterio.agregateCategoria(new CategoriaOperacion("Proyectazo"));
 
-        return new OperacionEgreso(unProveedor,null,null,unDetalle,1,unCriterio.getCategorias(),null);
+        return new OperacionEgreso(unProveedor,null,null,unDetalle,unCriterio.getCategorias(),null);
     }
 
     OperacionEgreso generaEgresoConPresupuestos(int cantMinimaPresupuesto,int cantPresupuestos) throws Exception {

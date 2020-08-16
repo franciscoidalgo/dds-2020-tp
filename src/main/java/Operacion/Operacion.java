@@ -3,8 +3,8 @@ package Operacion;
 import Usuario.Usuario;
 
 import java.time.LocalTime;
-public abstract class Operacion {
 
+public abstract class Operacion {
 
 
     protected long nroOperacion;
@@ -18,15 +18,26 @@ public abstract class Operacion {
     }
 
     //Getter Setter
-    public long getNroOperacion() { return nroOperacion; }
-    public void setNroOperacion(long nroOperacion) { this.nroOperacion = nroOperacion; }
+    public long getNroOperacion() {
+        return nroOperacion;
+    }
 
-    public LocalTime getFecha() { return fecha; }
-    public void setFecha(LocalTime fecha) { this.fecha = fecha; }
+    public void setNroOperacion(long nroOperacion) {
+        this.nroOperacion = nroOperacion;
+    }
+
+    public LocalTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalTime fecha) {
+        this.fecha = fecha;
+    }
 
     public Usuario getCreadoPor() {
         return creadoPor;
     }
+
     public void setCreadoPor(Usuario creadoPor) {
         this.creadoPor = creadoPor;
     }
