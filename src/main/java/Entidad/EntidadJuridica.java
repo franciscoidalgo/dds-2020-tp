@@ -113,13 +113,6 @@ public abstract class EntidadJuridica implements Entidad {
         this.criterios.add(new Criterio(unNombre));
     }
 
-    public List<CategoriaOperacion> mostraCategoriasAsociadas(){
-        List<CategoriaOperacion> listaCat= new ArrayList<>();
-        this.criterios.forEach(criterio -> listaCat.addAll(criterio.mostraTodasCategorias()));
-        return listaCat;
-
-    }
-
     public void creaCriterio(String unNombre, Criterio criterioPadre) {
         Criterio criterio = new Criterio(unNombre);
         this.criterios.add(criterio);

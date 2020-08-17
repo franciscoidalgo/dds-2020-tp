@@ -8,11 +8,40 @@ import Operacion.Ingreso.OperacionIngreso;
 import Usuario.RolAdministrador;
 import Usuario.RolEstandar;
 import Usuario.Usuario;
+import Validadores.ValidadorDeTransparencia;
+import Validadores.ValidarCantidadPresupuesto;
+import Validadores.ValidarCriterioSeleccion;
+import Validadores.ValidarDetalle;
 
 class Generador {
+    private static Generador instancia=null;
 
 
 
+    ValidadorDeTransparencia validadorDeTransparencia;
+    public Generador(){}
+
+    public static Generador instancia(){
+        if (instancia == null) {
+            instancia = new Generador();
+        }
+        return instancia;
+    }
+
+    public void inicializaValidadorTransparencia(){
+        ValidarCantidadPresupuesto criterioCantPresupuesto;
+        ValidarDetalle criterioDetalle;
+        ValidarCriterioSeleccion criterioSeleccion;
+        validadorDeTransparencia = ValidadorDeTransparencia.instancia();
+        if(validadorDeTransparencia.getCriteriosValidadores().isEmpty()) {
+            criterioCantPresupuesto = new ValidarCantidadPresupuesto();
+            criterioDetalle = new ValidarDetalle();
+            criterioSeleccion = new ValidarCriterioSeleccion();
+            validadorDeTransparencia.agregateCriterio(criterioCantPresupuesto);
+            validadorDeTransparencia.agregateCriterio(criterioDetalle);
+            validadorDeTransparencia.agregateCriterio(criterioSeleccion);
+        }
+    }
 
     Detalle generaDetalle(){
         Item item1;

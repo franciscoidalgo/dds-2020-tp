@@ -4,7 +4,7 @@ public class TareaMain {
 
     public static void main (String[] args) {
 
-        Tarea tarea = new Tarea();
+        Planificador tarea = new Planificador();
 
     }
 

@@ -7,22 +7,27 @@ import org.junit.Test;
 
 public class TestValidaciones {
 
-    OperacionEgreso unEgreso;
+   private OperacionEgreso unEgreso;
 
-    Presupuesto presupuesto1;
-    Presupuesto presupuesto2;
-    Presupuesto presupuesto3;
-    Detalle     detalleP1;
-    Detalle     detalleP2;
-    Detalle     detalleP3;
-    Detalle     detalleEgreso;
-    Proveedor   pedro;
-    Proveedor   pablo;
-    Proveedor   simon;
+    private Presupuesto presupuesto1;
+    private Presupuesto presupuesto2;
+    private Presupuesto presupuesto3;
+    private Detalle     detalleP1;
+    private Detalle     detalleP2;
+    private Detalle     detalleP3;
+    private Detalle     detalleEgreso;
+    private Proveedor   pedro;
+    private Proveedor   pablo;
+    private Proveedor   simon;
 
-    CriterioValidacion criterioValidacion;
-    ValidadorDeTransparencia validadorDeTransparencia;
 
+    private ValidarCantidadPresupuesto criterioCantPresupuesto;
+    private ValidarDetalle criterioDetalle;
+    private ValidarCriterioSeleccion criterioSeleccion;
+
+
+    private ValidadorDeTransparencia validadorDeTransparencia;
+    private Generador generador;
 
 
     @Before
@@ -71,7 +76,15 @@ public class TestValidaciones {
 
 
         /*Inicializo Validador de transparencia*/
-        validadorDeTransparencia = new ValidadorDeTransparencia();
+        generador = Generador.instancia();
+        generador.inicializaValidadorTransparencia();
+        validadorDeTransparencia = ValidadorDeTransparencia.instancia();
+        criterioCantPresupuesto = new ValidarCantidadPresupuesto();
+        criterioDetalle = new ValidarDetalle();
+        criterioSeleccion = new ValidarCriterioSeleccion();
+
+
+
     }
 
 
@@ -82,23 +95,20 @@ public class TestValidaciones {
 
     @Test
     public void testPasaValidacion_cantMinimaPresupuestaValido(){
-        criterioValidacion = new ValidarCantidadPresupuesto();
 
-        Assert.assertTrue(criterioValidacion.validaEgreso(unEgreso));
+        Assert.assertTrue(criterioCantPresupuesto.validaEgreso(unEgreso));
     }
 
     @Test
     public void testPasaValidacion_coincidenDetalles(){
-        criterioValidacion = new ValidarDetalle();
 
-        Assert.assertTrue(criterioValidacion.validaEgreso(unEgreso));
+        Assert.assertTrue(criterioDetalle.validaEgreso(unEgreso));
     }
 
     @Test
     public void testPasaValidacion_seleccionCorrectaDePresupuesto(){
-        criterioValidacion = new ValidarCriterioSeleccion();
 
-        Assert.assertTrue(criterioValidacion.validaEgreso(unEgreso));
+        Assert.assertTrue(criterioSeleccion.validaEgreso(unEgreso));
     }
 
     @Test

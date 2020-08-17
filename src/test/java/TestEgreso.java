@@ -13,16 +13,19 @@ public class TestEgreso {
     Presupuesto presupuesto1;
     Presupuesto presupuesto2;
 
+    Generador generador;
+
     @Before
     public void setUp() throws Exception {
+        generador = Generador.instancia();
          //Presupuesto1
-        presupuesto1 = new Generador().generaPresupuesto();
+        presupuesto1 = generador.generaPresupuesto();
 
         //Presupuesto2
-        presupuesto2 = new Generador().generaPresupuesto();
+        presupuesto2 = generador.generaPresupuesto();
 
         //Egreso ya viene con un detalle generado
-        unEgreso = new Generador().generaEgreso(0);
+        unEgreso = generador.generaEgreso(0);
     }
 
 

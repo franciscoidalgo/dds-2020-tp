@@ -129,9 +129,8 @@ public class OperacionEgreso extends Operacion {
 
     public void validaOperacion() {
         /*Ver esto*/
-        ValidadorDeTransparencia validadorDeTransparencia;
-        validadorDeTransparencia = new ValidadorDeTransparencia();
-        validadorDeTransparencia.realizaValidacion(this);
+        ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
+        validadorDeTransparencia.realizaValidacionAutomatica(this);
     }
 
 

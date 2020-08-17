@@ -2,7 +2,6 @@ package Entidad.CategorizacionOperacion;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Criterio {
     private String nombre;
@@ -56,21 +55,5 @@ public class Criterio {
         this.categorias.remove(categoriaOperacion);
     }
 
-    public List<CategoriaOperacion> mostraTodasCategorias() {
-
-
-
-            if(criterioHijo != null && !categorias.isEmpty()) {
-                List<CategoriaOperacion> listaBase;
-                List<CategoriaOperacion> listaHijo;
-                listaBase = this.categorias;
-                listaHijo = this.mostraTodasCategorias();
-                listaBase.addAll(listaHijo);
-                return listaBase.stream().collect(Collectors.toSet()).stream().//Saco repetidos
-                        filter(categoriaOperacion -> categoriaOperacion != null).//Saco null
-                        collect(Collectors.toList());
-            }
-            return  categorias;
-    }
 
 }

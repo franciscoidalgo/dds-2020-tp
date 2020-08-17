@@ -1,9 +1,7 @@
 package Validadores;
 
 import Operacion.Egreso.OperacionEgreso;
-import PlanificadorDeTareas.Tarea;
-import PlanificadorDeTareas.TareaValidacion;
-import Usuario.Mensaje;
+import PlanificadorDeTareas.Planificador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +9,14 @@ import java.util.List;
 public class ValidadorDeTransparencia {
 
 
-    private List<CriterioValidacion> criteriosValidadores;
+    private List<CriterioValidacion> criteriosValidadores = new ArrayList<>();
+    private static ValidadorDeTransparencia instancia = null;
+    private NotificadorResultadoValidacion notificador = NotificadorResultadoValidacion.instancia();
+    private Planificador planificador = Planificador.instancia();
 
-    public ValidadorDeTransparencia() {
-        CriterioValidacion criterioCantidad = new ValidarCantidadPresupuesto();
-        CriterioValidacion criterioDetalle = new ValidarCriterioSeleccion();
-        CriterioValidacion criterioSeleccion = new ValidarDetalle();
 
-        criteriosValidadores = new ArrayList<>();
-        criteriosValidadores.add(criterioCantidad);
-        criteriosValidadores.add(criterioDetalle);
-        criteriosValidadores.add(criterioSeleccion);
-    }
 
+    /*Getters y Setters*/
     public List<CriterioValidacion> getCriteriosValidadores() {
         return criteriosValidadores;
     }
@@ -32,45 +25,36 @@ public class ValidadorDeTransparencia {
         this.criteriosValidadores = criteriosValidadores;
     }
 
+
+    /*Funcionales*/
+    public void agregateCriterio(CriterioValidacion unCriterio){
+        if(!criteriosValidadores.contains(unCriterio)) {
+            this.criteriosValidadores.add(unCriterio);
+        }
+    }
+
+    public void removeCriterio(CriterioValidacion unCriterio){
+        this.criteriosValidadores.remove(unCriterio);
+    }
+
+    public static ValidadorDeTransparencia instancia(){
+        if (instancia == null) {
+            instancia = new ValidadorDeTransparencia();
+        }
+        return instancia;
+    }
+
     public Boolean validaEgreso(OperacionEgreso unEgreso) {
         return this.criteriosValidadores.stream()
                 .map(unCriterio -> unCriterio.validaEgreso(unEgreso))
                 .reduce(Boolean::logicalAnd).get();
     }
 
-    public void realizaValidacion(OperacionEgreso unEgreso) {
-        Tarea planificador;
-        TareaValidacion task;
-        task = new TareaValidacion(unEgreso, this);
-        planificador = new Tarea(task);
+    public void realizaValidacionAutomatica(OperacionEgreso unEgreso) {
+        planificador.planificaTareaValidacion(unEgreso);
     }
-
     public void notificaResultados(OperacionEgreso unEgreso) {
-        unEgreso.notificaRevisores(this.generaMensaje(unEgreso));
-    }
-
-    private Mensaje generaMensaje(OperacionEgreso unEgreso) {
-
-        return new Mensaje(this.asuntoMensaje(unEgreso), this.cuerpoMensaje(unEgreso));
-    }
-
-    private String detalleResultado(OperacionEgreso unEgreso) {
-        return this.getCriteriosValidadores().stream().
-                map(criterioValidacion -> criterioValidacion.resultado(unEgreso))
-                .reduce((s, s2) -> s + '\n' + s2).get();
-
-    }
-
-    private String tituloResultado(OperacionEgreso unEgreso) {
-        return this.validaEgreso(unEgreso) ? "Operacion Valida" : "Operacion invalida";
-    }
-
-    private String cuerpoMensaje(OperacionEgreso unEgreso) {
-        return this.tituloResultado(unEgreso) + "\n En detalle: \n" + this.detalleResultado(unEgreso);
-    }
-
-    private String asuntoMensaje(OperacionEgreso unEgreso) {
-        return "Operacion Egreso #" + Long.toString(unEgreso.getNroOperacion());
+        notificador.enviaResultados(this,unEgreso);
     }
 
 

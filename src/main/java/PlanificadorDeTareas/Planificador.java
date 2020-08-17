@@ -5,33 +5,43 @@
 
 package PlanificadorDeTareas;
 
+import Operacion.Egreso.OperacionEgreso;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Timer;
 
-public class Tarea {
+public class Planificador {
 
     private Timer timer;
-    private TareaValidacion task;
     private int delay;
     private int period;
     private String path = "src/main/java/PlanificadorDeTareas/config.txt";
+    private static Planificador instancia = null;
 
-    public Tarea (TareaValidacion tarea){
+    public Planificador(){
         this.timer = new Timer();
-        this.task = tarea;
         actualizarConfiguracion();
-        this.planificarTareaValidacion();
-    }
-
-    private void planificarTareaValidacion () {
-
-
-        timer.schedule(task, delay, period);
 
     }
 
+    public static Planificador instancia() {
+        if(instancia == null){
+            instancia = new Planificador();
+        }
+        return instancia;
+    }
+
+    public void planificaTareaValidacion (OperacionEgreso unEgreso) {
+
+        timer.schedule(this.generaTareaValidacion(unEgreso), delay, period);
+
+    }
+
+    private TareaValidacion generaTareaValidacion(OperacionEgreso unEgreso){
+        return new TareaValidacion(unEgreso);
+    }
     private void actualizarConfiguracion () {
         try {
             File configFile = new File (path);
