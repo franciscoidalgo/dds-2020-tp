@@ -1,6 +1,13 @@
 package APIMercadoPago.modelos;
 
-public class Identificador {
+import DireccionPostal.Estandarizable;
+
+public class Identificador implements Estandarizable {
     public String id;
     public String name;
+
+    @Override
+    public String mostraNombre() {
+        return this.name;
+    }
 }

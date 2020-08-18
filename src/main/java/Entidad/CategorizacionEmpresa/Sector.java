@@ -2,10 +2,10 @@ package Entidad.CategorizacionEmpresa;
 
 import java.util.ArrayList;
 
-public class Sector{
+public class Sector {
 
 
-    private String  nombre;
+    private String nombre;
     private String descripcion;
     private ArrayList<Categoria> categoria;
 
@@ -41,7 +41,7 @@ public class Sector{
         this.categoria = categoria;
     }
 
-    public  void  agregateCategoria(Categoria unaCategoria){
+    public void agregateCategoria(Categoria unaCategoria) {
         categoria.add(unaCategoria);
     }
 }

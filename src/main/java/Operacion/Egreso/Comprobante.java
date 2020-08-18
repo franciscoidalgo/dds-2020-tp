@@ -3,6 +3,15 @@ package Operacion.Egreso;
 public class Comprobante {
     private long nroComprobante;
     private ComprobanteDePago tipoComprobante;
+    private String path;
+
+    //Constructor
+    public Comprobante(long nroComprobante, ComprobanteDePago tipoComprobante, String path) {
+        this.nroComprobante = nroComprobante;
+        this.tipoComprobante = tipoComprobante;
+        this.path = path;
+    }
+
 
     //Getter Setter
     public long getNroComprobante() {
@@ -19,9 +28,11 @@ public class Comprobante {
         this.tipoComprobante = tipoComprobante;
     }
 
-    //Constructor
-    public Comprobante(long nroComprobante, ComprobanteDePago comprobanteDePago){
-        this.nroComprobante = nroComprobante;
-        this.tipoComprobante = comprobanteDePago;
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

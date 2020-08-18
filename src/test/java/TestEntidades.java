@@ -1,19 +1,21 @@
-/*
 import Entidad.CategorizacionOperacion.Criterio;
 import Entidad.Empresa;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class TestEntidades {
     Empresa empresa1;
 
     Criterio criterio;
+    Generador generador;
     @Before
 
-    public void setUp(){
-
-        empresa1 = new Generador().generaEmpresa();
+    public void setUp() throws IOException {
+        generador = Generador.instancia();;
+        empresa1 = generador.generaEmpresa();
         empresa1.creaCriterio("unCriterio");
         criterio = empresa1.getCriterios().get(0);
     }
@@ -35,7 +37,4 @@ public class TestEntidades {
         Assert.assertEquals(criterio.getCategorias().size(),3);
     }
 
-
 }
-
- */

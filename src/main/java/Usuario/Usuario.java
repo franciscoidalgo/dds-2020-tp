@@ -23,6 +23,7 @@ public class Usuario {
         this.entidadSeleccionada = entidadPertenece;
         this.bandejaDeMensajes = new BandejaMensaje();
     }
+
 //Getters-Setters
 
     public String getNombre() {
@@ -89,6 +90,10 @@ public class Usuario {
 
     public void entidadSeleccionada(Entidad seleccionada){
         this.entidadSeleccionada = seleccionada;
+    }
+
+    public void recibiMensaje(Mensaje unMensaje){
+        this.bandejaDeMensajes.agregateMensaje(unMensaje);
     }
     /*
     public void entidadSeleccionada(Entidad seleccionada) throws Exception {

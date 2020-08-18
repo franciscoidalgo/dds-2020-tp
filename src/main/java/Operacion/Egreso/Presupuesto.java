@@ -1,34 +1,34 @@
 package Operacion.Egreso;
 
-import Entidad.CategorizacionOperacion.CategoriaOperacion;
-
-import java.util.List;
-
 public class Presupuesto {
-    private Detalle detalle;
-    private List<CategoriaOperacion> categorias;
-    private double montoTotal;
 
-    public Presupuesto(Detalle detalle, List<CategoriaOperacion> categorias) {
+    private DetalleCompra detalle;
+
+    public Presupuesto(DetalleCompra detalle) {
         this.detalle = detalle;
-        this.categorias = categorias;
-
-        this.montoTotal = montoTotal();
     }
 
-    //Getter and Setter
-    public Detalle getDetalle() { return detalle; }
-    public void setDetalle(Detalle detalle) { this.detalle = detalle; }
+    //Getters y Setters
+    public DetalleCompra getDetalle() {
+        return detalle;
+    }
 
-    public List<CategoriaOperacion> getCriterio() { return categorias; }
-    public void setCategoriaOperacion(List<CategoriaOperacion> categorias) { this.categorias = categorias; }
-
-    public double getMontoTotal() { return montoTotal; }
-    public double montoTotal() {
-        return this.detalle.calcularSubtotal();
+    public void setDetalle(DetalleCompra detalle) {
+        this.detalle = detalle;
     }
 
     //Funcionalidad
-    public double mostrarCosto(){ return this.detalle.calcularSubtotal(); }
+    public double montoTotal() {
+        return this.detalle.montoTotal();
+    }
+
+    public Boolean coincidenSolicitud(OperacionEgreso unEgreso){
+        return this.getDetalle().coincidenSolicitud(unEgreso.getDetalleValidable());
+    }
+
+    public Boolean coincideProveedor(OperacionEgreso unEgreso){
+        return this.getDetalle().coincidenProveedores(unEgreso.getDetalleValidable());
+    }
+
 
 }

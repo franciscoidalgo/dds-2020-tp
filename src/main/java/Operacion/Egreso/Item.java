@@ -15,4 +15,9 @@ public class Item {
 
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public String getDescripcion() { return descripcion; }
+
+    //Funcionalidad
+    public Boolean coincidenItems(Item otroItem) {
+        return this.getDescripcion().contentEquals(otroItem.getDescripcion()) && this.getPrecio() == otroItem.getPrecio();
+    }
 }
