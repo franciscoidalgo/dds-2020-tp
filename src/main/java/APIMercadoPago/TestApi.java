@@ -10,12 +10,6 @@ public class TestApi {
         ServicioMercadoLibre servicioMercadoLibre = ServicioMercadoLibre.instancia();
 
         /*
-        //Prueba: conversion de dolares a pesos
-        System.out.println("Conversion de dolar a peso argentino");
-        ConversionDeMonedas conversionDeMonedas = servicioMercadoLibre.conversionDeMonedas("USD", "ARS");
-        System.out.println("Conversion: " + conversionDeMonedas.ratio +
-                "\nConversion de mercado pago: " + conversionDeMonedas.mercado_pago_ratio);
-
         //Prueba: imprimir descripciones de las monedas
         ListaDeMonedas listaDeMonedas = servicioMercadoLibre.listaDeMonedas();
         System.out.println("Lista de monedas: ");
@@ -23,10 +17,8 @@ public class TestApi {
             System.out.println(moneda.description);
         }
         */
-
-
-
         //Prueba: Informacion del pais, la provincia y la ciudad basandose en el codigo postal.
+        System.out.println("Lista de paises");
         servicioMercadoLibre.listaDePaises().mostrarNombres();
         System.out.println("Ingrese el nombre de su pais: ");
         Scanner entradaScanner = new Scanner(System.in);

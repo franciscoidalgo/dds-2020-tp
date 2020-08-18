@@ -25,7 +25,7 @@ public class ListaIdentificables  {
             Identificador paisBuscado = posiblePais.get();
             return paisBuscado.id;
         }
-        else throw new Exception("No existe el pais buscado");
+        else throw new Exception("No existe el elemento buscado");
     }
     public List<Identificador> getIdentificadores() {
         return identificadores;
