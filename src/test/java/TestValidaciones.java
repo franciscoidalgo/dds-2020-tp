@@ -33,9 +33,9 @@ public class TestValidaciones {
     @Before
     public void setUp() throws Exception {
         /* Inicializo Proveedores */
-        pedro = new Proveedor("Pedro","Pedro S.A",99999999,999999999,"av Pedro 1234");
-        pablo = new Proveedor("Pablo","Pablo Bros",88888888,888888888,"Pablo 9876");
-        simon = new Proveedor("Simon","Simon SRL",77777777,777777777,"Simon 4567");
+        pedro = new Proveedor("Pedro","Pedro S.A",99999999,999999999,null);
+        pablo = new Proveedor("Pablo","Pablo Bros",88888888,888888888,null);
+        simon = new Proveedor("Simon","Simon SRL",77777777,777777777,null);
 
         /* Inicializo Detalles*/
         solicitudP1 = new Solicitud();

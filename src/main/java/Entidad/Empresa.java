@@ -1,6 +1,7 @@
 package Entidad;
 
 
+import DireccionPostal.DireccionPostal;
 import Entidad.CategorizacionEmpresa.Categoria;
 import Entidad.CategorizacionEmpresa.Categorizable;
 import Entidad.CategorizacionEmpresa.Sector;
@@ -16,7 +17,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     //Constructor
 
-    public Empresa(String razonSocial, String nombre, long CUIT, String descripcion, String direccionPostal, long codIGJ, String actividad, Sector sector, int cantPersonal, int promVentasAnual) {
+    public Empresa(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ, String actividad, Sector sector, int cantPersonal, int promVentasAnual) {
         super(razonSocial, nombre, CUIT, descripcion, direccionPostal, codIGJ);
         this.actividad = actividad;
         this.sector = sector;

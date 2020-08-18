@@ -1,3 +1,6 @@
+import APIMercadoPago.services.ServicioMercadoLibre;
+import DireccionPostal.Direccion;
+import DireccionPostal.DireccionPostal;
 import Entidad.CategorizacionEmpresa.Categoria;
 import Entidad.CategorizacionEmpresa.Sector;
 import Entidad.CategorizacionOperacion.CategoriaOperacion;
@@ -8,10 +11,12 @@ import Operacion.Ingreso.OperacionIngreso;
 import Usuario.RolAdministrador;
 import Usuario.RolEstandar;
 import Usuario.Usuario;
-import Validadores.ValidadorDeTransparencia;
 import Validadores.CriterioValidacionCantidadPresupuesto;
-import Validadores.CriterioValidacionSeleccion;
 import Validadores.CriterioValidacionDetalle;
+import Validadores.CriterioValidacionSeleccion;
+import Validadores.ValidadorDeTransparencia;
+
+import java.io.IOException;
 
 class Generador {
     private static Generador instancia=null;
@@ -103,22 +108,28 @@ class Generador {
         return new OperacionIngreso(valorIngreso,"Inversion de dudosa procedencia",null);
     }
 
-    Usuario generaUsuarioEstandar(){
+    Usuario generaUsuarioEstandar() throws IOException {
         return new Usuario("User","U23R274ND4R",new RolEstandar(),this.generaEmpresa());
     }
 
-    Usuario generaUsuarioAdmin(){
+    Usuario generaUsuarioAdmin() throws IOException {
         return new Usuario("Admin","El4dm1n",new RolAdministrador(),this.generaEmpresa());
     }
 
-    Empresa generaEmpresa(){
+    Empresa generaEmpresa() throws IOException {
         Sector unSector =new Sector("comercio","Algo de comercio");
-
+        DireccionPostal dir = this.generaDireccion("Av.Siempre Empresa");
         unSector.agregateCategoria(new Categoria(132,321,"Categoria"));
 
         return new Empresa("unaEmpresa S.A","La empresa",302222221
-                ,"una simple empresa","Av.Siempre Empresa",1231231232
+                ,"una simple empresa",dir,1231231232
                 ,"Solo generamos empresas",unSector,5000,1000000);
+    }
+
+    DireccionPostal generaDireccion(String calle) throws IOException {
+        ServicioMercadoLibre servicioMercadoLibre = ServicioMercadoLibre.instancia();
+        Direccion direccionEstado = (Direccion) servicioMercadoLibre.generaDireccion("UY","UY-RO","TUxVQ0NBQjY1MmQ1");
+        return new DireccionPostal(calle,"","",direccionEstado);
     }
 
 }

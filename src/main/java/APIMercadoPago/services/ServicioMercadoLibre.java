@@ -1,13 +1,17 @@
 package APIMercadoPago.services;
 
 import APIMercadoPago.modelos.*;
+import DireccionPostal.Direccion;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import java.io.IOException;
 
-public class ServicioMercadoLibre {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ServicioMercadoLibre implements ServicioEstandarizacion {
 
     private static ServicioMercadoLibre instancia = null;
     private Retrofit retrofit;
@@ -86,7 +90,7 @@ public class ServicioMercadoLibre {
         return ciudadDeId;
 
     }
-
+    @Override
     public ListaDeMonedas listaDeMonedas () throws IOException {
         MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
         Call<Moneda[]> requestListaDeMonedas = mercadoLibreService.monedas();
@@ -117,4 +121,33 @@ public class ServicioMercadoLibre {
 
     }
 
+    @Override
+    public List<Pais> generaPaises() throws IOException {
+        List<Pais> paises= new ArrayList<Pais>();
+        MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
+        Call<PaisSimplificado[]> requestListaDePaises = mercadoLibreService.paises();
+        Response<PaisSimplificado[]> responseListaDePaises = requestListaDePaises.execute();
+        ListaIdentificables listaDePaises = new ListaIdentificables(responseListaDePaises.body());
+        listaDePaises.mostraId().forEach(s -> {
+            try {
+                Pais pais = this.generaPais(s);
+                paises.add(pais);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        return paises;
+    }
+
+    private Pais generaPais(String cualId) throws IOException {
+        MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
+        Call<Pais> requestPaisDeId = mercadoLibreService.pais(cualId);
+        Response<Pais> responsePaisDeId = requestPaisDeId.execute();
+        Pais paisDeNombre = responsePaisDeId.body();
+
+        return paisDeNombre;
+    }
+    public Direccion generaDireccion(String idPais, String idProv, String idCiudad)throws IOException{
+        return new Direccion(this.generaPais(idPais), this.ciudadDeId(idCiudad), this.provinciaDeId(idProv));
+    };
 }

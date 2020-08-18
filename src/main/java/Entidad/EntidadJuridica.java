@@ -1,6 +1,7 @@
 package Entidad;
 
 
+import DireccionPostal.DireccionPostal;
 import Entidad.CategorizacionOperacion.CategoriaOperacion;
 import Entidad.CategorizacionOperacion.Criterio;
 import Operacion.Operacion;
@@ -13,14 +14,14 @@ public abstract class EntidadJuridica implements Entidad {
     protected String nombre;
     protected long CUIT;
     protected String descripcion;
-    protected String direccionPostal;
+    protected DireccionPostal direccionPostal;
     protected long codIGJ;
     protected List<EntidadBase> entidadesBases;
     protected List<Operacion> operaciones;
     protected List<Criterio> criterios;
 
 
-    public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, String direccionPostal, long codIGJ) {
+    public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ) {
         this.razonSocial = razonSocial;
         this.nombre = nombre;
         this.CUIT = CUIT;
@@ -64,11 +65,11 @@ public abstract class EntidadJuridica implements Entidad {
         this.descripcion = descripcion;
     }
 
-    public String getDireccionPostal() {
+    public DireccionPostal getDireccionPostal() {
         return direccionPostal;
     }
 
-    public void setDireccionPostal(String direccionPostal) {
+    public void setDireccionPostal(DireccionPostal direccionPostal) {
         this.direccionPostal = direccionPostal;
     }
 
@@ -125,5 +126,9 @@ public abstract class EntidadJuridica implements Entidad {
 
     public boolean tieneEntidadBase(Entidad base) {
         return this.entidadesBases.contains(base);
+    }
+
+    public String mostraDireccion(){
+        return this.direccionPostal.mostraDireccion();
     }
 }

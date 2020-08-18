@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class TestEntidades {
     Empresa empresa1;
 
@@ -11,7 +13,7 @@ public class TestEntidades {
     Generador generador;
     @Before
 
-    public void setUp(){
+    public void setUp() throws IOException {
         generador = Generador.instancia();;
         empresa1 = generador.generaEmpresa();
         empresa1.creaCriterio("unCriterio");

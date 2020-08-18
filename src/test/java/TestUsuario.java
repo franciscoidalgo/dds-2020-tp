@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class TestUsuario {
 
         private Usuario unEstandar;
@@ -21,7 +23,7 @@ public class TestUsuario {
 
 
     @Before
-        public void setUp() {
+        public void setUp() throws IOException {
             generador = Generador.instancia();
             //Inicializo 2 tipos de usuarios genericos.
             unEstandar = generador.generaUsuarioEstandar();

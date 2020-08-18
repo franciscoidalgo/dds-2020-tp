@@ -3,8 +3,11 @@ package APIMercadoPago.modelos;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class ListaIdentificables {
+public class ListaIdentificables  {
+
+
 
     private List<Identificador> identificadores;
 
@@ -24,10 +27,16 @@ public class ListaIdentificables {
         }
         else throw new Exception("No existe el pais buscado");
     }
-
+    public List<Identificador> getIdentificadores() {
+        return identificadores;
+    }
     public void mostrarNombres (){
         for(Identificador pais: identificadores){
             System.out.println(pais.name);
         }
     }
+    public List<String> mostraId(){
+        return this.identificadores.stream().map(identificador -> identificador.id).collect(Collectors.toList());
+    }
+
 }
