@@ -1,20 +1,18 @@
 package Validadores;
 
 import Operacion.Egreso.OperacionEgreso;
-import Operacion.Egreso.Presupuesto;
-import Operacion.Egreso.Proveedor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
-public class ValidarCriterioSeleccion implements CriterioValidacion {
+public class CriterioValidacionDetalle implements CriterioValidacion {
     @Override
     public Boolean validaEgreso(OperacionEgreso unEgreso) {
-        return !this.requierePresupuesto(unEgreso) || this.buscaProveedoresMasBaratos(unEgreso).contains(unEgreso.getProveedor());
+        //La validacion de la cant de presupuesto lo hace otro validador.
+        return this.requierePresupuesto(unEgreso) ? this.verificaDetalleEgresoConAlgunPresupuesto(unEgreso) : true;
     }
+
 
     private Boolean requierePresupuesto(OperacionEgreso unEgreso) {
 
@@ -39,24 +37,20 @@ public class ValidarCriterioSeleccion implements CriterioValidacion {
         return false;
     }
 
-    private List<Proveedor> buscaProveedoresMasBaratos(OperacionEgreso unEgreso) {
-        return unEgreso.getPresupuestos().stream().
-                filter(p -> p.montoTotal() == this.menorPresupuestoSegun(unEgreso))
-                .map(Presupuesto::getProveedor).collect(Collectors.toList());
-    }
 
-    private double menorPresupuestoSegun(OperacionEgreso unEgreso) {
+    private Boolean verificaDetalleEgresoConAlgunPresupuesto(OperacionEgreso unEgreso) {
         return unEgreso.getPresupuestos().stream().
-                reduce((p, p2) -> p.montoTotal() <= p2.montoTotal() ? p : p2).get().montoTotal();
+                anyMatch(p -> p.coincidenSolicitud(unEgreso));
     }
 
     @Override
     public String resultado(OperacionEgreso unEgreso) {
         if (this.validaEgreso(unEgreso)) {
-            return "Seleccion Presupuesto: Valida";
+            return "Solicitud Coinciden Con Presupuesto: Valida";
         } else {
-            return "Seleccion Presupuesto: Invalida";
+            return "Solicitud Coinciden Con Presupuesto: Invalida";
         }
 
     }
+
 }

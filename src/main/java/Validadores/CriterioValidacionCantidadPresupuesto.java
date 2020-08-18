@@ -6,11 +6,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class ValidarCantidadPresupuesto implements CriterioValidacion {
+public class CriterioValidacionCantidadPresupuesto implements CriterioValidacion {
     private int limitePresupuestos;
 
 
-    public ValidarCantidadPresupuesto() {
+    public CriterioValidacionCantidadPresupuesto() {
         this.actualizarConfiguracion();
     }
 

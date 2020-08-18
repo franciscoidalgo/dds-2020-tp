@@ -2,7 +2,6 @@
 package Operacion.Egreso;
 
 
-import Entidad.CategorizacionOperacion.CategoriaOperacion;
 import Operacion.Operacion;
 import Usuario.Mensaje;
 import Usuario.Usuario;
@@ -13,46 +12,26 @@ import java.util.List;
 
 public class OperacionEgreso extends Operacion {
     //Atributos
-    private Proveedor proveedor;
-    private Comprobante comprobante;
+    private DetalleCompra detalle;
     private MedioDePago medioDePago;
-    private Detalle detalle;
     private List<Usuario> revisores;
     private List<Presupuesto> presupuestos;
-    private List<CategoriaOperacion> categorias;
+
     //Constructor
 
-    public OperacionEgreso(Proveedor proveedor, Comprobante comprobante, MedioDePago medioDePago,
-                           Detalle detalle, List<CategoriaOperacion> categorias,
+    public OperacionEgreso(MedioDePago medioDePago,
+                           DetalleCompra detalle,
                            Usuario creadoPor) {
         super(creadoPor);
-        this.proveedor = proveedor;
-        this.comprobante = comprobante;
         this.medioDePago = medioDePago;
         this.detalle = detalle;
         this.revisores = new ArrayList<>();
         this.presupuestos = new ArrayList<>();
-        this.categorias = categorias;
 
     }
     //Este es el proceso de registro de la operacion
 
     //Getter Setter
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public Comprobante getComprobantes() {
-        return comprobante;
-    }
-
-    public void setComprobantes(Comprobante comprobantes) {
-        this.comprobante = comprobantes;
-    }
 
     public MedioDePago getMedioDePago() {
         return medioDePago;
@@ -62,11 +41,11 @@ public class OperacionEgreso extends Operacion {
         this.medioDePago = medioDePago;
     }
 
-    public Detalle getDetalle() {
+    public DetalleCompra getDetalleValidable() {
         return detalle;
     }
 
-    public void setDetalle(Detalle detalle) {
+    public void setDetalleValidable(DetalleCompra detalle) {
         this.detalle = detalle;
     }
 
@@ -86,18 +65,10 @@ public class OperacionEgreso extends Operacion {
         this.presupuestos = presupuestos;
     }
 
-    public List<CategoriaOperacion> getCategoria() {
-        return categorias;
-    }
-
-    public void setCategoriaOperacion(List<CategoriaOperacion> categorias) {
-        this.categorias = categorias;
-    }
-
     /*Funcionales*/
     @Override
     public double montoTotal() {
-        return this.detalle.calcularSubtotal();
+        return this.detalle.montoTotal();
     }
 
     public void agregaPresupuesto(Presupuesto unPresupuesto) throws Exception {
@@ -135,6 +106,7 @@ public class OperacionEgreso extends Operacion {
 
 
     private Boolean puedeAgregarPresupuesto() {
-        return !this.detalle.getListaItems().isEmpty();
+        return this.detalle.solicitudTieneItems();
     }
+
 }

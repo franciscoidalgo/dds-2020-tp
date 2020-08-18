@@ -1,4 +1,4 @@
-import Operacion.Egreso.Detalle;
+import Operacion.Egreso.DetalleCompra;
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Egreso.Presupuesto;
 import org.junit.Assert;
@@ -38,7 +38,7 @@ public class TestEgreso {
 
     @Test
     public void testCargaPresupuesto_NoSePuedeCargarPresupuestoSinHaberCargadoEgreso() throws Exception {
-        unEgreso.setDetalle(new Detalle());
+        unEgreso.setDetalleValidable(new DetalleCompra(null,null));
         try {
             unEgreso.agregaPresupuesto(presupuesto1);
             Assert.fail();

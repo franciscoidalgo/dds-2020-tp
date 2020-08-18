@@ -12,18 +12,18 @@ public class TestValidaciones {
     private Presupuesto presupuesto1;
     private Presupuesto presupuesto2;
     private Presupuesto presupuesto3;
-    private Detalle     detalleP1;
-    private Detalle     detalleP2;
-    private Detalle     detalleP3;
-    private Detalle     detalleEgreso;
+    private Solicitud solicitudP1;
+    private Solicitud solicitudP2;
+    private Solicitud solicitudP3;
+    private Solicitud solicitudEgreso;
     private Proveedor   pedro;
     private Proveedor   pablo;
     private Proveedor   simon;
 
 
-    private ValidarCantidadPresupuesto criterioCantPresupuesto;
-    private ValidarDetalle criterioDetalle;
-    private ValidarCriterioSeleccion criterioSeleccion;
+    private CriterioValidacionCantidadPresupuesto criterioCantPresupuesto;
+    private CriterioValidacionDetalle criterioDetalle;
+    private CriterioValidacionSeleccion criterioSeleccion;
 
 
     private ValidadorDeTransparencia validadorDeTransparencia;
@@ -38,38 +38,38 @@ public class TestValidaciones {
         simon = new Proveedor("Simon","Simon SRL",77777777,777777777,"Simon 4567");
 
         /* Inicializo Detalles*/
-        detalleP1 = new Detalle();
-        detalleP2 = new Detalle();
-        detalleP3 = new Detalle();
-        detalleEgreso = new Detalle();
+        solicitudP1 = new Solicitud();
+        solicitudP2 = new Solicitud();
+        solicitudP3 = new Solicitud();
+        solicitudEgreso = new Solicitud();
 
 
-        detalleP1.agregaItem(new Item(100,"Hojas"));
-        detalleP1.agregaItem(new Item(200,"Lapiceras"));
-        detalleP1.agregaItem(new Item(300,"Carpetas"));
+        solicitudP1.agregaItem(new Item(100,"Hojas"));
+        solicitudP1.agregaItem(new Item(200,"Lapiceras"));
+        solicitudP1.agregaItem(new Item(300,"Carpetas"));
 
 
-        detalleP2.agregaItem(new Item(150,"Hojas"));
-        detalleP2.agregaItem(new Item(250,"Lapiceras"));
-        detalleP2.agregaItem(new Item(350,"Carpetas"));
+        solicitudP2.agregaItem(new Item(150,"Hojas"));
+        solicitudP2.agregaItem(new Item(250,"Lapiceras"));
+        solicitudP2.agregaItem(new Item(350,"Carpetas"));
 
-        detalleP3.agregaItem(new Item(500,"Hojas"));
-        detalleP3.agregaItem(new Item(600,"Lapiceras"));
-        detalleP3.agregaItem(new Item(700,"Carpetas"));
+        solicitudP3.agregaItem(new Item(500,"Hojas"));
+        solicitudP3.agregaItem(new Item(600,"Lapiceras"));
+        solicitudP3.agregaItem(new Item(700,"Carpetas"));
 
-        detalleEgreso.agregaItem(new Item(100,"Hojas"));
-        detalleEgreso.agregaItem(new Item(200,"Lapiceras"));
-        detalleEgreso.agregaItem(new Item(300,"Carpetas"));
+        solicitudEgreso.agregaItem(new Item(100,"Hojas"));
+        solicitudEgreso.agregaItem(new Item(200,"Lapiceras"));
+        solicitudEgreso.agregaItem(new Item(300,"Carpetas"));
 
         /*Inicializo Presupuestos*/
-        presupuesto1 = new Presupuesto(detalleP1,null,pedro);
-        presupuesto2 = new Presupuesto(detalleP2,null,pablo);
-        presupuesto3 = new Presupuesto(detalleP3,null,simon);
+        presupuesto1 = new Presupuesto(new DetalleCompra(solicitudP1,pedro));
+        presupuesto2 = new Presupuesto(new DetalleCompra(solicitudP2,pablo));
+        presupuesto3 = new Presupuesto(new DetalleCompra(solicitudP3,simon));
 
 
         /*Inicializo Egreso*/
-        unEgreso = new OperacionEgreso(pedro,null,null,null,null,null);
-        unEgreso.setDetalle(detalleEgreso);
+        unEgreso = new OperacionEgreso(null,null,null);
+        unEgreso.setDetalleValidable(new DetalleCompra(solicitudEgreso,pedro));
         unEgreso.agregaPresupuesto(presupuesto1);
         unEgreso.agregaPresupuesto(presupuesto2);
         unEgreso.agregaPresupuesto(presupuesto3);
@@ -79,9 +79,9 @@ public class TestValidaciones {
         generador = Generador.instancia();
         generador.inicializaValidadorTransparencia();
         validadorDeTransparencia = ValidadorDeTransparencia.instancia();
-        criterioCantPresupuesto = new ValidarCantidadPresupuesto();
-        criterioDetalle = new ValidarDetalle();
-        criterioSeleccion = new ValidarCriterioSeleccion();
+        criterioCantPresupuesto = new CriterioValidacionCantidadPresupuesto();
+        criterioDetalle = new CriterioValidacionDetalle();
+        criterioSeleccion = new CriterioValidacionSeleccion();
 
 
 
@@ -118,10 +118,10 @@ public class TestValidaciones {
 
     @Test
     public void testTransparencia_EgresoNoTieneProveedorDeMenorPresupuesto(){
-        unEgreso.setProveedor(pablo);
-        detalleEgreso.agregaItem(new Item(150,"Hojas"));
-        detalleEgreso.agregaItem(new Item(250,"Lapiceras"));
-        detalleEgreso.agregaItem(new Item(350,"Carpetas"));
+        unEgreso.getDetalleValidable().setProveedor(pablo);
+        solicitudEgreso.agregaItem(new Item(150,"Hojas"));
+        solicitudEgreso.agregaItem(new Item(250,"Lapiceras"));
+        solicitudEgreso.agregaItem(new Item(350,"Carpetas"));
 
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
@@ -129,7 +129,7 @@ public class TestValidaciones {
     @Test
     public void testTransparencia_EgresoNoCumpleConCantMinPresupuestos() throws Exception {
         Presupuesto presupuesto4;
-        presupuesto4 = new Presupuesto(detalleP3,null,pablo);
+        presupuesto4 = new Presupuesto(new DetalleCompra(solicitudP3,pablo));
         unEgreso.agregaPresupuesto(presupuesto4);
 
          Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
@@ -137,7 +137,7 @@ public class TestValidaciones {
 
     @Test
     public void testTransparencia_EgresoDebeEstarAsociadoAUnPresupuesto(){
-        detalleEgreso.agregaItem(new Item(600,"Carpetas"));
+        solicitudEgreso.agregaItem(new Item(600,"Carpetas"));
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
 

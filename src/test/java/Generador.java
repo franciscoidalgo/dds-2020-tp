@@ -9,9 +9,9 @@ import Usuario.RolAdministrador;
 import Usuario.RolEstandar;
 import Usuario.Usuario;
 import Validadores.ValidadorDeTransparencia;
-import Validadores.ValidarCantidadPresupuesto;
-import Validadores.ValidarCriterioSeleccion;
-import Validadores.ValidarDetalle;
+import Validadores.CriterioValidacionCantidadPresupuesto;
+import Validadores.CriterioValidacionSeleccion;
+import Validadores.CriterioValidacionDetalle;
 
 class Generador {
     private static Generador instancia=null;
@@ -29,21 +29,21 @@ class Generador {
     }
 
     public void inicializaValidadorTransparencia(){
-        ValidarCantidadPresupuesto criterioCantPresupuesto;
-        ValidarDetalle criterioDetalle;
-        ValidarCriterioSeleccion criterioSeleccion;
+        CriterioValidacionCantidadPresupuesto criterioCantPresupuesto;
+        CriterioValidacionDetalle criterioDetalle;
+        CriterioValidacionSeleccion criterioSeleccion;
         validadorDeTransparencia = ValidadorDeTransparencia.instancia();
         if(validadorDeTransparencia.getCriteriosValidadores().isEmpty()) {
-            criterioCantPresupuesto = new ValidarCantidadPresupuesto();
-            criterioDetalle = new ValidarDetalle();
-            criterioSeleccion = new ValidarCriterioSeleccion();
+            criterioCantPresupuesto = new CriterioValidacionCantidadPresupuesto();
+            criterioDetalle = new CriterioValidacionDetalle();
+            criterioSeleccion = new CriterioValidacionSeleccion();
             validadorDeTransparencia.agregateCriterio(criterioCantPresupuesto);
             validadorDeTransparencia.agregateCriterio(criterioDetalle);
             validadorDeTransparencia.agregateCriterio(criterioSeleccion);
         }
     }
 
-    Detalle generaDetalle(){
+    Solicitud generaSolicitud(){
         Item item1;
         Item item2;
         Item item3;
@@ -52,33 +52,36 @@ class Generador {
         item2 = new Item(1000,"pack de hojas A4");
         item3 = new Item(10000,"un item de curiosa procedencia");
 
-        Detalle unDetalle;
-        unDetalle=new Detalle();
-        unDetalle.agregaItem(item1);
-        unDetalle.agregaItem(item2);
-        unDetalle.agregaItem(item3);
+        Solicitud unSolicitud;
+        unSolicitud =new Solicitud();
+        unSolicitud.agregaItem(item1);
+        unSolicitud.agregaItem(item2);
+        unSolicitud.agregaItem(item3);
 
-        return unDetalle;
+        return unSolicitud;
     }
 
     OperacionEgreso generaEgreso(int cantMinimaPresupuesto){
 
         Proveedor unProveedor = new Proveedor(null,null,1231694,12356464,null);
         //MedioDePago unMedio = new MedioDePago(null);
-        Detalle unDetalle = this.generaDetalle();
+        Solicitud unaSolicitud = this.generaSolicitud();
         Criterio unCriterio = new Criterio("Proyectito");
         unCriterio.agregateCategoria(new CategoriaOperacion("Proyectazo"));
-
-        return new OperacionEgreso(unProveedor,null,null,unDetalle,unCriterio.getCategorias(),null);
+        DetalleCompra unDetalle = new DetalleCompra(unaSolicitud,unProveedor);
+        unDetalle.setCategoriaOperacion(unCriterio.getCategorias());
+        return new OperacionEgreso(null,unDetalle,null);
     }
 
     OperacionEgreso generaEgresoConPresupuestos(int cantMinimaPresupuesto,int cantPresupuestos) throws Exception {
-        Detalle unDetalle;
+        Solicitud unaSolicitud;
         OperacionEgreso unEgreso;
 
-        unDetalle = this.generaDetalle();
+        Proveedor unProveedor = new Proveedor(null,null,1231694,12356464,null);
+        unaSolicitud = this.generaSolicitud();
         unEgreso = this.generaEgreso(cantMinimaPresupuesto);
-        unEgreso.setDetalle(unDetalle);
+
+        DetalleCompra unDetalle = new DetalleCompra(unaSolicitud,unProveedor);
         Presupuesto unPresupuesto = this.generaPresupuesto();
 
         for(int i = 0; i<cantMinimaPresupuesto;i++) unEgreso.agregaPresupuesto(unPresupuesto);
@@ -87,10 +90,12 @@ class Generador {
     }
 
     Presupuesto generaPresupuesto(){
-       Detalle unDetallePresupuesto = new Generador().generaDetalle();
+       Solicitud unaSolicitudPresupuesto = new Generador().generaSolicitud();
         Criterio unCriterio = new Criterio("Proyectito");
         unCriterio.agregateCategoria(new CategoriaOperacion("Super Proyectito"));
-       return new Presupuesto(unDetallePresupuesto,unCriterio.getCategorias(),null);
+        DetalleCompra unDetalle = new DetalleCompra(unaSolicitudPresupuesto,null);
+        unDetalle.setCategoriaOperacion(unCriterio.getCategorias());
+       return new Presupuesto(unDetalle);
     }
 
     OperacionIngreso generaIngreso(long valorIngreso){
