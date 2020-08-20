@@ -1,6 +1,6 @@
-package APIMercadoPago;
+package APIMercadoLibre;
 
-import APIMercadoPago.modelos.CodigoPostalAPI;
+import APIMercadoLibre.modelos.CodigoPostalAPI;
 
 import java.util.Optional;
 

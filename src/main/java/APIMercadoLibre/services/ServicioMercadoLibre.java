@@ -1,6 +1,6 @@
-package APIMercadoPago.services;
+package APIMercadoLibre.services;
 
-import APIMercadoPago.modelos.*;
+import APIMercadoLibre.modelos.*;
 import DireccionPostal.Direccion;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -150,4 +150,9 @@ public class ServicioMercadoLibre implements ServicioEstandarizacion {
     public Direccion generaDireccion(String idPais, String idProv, String idCiudad)throws IOException{
         return new Direccion(this.generaPais(idPais), this.ciudadDeId(idCiudad), this.provinciaDeId(idProv));
     };
+
+    public void cargarInfo(){
+
+    }
+
 }

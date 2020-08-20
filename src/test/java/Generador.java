@@ -1,4 +1,4 @@
-import APIMercadoPago.services.ServicioMercadoLibre;
+import APIMercadoLibre.services.ServicioMercadoLibre;
 import DireccionPostal.Direccion;
 import DireccionPostal.DireccionPostal;
 import Entidad.CategorizacionEmpresa.Categoria;

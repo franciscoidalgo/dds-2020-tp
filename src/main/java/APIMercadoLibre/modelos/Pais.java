@@ -1,9 +1,9 @@
-package APIMercadoPago.modelos;
+package APIMercadoLibre.modelos;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Pais extends Identificador{
+public class Pais extends Identificable {
     public String locale;
     public String currency_id;
     public char decimal_separator;

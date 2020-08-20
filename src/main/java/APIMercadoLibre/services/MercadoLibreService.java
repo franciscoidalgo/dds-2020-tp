@@ -1,6 +1,6 @@
-package APIMercadoPago.services;
+package APIMercadoLibre.services;
 
-import APIMercadoPago.modelos.*;
+import APIMercadoLibre.modelos.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

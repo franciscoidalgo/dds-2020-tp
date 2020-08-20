@@ -1,4 +1,4 @@
-package APIMercadoPago.modelos;
+package APIMercadoLibre.modelos;
 
 import java.util.Arrays;
 import java.util.List;

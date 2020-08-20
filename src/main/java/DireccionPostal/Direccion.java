@@ -1,8 +1,8 @@
 package DireccionPostal;
 
-import APIMercadoPago.modelos.Ciudad;
-import APIMercadoPago.modelos.Pais;
-import APIMercadoPago.modelos.Provincia;
+import APIMercadoLibre.modelos.Ciudad;
+import APIMercadoLibre.modelos.Pais;
+import APIMercadoLibre.modelos.Provincia;
 
 public class Direccion implements Estandarizable{
 

@@ -1,7 +1,7 @@
-package APIMercadoPago.services;
+package APIMercadoLibre.services;
 
-import APIMercadoPago.modelos.ListaDeMonedas;
-import APIMercadoPago.modelos.Pais;
+import APIMercadoLibre.modelos.ListaDeMonedas;
+import APIMercadoLibre.modelos.Pais;
 import DireccionPostal.Direccion;
 
 import java.io.IOException;

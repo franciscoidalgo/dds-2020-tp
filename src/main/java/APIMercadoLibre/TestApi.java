@@ -1,7 +1,7 @@
-package APIMercadoPago;
+package APIMercadoLibre;
 
-import APIMercadoPago.modelos.*;
-import APIMercadoPago.services.ServicioMercadoLibre;
+import APIMercadoLibre.modelos.*;
+import APIMercadoLibre.services.ServicioMercadoLibre;
 
 import java.util.Scanner;
 
@@ -17,6 +17,7 @@ public class TestApi {
             System.out.println(moneda.description);
         }
         */
+
         //Prueba: Informacion del pais, la provincia y la ciudad basandose en el codigo postal.
         System.out.println("Lista de paises");
         servicioMercadoLibre.listaDePaises().mostrarNombres();

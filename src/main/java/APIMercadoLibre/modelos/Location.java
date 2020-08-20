@@ -1,4 +1,4 @@
-package APIMercadoPago.modelos;
+package APIMercadoLibre.modelos;
 
 public class Location {
     public Double latitude;
