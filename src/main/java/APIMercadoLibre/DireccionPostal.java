@@ -10,4 +10,5 @@ public class DireccionPostal {
     private Optional<Integer> piso;
     private Optional<String> depto;
     private CodigoPostalAPI codigoPostalAPI;
+
 }

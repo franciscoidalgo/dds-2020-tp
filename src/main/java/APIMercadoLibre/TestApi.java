@@ -3,6 +3,7 @@ package APIMercadoLibre;
 import APIMercadoLibre.modelos.*;
 import APIMercadoLibre.services.ServicioMercadoLibre;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class TestApi {
@@ -11,9 +12,9 @@ public class TestApi {
 
         /*
         //Prueba: imprimir descripciones de las monedas
-        ListaDeMonedas listaDeMonedas = servicioMercadoLibre.listaDeMonedas();
+        List<Moneda> listaDeMonedas = servicioMercadoLibre.listaDeMonedas();
         System.out.println("Lista de monedas: ");
-        for (Moneda moneda : listaDeMonedas.monedas()){
+        for (Moneda moneda : listaDeMonedas){
             System.out.println(moneda.description);
         }
         */

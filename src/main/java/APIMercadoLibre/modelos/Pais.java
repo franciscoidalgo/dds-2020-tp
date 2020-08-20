@@ -10,9 +10,9 @@ public class Pais extends Identificable {
     public char thousand_separator;
     public String time_zone;
     public GeoInformation geo_information;
-    public Provincia[] states;
+    public Identificable[] states;
 
-    public List<Provincia> mostrarProvincias(){
+    public List<Identificable> mostrarProvincias(){
         return Arrays.asList(this.states);
     }
 

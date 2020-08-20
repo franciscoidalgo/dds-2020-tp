@@ -29,9 +29,4 @@ public interface MercadoLibreService {
     @GET("/currencies/{Currency_id}")
     Call<Moneda> moneda();
 
-    @GET("/currency_conversions/search")
-    Call<ConversionDeMonedas> conversionDeMonedas(@Query("from") String fromId, @Query("to") String toId);
-
-
-
 }

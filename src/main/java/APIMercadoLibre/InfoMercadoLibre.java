@@ -1,15 +1,15 @@
 package APIMercadoLibre;
 
-import APIMercadoLibre.modelos.ListaDeMonedas;
-import APIMercadoLibre.modelos.ListaIdentificables;
+import APIMercadoLibre.modelos.Moneda;
+import APIMercadoLibre.modelos.Pais;
 import APIMercadoLibre.services.ServicioMercadoLibre;
 
 import java.io.IOException;
+import java.util.List;
 
 public class InfoMercadoLibre {
-    private ListaIdentificables listaDePaises;
-//  private ListaIdentificables listaDeProvincias;
-    private ListaDeMonedas listaDeMonedas;
+    private List<Pais> listaDePaises;
+    private List<Moneda> listaDeMonedas;
     private static InfoMercadoLibre instancia = null;
     private ServicioMercadoLibre servicioMercadoLibre;
 
@@ -25,7 +25,7 @@ public class InfoMercadoLibre {
     }
 
     public void actualizarInfo() throws IOException {
-        listaDePaises = servicioMercadoLibre.listaDePaises();
+        listaDePaises = servicioMercadoLibre.listaDePaisesConProvincias();
         listaDeMonedas = servicioMercadoLibre.listaDeMonedas();
     }
 
@@ -34,4 +34,11 @@ public class InfoMercadoLibre {
     }
 
 
+    public List<Pais> getListaDePaises() {
+        return listaDePaises;
+    }
+
+    public List<Moneda> getListaDeMonedas() {
+        return listaDeMonedas;
+    }
 }

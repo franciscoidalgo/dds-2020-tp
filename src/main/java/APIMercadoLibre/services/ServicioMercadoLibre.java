@@ -9,9 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ServicioMercadoLibre implements ServicioEstandarizacion {
+public class ServicioMercadoLibre {
 
     private static ServicioMercadoLibre instancia = null;
     private Retrofit retrofit;
@@ -49,6 +50,15 @@ public class ServicioMercadoLibre implements ServicioEstandarizacion {
 
         return listaDePaises;
 
+    }
+
+    public List<Pais> listaDePaisesConProvincias() throws IOException {
+        ListaIdentificables listaIdentificablesPaises = this.listaDePaises();
+        List<Pais> listaDePaises = new ArrayList<>();
+        for (Identificable pais : listaIdentificablesPaises.getIdentificadores()){
+            listaDePaises.add(paisDeId(pais.id));
+        }
+        return listaDePaises;
     }
 
     public ListaIdentificables listaDeProvincias (Pais deQuePais){
@@ -90,12 +100,12 @@ public class ServicioMercadoLibre implements ServicioEstandarizacion {
         return ciudadDeId;
 
     }
-    @Override
-    public ListaDeMonedas listaDeMonedas () throws IOException {
+
+    public List<Moneda> listaDeMonedas () throws IOException {
         MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
         Call<Moneda[]> requestListaDeMonedas = mercadoLibreService.monedas();
         Response<Moneda[]> responseListaDeMonedas = requestListaDeMonedas.execute();
-        ListaDeMonedas listaDeMonedas = new ListaDeMonedas(responseListaDeMonedas.body());
+        List<Moneda> listaDeMonedas = Arrays.asList(responseListaDeMonedas.body());
 
         return listaDeMonedas;
 
@@ -110,46 +120,6 @@ public class ServicioMercadoLibre implements ServicioEstandarizacion {
         return monedaDeId;
 
     }
-
-    public ConversionDeMonedas conversionDeMonedas (String idFrom, String idTo) throws IOException {
-        MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
-        Call<ConversionDeMonedas> requestConversionDeMonedas = mercadoLibreService.conversionDeMonedas(idFrom, idTo);
-        Response<ConversionDeMonedas> responseConversionDeMonedas = requestConversionDeMonedas.execute();
-        ConversionDeMonedas conversionDeMonedas = responseConversionDeMonedas.body();
-
-        return conversionDeMonedas;
-
-    }
-
-    @Override
-    public List<Pais> generaPaises() throws IOException {
-        List<Pais> paises= new ArrayList<Pais>();
-        MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
-        Call<PaisSimplificado[]> requestListaDePaises = mercadoLibreService.paises();
-        Response<PaisSimplificado[]> responseListaDePaises = requestListaDePaises.execute();
-        ListaIdentificables listaDePaises = new ListaIdentificables(responseListaDePaises.body());
-        listaDePaises.mostraId().forEach(s -> {
-            try {
-                Pais pais = this.generaPais(s);
-                paises.add(pais);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        return paises;
-    }
-
-    private Pais generaPais(String cualId) throws IOException {
-        MercadoLibreService mercadoLibreService = this.retrofit.create(MercadoLibreService.class);
-        Call<Pais> requestPaisDeId = mercadoLibreService.pais(cualId);
-        Response<Pais> responsePaisDeId = requestPaisDeId.execute();
-        Pais paisDeNombre = responsePaisDeId.body();
-
-        return paisDeNombre;
-    }
-    public Direccion generaDireccion(String idPais, String idProv, String idCiudad)throws IOException{
-        return new Direccion(this.generaPais(idPais), this.ciudadDeId(idCiudad), this.provinciaDeId(idProv));
-    };
 
     public void cargarInfo(){
 
