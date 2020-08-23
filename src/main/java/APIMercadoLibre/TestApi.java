@@ -2,6 +2,7 @@ package APIMercadoLibre;
 
 import APIMercadoLibre.modelos.*;
 import APIMercadoLibre.services.ServicioMercadoLibre;
+import Entidad.OrganizacionSocial;
 
 import java.util.List;
 import java.util.Scanner;
@@ -42,6 +43,12 @@ public class TestApi {
         String nombreCiudadElegida = entradaScanner.nextLine();
         System.out.println("Ingrese su codigo postal: ");
         String codigoPostal = entradaScanner.nextLine();
+
+        AdapterDireccionMercadoLibre adapterDireccionMercadoLibre = new AdapterDireccionMercadoLibre(paisElegido, provinciaElegida, nombreCiudadElegida);
+
+        DireccionPostal direccionPostal = new DireccionPostal("Una calle", 12345, adapterDireccionMercadoLibre);
+
+        System.out.println("Direccion: " + direccionPostal.getCiudad() + ", " + direccionPostal.getProvincia() + ", " + direccionPostal.getPais());
 
         entradaScanner.close();
 

@@ -20,7 +20,9 @@ public class InfoMercadoLibre {
     private static ServicioMercadoLibre servicioMercadoLibre;
 
     private InfoMercadoLibre() throws IOException {
+        System.out.println("Cargando informacion de Mercado Libre...");
         this.actualizarInfo();
+        System.out.println("Informacion cargada con exito!");
     }
 
     public static InfoMercadoLibre instancia () throws IOException {
@@ -40,10 +42,6 @@ public class InfoMercadoLibre {
                 listaDeProvincias.add(servicioMercadoLibre.provinciaDeId(provincia.id));
             }
         }
-    }
-
-    public void persistirInfo(){
-        //TODO
     }
 
     public List<Pais> getListaDePaises() {
@@ -78,6 +76,10 @@ public class InfoMercadoLibre {
 
     public List<Moneda> getListaDeMonedas() {
         return listaDeMonedas;
+    }
+
+    public void persistirInfo(){
+        //TODO
     }
 
 }
