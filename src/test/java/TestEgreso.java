@@ -1,4 +1,4 @@
-import Almacenador.AlmacenadorDeEstandarizaciones;
+import APIMercadoLibre.InfoMercadoLibre;
 import Operacion.Egreso.DetalleCompra;
 import Operacion.Egreso.OperacionEgreso;
 import Operacion.Egreso.Presupuesto;
@@ -49,7 +49,7 @@ public class TestEgreso {
 
     @Test
     public void testEstandarizacion_SeMuestraQueAlmacenadorTraePaisesDeLaApi() throws Exception {
-        AlmacenadorDeEstandarizaciones storage = AlmacenadorDeEstandarizaciones.getInstance();
+        InfoMercadoLibre storage = InfoMercadoLibre.instancia();
         //Para mostrar por consola que muestra... descomentar
 
         /*storage.getPaises().stream().forEach(pais ->{
@@ -59,6 +59,6 @@ public class TestEgreso {
             });
         });
         */
-        Assert.assertTrue(!storage.getPaises().isEmpty());
+        Assert.assertTrue(!storage.getListaDePaises().isEmpty() && !storage.getListaDeMonedas().isEmpty());
     }
 }

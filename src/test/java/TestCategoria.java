@@ -1,3 +1,4 @@
+/*
 import Entidad.CategorizacionEmpresa.Categoria;
 import Entidad.CategorizacionEmpresa.Sector;
 import Entidad.Empresa;
@@ -23,13 +24,11 @@ public class TestCategoria {
     @Before
     public void setUp(){
         generador = Generador.instancia();
-        /* A modelo de ejemplo de las 20 instancias */
         microCom = new Categoria(7, 29740000, "Micro");
         pequenaCom = new Categoria(35, 178860000, "Pequena");
         mediana1Com = new Categoria(125, 1502750000, "Medianta-Tramo 1");
         mediana2Com = new Categoria(345, 2146810000, "Medianta-Tramo 2");
 
-        /* Sectores */
         comercial = new Sector("Comercial", "Mucha gente");
 
         comercial.agregateCategoria(microCom);
@@ -83,3 +82,4 @@ public class TestCategoria {
 
 
 }
+*/

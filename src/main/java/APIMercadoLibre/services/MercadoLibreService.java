@@ -1,6 +1,6 @@
-package APIMercadoPago.services;
+package APIMercadoLibre.services;
 
-import APIMercadoPago.modelos.*;
+import APIMercadoLibre.modelos.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -28,10 +28,5 @@ public interface MercadoLibreService {
 
     @GET("/currencies/{Currency_id}")
     Call<Moneda> moneda();
-
-    @GET("/currency_conversions/search")
-    Call<ConversionDeMonedas> conversionDeMonedas(@Query("from") String fromId, @Query("to") String toId);
-
-
 
 }

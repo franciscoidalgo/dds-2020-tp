@@ -1,4 +1,4 @@
-package APIMercadoPago.modelos;
+package APIMercadoLibre.modelos;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,29 +9,29 @@ public class ListaIdentificables  {
 
 
 
-    private List<Identificador> identificadores;
+    private List<Identificable> identificadores;
 
-    public ListaIdentificables (Identificador[] identificadores){
+    public ListaIdentificables (Identificable[] identificadores){
         this.identificadores = Arrays.asList(identificadores);
     }
 
-    public ListaIdentificables (List<Identificador> identificadores){
+    public ListaIdentificables (List<Identificable> identificadores){
         this.identificadores = identificadores;
     }
 
     public String idDeIdentificador(String nombreIdentificador) throws Exception {
-        Optional<Identificador> posiblePais = this.identificadores.stream().filter(identificador -> identificador.name.equals(nombreIdentificador)).findFirst();
+        Optional<Identificable> posiblePais = this.identificadores.stream().filter(identificador -> identificador.name.equals(nombreIdentificador)).findFirst();
         if(posiblePais.isPresent()) {
-            Identificador paisBuscado = posiblePais.get();
+            Identificable paisBuscado = posiblePais.get();
             return paisBuscado.id;
         }
         else throw new Exception("No existe el elemento buscado");
     }
-    public List<Identificador> getIdentificadores() {
+    public List<Identificable> getIdentificadores() {
         return identificadores;
     }
     public void mostrarNombres (){
-        for(Identificador pais: identificadores){
+        for(Identificable pais: identificadores){
             System.out.println(pais.name);
         }
     }

@@ -1,4 +1,4 @@
-import APIMercadoPago.services.ServicioMercadoLibre;
+import APIMercadoLibre.services.ServicioMercadoLibre;
 import DireccionPostal.Direccion;
 import DireccionPostal.DireccionPostal;
 import Entidad.CategorizacionEmpresa.Categoria;
@@ -108,6 +108,9 @@ class Generador {
         return new OperacionIngreso(valorIngreso,"Inversion de dudosa procedencia",null);
     }
 
+    //No deberia ser el servicio de mercado libre el que genere la direccion, a mercadolibre solo le pedimos data de provincias
+    //y paises
+    /*
     Usuario generaUsuarioEstandar() throws IOException {
         return new Usuario("User","U23R274ND4R",new RolEstandar(),this.generaEmpresa());
     }
@@ -131,5 +134,5 @@ class Generador {
         Direccion direccionEstado = (Direccion) servicioMercadoLibre.generaDireccion("UY","UY-RO","TUxVQ0NBQjY1MmQ1");
         return new DireccionPostal(calle,"","",direccionEstado);
     }
-
+*/
 }

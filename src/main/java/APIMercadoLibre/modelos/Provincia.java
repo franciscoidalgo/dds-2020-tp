@@ -1,10 +1,10 @@
-package APIMercadoPago.modelos;
+package APIMercadoLibre.modelos;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Provincia extends Identificador{
-    public Identificador country;
+public class Provincia extends Identificable {
+    public Identificable country;
     public GeoInformation geo_information;
     public String time_zone;
     public Ciudad[] cities;
