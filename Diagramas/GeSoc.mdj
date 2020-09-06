@@ -71,7 +71,7 @@
 											"top": 173,
 											"width": 48.40087890625,
 											"height": 13,
-											"text": "Usuario"
+											"text": "domain.Usuario"
 										},
 										{
 											"_type": "LabelView",
@@ -1782,7 +1782,7 @@
 											"top": 317,
 											"width": 48.40087890625,
 											"height": 13,
-											"text": "Usuario"
+											"text": "domain.Usuario"
 										},
 										{
 											"_type": "LabelView",
@@ -2897,7 +2897,7 @@
 											"top": 557,
 											"width": 48.40087890625,
 											"height": 13,
-											"text": "Usuario"
+											"text": "domain.Usuario"
 										},
 										{
 											"_type": "LabelView",
@@ -3345,7 +3345,7 @@
 											"top": 157,
 											"width": 48.40087890625,
 											"height": 13,
-											"text": "Usuario"
+											"text": "domain.Usuario"
 										},
 										{
 											"_type": "LabelView",
@@ -4057,7 +4057,7 @@
 											"top": 349,
 											"width": 48.40087890625,
 											"height": 13,
-											"text": "Usuario"
+											"text": "domain.Usuario"
 										},
 										{
 											"_type": "LabelView",
@@ -5008,7 +5008,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Usuario",
+					"name": "domain.Usuario",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -5214,7 +5214,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Usuario",
+					"name": "domain.Usuario",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -5352,7 +5352,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Usuario"
+					"name": "domain.Usuario"
 				},
 				{
 					"_type": "UMLActor",
@@ -5360,7 +5360,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Usuario",
+					"name": "domain.Usuario",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -5397,7 +5397,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Usuario"
+					"name": "domain.Usuario"
 				},
 				{
 					"_type": "UMLCollaboration",
@@ -5514,7 +5514,7 @@
 															"top": 47,
 															"width": 62.736328125,
 															"height": 13,
-															"text": "Usuario"
+															"text": "domain.Usuario"
 														},
 														{
 															"_type": "LabelView",
@@ -8920,7 +8920,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFxwVZpC/XHlMw="
 									},
-									"name": "Usuario",
+									"name": "domain.Usuario",
 									"represent": {
 										"$ref": "AAAAAAFxwVjZSfZunOo="
 									},
@@ -10023,7 +10023,7 @@
 									"top": 621,
 									"width": 221.166015625,
 									"height": 13,
-									"text": "Usuario"
+									"text": "domain.Usuario"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -12486,7 +12486,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFxzP9KKOc9qdM="
 					},
-					"name": "Usuario",
+					"name": "domain.Usuario",
 					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
@@ -14002,7 +14002,7 @@
 											"top": 1063,
 											"width": 289.427734375,
 											"height": 13,
-											"text": "-revisores: List <Usuario>",
+											"text": "-revisores: List <domain.Usuario>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14249,7 +14249,7 @@
 											"top": 1133,
 											"width": 289.427734375,
 											"height": 13,
-											"text": "+agregaRevisor(Usuario)",
+											"text": "+agregaRevisor(domain.Usuario)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -15082,7 +15082,7 @@
 											"top": 1394,
 											"width": 200.12890625,
 											"height": 13,
-											"text": "-direccionPostal: DireccionPostal",
+											"text": "-direccionPostal: domain.DireccionPostal",
 											"horizontalAlignment": 0
 										}
 									],
@@ -15205,7 +15205,7 @@
 											"top": 343,
 											"width": 358.7822265625,
 											"height": 13,
-											"text": "Usuario"
+											"text": "domain.Usuario"
 										},
 										{
 											"_type": "LabelView",
@@ -15311,7 +15311,7 @@
 											"top": 396,
 											"width": 358.7822265625,
 											"height": 13,
-											"text": "-entidadSeleccionada: Entidad",
+											"text": "-entidadSeleccionada: domain.Entidad",
 											"horizontalAlignment": 0
 										},
 										{
@@ -15466,7 +15466,7 @@
 											"top": 524,
 											"width": 358.7822265625,
 											"height": 13,
-											"text": "+realizaOperacionIngreso(Operacion)",
+											"text": "+realizaOperacionIngreso(domain.Operacion)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -15520,7 +15520,7 @@
 											"top": 524,
 											"width": 358.7822265625,
 											"height": 13,
-											"text": "+realizaOperacion(Operacion)",
+											"text": "+realizaOperacion(domain.Operacion)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -15537,7 +15537,7 @@
 											"top": 509,
 											"width": 358.7822265625,
 											"height": 13,
-											"text": "+seleccionaEntidad(Entidad): Void",
+											"text": "+seleccionaEntidad(domain.Entidad): Void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16214,7 +16214,7 @@
 											"top": 536,
 											"width": 417.97412109375,
 											"height": 13,
-											"text": "#direccionPostal: DireccionPostal",
+											"text": "#direccionPostal: domain.DireccionPostal",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16265,7 +16265,7 @@
 											"top": 581,
 											"width": 417.97412109375,
 											"height": 13,
-											"text": "#operaciones: List<Operacion>",
+											"text": "#operaciones: List<domain.Operacion>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16318,7 +16318,7 @@
 											"top": 595,
 											"width": 330.9794921875,
 											"height": 13,
-											"text": "#operacionesIngreso: List<Operacion>",
+											"text": "#operacionesIngreso: List<domain.Operacion>",
 											"horizontalAlignment": 0
 										}
 									],
@@ -16371,7 +16371,7 @@
 											"top": 620,
 											"width": 330.9794921875,
 											"height": 13,
-											"text": "+realizaOperacionIngreso(Operacion)",
+											"text": "+realizaOperacionIngreso(domain.Operacion)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16493,7 +16493,7 @@
 											"top": 666,
 											"width": 417.97412109375,
 											"height": 13,
-											"text": "+realizaOperacion(Operacion)",
+											"text": "+realizaOperacion(domain.Operacion)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16510,7 +16510,7 @@
 											"top": 681,
 											"width": 417.97412109375,
 											"height": 13,
-											"text": "+tieneEntidadBase(Entidad): Boolean",
+											"text": "+tieneEntidadBase(domain.Entidad): Boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -16528,7 +16528,7 @@
 											"top": 665,
 											"width": 386.17236328125,
 											"height": 13,
-											"text": "+agregateOperacion(Operacion)",
+											"text": "+agregateOperacion(domain.Operacion)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -17203,7 +17203,7 @@
 											"top": 741,
 											"width": 222.9169921875,
 											"height": 13,
-											"text": "+realizaOperacion(Operacion)",
+											"text": "+realizaOperacion(domain.Operacion)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -18278,7 +18278,7 @@
 											"top": 549,
 											"width": 94,
 											"height": 13,
-											"text": "-para: Usuario",
+											"text": "-para: domain.Usuario",
 											"horizontalAlignment": 0
 										},
 										{
@@ -18296,7 +18296,7 @@
 											"top": 549,
 											"width": 94,
 											"height": 13,
-											"text": "-desde: Usuario",
+											"text": "-desde: domain.Usuario",
 											"horizontalAlignment": 0
 										},
 										{
@@ -18365,7 +18365,7 @@
 											"top": 554,
 											"width": 225.087890625,
 											"height": 13,
-											"text": "+operacionAsociada: Operacion",
+											"text": "+operacionAsociada: domain.Operacion",
 											"horizontalAlignment": 0
 										},
 										{
@@ -18383,7 +18383,7 @@
 											"top": 561,
 											"width": 225.087890625,
 											"height": 13,
-											"text": "+propetario: Usuario",
+											"text": "+propetario: domain.Usuario",
 											"horizontalAlignment": 0
 										}
 									],
@@ -18617,7 +18617,7 @@
 											"top": 526,
 											"width": 190,
 											"height": 13,
-											"text": "-propietario: Usuario",
+											"text": "-propietario: domain.Usuario",
 											"horizontalAlignment": 0
 										},
 										{
@@ -30322,7 +30322,7 @@
 											"top": 652,
 											"width": 125.74072265625,
 											"height": 13,
-											"text": "Operacion"
+											"text": "domain.Operacion"
 										},
 										{
 											"_type": "LabelView",
@@ -30446,7 +30446,7 @@
 											"top": 707,
 											"width": 125.74072265625,
 											"height": 13,
-											"text": "#creadoPor: Usuario",
+											"text": "#creadoPor: domain.Usuario",
 											"horizontalAlignment": 0
 										}
 									],
@@ -32919,7 +32919,7 @@
 											"top": 332,
 											"width": 123.18896484375,
 											"height": 13,
-											"text": "Entidad"
+											"text": "domain.Entidad"
 										},
 										{
 											"_type": "LabelView",
@@ -37541,7 +37541,7 @@
 											"top": 1015,
 											"width": 204.470703125,
 											"height": 13,
-											"text": "DireccionPostal"
+											"text": "domain.DireccionPostal"
 										},
 										{
 											"_type": "LabelView",
@@ -44698,7 +44698,7 @@
 							},
 							"name": "revisores",
 							"visibility": "private",
-							"type": "List <Usuario>"
+							"type": "List <domain.Usuario>"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -44887,7 +44887,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFy0xDvXAGAGJI="
 									},
-									"name": "Usuario",
+									"name": "domain.Usuario",
 									"type": ""
 								}
 							]
@@ -45454,7 +45454,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFx3PXUBYdoTDQ="
 					},
-					"name": "Usuario",
+					"name": "domain.Usuario",
 					"ownedElements": [
 						{
 							"_type": "UMLDependency",
@@ -45957,7 +45957,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzmCqTuAqgw0="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								}
 							]
@@ -46023,7 +46023,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzlkNDjndJn0="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								}
 							]
@@ -46042,7 +46042,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyKlmwGtI6KYw="
 									},
-									"name": "Entidad",
+									"name": "domain.Entidad",
 									"type": ""
 								},
 								{
@@ -46663,7 +46663,7 @@
 							},
 							"name": "operaciones",
 							"visibility": "protected",
-							"type": "List<Operacion>"
+							"type": "List<domain.Operacion>"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -46693,7 +46693,7 @@
 							},
 							"name": "operacionesIngreso",
 							"visibility": "protected",
-							"type": "List<Operacion>"
+							"type": "List<domain.Operacion>"
 						}
 					],
 					"operations": [
@@ -46730,7 +46730,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyzmBm9tyfHWY="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								}
 							]
@@ -46881,7 +46881,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyjHyPfleeZtE="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								}
 							]
@@ -46900,7 +46900,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFy1+aOzovZQ0E="
 									},
-									"name": "Entidad",
+									"name": "domain.Entidad",
 									"type": ""
 								},
 								{
@@ -46928,7 +46928,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFy2IGSprM2s6s="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								}
 							]
@@ -47399,7 +47399,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyu4u5h9vZHCI="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								}
 							]
@@ -48780,7 +48780,7 @@
 								"$ref": "AAAAAAFycZd4PPNsClE="
 							},
 							"name": "operacionAsociada",
-							"type": "Operacion"
+							"type": "domain.Operacion"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -49242,7 +49242,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyciSiLTwdpgQ="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								},
 								{
@@ -49270,7 +49270,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyci5GzZs6rmo="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								},
 								{
@@ -49298,7 +49298,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyci6bJZ2ppa0="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								},
 								{
@@ -49326,7 +49326,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyci+4taHjEcc="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								},
 								{
@@ -49495,7 +49495,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyciVhfUEmZAI="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								},
 								{
@@ -49523,7 +49523,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFyci1WJZfMI2k="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								},
 								{
@@ -55736,7 +55736,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFx3PXUBYdoTDQ="
 					},
-					"name": "Operacion",
+					"name": "domain.Operacion",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -56212,7 +56212,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFx3PXUBYdoTDQ="
 					},
-					"name": "Entidad",
+					"name": "domain.Entidad",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -56269,7 +56269,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFx3PXUBYdoTDQ="
 					},
-					"name": "Entidad",
+					"name": "domain.Entidad",
 					"stereotype": "Interface",
 					"operations": [
 						{
@@ -56358,7 +56358,7 @@
 								"$ref": "AAAAAAFy2qtOs5TeQ7c="
 							},
 							"name": "operaciones",
-							"type": "List<Operacion>"
+							"type": "List<domain.Operacion>"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -56460,7 +56460,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFy2q5ggr0YLLc="
 									},
-									"name": "Operacion",
+									"name": "domain.Operacion",
 									"type": ""
 								}
 							]
@@ -57593,7 +57593,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFx3PXUBYdoTDQ="
 					},
-					"name": "DireccionPostal",
+					"name": "domain.DireccionPostal",
 					"ownedElements": [
 						{
 							"_type": "UMLRealization",
@@ -60883,7 +60883,7 @@
 											"width": 231,
 											"height": 13,
 											"underline": true,
-											"text": "u2: Usuario"
+											"text": "u2: domain.Usuario"
 										},
 										{
 											"_type": "LabelView",

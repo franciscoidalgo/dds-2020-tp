@@ -1,6 +1,6 @@
 /*
-import Entidad.CategorizacionOperacion.Criterio;
-import Entidad.Empresa;
+import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Entidad.Empresa;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

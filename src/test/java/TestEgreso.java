@@ -1,7 +1,7 @@
 import APIMercadoLibre.InfoMercadoLibre;
-import Operacion.Egreso.DetalleCompra;
-import Operacion.Egreso.OperacionEgreso;
-import Operacion.Egreso.Presupuesto;
+import domain.Operacion.Egreso.DetalleCompra;
+import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Egreso.Presupuesto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package PlanificadorDeTareas;
 
-import Operacion.Egreso.OperacionEgreso;
-import Validadores.ValidadorDeTransparencia;
+import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Validadores.ValidadorDeTransparencia;
 
 import java.util.Date;
 import java.util.TimerTask;

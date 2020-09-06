@@ -1,7 +1,7 @@
 /*
-import Entidad.CategorizacionEmpresa.Categoria;
-import Entidad.CategorizacionEmpresa.Sector;
-import Entidad.Empresa;
+import domain.Entidad.CategorizacionEmpresa.Categoria;
+import domain.Entidad.CategorizacionEmpresa.Sector;
+import domain.Entidad.Empresa;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

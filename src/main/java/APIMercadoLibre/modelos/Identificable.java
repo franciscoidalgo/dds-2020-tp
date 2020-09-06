@@ -1,6 +1,6 @@
 package APIMercadoLibre.modelos;
 
-import DireccionPostal.Estandarizable;
+import domain.DireccionPostal.Estandarizable;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

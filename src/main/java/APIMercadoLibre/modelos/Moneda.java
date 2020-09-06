@@ -1,6 +1,6 @@
 package APIMercadoLibre.modelos;
 
-import DireccionPostal.Estandarizable;
+import domain.DireccionPostal.Estandarizable;
 
 public class Moneda implements Estandarizable {
     public String id;

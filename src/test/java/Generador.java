@@ -1,22 +1,11 @@
-import APIMercadoLibre.services.ServicioMercadoLibre;
-import DireccionPostal.Direccion;
-import DireccionPostal.DireccionPostal;
-import Entidad.CategorizacionEmpresa.Categoria;
-import Entidad.CategorizacionEmpresa.Sector;
-import Entidad.CategorizacionOperacion.CategoriaOperacion;
-import Entidad.CategorizacionOperacion.Criterio;
-import Entidad.Empresa;
-import Operacion.Egreso.*;
-import Operacion.Ingreso.OperacionIngreso;
-import Usuario.RolAdministrador;
-import Usuario.RolEstandar;
-import Usuario.Usuario;
-import Validadores.CriterioValidacionCantidadPresupuesto;
-import Validadores.CriterioValidacionDetalle;
-import Validadores.CriterioValidacionSeleccion;
-import Validadores.ValidadorDeTransparencia;
-
-import java.io.IOException;
+import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
+import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Operacion.Egreso.*;
+import domain.Operacion.Ingreso.OperacionIngreso;
+import domain.Validadores.CriterioValidacionCantidadPresupuesto;
+import domain.Validadores.CriterioValidacionDetalle;
+import domain.Validadores.CriterioValidacionSeleccion;
+import domain.Validadores.ValidadorDeTransparencia;
 
 class Generador {
     private static Generador instancia=null;
@@ -111,17 +100,17 @@ class Generador {
     //No deberia ser el servicio de mercado libre el que genere la direccion, a mercadolibre solo le pedimos data de provincias
     //y paises
     /*
-    Usuario generaUsuarioEstandar() throws IOException {
-        return new Usuario("User","U23R274ND4R",new RolEstandar(),this.generaEmpresa());
+    domain.Usuario generaUsuarioEstandar() throws IOException {
+        return new domain.Usuario("User","U23R274ND4R",new RolEstandar(),this.generaEmpresa());
     }
 
-    Usuario generaUsuarioAdmin() throws IOException {
-        return new Usuario("Admin","El4dm1n",new RolAdministrador(),this.generaEmpresa());
+    domain.Usuario generaUsuarioAdmin() throws IOException {
+        return new domain.Usuario("Admin","El4dm1n",new RolAdministrador(),this.generaEmpresa());
     }
 
     Empresa generaEmpresa() throws IOException {
         Sector unSector =new Sector("comercio","Algo de comercio");
-        DireccionPostal dir = this.generaDireccion("Av.Siempre Empresa");
+        domain.DireccionPostal dir = this.generaDireccion("Av.Siempre Empresa");
         unSector.agregateCategoria(new Categoria(132,321,"Categoria"));
 
         return new Empresa("unaEmpresa S.A","La empresa",302222221
@@ -129,10 +118,10 @@ class Generador {
                 ,"Solo generamos empresas",unSector,5000,1000000);
     }
 
-    DireccionPostal generaDireccion(String calle) throws IOException {
+    domain.DireccionPostal generaDireccion(String calle) throws IOException {
         ServicioMercadoLibre servicioMercadoLibre = ServicioMercadoLibre.instancia();
         Direccion direccionEstado = (Direccion) servicioMercadoLibre.generaDireccion("UY","UY-RO","TUxVQ0NBQjY1MmQ1");
-        return new DireccionPostal(calle,"","",direccionEstado);
+        return new domain.DireccionPostal(calle,"","",direccionEstado);
     }
 */
 }

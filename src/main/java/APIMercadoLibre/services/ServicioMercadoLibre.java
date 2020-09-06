@@ -1,7 +1,7 @@
 package APIMercadoLibre.services;
 
 import APIMercadoLibre.modelos.*;
-import DireccionPostal.Direccion;
+import domain.DireccionPostal.Direccion;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;

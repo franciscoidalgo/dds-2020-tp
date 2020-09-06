@@ -1,9 +1,9 @@
 /*
-import Entidad.CategorizacionOperacion.Criterio;
-import Operacion.Egreso.OperacionEgreso;
-import Operacion.Ingreso.OperacionIngreso;
-import Usuario.Usuario;
-import Validadores.ValidadorDeTransparencia;
+import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Ingreso.OperacionIngreso;
+import domain.Usuario.domain.Usuario;
+import domain.Validadores.ValidadorDeTransparencia;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class TestUsuario {
 
-        private Usuario unEstandar;
-        private Usuario unAdmin;
+        private domain.Usuario unEstandar;
+        private domain.Usuario unAdmin;
         private Criterio unCriterio;
         private Criterio unCriterioHijo;
 

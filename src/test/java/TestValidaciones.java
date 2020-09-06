@@ -1,5 +1,5 @@
-import Operacion.Egreso.*;
-import Validadores.*;
+import domain.Operacion.Egreso.*;
+import domain.Validadores.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

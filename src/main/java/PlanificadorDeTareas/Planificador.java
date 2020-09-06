@@ -5,7 +5,7 @@
 
 package PlanificadorDeTareas;
 
-import Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Egreso.OperacionEgreso;
 
 import java.io.File;
 import java.io.FileNotFoundException;

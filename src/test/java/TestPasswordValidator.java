@@ -1,5 +1,5 @@
 /*
-import Password.*;
+import domain.Password.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,26 +42,26 @@ public class TestPasswordValidator {
     @Test
     public void TestPasswordValidator() throws IOException {
 
-        // Password length (8 =< X <= 32)
-        Assert.assertFalse(ValidatePasswordLength("1234567")); // Password length < 8
-        Assert.assertTrue(ValidatePasswordLength("12345678")); // Password length = 8
-        Assert.assertTrue(ValidatePasswordLength("123456789")); // Password length > 8 & < 32
-        Assert.assertTrue(ValidatePasswordLength("12345678123456781234567812345678")); // Password length = 32
-        Assert.assertFalse(ValidatePasswordLength("123456781234567812345678123456781")); // Password length > 32
+        // domain.Password length (8 =< X <= 32)
+        Assert.assertFalse(ValidatePasswordLength("1234567")); // domain.Password length < 8
+        Assert.assertTrue(ValidatePasswordLength("12345678")); // domain.Password length = 8
+        Assert.assertTrue(ValidatePasswordLength("123456789")); // domain.Password length > 8 & < 32
+        Assert.assertTrue(ValidatePasswordLength("12345678123456781234567812345678")); // domain.Password length = 32
+        Assert.assertFalse(ValidatePasswordLength("123456781234567812345678123456781")); // domain.Password length > 32
 
-        // Password capital letter [A-Z]
-        Assert.assertTrue(ValidatePasswordCapitalLetter("Password"));
+        // domain.Password capital letter [A-Z]
+        Assert.assertTrue(ValidatePasswordCapitalLetter("domain.Password"));
         Assert.assertTrue(ValidatePasswordCapitalLetter("passworD"));
         Assert.assertTrue(ValidatePasswordCapitalLetter("passWord"));
         Assert.assertFalse(ValidatePasswordCapitalLetter("password"));
 
-        // Password number [0-9]
+        // domain.Password number [0-9]
         Assert.assertTrue(ValidatePasswordNumber("1password"));
         Assert.assertTrue(ValidatePasswordNumber("password2"));
         Assert.assertTrue(ValidatePasswordNumber("pass3word"));
         Assert.assertFalse(ValidatePasswordNumber("password"));
 
-        // Password special character [@#$%]
+        // domain.Password special character [@#$%]
         Assert.assertTrue(ValidatePasswordSpecialCharacter("@password"));
         Assert.assertTrue(ValidatePasswordSpecialCharacter("password#"));
         Assert.assertTrue(ValidatePasswordSpecialCharacter("pass$word"));
