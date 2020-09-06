@@ -1,11 +1,7 @@
 package domain.Validadores;
 
-import config.ConfiguracionScheduler;
+import config.ConfiguracionValidador;
 import domain.Operacion.Egreso.OperacionEgreso;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class CriterioValidacionDetalle implements CriterioValidacion {
     @Override
@@ -16,7 +12,7 @@ public class CriterioValidacionDetalle implements CriterioValidacion {
 
     private Boolean requierePresupuesto(OperacionEgreso unEgreso) {
 
-        return ConfiguracionScheduler.cantPresupuestos >0;
+        return ConfiguracionValidador.cantPresupuestos >0;
     }
 
 
