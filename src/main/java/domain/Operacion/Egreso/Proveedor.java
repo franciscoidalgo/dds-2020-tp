@@ -9,7 +9,7 @@ public class Proveedor {
     private long CUIT;
     private DireccionPostal dirPostal;
 
-    public Proveedor(String nombre, String razonSocial, int DNI, long CUIT, DireccionPostal  dirPostal){
+    public Proveedor(String nombre, String razonSocial, int DNI, long CUIT, DireccionPostal dirPostal){
         this.nombre = nombre;
         this.razonSocial = razonSocial;
         this.DNI = DNI;
@@ -46,10 +46,10 @@ public class Proveedor {
         this.CUIT = CUIT;
     }
 
-    public DireccionPostal  getDirPostal() {
+    public DireccionPostal getDirPostal() {
         return dirPostal;
     }
-    public void setDirPostal(DireccionPostal  dirPostal) {
+    public void setDirPostal(DireccionPostal dirPostal) {
         this.dirPostal = dirPostal;
     }
 

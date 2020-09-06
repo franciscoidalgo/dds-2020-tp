@@ -10,9 +10,6 @@ public class CriterioValidacionCantidadPresupuesto implements CriterioValidacion
     private int limitePresupuestos;
 
 
-    public CriterioValidacionCantidadPresupuesto() {
-        this.actualizarConfiguracion();
-    }
 
     @Override
     public Boolean validaEgreso(OperacionEgreso unEgreso) {
@@ -28,29 +25,6 @@ public class CriterioValidacionCantidadPresupuesto implements CriterioValidacion
         }
 
     }
-
-
-    private void actualizarConfiguracion() {
-        try {
-            File configFile = new File("src/main/java/PlanificadorDeTareas/config.txt");
-            Scanner miScanner = new Scanner(configFile);
-            while (miScanner.hasNextLine()) {
-                String data = miScanner.nextLine();
-                int indexOfTheNumber = data.indexOf("=") + 1;
-                String number = data.substring(indexOfTheNumber).trim();
-
-                if (data.contains("cantPresupuestos")) {
-                    limitePresupuestos = Integer.parseInt(number);
-                }
-            }
-            miScanner.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontro el archivo de configuraciones.");
-            e.printStackTrace();
-        }
-    }
-
 
 }
 

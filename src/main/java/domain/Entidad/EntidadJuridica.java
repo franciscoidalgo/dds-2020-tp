@@ -128,7 +128,4 @@ public abstract class EntidadJuridica implements Entidad {
         return this.entidadesBases.contains(base);
     }
 
-    public String mostraDireccion(){
-        return this.direccionPostal.mostraDireccion();
-    }
 }
