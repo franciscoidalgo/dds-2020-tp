@@ -45,6 +45,7 @@ input,
 select,
 textarea {
     font-size: 1.4rem;
+    padding: 0.5rem;
 }
 
 label {
@@ -131,13 +132,13 @@ tbody tr {
     font-weight: 400;
 }
 
-.fw-600 {
-    font-weight: 600;
+.fw-700 {
+    font-weight: 700;
 }
 
 .bg-primario {
     /* background-color: #1b1c25;*/
-    background-color: rgb(200, 200, 200);
+    background-color: #015B81;
 }
 
 .bg-secundario {
@@ -154,6 +155,13 @@ tbody tr {
 .bg-cuarto {
     background-color: #d1cebd;
 }
+
+.float-r {
+    float: right;
+}
+
+
+/*Botones*/
 
 .btn {
     margin: 1rem 0;
@@ -207,6 +215,23 @@ tbody tr {
     transition: color 1s, background-color 1s;
 }
 
+.btn-formulario {
+    margin-left: 1rem;
+    align-self: flex-end;
+    text-align: initial;
+    background-color: transparent;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0187C0;
+    transition: color 1s, background-color 1s;
+}
+
+.btn-formulario:hover {
+    color: #555555;
+    background-color: #e7e7e7;
+    transition: color 1s, background-color 1s;
+}
+
 .f-dir-col {
     flex-direction: column;
 }
@@ -215,10 +240,12 @@ tbody tr {
     margin: auto;
 }
 
+.m-0 {
+    margin: 0;
+}
+
 #logo {
     color: whitesmoke;
-    font-weight: 700;
-    margin: 0;
 }
 
 #logo span {
@@ -259,7 +286,6 @@ tbody tr {
 }
 
 .contenedor-titulo {
-    margin: auto;
     border-style: inset;
     padding: 9rem 10rem;
     border-width: 0 1px 0 0;
@@ -391,16 +417,16 @@ form div.burbuja {
     cursor: pointer;
 }
 
-.burbuja input:not([type="button"]),
+.contenedor-entrada>input:not([type="button"]),
 .burbuja select {
     width: 418px;
-    padding: 0.3rem;
     margin: 1rem 0;
 }
 
 .contenedor-entrada {
     padding-left: 20%;
     min-width: 47rem;
+    vertical-align: bottom;
 }
 
 .burbuja h3 {
@@ -408,20 +434,12 @@ form div.burbuja {
     align-self: center;
 }
 
-.contenedor-direccion {
-    width: 108px;
+.contenedor-limitado {
+    max-width: 60%;
 }
 
 .contenido-direccion {
-    width: 10rem;
-}
-
-.contenido-direccion input {
-    width: 100%;
-}
-
-.entrada-form-nuevo {
-    flex-basis: 70%;
+    margin: 0 2rem 0 0;
 }
 
 #descripcion {
@@ -434,9 +452,7 @@ form div.burbuja {
 /*Tabla*/
 
 .th-principal th {
-    background-color: #015B81;
     color: white;
-    font-weight: bold;
     height: 3.5rem;
 }
 
@@ -493,40 +509,45 @@ tr {
 
 /*Categorias*/
 
-.contenedor-categorias {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: auto;
-    grid-gap: 1rem;
+.seccion-categorias {
+    margin: 2rem;
 }
 
-.contenido-categoria {
-    max-width: fit-content;
-    color: #d63447;
-    background-color: #ffeff1;
-    border-color: #d63447;
+.categoria {
+    margin: .2rem;
+    padding: .4rem .6rem;
+    color: #002e15;
+    border: 1px solid #002e15;
+    background-color: #d6ece0;
     transition: color 1s, border-color 1s, background-color 1s;
 }
 
-.contenido-categoria:hover,
-.contenido-categoria-seleccionada:hover {
+.contenedor-categorias {
+    flex-wrap: wrap;
+    flex-flow: wrap;
+}
+
+.categoria-seleccionada {
+    margin: .2rem;
+    padding: .4rem .6rem;
+    color: #015B81;
+    background-color: #e7e7e7;
+    border: 1px solid #015B81;
+    transition: color 1s, border-color 1s, background-color 1s;
+}
+
+.categoria p,
+.categoria-seleccionada p {
+    margin: 0;
+}
+
+.categoria:hover,
+.categoria-seleccionada:hover {
     color: #555555;
     border-color: #555555;
     background-color: #ffffff;
     transition: color 1s, border-color 1s, background-color 1s;
     cursor: pointer;
-}
-
-.contenedor-categorias .burbuja {
-    margin: 0;
-}
-
-.contenido-categoria-seleccionada {
-    max-width: fit-content;
-    color: #002e15;
-    border-color: #002e15;
-    background-color: #d6ece0;
-    transition: color 1s, border-color 1s, background-color 1s;
 }
 
 

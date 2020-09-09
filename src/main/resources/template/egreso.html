@@ -40,25 +40,25 @@
             <!-- Formulario Proveedor-->
             <fieldset id="proveedor" class="burbuja ">
                 <div class="contenedor-entrada">
-                    <div class="d-flex jc-sb">
-                        <div class="entrada-form-nuevo">
+                    <div class="d-flex ">
+                        <div class="">
                             <label for="razon-social">Razon Social</label><br>
                             <select name="razon-social" id="razon-social" required>
                                 <option value="" disabled selected>-- Seleccione --</option>
                                 <option value="">algo</option>
                             </select>
                         </div>
-                        <input type="button" value="Nueva" class="btn btn-secundario" required>
+                        <input type="button" value="Nueva" class="btn btn-formulario" required>
                     </div>
-                    <div class="d-flex jc-sb">
-                        <div class="entrada-form-nuevo">
+                    <div class="d-flex ">
+                        <div class="">
                             <label for="vendedor">Vendedor</label><br>
                             <select name="vendedor" id="vendedor" disabled required>
                                 <option value="" disabled selected>-- Seleccione --</option>
                                 <option value="">algo</option>                        
                             </select>
                         </div>
-                        <input type="button" value="Nuevo Vendedor" class="btn btn-secundario" required>
+                        <input type="button" value="Nuevo Vendedor" class="btn btn-formulario" required>
                     </div>
                     <label for="dni">Dni/Cuit</label><br>
                     <input type="number" name="dni" id="dni" disabled placeholder="Ingrese DNI o CUIT..." required><br>
@@ -82,7 +82,7 @@
                     </select><br>
                     <label for="calle">Calle</label><br>
                     <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9]{1,}" title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... " required><br>
-                    <div class="d-flex jc-sb contenedor-direccion">
+                    <div class="d-flex jc-sb contenedor-limitado">
                         <div class="contenido-direccion">
                             <label for="altura">Altura</label><br>
                             <input type="number" name="altura" id="altura" min="0" placeholder="Altura... " required>
@@ -109,7 +109,7 @@
             <!-- Formulario Detalle compra-->
             <fieldset id="detalle-compra" class="burbuja ">
                 <table class="txt-centrado tabla">
-                    <thead class="th-principal">
+                    <thead class="bg-primario fw-700 th-principal">
                         <tr>
                             <th>Descripcion</th>
                             <th> </th>
@@ -132,19 +132,21 @@
                 </table>
                 <hr/>
                 <div class="contenedor-entrada">
-                    <div class="d-flex jc-sb">
-                        <div class="entrada-form-nuevo">
+                    <div class="d-flex ">
+                        <div class="">
                             <label for="producto">Servicio/Producto</label><br>
                             <select name="producto" id="producto" required>
                         <option value="" disabled selected>-- Seleccione --</option>
                         <option value="">algo</option>
                     </select>
-                        </div> <input type="button" value="Nuevo Producto" class="btn btn-secundario">
+                        </div> <input type="button" value="Nuevo Producto" class="btn btn-formulario">
                     </div>
                     <br>
                     <label for="costo">Costo Total</label><br>
                     <input type="number" name="costo" id="costo" min="0" placeholder="Ingrese costo total... " required><br>
-                    <input id="agregar-tabla" type="button" value="Agregar" class="btn btn-secundario">
+                    <div class="contenedor-limitado txt-centrado">
+                        <input id="agregar-tabla" type="button" value="Agregar" class="btn btn-secundario">
+                    </div>
                 </div>
             </fieldset>
             <!-- Seccion Medio de Pago-->
@@ -190,54 +192,53 @@
                 </select><br>
                 </div>
                 <hr/>
-                <div>
-                    <div>
-                        <h4> Categorias seleccionadas</h4>
-                        <p>Para <strong>quitar</strong> una categoria, <em>haga click en la caja</em>.</p>
-                    </div>
+                <div class="seccion-categorias">
+                    <h4> Categorias seleccionadas</h4>
+                    <p>Para <strong>quitar</strong> una categoria, <em>haga click en la caja</em>.</p>
                     <!--Categorias seleccionadas-->
-                    <div class="contenedor-categorias">
-                        <div class="burbuja contenido-categoria fw-600">
+                    <div class="d-flex m-0 contenedor-categorias">
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Economico</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Ejecutivo</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Directivo</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Barrial</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Comercio</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Construccion</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Cooperativa &quot;Somos una cooperativa &quot;</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Social</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Simple</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
+                            <p>Internacional</p>
+                        </div>
+                        <div class="categoria-seleccionada fw-700">
                             <p>unaCategoria</p>
                         </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
-                            <p>unaCategoria</p>
-                        </div>
-                        <div class="burbuja contenido-categoria fw-600">
+                        <div class="categoria-seleccionada fw-700">
                             <p>unaCategoria</p>
                         </div>
                     </div>
             </fieldset>
-            <input type="submit" value="Siguiente" class="btn btn-primario">
+            <input type="submit" value="Siguiente" class="btn btn-primario float-r">
         </form>
     </main>
+    <footer></footer>
 </body>
 
 </html>
