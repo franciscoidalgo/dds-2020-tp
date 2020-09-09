@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/css/normalize.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
+    <title>Bandeja de Mensajes</title>
+</head>
+
+<body>
+    <header class="contenedor-barra d-flex jc-sb">
+        <div class="ai-center txt-centrado">
+            <a href="#">
+                <h1 id="logo">Ge<span>Soc</span></h1>
+            </a>
+        </div>
+        <nav class="navbar">
+            <ul class="d-flex jc-sb contenido-navbar">
+                <li><i class="fas fa-envelope"></i></li>
+                <li><i class="fas fa-user"></i></li>
+                <li><i class="fas fa-ellipsis-v"></i></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="seccion">
+        <h1> Resultado de Validaciones </h1>
+        <div class="ai-center d-flex jc-sb">
+            <input type="text" name="busqueda" id="busqueda" placeholder="Buscar en bandeja de mensajes...">
+            <div class="contenedor-filtrado">
+                <p class="fw-600">Filtrar Por</p><br>
+                <input type="checkbox" name="visto" id="visto" value="visto" checked>
+                <label for="todas">Ver todas</label>
+                <input type="checkbox" name="todas" id="todas" value="todas" disabled>
+                <label for="visto">Vistos</label>
+                <input type="checkbox" name="transparentes" id="transparentes" value="transparentes" disabled>
+                <label for="transparentes">Transparentes</label>
+                <input type="checkbox" name="invalidas" id="invalidas" value="invalidas" disabled>
+                <label for="invalidas">Invalidas</label>
+            </div>
+        </div>
+        <hr>
+    </section>
+    <main class="seccion">
+
+        <table class="txt-centrado tabla">
+
+            <thead class="th-principal">
+                <tr>
+                    <th>#ID</th>
+                    <th>Generado Por</th>
+                    <th>Fecha</th>
+                    <th>Resultado</th>
+                    <th>Visto</th>
+                </tr>
+            </thead>
+            <tbody class="tabla-bandeja">
+                <tr>
+                    <td>9989781</td>
+                    <td>Fernando</td>
+                    <td>12-12-2012</td>
+                    <td>Transparente</td>
+                    <td> icono Visto</td>
+                </tr>
+                <tr class="invalido no-visto">
+                    <td>9989781</td>
+                    <td>Federico</td>
+                    <td>12-12-2018</td>
+                    <td>Invalida</td>
+                    <td> icono Visto</td>
+                </tr>
+                <tr class="invalido">
+                    <td>9989781</td>
+                    <td>Maxi</td>
+                    <td>12-12-2018</td>
+                    <td>Invalida</td>
+                    <td> icono Visto</td>
+                </tr>
+                <tr>
+                    <td>9989781</td>
+                    <td>Pedro</td>
+                    <td>12-12-2012</td>
+                    <td>Transparente</td>
+                    <td> icono Visto</td>
+                </tr>
+                <tr>
+                    <td>9989781</td>
+                    <td>Ignacio</td>
+                    <td>12-12-2012</td>
+                    <td>Transparente</td>
+                    <td> icono Visto</td>
+                </tr>
+                <tr class="invalido">
+                    <td>9989781</td>
+                    <td>Simon</td>
+                    <td>12-12-2018</td>
+                    <td>Invalida</td>
+                    <td> icono Visto</td>
+                </tr>
+                <tr class="seleccionado">
+                    <td>9989781</td>
+                    <td>Florencia</td>
+                    <td>12-12-2012</td>
+                    <td>Transparente</td>
+                    <td> icono Visto</td>
+                </tr>
+                <tr class="invalido">
+                    <td>9989781</td>
+                    <td>Alex</td>
+                    <td>12-12-2018</td>
+                    <td>Invalida</td>
+                    <td> icono Visto</td>
+                </tr>
+            </tbody>
+        </table>
+        <nav class="d-flex nav-tabla">
+            <a href="#">anterior</a>
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">siguiente</a>
+        </nav>
+        <br>
+        <article id="mensaje" class="seccion">
+            <header>
+                <h3>Asunto:Egreso #12457</h3>
+            </header>
+            <section>
+                <h4>Resultados de las validaciones</h4>
+                <p>Resultado de validacion de seleccion de proveedor: Valida <br> Resultado de validacion de detalles del presupuestos: Valida <br> Resultado de validacion de cantidad de presupuestos: Valida</p>
+            </section>
+            <footer class="d-flex jc-sb">
+                <p>Creado Por: Florencia</p>
+                <p>Fecha:12-12-2012</p>
+            </footer>
+        </article>
+    </main>
+</body>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/css/normalize.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
+    <title>Egresos</title>
+</head>
+
+<body>
+    <header class="contenedor-barra d-flex jc-sb">
+        <div class="ai-center txt-centrado">
+            <a href="#">
+                <h1 id="logo">Ge<span>Soc</span></h1>
+            </a>
+        </div>
+        <nav class="navbar">
+            <ul class="d-flex jc-sb contenido-navbar">
+                <li><i class="fas fa-envelope"></i></li>
+                <li><i class="fas fa-user"></i></li>
+                <li><i class="fas fa-ellipsis-v"></i></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="seccion">
+        <h1> Operacion Egreso/Presupuesto </h1>
+        <form action="" method="post">
+            <!-- Seccion Proveedor-->
+            <div class="burbuja  d-flex jc-sb ai-center">
+                <div class="d-flex jc-sb">
+                    <p><i class="fas fa-truck-moving"></i></p>
+                    <h3>Seleccion de Proveedor</h3>
+                </div>
+                <p><i class="fas fa-plus"></i></p>
+            </div>
+            <!-- Formulario Proveedor-->
+            <fieldset id="proveedor" class="burbuja ">
+                <div class="contenedor-entrada">
+                    <div class="d-flex jc-sb">
+                        <div class="entrada-form-nuevo">
+                            <label for="razon-social">Razon Social</label><br>
+                            <select name="razon-social" id="razon-social" required>
+                                <option value="" disabled selected>-- Seleccione --</option>
+                                <option value="">algo</option>
+                            </select>
+                        </div>
+                        <input type="button" value="Nueva" class="btn btn-secundario" required>
+                    </div>
+                    <div class="d-flex jc-sb">
+                        <div class="entrada-form-nuevo">
+                            <label for="vendedor">Vendedor</label><br>
+                            <select name="vendedor" id="vendedor" disabled required>
+                                <option value="" disabled selected>-- Seleccione --</option>
+                                <option value="">algo</option>                        
+                            </select>
+                        </div>
+                        <input type="button" value="Nuevo Vendedor" class="btn btn-secundario" required>
+                    </div>
+                    <label for="dni">Dni/Cuit</label><br>
+                    <input type="number" name="dni" id="dni" disabled placeholder="Ingrese DNI o CUIT..." required><br>
+                </div>
+                <hr/>
+                <div class="contenedor-entrada">
+                    <label for="pais">Pais</label><br>
+                    <select name="pais" id="pais" required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        <option value="">algo</option>
+                    </select><br>
+                    <label for="provincia">Provincia</label><br>
+                    <select name="provincia" id="provincia" disabled required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        <option value="">algo</option>
+                    </select><br>
+                    <label for="ciudad">Ciudad</label><br>
+                    <select name="ciudad" id="ciudad" disabled required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        <option value="">algo</option>
+                    </select><br>
+                    <label for="calle">Calle</label><br>
+                    <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9]{1,}" title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... " required><br>
+                    <div class="d-flex jc-sb contenedor-direccion">
+                        <div class="contenido-direccion">
+                            <label for="altura">Altura</label><br>
+                            <input type="number" name="altura" id="altura" min="0" placeholder="Altura... " required>
+                        </div>
+                        <div class="contenido-direccion">
+                            <label for="piso">Piso</label><br>
+                            <input type="text" name="piso" id="piso" placeholder="Piso... ">
+                        </div>
+                        <div class="contenido-direccion">
+                            <label for="dpto">Dpto</label><br>
+                            <input type="text" name="dpto" id="dpto" placeholder="Dpto... ">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <!-- Seccion Detalle compra-->
+            <div class="burbuja  d-flex jc-sb ai-center">
+                <div class="d-flex jc-sb">
+                    <p> <i class="fas fa-cart-arrow-down"></i></p>
+                    <h3>Detalle compra</h3>
+                </div>
+                <p><i class="fas fa-plus"></i></p>
+            </div>
+            <!-- Formulario Detalle compra-->
+            <fieldset id="detalle-compra" class="burbuja ">
+                <table class="txt-centrado tabla">
+                    <thead class="th-principal">
+                        <tr>
+                            <th>Descripcion</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody class="tabla-detalle">
+                        <tr>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                            <td> icono</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                            <td> icono</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                            <td> icono</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <div class="contenedor-entrada">
+                    <div class="d-flex jc-sb">
+                        <div class="entrada-form-nuevo">
+                            <label for="producto">Servicio/Producto</label><br>
+                            <select name="producto" id="producto" required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        <option value="">algo</option>
+                    </select>
+                        </div> <input type="button" value="Nuevo Producto" class="btn btn-secundario">
+                    </div>
+                    <br>
+                    <label for="costo">Costo Total</label><br>
+                    <input type="number" name="costo" id="costo" min="0" placeholder="Ingrese costo total... " required><br>
+                    <input id="agregar-tabla" type="button" value="Agregar" class="btn btn-secundario">
+                </div>
+            </fieldset>
+            <!-- Seccion Medio de Pago-->
+            <div class="burbuja d-flex jc-sb ai-center">
+                <div class="d-flex jc-sb">
+                    <p><i class="far fa-credit-card"></i></p>
+                    <h3>Seleccion de Medio de Pago</h3>
+                </div>
+                <p><i class="fas fa-plus"></i></p>
+            </div>
+            <!-- Formulario Medio de Pago-->
+            <fieldset id="medio-de-pago" class="burbuja ">
+                <div class="contenedor-entrada">
+                    <label for="moneda">Moneda</label><br>
+                    <select name="moneda" id="moneda" required>
+                        <option value="" disabled selected >-- Seleccione --</option>
+                        <option value="">Peso</option>
+                        <option value="">Dolar</option>
+                        <option value="">Bitcoin</option>
+                        
+                </select><br>
+                    <label for="tipo-pago">Tipo de pago</label><br>
+                    <select name="tipo-pago" id="tipo-pago" disabled required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        <option value="">Efectivo</option>
+                        <option value="">Tarjeta Debito</option>
+                        <option value="">Tarjeta Credito</option>
+                        <option value="">Cheque</option>
+                </select><br>
+                    <label for="tipo-comprobante">Tipo comprobante</label><br>
+                    <select name="tipo-comprobante" id="tipo-comprobante">
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        <option value="">Ticket</option>
+                        <option value="">Recibo</option>
+                        <option value="">Factura</option>
+                </select><br>
+                    <label for="comprobante">Comprobante</label><br>
+                    <input type="file" name="comprobante" id="comprobante" placeholder="Ingrese comprobante... "><br>
+                    <label for="categoria">Categoria</label><br>
+                    <select name="categoria" id="categoria">
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        <option value="">algo</option>
+                </select><br>
+                </div>
+                <hr/>
+                <div>
+                    <div>
+                        <h4> Categorias seleccionadas</h4>
+                        <p>Para <strong>quitar</strong> una categoria, <em>haga click en la caja</em>.</p>
+                    </div>
+                    <!--Categorias seleccionadas-->
+                    <div class="contenedor-categorias">
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                        <div class="burbuja contenido-categoria fw-600">
+                            <p>unaCategoria</p>
+                        </div>
+                    </div>
+            </fieldset>
+            <input type="submit" value="Siguiente" class="btn btn-primario">
+        </form>
+    </main>
+</body>
+
+</html>

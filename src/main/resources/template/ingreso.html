@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/css/normalize.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
+    <title>Ingreso</title>
+</head>
+
+<body>
+    <header class="contenedor-barra d-flex jc-sb">
+        <div class="ai-center txt-centrado">
+            <a href="#">
+                <h1 id="logo">Ge<span>Soc</span></h1>
+            </a>
+        </div>
+        <nav class="navbar">
+            <ul class="d-flex jc-sb contenido-navbar">
+                <li><i class="fas fa-envelope"></i></li>
+                <li><i class="fas fa-user"></i></li>
+                <li><i class="fas fa-ellipsis-v"></i></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="seccion">
+        <h1> Operacion Ingreso </h1>
+        <form action="" method="post">
+            <!-- Seccion Ingreso-->
+            <div class="burbuja  d-flex jc-sb ai-center">
+                <div class="d-flex jc-sb">
+                    <p><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></p>
+                    <h3>Detalle Ingreso</h3>
+                </div>
+                <p><i class="fas fa-plus"></i></p>
+            </div>
+            <!-- Formulario Ingreso-->
+            <fieldset id="detalle-ingreso" class="burbuja ">
+                <div class="contenedor-entrada">
+                    <div class="entrada-form-nuevo">
+                        <label for="tipo-ingreso">Tipo de Ingreso</label><br>
+                        <select name="tipo-ingreso" id="tipo-ingreso" disabled required>
+                                <option value="" disabled selected>-- Seleccione --</option>
+                                <option value="">Donacion</option>                        
+                                <option value="">Prestamo</option>                        
+                            </select>
+                    </div>
+                    <label for="monto-total">Monto Total</label><br>
+                    <input type="number" name="monto-total" id="monto-total" min="0" disabled placeholder="Ingrese monto total..." required><br>
+                    <label for="descripcion">Descripcion</label><br>
+                    <textarea name="descripcion" id="descripcion" disabled placeholder="Ingrese descripcion..." required></textarea>
+                    <br>
+
+                </div>
+            </fieldset>
+            <!-- Seccion Asociar Egreso-->
+            <div class="burbuja  d-flex jc-sb ai-center">
+                <div class="d-flex jc-sb">
+                    <p> <i class="fa fa-link"></i></p>
+                    <h3>Asociar con Egresos</h3>
+                </div>
+                <p><i class="fas fa-plus"></i></p>
+            </div>
+            <!-- Formulario Asociar Egreso-->
+            <fieldset id="detalle-compra" class="burbuja ">
+                <table class="txt-centrado tabla">
+                    <caption class="fw-600">Egresos Vinculados</caption>
+                    <thead class="th-principal">
+                        <tr>
+                            <th>#ID</th>
+                            <th>Fecha</th>
+                            <th>Descripcion</th>
+                            <th>Monto total</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody class="tabla-detalle">
+                        <tr>
+                            <td>9989781</td>
+                            <td>12-12-2012</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                            <td>10000</td>
+                            <td> icono</td>
+                        </tr>
+                        <tr>
+                            <td>9989781</td>
+                            <td>12-12-2012</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                            <td>10000</td>
+                            <td> icono</td>
+                        </tr>
+                        <tr>
+                            <td>9989781</td>
+                            <td>12-12-2012</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                            <td>10000</td>
+                            <td> icono</td>
+                        </tr>
+                        <tr>
+                            <td>9989781</td>
+                            <td>12-12-2012</td>
+                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                            <td>10000</td>
+                            <td> icono</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+
+                <!--Agregar BUSQUEDA ACA!-->
+
+                <input id="agregar-tabla" type="button" value="Vincular" class="btn btn-secundario">
+            </fieldset>
+            <input type="submit" value="Siguiente" class="btn btn-primario">
+        </form>
+    </main>
+</body>
+
+</html>
