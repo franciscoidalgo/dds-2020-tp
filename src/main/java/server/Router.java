@@ -1,5 +1,8 @@
 package server;
 
+import controllers.ControllerIndex;
+import controllers.ControllerLogin;
+import middleware.AuthMiddleware;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
@@ -23,5 +26,19 @@ public class Router {
     }
 
     private static void configure(){
+        ControllerLogin controllerLogin = new ControllerLogin();
+        ControllerIndex controllerIndex = new ControllerIndex();
+        AuthMiddleware authMiddleware = new AuthMiddleware();
+
+        //Spark.get("/", controllerLogin::inicio, Router.engine);
+
+        Spark.before("/", authMiddleware::verificarSesion);
+
+        Spark.get("/auth", controllerLogin::inicio, Router.engine);
+
+        Spark.post("/auth", controllerLogin::login);
+
+        Spark.get("/dashboard", controllerIndex::mostrarIndice, Router.engine);
+
     }
 }

@@ -1,18 +1,35 @@
-package domain.Usuario;
+package domain.Entidad.Usuario;
 
 import domain.Entidad.Entidad;
 import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-public class Usuario {
+@Entity
+@Table
+public class Usuario extends Entidad{
     //Atributo
+    @Column
     private String nombre;
+
+    @Column
     private String password;
+
+    @Transient
     private Rol rol;
+
+    @Transient
     private EntidadJuridica entidadPertenece;//domain.Entidad Juridica a la que pertenece el usuario
+
+    @Transient
     private Entidad entidadSeleccionada;
+
+    @Transient
     private BandejaMensaje bandejaDeMensajes;
 
     public Usuario(String nombre, String password, Rol rol, EntidadJuridica entidadPertenece) {

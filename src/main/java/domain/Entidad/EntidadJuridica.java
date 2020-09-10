@@ -9,7 +9,7 @@ import domain.Operacion.Operacion;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EntidadJuridica implements Entidad {
+public abstract class EntidadJuridica extends Entidad {
     protected String razonSocial;
     protected String nombre;
     protected long CUIT;

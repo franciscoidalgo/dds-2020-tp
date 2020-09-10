@@ -1,6 +1,6 @@
 package domain.Entidad;
 
-public class EntidadBase implements Entidad{
+public class EntidadBase extends Entidad{
     //Atributos
     private String nombre;
     private String descripcion;
@@ -21,12 +21,10 @@ public class EntidadBase implements Entidad{
         this.descripcion = descripcion;
     }
 
-    @Override
     public String nombre() {
         return nombre;
     }
 
-    @Override
     public String descripcion() {
         return descripcion;
     }

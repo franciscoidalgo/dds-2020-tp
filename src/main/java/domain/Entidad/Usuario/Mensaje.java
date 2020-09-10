@@ -1,4 +1,4 @@
-package domain.Usuario;
+package domain.Entidad.Usuario;
 
 import java.time.LocalTime;
 

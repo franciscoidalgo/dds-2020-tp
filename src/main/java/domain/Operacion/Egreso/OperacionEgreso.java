@@ -3,8 +3,8 @@ package domain.Operacion.Egreso;
 
 
 import domain.Operacion.Operacion;
-import domain.Usuario.Mensaje;
-import domain.Usuario.Usuario;
+import domain.Entidad.Usuario.Mensaje;
+import domain.Entidad.Usuario.Usuario;
 import domain.Validadores.ValidadorDeTransparencia;
 
 import java.util.ArrayList;

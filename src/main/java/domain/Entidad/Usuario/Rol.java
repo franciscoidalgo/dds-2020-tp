@@ -1,4 +1,4 @@
-package domain.Usuario;
+package domain.Entidad.Usuario;
 
 import domain.Entidad.CategorizacionOperacion.Criterio;
 

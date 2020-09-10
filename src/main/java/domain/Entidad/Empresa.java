@@ -73,12 +73,10 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         this.categoria = categoria;
     }
 
-    @Override
     public String nombre() {
         return this.nombre;
     }
 
-    @Override
     public String descripcion() {
         return this.descripcion;
     }
