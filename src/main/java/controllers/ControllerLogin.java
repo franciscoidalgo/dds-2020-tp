@@ -35,6 +35,7 @@ public class ControllerLogin {
 
                 request.session(true);
                 request.session().attribute("id", usuario.getId());
+                request.session().attribute("username", usuario.getNombre());
 
                 response.redirect("/dashboard");
             }else{

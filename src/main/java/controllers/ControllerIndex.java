@@ -1,5 +1,6 @@
 package controllers;
 
+import middleware.AuthMiddleware;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;

@@ -30,13 +30,13 @@ public class Router {
         ControllerIndex controllerIndex = new ControllerIndex();
         AuthMiddleware authMiddleware = new AuthMiddleware();
 
-        //Spark.get("/", controllerLogin::inicio, Router.engine);
-
         Spark.before("/", authMiddleware::verificarSesion);
 
         Spark.get("/auth", controllerLogin::inicio, Router.engine);
 
         Spark.post("/auth", controllerLogin::login);
+
+        Spark.before("/dashboard", authMiddleware::ingresoConSesionIniciada);
 
         Spark.get("/dashboard", controllerIndex::mostrarIndice, Router.engine);
 
