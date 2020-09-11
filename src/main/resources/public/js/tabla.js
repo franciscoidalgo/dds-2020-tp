@@ -12,4 +12,6 @@ function agregateEnTablaSimple(tabla, descripcion) {
     tBody.appendChild(fila);
 }
 
+
+
 export default agregateEnTablaSimple;

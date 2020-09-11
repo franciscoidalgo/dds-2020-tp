@@ -1,6 +1,5 @@
 import agregateEnTablaSimple from './tabla.js';
 import { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, quitarDelDesplegableSegunContenido, tieneSeleccionables } from './desplegable.js';
-
 import generaCategoria from './categoria.js';
 
 var burbuja = {
@@ -9,7 +8,7 @@ var burbuja = {
     pago: document.getElementById('burbuja-pago')
 }
 
-var formulario = {
+var contenedorFormulario = {
     proveedor: document.getElementById('proveedor'),
     compra: document.getElementById('detalle-compra'),
     pago: document.getElementById('medio-de-pago')
@@ -40,12 +39,14 @@ var boton = {
 
 var seccion = {
     tablaDetalle: document.getElementById('tabla-detalle'),
-    categoria: document.getElementById('categorias-seleccionadas')
+    msgTablaVacia: document.getElementById('msg-tabla-vacia'),
+    categoria: document.getElementById('categorias-seleccionadas'),
+    msgCategoriasVacia: document.getElementById('msg-categorias-vacia')
 }
 
 
 /*funciones!*/
-export function setHidden(etiqueta, valor) {
+function setHidden(etiqueta, valor) {
     etiqueta.hidden = valor;
 }
 
@@ -53,7 +54,6 @@ function modificaIcono(disparador, clase) {
     disparador.children[1].children[0].className = clase;
 }
 
-/**todo: Refactorizar esto */
 function setHiddenSegun(disparador, etiqueta) {
     etiqueta.hidden ? modificaIcono(disparador, "fas fa-minus") : modificaIcono(disparador, "fas fa-plus");
     setHidden(etiqueta, !etiqueta.hidden);
@@ -83,28 +83,34 @@ function manejaSeleccionables(desplegable, disparador) {
 function agregaEnTablaSegunDesplegable(disparador, tabla, desplegable) {
 
     var nodoContenido = contenidoSeleccionadoEn(desplegable);
-    var contenido = contenidoSeleccionadoEn(desplegable);
+    var contenido = nodoContenido.innerHTML;
 
-    agregateEnTablaSimple(tabla, contenido.innerHTML);
+
+    agregateEnTablaSimple(tabla, contenido);
     seleccionarValorPara(desplegable, 0);
 
-    setHiden(disparador.srcElement, true);
     enfocarElemento(tabla);
+
     quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
-    manejaSeleccionables(desplegable, disparador)
+    manejaSeleccionables(desplegable, disparador);
+
+
 }
 
 
 
 function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
-    var contenido = contenidoSeleccionadoEn(desplegable);
-    var categoria = generaCategoria(contenido.innerHTML, true);
+
+    var nodoContenido = contenidoSeleccionadoEn(desplegable);
+    var contenido = nodoContenido.innerHTML;
+    var categoria = generaCategoria(contenido, true);
 
     seccion.appendChild(categoria);
-
     seleccionarValorPara(desplegable, 0);
+
     enfocarElemento(desplegable);
-    quitarDelDesplegableSegunContenido(desplegable, contenido);
+
+    quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
     manejaSeleccionables(desplegable, disparador)
 }
 
@@ -112,9 +118,9 @@ function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
 
 
 /*disparadores*/
-burbuja.proveedor.onclick = () => setHiddenSegun(burbuja.proveedor, formulario.proveedor);
-burbuja.detalle.onclick = () => setHiddenSegun(burbuja.detalle, formulario.compra);
-burbuja.pago.onclick = () => setHiddenSegun(burbuja.pago, formulario.pago);
+burbuja.proveedor.onclick = () => setHiddenSegun(burbuja.proveedor, contenedorFormulario.proveedor);
+burbuja.detalle.onclick = () => setHiddenSegun(burbuja.detalle, contenedorFormulario.compra);
+burbuja.pago.onclick = () => setHiddenSegun(burbuja.pago, contenedorFormulario.pago);
 
 desplegable.producto.onchange = () => setHidden(boton.agregarTabla, false);
 
@@ -128,5 +134,13 @@ desplegable.comprobante.onchange = () => {
     setDisabled(seleccionArchivo.comprobante, coincidenTexto);
 };
 
-boton.agregarTabla.onclick = (e) => agregaEnTablaSegunDesplegable(e, seccion.tablaDetalle, desplegable.producto);
-boton.agregarCategoria.onclick = (e) => agregaEnCategoriaValorDesplegable(e, seccion.categoria, desplegable.categoria);
+boton.agregarTabla.onclick = (e) => {
+    setHidden(seccion.tablaDetalle, false);
+    setHidden(seccion.msgTablaVacia, true);
+    agregaEnTablaSegunDesplegable(e, seccion.tablaDetalle, desplegable.producto);
+}
+boton.agregarCategoria.onclick = (e) => {
+    setHidden(seccion.categoria, false);
+    setHidden(seccion.msgCategoriasVacia, true);
+    agregaEnCategoriaValorDesplegable(e, seccion.categoria, desplegable.categoria);
+}

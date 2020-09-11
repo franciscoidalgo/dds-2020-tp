@@ -19,6 +19,7 @@ function puedeEliminar(desplegable, nodoVictima) {
 }
 
 function tieneSeleccionables(desplegable) {
+
     return desplegable.options.length > 1;
 }
 
