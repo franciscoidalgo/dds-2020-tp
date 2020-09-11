@@ -7,12 +7,11 @@ import spark.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ControllerIndex {
+public class ControllerEgresos {
 
-    public ModelAndView mostrarIndice (Request request, Response response){
+    public ModelAndView mostrarEgresos(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        return new ModelAndView(parametros, "dashboard.hbs");
-
+        parametros.put("egreso", true);
+        return new ModelAndView(parametros, "egreso.hbs");
     }
-
 }

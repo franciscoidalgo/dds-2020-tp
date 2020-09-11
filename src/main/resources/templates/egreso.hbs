@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="../public/css/normalize.css">
-    <link rel="stylesheet" href="../public/css/styles.css">
-    <title>Egresos</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Egreso</title>
 </head>
 
 <body>
     <header class="contenedor-barra d-flex jc-sb">
         <div class="ai-center txt-centrado">
-            <a href="#">
+            <a href="dashboard">
                 <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
             </a>
         </div>
@@ -27,7 +27,11 @@
         </nav>
     </header>
     <main class="seccion">
-        <h1> Operacion Egreso/Presupuesto </h1>
+        {{#if egreso}}
+        <h1> Operacion Egreso </h1>
+        {{else}}
+        <h1> Presupuesto </h1>
+        {{/if}}
         <form action="" method="post">
             <!-- Seccion Proveedor-->
             <div class="burbuja  d-flex jc-sb ai-center">

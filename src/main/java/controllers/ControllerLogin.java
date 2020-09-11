@@ -29,7 +29,6 @@ public class ControllerLogin {
             );
             String nombreDeUsuario = request.queryParams("usuario");
             String contrasenia = PasswordHasher.hash(request.queryParams("password"));
-            System.out.println(repositorioDeUsuarios.buscarUsuario("Francisco Idalgo", contrasenia));
             if(repositorioDeUsuarios.verificarExistencia(nombreDeUsuario, contrasenia)){
                 Usuario usuario = repositorioDeUsuarios.buscarUsuario(nombreDeUsuario, contrasenia);
 
