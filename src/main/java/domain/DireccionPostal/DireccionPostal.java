@@ -24,6 +24,8 @@ public class DireccionPostal {
         this.piso = piso;
     }
 
+    public DireccionPostal(){};
+
     //Getters y Setters
     public String getPais() {
         return pais;

@@ -1,6 +1,6 @@
 package domain.Operacion;
 
-import domain.Usuario.Usuario;
+import domain.Entidad.Usuario.Usuario;
 
 import java.time.LocalTime;
 

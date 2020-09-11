@@ -3,7 +3,7 @@ package domain.Operacion.Ingreso;
 
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Operacion;
-import domain.Usuario.Usuario;
+import domain.Entidad.Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;

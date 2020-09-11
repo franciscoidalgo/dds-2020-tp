@@ -1,4 +1,4 @@
-package domain.Usuario;
+package domain.Entidad.Usuario;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,13 +15,13 @@ public class BandejaMensaje {
 
     public void filtraPorLeido(){
         this.mensajes.stream()
-                .sorted(Comparator.comparing(unMensaje  -> unMensaje.getFechaLeido()))
+                .sorted(Comparator.comparing(Mensaje::getFechaLeido))
                 .collect(Collectors.toList());
     }
 
     public void filtraPorEnvio(){
         this.mensajes.stream()
-                .sorted((Comparator.comparing(unMensaje-> unMensaje.getFechaEnvio())))
+                .sorted((Comparator.comparing(Mensaje::getFechaEnvio)))
                 .collect(Collectors.toList());
     }
 
