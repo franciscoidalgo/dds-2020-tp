@@ -1,9 +1,6 @@
 package server;
 
-import controllers.ControllerEgresos;
-import controllers.ControllerIndex;
-import controllers.ControllerLogin;
-import controllers.ControllerPresupuesto;
+import controllers.*;
 import middleware.AuthMiddleware;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -32,10 +29,14 @@ public class Router {
         ControllerIndex controllerIndex = new ControllerIndex();
         ControllerEgresos controllerEgresos = new ControllerEgresos();
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
+        ControllerIngreso controllerIngreso = new ControllerIngreso();
+        PruebaRest pruebaRest = new PruebaRest();
 
         AuthMiddleware authMiddleware = new AuthMiddleware();
 
         Spark.before("/", authMiddleware::verificarSesion);
+
+        Spark.before("/auth", authMiddleware::noLogueesDosVeces);
 
         Spark.get("/auth", controllerLogin::inicio, Router.engine);
 
@@ -51,7 +52,13 @@ public class Router {
 
         Spark.before("/ingreso", authMiddleware::ingresoConSesionIniciada);
 
-        Spark.get("/ingreso", controllerPresupuesto::mostrarIngresos, Router.engine);
+        Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
+
+        Spark.before("/presupuesto", authMiddleware::ingresoConSesionIniciada);
+
+        Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
+
+        Spark.get("/api/usuario/:id", pruebaRest::mostrar);
 
     }
 }
