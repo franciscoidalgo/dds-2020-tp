@@ -1,17 +1,19 @@
 function agregateEnTablaSimple(tabla, descripcion) {
-    var template = `
-        <td>${descripcion}</td>
-        <td>icono</td>
+    let tBody = tabla.children[1]; /*0:thead|1:tbody*/
+    let fila = document.createElement("tr");
+    let id = `tr-${tBody.childElementCount}`;
+    let template = `
+            <td>${descripcion}</td>
+            <td><i class="fas fa-minus-square" onclick="eliminarFila('${id}')"></i></td>
         `;
-
-    var tBody = tabla.children[1]; /*0:thead|1:tbody*/
-    var fila = document.createElement("tr");
-
-    fila.innerHTML = template
-
+    fila.id = id;
+    fila.innerHTML = template;
     tBody.appendChild(fila);
 }
 
+function tablaTieneElementos(tabla){
+    let tBody = tabla.children[1]; /*0:thead|1:tbody*/
+    return tBody.childElementCount>0;
+}
 
-
-export default agregateEnTablaSimple;
+export {agregateEnTablaSimple, tablaTieneElementos};
