@@ -1,86 +1,79 @@
-import {agregateEnTablaSimple,tablaTieneElementos} from './tabla.js';
-import { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, quitarDelDesplegableSegunContenido, tieneSeleccionables,agregaContenidoEnDesplegable } from './desplegable.js';
+import {agregateEnTablaSimple, tablaTieneElementos} from './tabla.js';
+import {
+    agregaContenidoEnDesplegable,
+    contenidoDesplegableEs,
+    contenidoSeleccionadoEn,
+    quitarDelDesplegableSegunContenido,
+    seleccionarValorPara,
+} from './desplegable.js';
 import generaCategoria from './categoria.js';
+import generaTextbox from './textbox.js';
+import {Clases,  Desplegable} from "./clases.js";
 
-var burbuja = {
-    proveedor: document.getElementById('burbuja-proveedor'),
-    detalle: document.getElementById('burbuja-compra'),
-    pago: document.getElementById('burbuja-pago')
-}
+const burbujas = [
+        new Clases('burbuja-proveedor','proveedor'),
+        new Clases('burbuja-compra','detalle-compra'),
+        new Clases('burbuja-pago','medio-de-pago')
+]
 
-var contenedorFormulario = {
-    proveedor: document.getElementById('proveedor'),
-    compra: document.getElementById('detalle-compra'),
-    pago: document.getElementById('medio-de-pago')
-}
+const ocultadores = [
+        new Desplegable('producto', 'agregar-tabla'),
+        new Desplegable('categoria', 'agregar-categoria'),
+];
 
-var desplegable = {
+const habilitadores = [
+        new Desplegable('razon-social', 'vendedor'),
+        new Desplegable('pais', 'provincia'),
+        new Desplegable('provincia', 'ciudad'),
+        new Desplegable('moneda', 'tipo-pago'),
+];
+
+/* Estados Iniciales */
+const desplegable = {
     razonSocial: document.getElementById('razon-social'),
     vendedor: document.getElementById('vendedor'),
-    pais: document.getElementById('pais'),
-    provincia: document.getElementById('provincia'),
-    ciudad: document.getElementById('ciudad'),
-    moneda: document.getElementById('moneda'),
-    tipoPago: document.getElementById('tipo-pago'),
-    comprobante: document.getElementById('tipo-comprobante'),
     producto: document.getElementById('producto'),
-    categoria: document.getElementById('categoria')
-}
+    categoria: document.getElementById('categoria'),
+    comprobante: document.getElementById('tipo-comprobante')
+};
 
-var seleccionArchivo = {
-    comprobante: document.getElementById('comprobante'),
-}
+const entrada = {
+    dni: document.getElementById('dni'),
+    comprobante: document.getElementById('comprobante')
+};
 
-var boton = {
+const boton = {
     agregarTabla: document.getElementById('agregar-tabla'),
     agregarCategoria: document.getElementById('agregar-categoria'),
+    razonSocial: document.getElementById('nueva-razon-social'),
+    vendedor: document.getElementById('nuevo-vendedor'),
+    nuevoItem: document.getElementById('nuevo-item')
 
-}
+};
 
-var seccion = {
+const seccion = {
     tablaDetalle: document.getElementById('tabla-detalle'),
     msgTablaVacia: document.getElementById('msg-tabla-vacia'),
     categoria: document.getElementById('categorias-seleccionadas'),
     msgCategoriasVacia: document.getElementById('msg-categorias-vacia')
-}
+};
 
 
-/*funciones!*/
-
-function iconoSegunExpansion(etiqueta){
-     return etiqueta.hidden ? "fas fa-minus" : "fas fa-minus";
-}
-
-function enfocarElemento(etiqueta){
-    etiqueta.focus();
-    etiqueta.scrollIntoView({ behavior: "smooth" });
-}
-
-function setHiddenSegun(disparador, etiqueta) {
-    let nodoIcono = disparador.children[1].children[0];
-
-    nodoIcono.className = iconoSegunExpansion(etiqueta);
-    etiqueta.hidden = !etiqueta.hidden;
-    enfocarElemento(disparador)
-}
-
+/* Funciones */
 function agregaEnTablaSegunDesplegable(disparador, tabla, desplegable) {
 
     let nodoContenido = contenidoSeleccionadoEn(desplegable);
     let contenido = nodoContenido.innerHTML;
 
-
     agregateEnTablaSimple(tabla, contenido);
     seleccionarValorPara(desplegable, 0);
 
-    enfocarElemento(tabla);
+    desplegable.focus();
+    tabla.scrollIntoView({ behavior: "smooth" });
 
     quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
     disparador["srcElement"].hidden = true;
-
 }
-
-
 
 function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
 
@@ -91,51 +84,55 @@ function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
     seccion.appendChild(categoria);
     seleccionarValorPara(desplegable, 0);
 
-    enfocarElemento(desplegable);
-
     quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
+
+    desplegable.focus();
+    desplegable.scrollIntoView({ behavior: "smooth" });
     disparador["srcElement"].hidden = true;
+    categoria.onclick = ()=>{eliminaCategoria(categoria)};
 }
 
 
+/*Eventos!*/
 
+/*Repetidos*/
+burbujas.forEach((b)=>{
+    b.elemento.onclick = () => b.ocultaBurbuja();
+})
 
-/*disparadores*/
-burbuja.proveedor.onclick = () => setHiddenSegun(burbuja.proveedor, contenedorFormulario.proveedor);
-burbuja.detalle.onclick = () => setHiddenSegun(burbuja.detalle, contenedorFormulario.compra);
-burbuja.pago.onclick = () => setHiddenSegun(burbuja.pago, contenedorFormulario.pago);
+ocultadores.forEach((d) =>{
+    d.elemento.onchange = () => d.mostraObjetivo();
+});
 
-desplegable.producto.onchange = () => {
-    boton.agregarTabla.hidden = false;
-}
-
-desplegable.categoria.onchange = () => {
-    boton.agregarCategoria.hidden = false;
-}
-
-desplegable.razonSocial.onchange = () => {
-    desplegable.vendedor.disabled = false;
-}
-
-desplegable.pais.onchange = () => {
-    desplegable.provincia.disabled = false;
-}
-desplegable.provincia.onchange = () => {
-    desplegable.ciudad.disabled = false;
-}
-desplegable.moneda.onchange = () => {
-    desplegable.tipoPago.disabled = false;
-}
+habilitadores.forEach((d) =>{
+    d.elemento.onchange = () => d.habilitaObjetivo();
+});
 
 desplegable.comprobante.onchange = () => {
-    let coincidenTexto = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno');
-    seleccionArchivo.comprobante.disabled = coincidenTexto;
+    entrada.comprobante.disabled = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno');
 }
 
+/*Boton*/
 boton.agregarTabla.onclick = (e) => {
+    let botonNuevo = e.target["nextElementSibling"];
+    let tabla = seccion.tablaDetalle;
+    let contenido = document.getElementById('producto');
     seccion.tablaDetalle.hidden = false;
     seccion.msgTablaVacia.hidden = true;
-    agregaEnTablaSegunDesplegable(e, seccion.tablaDetalle, desplegable.producto);
+
+    if(botonNuevo.value !== "Cancelar"){
+        agregaEnTablaSegunDesplegable(e, seccion.tablaDetalle, contenido);
+    }else{
+        agregateEnTablaSimple(tabla, contenido.value);
+        enfocarElemento(tabla);
+        let contenedor = contenido.parentNode;
+        contenido.remove();
+        boton.nuevoItem.value = "Nuevo";
+        contenedor.appendChild(desplegable.producto);
+        document.getElementById('agregar-tabla').hidden=true;
+    }
+
+
 }
 
 boton.agregarCategoria.onclick = (e) => {
@@ -144,8 +141,83 @@ boton.agregarCategoria.onclick = (e) => {
     agregaEnCategoriaValorDesplegable(e, seccion.categoria, desplegable.categoria);
 }
 
-window.eliminarFila = (id) => {
-    let nodoFila = document.getElementById(id);
+boton.razonSocial.onclick = () =>{
+    let contenedor = document.getElementById('razon-social').parentNode;
+
+    if(boton.razonSocial.value !== "Volver"){
+    let contenido = generaTextbox(desplegable.razonSocial);
+
+    boton.razonSocial.setAttribute("value","Volver");
+    desplegable.razonSocial.remove();
+
+    contenedor.appendChild(contenido);
+    boton.vendedor.hidden = true;
+
+    contenido = generaTextbox(desplegable.vendedor);
+    contenedor = document.getElementById('vendedor').parentNode;
+    desplegable.vendedor.remove();
+
+    contenedor.appendChild(contenido);
+    entrada.dni.disabled = false;
+
+    }else{
+
+        boton.razonSocial.setAttribute("value","Nueva Razon Social");
+        boton.vendedor.hidden = false;
+        entrada.dni.disabled = true;
+
+        contenedor.lastChild.remove();
+        contenedor.appendChild(desplegable.razonSocial);
+
+        contenedor = document.getElementById('vendedor').parentNode;
+
+        contenedor.lastChild.remove();
+        contenedor.appendChild(desplegable.vendedor);
+    }
+
+}
+
+boton.vendedor.onclick = () =>{
+    let contenedor = document.getElementById('vendedor').parentNode;
+
+    if(boton.vendedor.value !== "Volver"){
+        let contenido = generaTextbox(desplegable.vendedor);
+
+        boton.vendedor.setAttribute("value","Volver");
+        desplegable.vendedor.remove();
+
+        contenedor.appendChild(contenido);
+        boton.razonSocial.hidden = true;
+
+        desplegable.razonSocial.disabled = true;
+        entrada.dni.disabled = false;
+
+    }else{
+
+        boton.vendedor.setAttribute("value","Nuevo Vendedor");
+        boton.razonSocial.hidden = false;
+        entrada.dni.disabled = true;
+        contenedor.lastChild.remove();
+        contenedor.appendChild(desplegable.vendedor);
+    }
+
+}
+
+boton.nuevoItem.onclick = ()=>{
+    let contenedor = document.getElementById('producto').parentNode;
+    let contenido = generaTextbox(desplegable.producto);
+
+    boton.nuevoItem.value = "Cancelar";
+    desplegable.producto.remove();
+    contenedor.appendChild(contenido);
+
+    contenido.onkeyup = ()=>{
+        document.getElementById('agregar-tabla').hidden = contenido.value==="";
+    }
+}
+
+/*En ejecucion*/
+window.eliminarFila = (nodoFila) => {
     let contenido = nodoFila.firstElementChild.textContent;
 
     agregaContenidoEnDesplegable(desplegable.producto,contenido);
@@ -153,15 +225,13 @@ window.eliminarFila = (id) => {
 
     seccion.tablaDetalle.hidden = !tablaTieneElementos(seccion.tablaDetalle);
     seccion.msgTablaVacia.hidden = tablaTieneElementos(seccion.tablaDetalle);
-
 }
-window.eliminaCategoria = (id) => {
-    let nodoCategoria = document.getElementById(id);
+
+window.eliminaCategoria = (nodoCategoria) => {
     let contenido = nodoCategoria.firstElementChild.textContent;
 
     agregaContenidoEnDesplegable(desplegable.categoria,contenido);
     nodoCategoria.remove();
-
 
     seccion.categoria.hidden = !seccion.categoria.childElementCount>1;
     seccion.msgCategoriasVacia.hidden = seccion.categoria.childElementCount>1;
