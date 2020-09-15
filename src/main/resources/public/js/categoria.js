@@ -1,16 +1,19 @@
  function generaCategoria(descripcion, estaSeleccionada) {
-     var classCategoria = `categoria${estaSeleccionada?"-seleccionada":""} fw-700`;
-     var categoria = document.createElement('div');
-     var contenido = document.createElement('p');
+     let classCategoria = `categoria${estaSeleccionada?"-seleccionada":""} fw-700`;
+     let categoria = document.createElement('div');
+     let contenido = document.createElement('p');
 
      contenido.innerHTML = descripcion;
      categoria.className = classCategoria;
+     categoria.id=descripcion;
 
      categoria.appendChild(contenido);
      categoria.setAttribute("id", descripcion);
+     categoria.setAttribute("onclick",`eliminaCategoria('${descripcion}')`)
 
      return categoria;
  }
+
 
 
  export default generaCategoria;

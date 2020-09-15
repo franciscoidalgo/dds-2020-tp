@@ -19,8 +19,15 @@ function puedeEliminar(desplegable, nodoVictima) {
 }
 
 function tieneSeleccionables(desplegable) {
-
     return desplegable.options.length > 1;
 }
 
-export { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, quitarDelDesplegableSegunContenido, tieneSeleccionables };
+function agregaContenidoEnDesplegable(desplegable,contenido){
+    let option = document.createElement("option");
+    option.value=contenido;
+    option.id=contenido;
+    option.innerText=contenido;
+    desplegable.appendChild(option);
+}
+
+export { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, quitarDelDesplegableSegunContenido, tieneSeleccionables,agregaContenidoEnDesplegable };

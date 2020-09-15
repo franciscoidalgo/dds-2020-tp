@@ -1,5 +1,5 @@
-import agregateEnTablaSimple from './tabla.js';
-import { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, quitarDelDesplegableSegunContenido, tieneSeleccionables } from './desplegable.js';
+import {agregateEnTablaSimple,tablaTieneElementos} from './tabla.js';
+import { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, quitarDelDesplegableSegunContenido, tieneSeleccionables,agregaContenidoEnDesplegable } from './desplegable.js';
 import generaCategoria from './categoria.js';
 
 var burbuja = {
@@ -46,44 +46,28 @@ var seccion = {
 
 
 /*funciones!*/
-function setHidden(etiqueta, valor) {
-    etiqueta.hidden = valor;
+
+function iconoSegunExpansion(etiqueta){
+     return etiqueta.hidden ? "fas fa-minus" : "fas fa-minus";
 }
 
-function modificaIcono(disparador, clase) {
-    disparador.children[1].children[0].className = clase;
-}
-
-function setHiddenSegun(disparador, etiqueta) {
-    etiqueta.hidden ? modificaIcono(disparador, "fas fa-minus") : modificaIcono(disparador, "fas fa-plus");
-    setHidden(etiqueta, !etiqueta.hidden);
-    disparador.focus();
-    disparador.scrollIntoView({ behavior: "smooth" });
-
-}
-
-
-function setDisabled(etiqueta, puedeHabilitar) {
-    etiqueta.disabled = puedeHabilitar;
-}
-
-
-function enfocarElemento(etiqueta) {
+function enfocarElemento(etiqueta){
     etiqueta.focus();
     etiqueta.scrollIntoView({ behavior: "smooth" });
 }
 
-function manejaSeleccionables(desplegable, disparador) {
-    if (!tieneSeleccionables(desplegable)) {
-        disparador.srcElement.hidden = true;
-        desplegable.disabled = true;
-    }
+function setHiddenSegun(disparador, etiqueta) {
+    let nodoIcono = disparador.children[1].children[0];
+
+    nodoIcono.className = iconoSegunExpansion(etiqueta);
+    etiqueta.hidden = !etiqueta.hidden;
+    enfocarElemento(disparador)
 }
 
 function agregaEnTablaSegunDesplegable(disparador, tabla, desplegable) {
 
-    var nodoContenido = contenidoSeleccionadoEn(desplegable);
-    var contenido = nodoContenido.innerHTML;
+    let nodoContenido = contenidoSeleccionadoEn(desplegable);
+    let contenido = nodoContenido.innerHTML;
 
 
     agregateEnTablaSimple(tabla, contenido);
@@ -92,8 +76,7 @@ function agregaEnTablaSegunDesplegable(disparador, tabla, desplegable) {
     enfocarElemento(tabla);
 
     quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
-    manejaSeleccionables(desplegable, disparador);
-
+    disparador["srcElement"].hidden = true;
 
 }
 
@@ -101,9 +84,9 @@ function agregaEnTablaSegunDesplegable(disparador, tabla, desplegable) {
 
 function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
 
-    var nodoContenido = contenidoSeleccionadoEn(desplegable);
-    var contenido = nodoContenido.innerHTML;
-    var categoria = generaCategoria(contenido, true);
+    let nodoContenido = contenidoSeleccionadoEn(desplegable);
+    let contenido = nodoContenido.innerHTML;
+    let categoria = generaCategoria(contenido, true);
 
     seccion.appendChild(categoria);
     seleccionarValorPara(desplegable, 0);
@@ -111,7 +94,7 @@ function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
     enfocarElemento(desplegable);
 
     quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
-    manejaSeleccionables(desplegable, disparador)
+    disparador["srcElement"].hidden = true;
 }
 
 
@@ -122,25 +105,65 @@ burbuja.proveedor.onclick = () => setHiddenSegun(burbuja.proveedor, contenedorFo
 burbuja.detalle.onclick = () => setHiddenSegun(burbuja.detalle, contenedorFormulario.compra);
 burbuja.pago.onclick = () => setHiddenSegun(burbuja.pago, contenedorFormulario.pago);
 
-desplegable.producto.onchange = () => setHidden(boton.agregarTabla, false);
+desplegable.producto.onchange = () => {
+    boton.agregarTabla.hidden = false;
+}
 
-desplegable.razonSocial.onchange = () => setDisabled(desplegable.vendedor, false);
-desplegable.pais.onchange = () => setDisabled(desplegable.provincia, false);
-desplegable.provincia.onchange = () => setDisabled(desplegable.ciudad, false);
-desplegable.moneda.onchange = () => setDisabled(desplegable.tipoPago, false);
+desplegable.categoria.onchange = () => {
+    boton.agregarCategoria.hidden = false;
+}
+
+desplegable.razonSocial.onchange = () => {
+    desplegable.vendedor.disabled = false;
+}
+
+desplegable.pais.onchange = () => {
+    desplegable.provincia.disabled = false;
+}
+desplegable.provincia.onchange = () => {
+    desplegable.ciudad.disabled = false;
+}
+desplegable.moneda.onchange = () => {
+    desplegable.tipoPago.disabled = false;
+}
 
 desplegable.comprobante.onchange = () => {
-    var coincidenTexto = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno');
-    setDisabled(seleccionArchivo.comprobante, coincidenTexto);
-};
+    let coincidenTexto = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno');
+    seleccionArchivo.comprobante.disabled = coincidenTexto;
+}
 
 boton.agregarTabla.onclick = (e) => {
-    setHidden(seccion.tablaDetalle, false);
-    setHidden(seccion.msgTablaVacia, true);
+    seccion.tablaDetalle.hidden = false;
+    seccion.msgTablaVacia.hidden = true;
     agregaEnTablaSegunDesplegable(e, seccion.tablaDetalle, desplegable.producto);
 }
+
 boton.agregarCategoria.onclick = (e) => {
-    setHidden(seccion.categoria, false);
-    setHidden(seccion.msgCategoriasVacia, true);
+    seccion.categoria.hidden = false;
+    seccion.msgCategoriasVacia.hidden = true;
     agregaEnCategoriaValorDesplegable(e, seccion.categoria, desplegable.categoria);
+}
+
+window.eliminarFila = (id) => {
+    let nodoFila = document.getElementById(id);
+    let contenido = nodoFila.firstElementChild.textContent;
+
+    agregaContenidoEnDesplegable(desplegable.producto,contenido);
+    nodoFila.remove();
+
+    seccion.tablaDetalle.hidden = !tablaTieneElementos(seccion.tablaDetalle);
+    seccion.msgTablaVacia.hidden = tablaTieneElementos(seccion.tablaDetalle);
+
+}
+window.eliminaCategoria = (id) => {
+    let nodoCategoria = document.getElementById(id);
+    let contenido = nodoCategoria.firstElementChild.textContent;
+
+    agregaContenidoEnDesplegable(desplegable.categoria,contenido);
+    nodoCategoria.remove();
+
+
+    seccion.categoria.hidden = !seccion.categoria.childElementCount>1;
+    seccion.msgCategoriasVacia.hidden = seccion.categoria.childElementCount>1;
+
 }
