@@ -23,8 +23,7 @@ public class AuthMiddleware {
 
     public Response noLogueesDosVeces (Request request, Response response){
         if(request.session().attribute("id") != null){
-            halt(401, "<h1>No se puede acceder: ya se encuentra logueado</h1>" +
-                    "<img src='/img/error.jpg'>");
+            response.redirect("/dashboard");
         }
         return response;
     }
