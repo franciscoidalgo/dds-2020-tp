@@ -9,12 +9,6 @@ public class Entidad {
     @GeneratedValue
     private int id;
 
-    @Transient
-    private String nombre;
-
-    @Column
-    private String descripcion;
-
     public void setId (int id){
         this.id = id;
     }
@@ -23,10 +17,4 @@ public class Entidad {
         return id;
     }
 
-    public String getNombre(){
-        return nombre;
-    };
-    public String getDescripcion(){
-        return descripcion;
-    };
 }

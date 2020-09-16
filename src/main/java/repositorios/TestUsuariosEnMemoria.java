@@ -19,7 +19,16 @@ public class TestUsuariosEnMemoria {
                 new RolAdministrador(),
                 new OrganizacionSocial("x", "x", 123, "x", new DireccionPostal(), 123));
         test1.setId(1);
+        //aguanteelgrupo9
+        Usuario test2 = new Usuario("El Admin",
+                "828b26c012c8a52b19bddbbb55b1048458031f2a165d4bab72312c22532a19b9",
+                new RolAdministrador(),
+                new OrganizacionSocial("x", "x", 123, "x", new DireccionPostal(), 123));
+        test2.setId(2);
+
         listaDeUsuarios.add(test1);
+        listaDeUsuarios.add(test2);
+
         return listaDeUsuarios;
     }
 
