@@ -48,4 +48,9 @@ public class ControllerLogin {
             return response;
         }
     }
+
+    public Response logout(Request request, Response response) {
+        request.session().invalidate();
+        return response;
+    }
 }
