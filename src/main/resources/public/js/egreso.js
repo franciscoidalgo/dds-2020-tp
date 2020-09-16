@@ -124,7 +124,6 @@ boton.agregarTabla.onclick = (e) => {
         agregaEnTablaSegunDesplegable(e, seccion.tablaDetalle, contenido);
     }else{
         agregateEnTablaSimple(tabla, contenido.value);
-        enfocarElemento(tabla);
         let contenedor = contenido.parentNode;
         contenido.remove();
         boton.nuevoItem.value = "Nuevo";

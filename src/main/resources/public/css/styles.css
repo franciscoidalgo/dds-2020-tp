@@ -160,7 +160,22 @@ tbody tr {
     float: right;
 }
 
+.f-dir-col {
+    flex-direction: column;
+}
 
+.m-auto {
+    margin: auto;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.seccion {
+    margin: 4rem auto;
+    width: 80%;
+}
 /*Botones*/
 
 .btn {
@@ -169,9 +184,8 @@ tbody tr {
     font-size: 1.8rem;
     padding: 1rem 4rem;
     text-align: center;
-    border: solid;
     border-radius: 0.6rem;
-    border-width: 1px;
+    border: 1px solid;
 }
 
 .btn:hover {
@@ -207,9 +221,18 @@ tbody tr {
     font-weight: 700;
     transition: color 1s, background-color 1s;
 }
+.btn-danger{
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    font-size: 1.4rem;
+    color:  #d63447;
+    font-weight: 700;
+    transition: color 1s, background-color 1s;
+}
 
 .btn-secundario:hover,
-.btn-icono:hover {
+.btn-icono:hover,
+.btn-danger:hover {
     color: #555555;
     background-color: #e7e7e7;
     transition: color 1s, background-color 1s;
@@ -232,18 +255,8 @@ tbody tr {
     transition: color 1s, background-color 1s;
 }
 
-.f-dir-col {
-    flex-direction: column;
-}
 
-.m-auto {
-    margin: auto;
-}
-
-.m-0 {
-    margin: 0;
-}
-
+/* Logo*/
 #logo {
     color: whitesmoke;
 }
@@ -252,13 +265,9 @@ tbody tr {
     color: #d63447;
 }
 
-.seccion {
-    margin: 4rem auto;
-    width: 80%;
-}
 
 
-/** login **/
+/** Login **/
 
 .fondo-img {
     background-image: url("../img/tax-468440_1280.jpg");
@@ -279,10 +288,6 @@ tbody tr {
     border-radius: 2rem;
     border-color: black;
     opacity: .95;
-}
-
-.contenedor-login {
-    align-content: center;
 }
 
 .contenedor-titulo {
@@ -407,7 +412,7 @@ tbody tr {
     border: 2px #555555 solid;
     border-radius: 2rem;
     margin: 2rem 0;
-    padding: 0rem 3rem;
+    padding: 0 3rem;
 }
 
 fieldset.burbuja {
@@ -571,3 +576,25 @@ tr {
 .contenedor-filtrado label {
     margin: 0 1.2rem 0 0.2rem;
 }
+
+/*Modal*/
+.modal-contenido {
+    position: fixed;
+    bottom: 50%;
+    background-color: #fefefe;
+    width: 100%;
+}
+
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+

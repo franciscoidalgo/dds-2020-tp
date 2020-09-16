@@ -61,7 +61,7 @@
                             <option value="2">algo con S.A</option>
                         </select>
                     </div>
-                    <input type="button" value="Nueva" class="btn btn-formulario" required>
+                    <input id="nueva-razon-social" type="button" value="Nueva Razon Social" class="btn btn-formulario" required>
                 </div>
                 <div class="d-flex ">
                     <div>
@@ -73,10 +73,10 @@
                             <option value="2">Simon</option>
                         </select>
                     </div>
-                    <input type="button" value="Nuevo Vendedor" class="btn btn-formulario" required>
+                    <input id="nuevo-vendedor" type="button" value="Nuevo Vendedor" class="btn btn-formulario" required>
                 </div>
                 <label for="dni">Dni/Cuit</label><br>
-                <input type="number" name="dni" id="dni" disabled placeholder="Ingrese DNI o CUIT..." required><br>
+                <input type="number" name="dni" id="dni" disabled placeholder="Ingrese DNI o CUIT..." min="999999" required><br>
             </div>
             <hr/>
             <div class="contenedor-entrada">
@@ -148,7 +148,7 @@
                         </select>
                     </div>
                     <input id="agregar-tabla" type="button" value="Agregar" class="btn btn-formulario" hidden>
-                    <input type="button" value="Nuevo" class="btn btn-formulario">
+                    <input id="nuevo-item" type="button" value="Nuevo" class="btn btn-formulario">
                 </div>
                 <br>
 
@@ -223,13 +223,12 @@
     </form>
 </main>
 
-
-<script type="module" src="/js/egreso.js"></script>
-<script type="module" src="/js/tabla.js"></script>
-<script type="module" src="/js/desplegable.js"></script>
-<script type="module" src="/js/categoria.js"></script>
-
-
+<script type="module" src="js/egreso.js"></script>
+<script type="module" src="js/tabla.js"></script>
+<script type="module" src="js/desplegable.js"></script>
+<script type="module" src="js/categoria.js"></script>
+<script type="module" src="js/textbox.js"></script>
+<script type="module" src="js/clases.js"></script>
 </body>
 
 

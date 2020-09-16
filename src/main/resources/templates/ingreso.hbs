@@ -14,7 +14,7 @@
 <body>
     <header class="contenedor-barra d-flex jc-sb">
         <div class="ai-center txt-centrado">
-            <a href="dashboard">
+            <a href="#">
                 <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
             </a>
         </div>
@@ -23,6 +23,7 @@
                 <li><i class="fas fa-envelope"></i></li>
                 <li><i class="fas fa-user"></i></li>
                 <li><i class="fas fa-ellipsis-v"></i></li>
+                <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -30,7 +31,7 @@
         <h1> Operacion Ingreso </h1>
         <form action="" method="post">
             <!-- Seccion Ingreso-->
-            <div class="burbuja  d-flex jc-sb ai-center">
+            <div id="burbuja-detalle" class="burbuja  d-flex jc-sb ai-center">
                 <div class="d-flex jc-sb">
                     <p><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></p>
                     <h3>Detalle Ingreso</h3>
@@ -42,11 +43,11 @@
                 <div class="contenedor-entrada">
                     <div class="entrada-form-nuevo">
                         <label for="tipo-ingreso">Tipo de Ingreso</label><br>
-                        <select name="tipo-ingreso" id="tipo-ingreso" disabled required>
-                                <option value="" disabled selected>-- Seleccione --</option>
-                                <option value="">Donacion</option>                        
-                                <option value="">Prestamo</option>                        
-                            </select>
+                        <select name="tipo-ingreso" id="tipo-ingreso" required>
+                            <option value="" disabled selected>-- Seleccione --</option>
+                            <option value="">Donacion</option>
+                            <option value="">Prestamo</option>
+                        </select>
                     </div>
                     <label for="monto-total">Monto Total</label><br>
                     <input type="number" name="monto-total" id="monto-total" min="0" disabled placeholder="Ingrese monto total..." required><br>
@@ -57,7 +58,7 @@
                 </div>
             </fieldset>
             <!-- Seccion Asociar Egreso-->
-            <div class="burbuja  d-flex jc-sb ai-center">
+            <div  id="burbuja-egreso" class="burbuja  d-flex jc-sb ai-center">
                 <div class="d-flex jc-sb">
                     <p> <i class="fa fa-link"></i></p>
                     <h3>Asociar con Egresos</h3>
@@ -65,58 +66,63 @@
                 <p><i class="fas fa-plus"></i></p>
             </div>
             <!-- Formulario Asociar Egreso-->
-            <fieldset id="detalle-compra" class="burbuja ">
+            <fieldset id="egreso" class="burbuja ">
                 <table class="txt-centrado tabla">
                     <caption class="fw-700">Egresos Vinculados</caption>
                     <thead class="bg-primario fw-700 th-principal">
-                        <tr>
-                            <th>#ID</th>
-                            <th>Fecha</th>
-                            <th>Descripcion</th>
-                            <th>Monto total</th>
-                            <th> </th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th>#ID</th>
+                        <th>Fecha</th>
+                        <th>Descripcion</th>
+                        <th>Monto total</th>
+                        <th> </th>
+                    </tr>
                     </thead>
                     <tbody class="tabla-detalle">
-                        <tr>
-                            <td>9989781</td>
-                            <td>12-12-2012</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                            <td>10000</td>
-                            <td> icono</td>
-                        </tr>
-                        <tr>
-                            <td>9989781</td>
-                            <td>12-12-2012</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                            <td>10000</td>
-                            <td> icono</td>
-                        </tr>
-                        <tr>
-                            <td>9989781</td>
-                            <td>12-12-2012</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                            <td>10000</td>
-                            <td> icono</td>
-                        </tr>
-                        <tr>
-                            <td>9989781</td>
-                            <td>12-12-2012</td>
-                            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                            <td>10000</td>
-                            <td> icono</td>
-                        </tr>
+                    <tr>
+                        <td><input type="checkbox" name="1" id="1"></td>
+                        <td>9989781</td>
+                        <td>12-12-2012</td>
+                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                        <td>10000</td>
+
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="2" id="2"></td>
+                        <td>9989781</td>
+                        <td>12-12-2012</td>
+                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                        <td>10000</td>
+
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="3" id="3"></td>
+                        <td>9989781</td>
+                        <td>12-12-2012</td>
+                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                        <td>10000</td>
+
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="4" id="4"></td>
+                        <td>9989781</td>
+                        <td>12-12-2012</td>
+                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
+                        <td>10000</td>
+                    </tr>
                     </tbody>
+
                 </table>
                 <hr>
-
-                <!--Agregar BUSQUEDA ACA!-->
-
-                <input id="agregar-tabla" type="button" value="Vincular" class="btn btn-secundario">
+                <input id="vincular-auto" type="button" value="Vincular Auto" class="btn btn-secundario float-r">
             </fieldset>
             <input type="submit" value="Siguiente" class="btn btn-primario">
         </form>
     </main>
+    <script type="module" src="js/ingresos.js"></script>
+    <script type="module" src="js/modal.js"></script>
+    <script type="module" src="js/clases.js"></script>
 </body>
 
 </html>
