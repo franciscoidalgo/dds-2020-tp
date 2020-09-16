@@ -9,8 +9,6 @@
 
      categoria.appendChild(contenido);
      categoria.setAttribute("id", descripcion);
-     categoria.setAttribute("onclick",`eliminaCategoria('${descripcion}')`)
-
      return categoria;
  }
 
