@@ -51,6 +51,7 @@ public class ControllerLogin {
 
     public Response logout(Request request, Response response) {
         request.session().invalidate();
+        response.redirect("/");
         return response;
     }
 }

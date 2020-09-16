@@ -46,7 +46,7 @@ public class Router {
 
         Spark.get("/dashboard", controllerIndex::mostrarIndice, Router.engine);
 
-        Spark.post("/logout", controllerLogin::logout);
+        Spark.get("/logout", controllerLogin::logout);
 
         Spark.before("/egreso", authMiddleware::ingresoConSesionIniciada);
 
