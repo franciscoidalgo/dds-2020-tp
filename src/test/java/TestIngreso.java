@@ -1,5 +1,5 @@
-import Operacion.Egreso.OperacionEgreso;
-import Operacion.Ingreso.OperacionIngreso;
+import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Ingreso.OperacionIngreso;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

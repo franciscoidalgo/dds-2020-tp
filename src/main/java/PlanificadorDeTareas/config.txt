@@ -1,0 +1,3 @@
+delay = 1
+period = 5000
+cantPresupuestos = 3

@@ -1,5 +1,7 @@
-import Operacion.Egreso.OperacionEgreso;
-import Operacion.Egreso.Presupuesto;
+import APIMercadoLibre.InfoMercadoLibre;
+import domain.Operacion.Egreso.DetalleCompra;
+import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Egreso.Presupuesto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,33 +14,51 @@ public class TestEgreso {
     Presupuesto presupuesto1;
     Presupuesto presupuesto2;
 
+    Generador generador;
+
     @Before
     public void setUp() throws Exception {
-         //Presupuesto1
-        presupuesto1 = new Generador().generaPresupuesto();
+        generador = Generador.instancia();
+        //Presupuesto1
+        presupuesto1 = generador.generaPresupuesto();
 
         //Presupuesto2
-        presupuesto2 = new Generador().generaPresupuesto();
+        presupuesto2 = generador.generaPresupuesto();
 
         //Egreso ya viene con un detalle generado
-        unEgreso = new Generador().generaEgreso(0);
+        unEgreso = generador.generaEgreso(0);
     }
 
 
-  /*
     @Test
-    public void testEgresoTieneVariosRevisores(){
-        // Todo: Terminar test con validaciones!
-        Usuario revisor1 = new Usuario("Pepe","",new RolEstandar(),new Empresa(50,50000,null));
-        revisor1.darseDeAltaEn(unEgreso);
-    }
-*/
-    @Test
-    public void testCalculaMontoTotal_Con2Presupuestos1Detalle(){
+    public void testCalculaMontoTotal_Con2Presupuestos1Detalle() throws Exception {
         unEgreso.agregaPresupuesto(presupuesto1);
         unEgreso.agregaPresupuesto(presupuesto2);
-        Assert.assertEquals(unEgreso.montoTotal(),3*presupuesto1.mostrarCosto(),0);
+        Assert.assertEquals(unEgreso.montoTotal(), 16000, 0);
     }
 
+    @Test
+    public void testCargaPresupuesto_NoSePuedeCargarPresupuestoSinHaberCargadoEgreso() throws Exception {
+        unEgreso.setDetalleValidable(new DetalleCompra(null, null));
+        try {
+            unEgreso.agregaPresupuesto(presupuesto1);
+            Assert.fail();
+        } catch (Exception ignored) {
+        }
+    }
 
+    @Test
+    public void testEstandarizacion_SeMuestraQueAlmacenadorTraePaisesDeLaApi() throws Exception {
+        InfoMercadoLibre storage = InfoMercadoLibre.instancia();
+        //Para mostrar por consola que muestra... descomentar
+
+        /*storage.getPaises().stream().forEach(pais ->{
+            System.out.println(pais.mostraNombre());
+            pais.mostrarProvincias().forEach(provincia -> {
+                System.out.println(provincia.mostraNombre());
+            });
+        });
+        */
+        Assert.assertTrue(!storage.getListaDePaises().isEmpty() && !storage.getListaDeMonedas().isEmpty());
+    }
 }
