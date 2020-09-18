@@ -34,29 +34,19 @@ public class Router {
 
         AuthMiddleware authMiddleware = new AuthMiddleware();
 
-        Spark.before("/", authMiddleware::verificarSesion);
-
-        Spark.before("/auth", authMiddleware::noLogueesDosVeces);
+        Spark.before("*", authMiddleware::verificarSesion);
 
         Spark.get("/auth", controllerLogin::inicio, Router.engine);
 
         Spark.post("/auth", controllerLogin::login);
 
-        Spark.before("/dashboard", authMiddleware::ingresoConSesionIniciada);
-
         Spark.get("/dashboard", controllerIndex::mostrarIndice, Router.engine);
 
         Spark.get("/logout", controllerLogin::logout);
 
-        Spark.before("/egreso", authMiddleware::ingresoConSesionIniciada);
-
         Spark.get("/egreso", controllerEgresos::mostrarEgresos, Router.engine);
 
-        Spark.before("/ingreso", authMiddleware::ingresoConSesionIniciada);
-
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
-
-        Spark.before("/presupuesto", authMiddleware::ingresoConSesionIniciada);
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
 
