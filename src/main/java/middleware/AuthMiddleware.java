@@ -11,7 +11,7 @@ public class AuthMiddleware {
         if(!this.estaLogueado(request)){
             this.safeRedirect(request, response,"/auth");
         }else if(request.pathInfo().equals("/")||request.pathInfo().equals("/auth")){
-            this.safeRedirect(request, response, "/dashboard");
+            response.redirect("/dashboard");
         }
         return response;
     }

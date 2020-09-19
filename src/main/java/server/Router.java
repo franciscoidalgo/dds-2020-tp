@@ -36,6 +36,7 @@ public class Router {
 
         Spark.before("*", authMiddleware::verificarSesion);
 
+
         Spark.get("/auth", controllerLogin::inicio, Router.engine);
 
         Spark.post("/auth", controllerLogin::login);
