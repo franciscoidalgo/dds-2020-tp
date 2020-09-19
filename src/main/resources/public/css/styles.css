@@ -32,7 +32,6 @@ h4 {
 }
 
 p,
-a,
 label,
 input,
 th,
@@ -80,11 +79,15 @@ hr {
 i {
     color: #555555;
     font-size: 2.4rem;
-    margin: 0 1rem;
+    margin: 0 2rem;
 }
 
 tbody tr {
     cursor: pointer;
+}
+
+main {
+    z-index: 3;
 }
 
 
@@ -176,6 +179,8 @@ tbody tr {
     margin: 4rem auto;
     width: 80%;
 }
+
+
 /*Botones*/
 
 .btn {
@@ -221,11 +226,12 @@ tbody tr {
     font-weight: 700;
     transition: color 1s, background-color 1s;
 }
-.btn-danger{
+
+.btn-danger {
     padding: 0.5rem 2rem;
     background-color: transparent;
     font-size: 1.4rem;
-    color:  #d63447;
+    color: #d63447;
     font-weight: 700;
     transition: color 1s, background-color 1s;
 }
@@ -257,6 +263,7 @@ tbody tr {
 
 
 /* Logo*/
+
 #logo {
     color: whitesmoke;
 }
@@ -264,7 +271,6 @@ tbody tr {
 #logo span {
     color: #d63447;
 }
-
 
 
 /** Login **/
@@ -390,19 +396,89 @@ tbody tr {
 /* Barra superior*/
 
 .contenedor-barra {
-    height: 6rem;
+    height: 7rem;
     background-color: #015B81;
     padding: 1rem 5rem;
     box-shadow: 5px 2px 5px #555555;
+    align-items: center;
 }
 
 .navbar {
-    flex-basis: 15%;
+    position: fixed;
+    left: -300%;
+    top: 0;
+    color: white;
+    width: max-content;
+    height: 100vh;
+    background-color: rgba(85, 85, 85, 0.95);
+    transition: left 3 ease-in;
+    z-index: 1;
 }
 
-.contenido-navbar li i {
+.navbar div {
+    padding: 0 0 0 4rem;
+    border-bottom: 2px solid #8da2a7;
+}
+
+.navbar-on {
+    left: 0;
+    transition: left 3 ease-in;
+}
+
+.contenido-navbar {
+    display: block;
+    width: 100%;
+    padding: 0;
+}
+
+.navbar a {
+    display: block;
+    padding: 2rem 5rem 2rem 1.75rem;
+    border-bottom: 2px solid #6e7c8b;
+}
+
+#btn-menu i,
+.navbar a,
+.navbar .fas {
     color: white;
     font-size: 2rem;
+    font-weight: 700;
+}
+
+.contenido-navbar li:last-child {
+    background-color: #ff3149;
+}
+
+.contenido-navbar li:hover {
+    background-color: #0098db;
+}
+
+#btn-menu {
+    background-color: #555555;
+    padding: .3rem;
+    border: 1px solid #5a567f;
+    color: #ffffff;
+    opacity: 1;
+}
+
+#btn-menu:hover,
+#btn-menu i:hover {
+    opacity: .6;
+    cursor: pointer;
+}
+
+#btn-close {
+    background-color: transparent;
+    border: none;
+}
+
+#btn-close:hover,
+#btn-close .fas:hover {
+    opacity: .8;
+}
+
+#btn-close:focus {
+    display: none;
 }
 
 
@@ -577,7 +653,9 @@ tr {
     margin: 0 1.2rem 0 0.2rem;
 }
 
+
 /*Modal*/
+
 .modal-contenido {
     position: fixed;
     bottom: 50%;
@@ -593,8 +671,6 @@ tr {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     text-align: center;
 }
-
-

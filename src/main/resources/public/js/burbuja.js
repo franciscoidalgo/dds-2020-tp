@@ -1,4 +1,4 @@
-export class Clases {
+export class Burbuja {
 
     constructor(idElemento, idElementoObjetivo) {
         this.elemento = document.getElementById(idElemento);
