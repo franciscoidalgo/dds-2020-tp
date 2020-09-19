@@ -18,6 +18,10 @@ public class ControllerLogin {
 
     public ModelAndView inicio (Request request, Response response){
         Map<String, Object> parametros= new HashMap<>();
+        if(request.session().attribute("loginFailed") != null){
+            parametros.put("loginFailed", request.session().attribute("loginFailed"));
+            request.session().removeAttribute("loginFailed");
+        }
         return new ModelAndView(parametros, "auth.hbs");
     }
 
@@ -35,13 +39,16 @@ public class ControllerLogin {
                 request.session(true);
                 request.session().attribute("id", usuario.getId());
                 request.session().attribute("username", usuario.getNombre());
+                request.session().attribute("loginFailed", false);
 
                 response.redirect("/dashboard");
             }else{
+                request.session().attribute("loginFailed", true);
                 response.redirect("/auth");
             }
 
         } catch (Exception e) {
+            request.session().attribute("loginFailed", true);
             response.redirect("/auth");
         }
         finally {
