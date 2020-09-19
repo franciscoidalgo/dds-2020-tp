@@ -1,8 +1,8 @@
-import {Clases,  Desplegable} from "./clases.js";
+import {Burbuja,  Desplegable} from "./burbuja.js";
 import {generaModalAlert,generaBoton} from "./modal.js"
 const burbujas = [
-    new Clases('burbuja-detalle','detalle-ingreso'),
-    new Clases('burbuja-egreso','egreso')
+    new Burbuja('burbuja-detalle','detalle-ingreso'),
+    new Burbuja('burbuja-egreso','egreso')
 ]
 
 const habilitadores = [
@@ -28,6 +28,7 @@ burbujas.forEach((b)=>{
 habilitadores.forEach((d) =>{
     d.elemento.onchange = () => d.habilitaObjetivo();
 });
+
 
 document.getElementById("vincular-auto").onclick = ()=>{
     let modal = generaModalAlert("Realizar Vinculacion Automatica","No se vincularan los Egresos seleccionados manualmente, ¿esta seguro de continuar?")

@@ -8,12 +8,12 @@ import {
 } from './desplegable.js';
 import generaCategoria from './categoria.js';
 import generaTextbox from './textbox.js';
-import {Clases,  Desplegable} from "./clases.js";
+import {Burbuja,  Desplegable} from "./burbuja.js";
 
 const burbujas = [
-        new Clases('burbuja-proveedor','proveedor'),
-        new Clases('burbuja-compra','detalle-compra'),
-        new Clases('burbuja-pago','medio-de-pago')
+        new Burbuja('burbuja-proveedor','proveedor'),
+        new Burbuja('burbuja-compra','detalle-compra'),
+        new Burbuja('burbuja-pago','medio-de-pago')
 ]
 
 const ocultadores = [
