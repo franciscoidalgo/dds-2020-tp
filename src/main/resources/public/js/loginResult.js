@@ -1,4 +1,3 @@
-import {Clases,  Desplegable} from "./clases.js";
 import {generaModalAlert,generaBoton} from "./modal.js"
 
 
