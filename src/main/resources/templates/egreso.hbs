@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -82,11 +82,17 @@
                 <label for="pais">Pais</label><br>
                 <select name="pais" id="pais" required>
                     <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each paises}}
+                        <option value="">{{nombre}}</option>
+                    {{/each}}
                     <option value="">algo</option>
                 </select><br>
                 <label for="provincia">Provincia</label><br>
                 <select name="provincia" id="provincia" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each provincias}}
+                        <option value="{{nombre}}">{{nombre}}</option>
+                    {{/each}}
                     <option value="">algo</option>
                 </select><br>
                 <label for="ciudad">Ciudad</label><br>
@@ -228,6 +234,7 @@
 <script type="module" src="js/categoria.js"></script>
 <script type="module" src="js/textbox.js"></script>
 <script type="module" src="js/clases.js"></script>
+
 </body>
 
 

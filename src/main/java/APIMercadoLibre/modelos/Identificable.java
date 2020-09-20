@@ -11,4 +11,8 @@ public class Identificable  {
 
     public String name;
 
+    public String getNombre(){
+        return name;
+    }
+
 }

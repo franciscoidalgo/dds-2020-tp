@@ -25,6 +25,7 @@ public class ControllerIndex {
     public ModelAndView mostrarIndice (Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
         Usuario usuario = repositorio.buscar(request.session().attribute("id"));
+        //Usuario usuario = repositorio.buscar(Integer.parseInt(request.cookie("id")));
         parametros.put("usuario", usuario);
         return new ModelAndView(parametros, "dashboard.hbs");
 

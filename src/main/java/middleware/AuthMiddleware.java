@@ -18,6 +18,7 @@ public class AuthMiddleware {
 
     private boolean estaLogueado(Request request){
         return request.session().attribute("id") != null;
+        //return request.cookie("id") != null;
     }
 
     private void safeRedirect(Request request,Response response, String path){

@@ -36,10 +36,12 @@ public class ControllerLogin {
             if(repositorioDeUsuarios.verificarExistencia(nombreDeUsuario, contrasenia)){
                 Usuario usuario = repositorioDeUsuarios.buscarUsuario(nombreDeUsuario, contrasenia);
 
+
                 request.session(true);
                 request.session().attribute("id", usuario.getId());
-                request.session().attribute("username", usuario.getNombre());
                 request.session().attribute("loginFailed", false);
+
+                //response.cookie("id", String.valueOf(usuario.getId()),86400);
 
                 response.redirect("/dashboard");
             }else{
@@ -58,6 +60,7 @@ public class ControllerLogin {
 
     public Response logout(Request request, Response response) {
         request.session().invalidate();
+        //response.removeCookie("id");
         response.redirect("/");
         return response;
     }
