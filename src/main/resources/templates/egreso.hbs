@@ -101,13 +101,18 @@
                 <select name="provincia" id="provincia" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
                     {{#each provincias}}
-                        <option value="{{nombre}}">{{nombre}}</option>
+                        <option value="">{{nombre}}</option>
                     {{/each}}
                     <option value="">algo</option>
                 </select><br>
                 <label for="ciudad">Ciudad</label><br>
                 <select name="ciudad" id="ciudad" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each provincias as |provincia| }}
+                        {{#each provincia.cities}}
+                            <option value="">{{nombre}}</option>
+                        {{/each}}
+                    {{/each}}
                     <option value="">algo</option>
                 </select><br>
                 <label for="calle">Calle</label><br>

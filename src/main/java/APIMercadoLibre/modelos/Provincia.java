@@ -17,4 +17,8 @@ public class Provincia extends Identificable {
     public Identificable getCountry (){
         return this.country;
     }
+
+    public Ciudad[] getCities(){
+        return this.cities;
+    }
 }

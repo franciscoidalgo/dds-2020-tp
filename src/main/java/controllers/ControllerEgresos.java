@@ -1,6 +1,7 @@
 package controllers;
 
 import APIMercadoLibre.InfoMercadoLibre;
+import config.ConfiguracionMercadoLibre;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -13,11 +14,14 @@ public class ControllerEgresos {
 
     public ModelAndView mostrarEgresos(Request request, Response response) throws IOException {
         Map<String, Object> parametros = new HashMap<>();
-        InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
+        if(ConfiguracionMercadoLibre.usarApi){
+            InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
+            parametros.put("paises", infoMercadoLibre.getListaDePaises());
+            parametros.put("provincias", infoMercadoLibre.getListaDeProvincias());
+            parametros.put("monedas", infoMercadoLibre.getListaDeMonedas());
+        }
+
         parametros.put("egreso", true);
-        parametros.put("paises", infoMercadoLibre.getListaDePaises());
-        parametros.put("provincias", infoMercadoLibre.getListaDeProvincias());
-        parametros.put("monedas", infoMercadoLibre.getListaDeMonedas());
         return new ModelAndView(parametros, "egreso.hbs");
     }
 }

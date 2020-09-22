@@ -1,6 +1,7 @@
 package server;
 
 import APIMercadoLibre.InfoMercadoLibre;
+import config.ConfiguracionMercadoLibre;
 import controllers.*;
 import middleware.AuthMiddleware;
 import spark.Spark;
@@ -36,7 +37,10 @@ public class Router {
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
         ControllerIngreso controllerIngreso = new ControllerIngreso();
         PruebaRest pruebaRest = new PruebaRest();
-        InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
+        if(ConfiguracionMercadoLibre.usarApi){
+            InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
+        }
+
 
         AuthMiddleware authMiddleware = new AuthMiddleware();
 
