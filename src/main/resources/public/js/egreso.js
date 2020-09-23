@@ -236,3 +236,53 @@ window.eliminaCategoria = (nodoCategoria) => {
     seccion.msgCategoriasVacia.hidden = seccion.categoria.childElementCount>1;
 
 }
+
+/*Paises, provincias y ciudades */
+$(document).on("change", '#pais', function(e){
+    var urlBase = "/api/get-lista-de-provincias/";
+    var nombrePais = $( "select#pais option:checked" ).text();
+    var urlFinal = urlBase.concat(nombrePais);
+
+    $.ajax({
+        url : urlFinal,
+        dataType: 'json',
+        success: function (json){
+            var $listaProvincias = $("#provincia");
+            var $listaCiudades = $("#ciudad");
+            $listaCiudades.prop("disabled", true);
+            $listaCiudades.empty();
+            $listaCiudades.append($("<option disabled selected></option>")
+                          .attr("value", "").text("-- Seleccione --"));
+
+            $listaProvincias.empty();
+            $listaProvincias.append($("<option disabled selected></option>")
+                            .attr("value", "").text("-- Seleccione --"));
+            $.each(json, function(index, item){
+                $listaProvincias.append($("<option></option>")
+                                .attr("value", item.id).text(item.name));
+            })
+        }
+    })
+});
+
+$(document).on("change", '#provincia', function(e){
+    var urlBase = "/api/get-lista-de-ciudades/";
+    var nombreProvincia = $( "select#provincia option:checked" ).text();
+    var urlFinal = urlBase.concat(nombreProvincia);
+
+    $.ajax({
+        url : urlFinal,
+        dataType: 'json',
+        success: function (json){
+            var $listaCiudades = $("#ciudad");
+
+            $listaCiudades.empty();
+            $listaCiudades.append($("<option disabled selected></option>")
+                            .attr("value", "").text("-- Seleccione --"));
+            $.each(json, function(index, item){
+                $listaCiudades.append($("<option></option>")
+                                .attr("value", item.id).text(item.name));
+            })
+        }
+    })
+});

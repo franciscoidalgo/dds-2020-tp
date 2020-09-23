@@ -20,7 +20,8 @@ public class Router {
                 .create()
                 .withDefaultHelpers()
                 .withHelper("isTrue", BooleanHelper.isTrue)
-                .withHelper("isEqual", CustomHelper.isEqual)
+                .withHelper("ifEqual", CustomHelper.ifEqual)
+                //.withHelper("mostrarProvinciasDe", CustomHelper.mostrarProvinciasDe)
                 .build();
     }
 
@@ -56,6 +57,10 @@ public class Router {
         Spark.get("/logout", controllerLogin::logout);
 
         Spark.get("/egreso", controllerEgresos::mostrarEgresos, Router.engine);
+
+        Spark.get("/api/get-lista-de-provincias/:nombrePais", controllerEgresos::pasarProvincias);
+
+        Spark.get("/api/get-lista-de-ciudades/:nombreProvincia", controllerEgresos::pasarCiudades);
 
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
 
