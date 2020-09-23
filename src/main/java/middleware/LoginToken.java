@@ -8,6 +8,8 @@ import repositorios.factories.FactoryRepoTokens;
 import javax.persistence.*;
 import java.util.UUID;
 
+import static spark.Spark.halt;
+
 @Entity
 @Table(name = "login_token")
 public class LoginToken extends Entidad {
@@ -33,9 +35,11 @@ public class LoginToken extends Entidad {
         LoginToken nuevoToken = new LoginToken(usuario, ip);
         try{
             if(repositorioLoginToken.existeToken(idUsuario)){
+
                 LoginToken tokenPrevio = repositorioLoginToken.buscarPorUsuario(idUsuario);
                 nuevoToken.setId(tokenPrevio.getId());
                 repositorioLoginToken.modificar(nuevoToken);
+
             }else{
                 repositorioLoginToken.agregar(nuevoToken);
             }

@@ -20,7 +20,9 @@ public class AuthMiddleware {
     }
 
     private boolean estaLogueado(Request request){
+        /*
         RepositorioDeTokens repositorioDeTokens = FactoryRepoTokens.get();
+
         if(request.cookie("idUsuario")!=null){
             int idUsuario = Integer.parseInt(request.cookie("idUsuario"));
             try{
@@ -30,6 +32,8 @@ public class AuthMiddleware {
             }
 
         }else return false;
+        */
+        return request.session().attribute("userId") != null;
     }
 
     private void safeRedirect(Request request,Response response, String path){

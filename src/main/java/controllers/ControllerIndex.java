@@ -20,8 +20,8 @@ public class ControllerIndex {
     public ModelAndView mostrarIndice (Request request, Response response){
         RepositorioDeUsuarios repositorio = FactoryRepoUsuario.get();
         Map<String, Object> parametros = new HashMap<>();
-        //Usuario usuario = repositorio.buscar(request.session().attribute("id"));
-        Usuario usuario = repositorio.buscar(Integer.parseInt(request.cookie("idUsuario")));
+        Usuario usuario = repositorio.buscar(request.session().attribute("userId"));
+        //Usuario usuario = repositorio.buscar(Integer.parseInt(request.cookie("idUsuario")));
         parametros.put("usuario", usuario);
         return new ModelAndView(parametros, "dashboard.hbs");
 

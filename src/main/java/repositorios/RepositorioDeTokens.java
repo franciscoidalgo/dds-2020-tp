@@ -18,32 +18,32 @@ public class RepositorioDeTokens extends Repositorio<LoginToken> {
         return this.buscarPorUsuario(idUsuario) != null;
     }
 
-    public boolean existeToken (int idUsuario, String token){
-        return this.buscarPorUsuarioYToken(idUsuario, token) != null;
+    public boolean existeToken (int idUsuario, String ip){
+        return this.buscarPorUsuarioEIP(idUsuario, ip) != null;
     }
 
     public LoginToken buscarPorUsuario(int idUsuario){
         return this.dao.buscar(busquedaPorIdUsuario(idUsuario));
     }
 
-    public LoginToken buscarPorUsuarioYToken(int idUsuario, String token){
-        return this.dao.buscar(busquedaPorIdUsuarioYToken(idUsuario, token));
+    public LoginToken buscarPorUsuarioEIP(int idUsuario, String token){
+        return this.dao.buscar(busquedaPorIdUsuarioEIp(idUsuario, token));
     }
 
 
-    private BusquedaCondicional busquedaPorIdUsuarioYToken (int idUsuario, String token){
+    private BusquedaCondicional busquedaPorIdUsuarioEIp (int idUsuario, String ip){
         CriteriaBuilder criteriaBuilder = criteriaBuilder();
         CriteriaQuery<LoginToken> ltQuery = criteriaBuilder().createQuery(LoginToken.class);
 
         Root<LoginToken> condicionRaiz = ltQuery.from(LoginToken.class);
 
         Predicate condicionIdUsuario = criteriaBuilder.equal(condicionRaiz.get("usuario"), idUsuario);
-        Predicate condicionToken = criteriaBuilder.equal(condicionRaiz.get("token"), token);
+        Predicate condicionToken = criteriaBuilder.equal(condicionRaiz.get("ip"), ip);
         Predicate condicionFinal = criteriaBuilder.and(condicionIdUsuario, condicionToken);
         ltQuery.where(condicionFinal);
 
         java.util.function.Predicate<LoginToken> matcheoIdYToken =
-                loginToken -> loginToken.getUsuario().getId() == idUsuario && loginToken.getToken().equals(token);
+                loginToken -> loginToken.getUsuario().getId() == idUsuario && loginToken.getIp().equals(ip);
 
         return new BusquedaCondicional(matcheoIdYToken, ltQuery);
     }

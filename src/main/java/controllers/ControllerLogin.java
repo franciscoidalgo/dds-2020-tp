@@ -33,16 +33,15 @@ public class ControllerLogin {
             String contrasenia = PasswordHasher.hash(request.queryParams("password"));
             if(repositorioDeUsuarios.verificarExistencia(nombreDeUsuario, contrasenia)){
                 Usuario usuario = repositorioDeUsuarios.buscarUsuario(nombreDeUsuario, contrasenia);
-                int idUsuario = usuario.getId();
-
 
                 request.session(true);
                 request.session().attribute("loginFailed", false);
+                request.session().attribute("userId", usuario.getId());
 
-                response.cookie("idUsuario", String.valueOf(usuario.getId()), 86400, false, true);
-                response.cookie("tokenUsuario", String.valueOf(usuario.getId()), 86400, false, true);
 
-                LoginToken.generarToken(usuario, request.ip());
+                //response.cookie("idUsuario", String.valueOf(usuario.getId()), 86400, false, true);
+
+                //LoginToken.generarToken(usuario, request.ip());
 
                 response.redirect("/dashboard");
             }else{
@@ -51,7 +50,6 @@ public class ControllerLogin {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             request.session().attribute("loginFailed", true);
             response.redirect("/auth");
         }
@@ -62,10 +60,12 @@ public class ControllerLogin {
 
     public Response logout(Request request, Response response) {
         request.session().invalidate();
+        /*
         RepositorioDeTokens repositorioDeTokens = FactoryRepoTokens.get();
         LoginToken loginToken = repositorioDeTokens.buscarPorUsuario(Integer.parseInt(request.cookie("idUsuario")));
         repositorioDeTokens.eliminar(loginToken);
         response.removeCookie("idUsuario");
+        */
         response.redirect("/");
         return response;
     }
