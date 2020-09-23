@@ -6,7 +6,6 @@ import controllers.*;
 import middleware.AuthMiddleware;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import spark.utils.BooleanHelper;
 import spark.utils.CustomHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
 
@@ -19,9 +18,7 @@ public class Router {
         Router.engine = HandlebarsTemplateEngineBuilder
                 .create()
                 .withDefaultHelpers()
-                .withHelper("isTrue", BooleanHelper.isTrue)
                 .withHelper("ifEqual", CustomHelper.ifEqual)
-                //.withHelper("mostrarProvinciasDe", CustomHelper.mostrarProvinciasDe)
                 .build();
     }
 
