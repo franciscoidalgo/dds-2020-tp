@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DAOMemoria<T> implements DAO<T>{
 
-    private List<Entidad> entidades;
+    private final List<Entidad> entidades;
 
     public DAOMemoria (List<Entidad> entidades){
         this.entidades = entidades;
@@ -49,6 +49,6 @@ public class DAOMemoria<T> implements DAO<T>{
 
     @Override
     public void eliminar(Object unObjeto) {
-        this.entidades.remove((Entidad) unObjeto);
+        this.entidades.remove(unObjeto);
     }
 }

@@ -1,8 +1,6 @@
 package domain.DireccionPostal;
 
-import APIMercadoLibre.modelos.Ciudad;
-import APIMercadoLibre.modelos.Pais;
-import APIMercadoLibre.modelos.Provincia;
+
 
 public class DireccionPostal {
 
@@ -24,7 +22,7 @@ public class DireccionPostal {
         this.piso = piso;
     }
 
-    public DireccionPostal(){};
+    public DireccionPostal(){}
 
     //Getters y Setters
     public String getPais() {

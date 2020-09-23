@@ -9,7 +9,7 @@ public class ListaIdentificables  {
 
 
 
-    private List<Identificable> identificadores;
+    private final List<Identificable> identificadores;
 
     public ListaIdentificables (Identificable[] identificadores){
         this.identificadores = Arrays.asList(identificadores);

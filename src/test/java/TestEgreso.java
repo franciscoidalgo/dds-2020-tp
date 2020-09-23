@@ -38,7 +38,7 @@ public class TestEgreso {
     }
 
     @Test
-    public void testCargaPresupuesto_NoSePuedeCargarPresupuestoSinHaberCargadoEgreso() throws Exception {
+    public void testCargaPresupuesto_NoSePuedeCargarPresupuestoSinHaberCargadoEgreso() {
         unEgreso.setDetalleValidable(new DetalleCompra(null, null));
         try {
             unEgreso.agregaPresupuesto(presupuesto1);

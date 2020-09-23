@@ -14,7 +14,7 @@ import java.util.List;
 public class ServicioMercadoLibre {
 
     private static ServicioMercadoLibre instancia = null;
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
     private ServicioMercadoLibre(){
         this.retrofit = new Retrofit.Builder()
@@ -120,8 +120,5 @@ public class ServicioMercadoLibre {
 
     }
 
-    public void cargarInfo(){
-
-    }
 
 }

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class BandejaMensaje {
 
-    private List<Mensaje> mensajes;
+    private final List<Mensaje> mensajes;
 
     public BandejaMensaje() {
         this.mensajes = new ArrayList<>();

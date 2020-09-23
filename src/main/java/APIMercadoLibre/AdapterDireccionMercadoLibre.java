@@ -1,6 +1,5 @@
 package APIMercadoLibre;
 
-import APIMercadoLibre.modelos.Ciudad;
 import APIMercadoLibre.modelos.Pais;
 import APIMercadoLibre.modelos.Provincia;
 

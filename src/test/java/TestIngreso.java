@@ -10,7 +10,7 @@ public class TestIngreso {
     OperacionIngreso unIngreso;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
 
         unIngreso = new Generador().generaIngreso(100000);

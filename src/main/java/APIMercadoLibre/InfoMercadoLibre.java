@@ -78,8 +78,4 @@ public class InfoMercadoLibre {
         return listaDeMonedas;
     }
 
-    public void persistirInfo(){
-        //TODO
-    }
-
 }

@@ -15,7 +15,6 @@ function generaBotonera(){
 
 
 window.onload = ()=>{
-    console.log("funca");
     let modal = generaModalAlert("Error al iniciar sesión","El nombre de usuario y la contraseña que ingresaste no coinciden con nuestros registros. Por favor, revisa e inténtalo de nuevo.")
     let botonera = generaBotonera();
 

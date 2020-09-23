@@ -3,7 +3,6 @@ package middleware;
 import spark.Request;
 import spark.Response;
 
-import static spark.Spark.halt;
 
 public class AuthMiddleware {
 
@@ -17,8 +16,8 @@ public class AuthMiddleware {
     }
 
     private boolean estaLogueado(Request request){
-        return request.session().attribute("id") != null;
-        //return request.cookie("id") != null;
+        //return request.session().attribute("id") != null;
+        return request.cookie("idUsuario") != null;
     }
 
     private void safeRedirect(Request request,Response response, String path){

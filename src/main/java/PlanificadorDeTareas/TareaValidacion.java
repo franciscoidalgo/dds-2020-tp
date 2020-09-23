@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public class TareaValidacion extends TimerTask {
 
 
-    private OperacionEgreso egreso;
+    private final OperacionEgreso egreso;
 
     /*Constructor*/
     public TareaValidacion(OperacionEgreso unEgreso) {

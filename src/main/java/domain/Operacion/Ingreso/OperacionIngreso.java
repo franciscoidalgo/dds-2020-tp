@@ -10,7 +10,7 @@ import java.util.List;
 
 public class OperacionIngreso extends Operacion {
 
-    private double montoTotal;
+    private final double montoTotal;
     private String descripcion;
     private List<OperacionEgreso> egresos;
 
