@@ -3,7 +3,9 @@ package controllers;
 import domain.Entidad.Usuario.Usuario;
 import middleware.LoginToken;
 import passwordHasher.PasswordHasher;
+import repositorios.RepositorioDeTokens;
 import repositorios.RepositorioDeUsuarios;
+import repositorios.factories.FactoryRepoTokens;
 import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -35,12 +37,11 @@ public class ControllerLogin {
 
 
                 request.session(true);
-                /*
-                request.session().attribute("id", usuario.getId());
-                */
                 request.session().attribute("loginFailed", false);
 
                 response.cookie("idUsuario", String.valueOf(usuario.getId()), 86400, false, true);
+                response.cookie("tokenUsuario", String.valueOf(usuario.getId()), 86400, false, true);
+
                 LoginToken.generarToken(usuario, request.ip());
 
                 response.redirect("/dashboard");
@@ -61,9 +62,9 @@ public class ControllerLogin {
 
     public Response logout(Request request, Response response) {
         request.session().invalidate();
-        //RepositorioDeTokens repositorioDeTokens = FactoryRepoTokens.get();
-        //LoginToken loginToken = repositorioDeTokens.buscarPorUsuario(Integer.parseInt(request.cookie("authToken")));
-        //repositorioDeTokens.eliminar(loginToken);
+        RepositorioDeTokens repositorioDeTokens = FactoryRepoTokens.get();
+        LoginToken loginToken = repositorioDeTokens.buscarPorUsuario(Integer.parseInt(request.cookie("idUsuario")));
+        repositorioDeTokens.eliminar(loginToken);
         response.removeCookie("idUsuario");
         response.redirect("/");
         return response;

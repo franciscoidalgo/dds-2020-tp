@@ -18,20 +18,43 @@ public class RepositorioDeTokens extends Repositorio<LoginToken> {
         return this.buscarPorUsuario(idUsuario) != null;
     }
 
+    public boolean existeToken (int idUsuario, String token){
+        return this.buscarPorUsuarioYToken(idUsuario, token) != null;
+    }
+
     public LoginToken buscarPorUsuario(int idUsuario){
-        return this.dao.buscar(busquedaPorId(idUsuario));
+        return this.dao.buscar(busquedaPorIdUsuario(idUsuario));
+    }
+
+    public LoginToken buscarPorUsuarioYToken(int idUsuario, String token){
+        return this.dao.buscar(busquedaPorIdUsuarioYToken(idUsuario, token));
     }
 
 
-
-    private BusquedaCondicional busquedaPorId (int idUsuario){
+    private BusquedaCondicional busquedaPorIdUsuarioYToken (int idUsuario, String token){
         CriteriaBuilder criteriaBuilder = criteriaBuilder();
         CriteriaQuery<LoginToken> ltQuery = criteriaBuilder().createQuery(LoginToken.class);
 
         Root<LoginToken> condicionRaiz = ltQuery.from(LoginToken.class);
 
         Predicate condicionIdUsuario = criteriaBuilder.equal(condicionRaiz.get("usuario"), idUsuario);
+        Predicate condicionToken = criteriaBuilder.equal(condicionRaiz.get("token"), token);
+        Predicate condicionFinal = criteriaBuilder.and(condicionIdUsuario, condicionToken);
+        ltQuery.where(condicionFinal);
 
+        java.util.function.Predicate<LoginToken> matcheoIdYToken =
+                loginToken -> loginToken.getUsuario().getId() == idUsuario && loginToken.getToken().equals(token);
+
+        return new BusquedaCondicional(matcheoIdYToken, ltQuery);
+    }
+
+    private BusquedaCondicional busquedaPorIdUsuario(int idUsuario){
+        CriteriaBuilder criteriaBuilder = criteriaBuilder();
+        CriteriaQuery<LoginToken> ltQuery = criteriaBuilder().createQuery(LoginToken.class);
+
+        Root<LoginToken> condicionRaiz = ltQuery.from(LoginToken.class);
+
+        Predicate condicionIdUsuario = criteriaBuilder.equal(condicionRaiz.get("usuario"), idUsuario);
         ltQuery.where(condicionIdUsuario);
 
         java.util.function.Predicate<LoginToken> matcheoIdUsuario =

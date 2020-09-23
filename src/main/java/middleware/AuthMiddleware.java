@@ -1,7 +1,11 @@
 package middleware;
 
+import repositorios.RepositorioDeTokens;
+import repositorios.factories.FactoryRepoTokens;
 import spark.Request;
 import spark.Response;
+
+import static spark.Spark.halt;
 
 
 public class AuthMiddleware {
@@ -16,8 +20,16 @@ public class AuthMiddleware {
     }
 
     private boolean estaLogueado(Request request){
-        //return request.session().attribute("id") != null;
-        return request.cookie("idUsuario") != null;
+        RepositorioDeTokens repositorioDeTokens = FactoryRepoTokens.get();
+        if(request.cookie("idUsuario")!=null){
+            int idUsuario = Integer.parseInt(request.cookie("idUsuario"));
+            try{
+                return repositorioDeTokens.existeToken(idUsuario);
+            }catch (Exception e){
+                return false;
+            }
+
+        }else return false;
     }
 
     private void safeRedirect(Request request,Response response, String path){

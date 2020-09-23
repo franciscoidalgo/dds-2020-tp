@@ -13,7 +13,7 @@ import java.util.UUID;
 public class LoginToken extends Entidad {
     @Column(name="token")
     private String token;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     @Column(name="ip")
@@ -21,7 +21,7 @@ public class LoginToken extends Entidad {
 
     public LoginToken(){}
 
-    private LoginToken(Usuario usuario, String ip){
+    public LoginToken(Usuario usuario, String ip){
         this.token = UUID.randomUUID().toString();
         this.usuario = usuario;
         this.ip = ip;
