@@ -21,7 +21,7 @@ export class Burbuja {
 
 
     iconoSegunExpansion(){
-        return this.elementoObjetivo.hidden ? "fas fa-minus" : "fas fa-minus";
+        return this.elementoObjetivo.hidden ?  "fas fa-minus":"fas fa-plus" ;
     }
 }
 

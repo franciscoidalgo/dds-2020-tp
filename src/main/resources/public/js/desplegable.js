@@ -10,7 +10,7 @@ function contenidoDesplegableEs(desplegable, posibleMatch) {
     return contenidoSeleccionadoEn(desplegable).text === posibleMatch;
 }
 
-function quitarDelDesplegableSegunContenido(desplegable, nodoVictima) {
+function sacarDelDesplegableEscondiendo(desplegable, nodoVictima) {
     puedeEliminar(desplegable, nodoVictima) ? desplegable.removeChild(nodoVictima) : "";
 }
 
@@ -30,4 +30,4 @@ function agregaContenidoEnDesplegable(desplegable,contenido){
     desplegable.appendChild(option);
 }
 
-export { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, quitarDelDesplegableSegunContenido, tieneSeleccionables,agregaContenidoEnDesplegable };
+export { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, sacarDelDesplegableEscondiendo, tieneSeleccionables,agregaContenidoEnDesplegable };

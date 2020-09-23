@@ -1,4 +1,4 @@
-function agregateEnTablaSimple(tabla, descripcion) {
+function agregateContenidoEnTablaSimple(tabla, descripcion) {
     let classDelete = "fas fa-minus-square";
     let icono = document.createElement("i");
     let fila = tabla.children[1].insertRow(-1);
@@ -18,4 +18,4 @@ function tablaTieneElementos(tabla){
     return tBody.childElementCount>0;
 }
 
-export {agregateEnTablaSimple, tablaTieneElementos};
+export {agregateContenidoEnTablaSimple, tablaTieneElementos};
