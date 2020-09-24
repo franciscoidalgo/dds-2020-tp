@@ -1,11 +1,9 @@
 package controllers;
 
 import domain.Entidad.Usuario.Usuario;
-import middleware.LoginToken;
+import middleware.sessionManager.SessionManageMethod;
 import passwordHasher.PasswordHasher;
-import repositorios.RepositorioDeTokens;
 import repositorios.RepositorioDeUsuarios;
-import repositorios.factories.FactoryRepoTokens;
 import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -15,6 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ControllerLogin {
+
+    private SessionManageMethod sessionManageMethod;
+
+    public ControllerLogin(SessionManageMethod sessionManageMethod){
+        this.sessionManageMethod = sessionManageMethod;
+    }
 
     public ModelAndView inicio (Request request, Response response){
         Map<String, Object> parametros= new HashMap<>();
@@ -36,14 +40,11 @@ public class ControllerLogin {
 
                 request.session(true);
                 request.session().attribute("loginFailed", false);
-                request.session().attribute("userId", usuario.getId());
-
-
-                //response.cookie("idUsuario", String.valueOf(usuario.getId()), 86400, false, true);
-
-                //LoginToken.generarToken(usuario, request.ip());
-
+                sessionManageMethod.login(request, response, usuario);
                 response.redirect("/dashboard");
+
+                return response;
+
             }else{
                 request.session().attribute("loginFailed", true);
                 response.redirect("/auth");
@@ -60,12 +61,7 @@ public class ControllerLogin {
 
     public Response logout(Request request, Response response) {
         request.session().invalidate();
-        /*
-        RepositorioDeTokens repositorioDeTokens = FactoryRepoTokens.get();
-        LoginToken loginToken = repositorioDeTokens.buscarPorUsuario(Integer.parseInt(request.cookie("idUsuario")));
-        repositorioDeTokens.eliminar(loginToken);
-        response.removeCookie("idUsuario");
-        */
+        sessionManageMethod.logout(request, response);
         response.redirect("/");
         return response;
     }

@@ -4,6 +4,7 @@ import APIMercadoLibre.InfoMercadoLibre;
 import config.ConfiguracionMercadoLibre;
 import controllers.*;
 import middleware.AuthMiddleware;
+import middleware.sessionManager.SessionManageSessionAttribute;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.CustomHelper;
@@ -29,7 +30,7 @@ public class Router {
     }
 
     private static void configure() throws IOException {
-        ControllerLogin controllerLogin = new ControllerLogin();
+        ControllerLogin controllerLogin = new ControllerLogin(new SessionManageSessionAttribute());
         ControllerIndex controllerIndex = new ControllerIndex();
         ControllerEgresos controllerEgresos = new ControllerEgresos();
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
@@ -42,7 +43,7 @@ public class Router {
         }
 
 
-        AuthMiddleware authMiddleware = new AuthMiddleware();
+        AuthMiddleware authMiddleware = new AuthMiddleware(new SessionManageSessionAttribute());
 
         Spark.before("*", authMiddleware::verificarSesion);
 
