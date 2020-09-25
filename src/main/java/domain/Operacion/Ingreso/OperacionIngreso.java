@@ -33,6 +33,10 @@ public class OperacionIngreso extends Operacion {
     //Funcionalidad
     public void agregateEgreso(OperacionEgreso operacionEgreso){ this.egresos.add(operacionEgreso); }
 
+    public void agregarListaDeEgresos(List<OperacionEgreso> egresos){
+        this.egresos.addAll(egresos);
+    }
+
     public double saldoOperacion(){
         return this.montoTotal - this.montoTotalEgresos();
     }

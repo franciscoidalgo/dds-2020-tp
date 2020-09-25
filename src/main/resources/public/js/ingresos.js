@@ -59,4 +59,29 @@ window.eventoCancelar = () => {
     modal.remove();
 }
 
+//Magia para vincular
+function getObject (){
 
+}
+
+function getObjectDePrueba(){
+
+}
+
+function vincular (){
+    var data = null;
+    data = {
+        ingreso: null,
+        egresos: null,
+    };
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:9001/api/vinculacion",
+        data: obj,
+        contentType: "application/json; charset=utf-f",
+        dataType: "json",
+        success: function(data){
+
+        }
+    })
+}
