@@ -1,5 +1,7 @@
 package componenteVinculador;
 
+import middleware.AuthMiddleware;
+import middleware.sessionManager.SessionManageSessionAttribute;
 import spark.Spark;
 
 public class RouterVinculacion {
@@ -9,7 +11,9 @@ public class RouterVinculacion {
     }
 
     private static void configure() {
+        AuthMiddleware authMiddleware = new AuthMiddleware(new SessionManageSessionAttribute());
         ControllerVinculacion controllerVinculacion = new ControllerVinculacion();
         Spark.get("/api/vinculacion", controllerVinculacion::vincular);
+        Spark.get("/api/vinculacionBeta", controllerVinculacion::vincularBeta);
     }
 }
