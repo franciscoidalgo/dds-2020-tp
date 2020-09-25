@@ -2,7 +2,6 @@ package componenteVinculador;
 
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import spark.Request;
@@ -20,12 +19,5 @@ public class ControllerVinculacion {
         String jIngreso = gson.toJson(operacionIngreso);
         response.type("application/json");
         return jIngreso;
-    }
-
-    public String vincularBeta(Request request, Response response){
-        Gson gson = new Gson();
-        String concat = request.queryParams("ingreso") + " con " + request.queryParams("listaEgresos") + " asociados";
-        String respuesta = gson.toJson(concat);
-        return respuesta;
     }
 }

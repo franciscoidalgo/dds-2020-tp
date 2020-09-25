@@ -1,6 +1,8 @@
 package controllers;
 
 import APIAsociadora.ServicioAsociacion;
+import com.google.gson.Gson;
+import domain.Operacion.Ingreso.OperacionIngreso;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -16,7 +18,10 @@ public class ControllerIngreso {
     }
 
     public String getIngresoAsociado(Request request, Response response) throws IOException {
+        Gson gson = new Gson();
         ServicioAsociacion servicioAsociacion = ServicioAsociacion.getInstancia();
-        return servicioAsociacion.getIngresoAsociadoBeta(request.queryParams("ingreso"), request.queryParams("listaEgresos"));
+        OperacionIngreso operacionIngresoResultante = servicioAsociacion.getIngresoAsociado(request.queryParams("ingreso"), request.queryParams("listaEgresos"));
+
+        return gson.toJson(operacionIngresoResultante);
     }
 }

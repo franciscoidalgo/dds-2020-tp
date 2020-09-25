@@ -6,9 +6,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface AsociadoraService {
-    @GET("/api/vinculacionBeta")
-    Call<String> ingresoVinculadoBeta(@Query("ingreso") String ingreso, @Query("listaEgresos") String listaEgresos);
 
     @GET("/api/vinculacion")
     Call<OperacionIngreso> ingresoVinculado(@Query("ingreso") String ingreso, @Query("listaEgresos") String listaEgresos);
+
 }
