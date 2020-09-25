@@ -14,6 +14,5 @@ public class RouterVinculacion {
         AuthMiddleware authMiddleware = new AuthMiddleware(new SessionManageSessionAttribute());
         ControllerVinculacion controllerVinculacion = new ControllerVinculacion();
         Spark.get("/api/vinculacion", controllerVinculacion::vincular);
-        Spark.get("/api/vinculacionBeta", controllerVinculacion::vincularBeta);
     }
 }
