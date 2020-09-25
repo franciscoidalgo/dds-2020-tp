@@ -68,5 +68,8 @@ public class Router {
 
         Spark.get("/api/usuario/:id", pruebaRest::mostrar);
 
+        Spark.get("/ingresoAsociado", controllerIngreso::getIngresoAsociado);
+
+
     }
 }

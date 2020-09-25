@@ -18,6 +18,14 @@ public class ControllerVinculacion {
         List<OperacionEgreso> egresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), OperacionEgreso[].class));
         operacionIngreso.agregarListaDeEgresos(egresos);
         String jIngreso = gson.toJson(operacionIngreso);
+        response.type("application/json");
         return jIngreso;
+    }
+
+    public String vincularBeta(Request request, Response response){
+        Gson gson = new Gson();
+        String concat = request.queryParams("ingreso") + " con " + request.queryParams("listaEgresos") + " asociados";
+        String respuesta = gson.toJson(concat);
+        return respuesta;
     }
 }

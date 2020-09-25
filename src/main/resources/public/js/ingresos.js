@@ -50,6 +50,7 @@ document.getElementById("vincular-auto").onclick = ()=>{
 
 window.eventoVincular = () => {
     alert("Magia para vincular!");
+    vincular();
     let modal = document.querySelector(".modal");
     modal.remove();
 }
@@ -60,28 +61,27 @@ window.eventoCancelar = () => {
 }
 
 //Magia para vincular
-function getObject (){
+function getIngreso (){
 
 }
 
-function getObjectDePrueba(){
+function getListaEgresos(){
 
 }
 
 function vincular (){
-    var data = null;
-    data = {
-        ingreso: null,
-        egresos: null,
+    var dataIngresosEgresos = null;
+    dataIngresosEgresos = {
+        ingreso: "ingreso",
+        listaEgresos: "egresos",
     };
     $.ajax({
         type: "GET",
-        url: "http://localhost:9001/api/vinculacion",
-        data: obj,
-        contentType: "application/json; charset=utf-f",
-        dataType: "json",
+        url: "/ingresoAsociado",
+        data: dataIngresosEgresos,
+        contentType: "text/plain; charset=utf-f",
         success: function(data){
-
+            console.log(data);
         }
     })
 }
