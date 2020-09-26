@@ -6,7 +6,7 @@ import java.util.List;
 public class Solicitud {
 
 
-    private List<Item> listaItems;
+    private final List<Item> listaItems;
 
     //Constructor
     public Solicitud(){

@@ -11,7 +11,7 @@ import java.util.Timer;
 
 public class Planificador {
 
-    private Timer timer;
+    private final Timer timer;
     private static Planificador instancia = null;
 
     public Planificador(){

@@ -1,9 +1,6 @@
 package APIMercadoLibre;
 
 import APIMercadoLibre.modelos.*;
-import APIMercadoLibre.services.ServicioMercadoLibre;
-import domain.Entidad.OrganizacionSocial;
-
 import java.util.List;
 import java.util.Scanner;
 

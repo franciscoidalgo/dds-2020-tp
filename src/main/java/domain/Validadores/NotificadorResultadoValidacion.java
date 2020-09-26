@@ -25,7 +25,7 @@ public class NotificadorResultadoValidacion {
     }
 
     private String asuntoMensaje(OperacionEgreso unEgreso) {
-        return "domain.Operacion Egreso #" + Long.toString(unEgreso.getNroOperacion());
+        return "domain.Operacion Egreso #" + unEgreso.getNroOperacion();
     }
 
     private String detalleResultado(ValidadorDeTransparencia validador,OperacionEgreso unEgreso) {

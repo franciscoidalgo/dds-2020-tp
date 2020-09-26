@@ -1,11 +1,16 @@
 package server;
 
+import APIMercadoLibre.InfoMercadoLibre;
+import config.ConfiguracionMercadoLibre;
 import controllers.*;
 import middleware.AuthMiddleware;
+import middleware.sessionManager.SessionManageSessionAttribute;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import spark.utils.BooleanHelper;
+import spark.utils.CustomHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
+
+import java.io.IOException;
 
 public class Router {
     private static HandlebarsTemplateEngine engine;
@@ -14,53 +19,57 @@ public class Router {
         Router.engine = HandlebarsTemplateEngineBuilder
                 .create()
                 .withDefaultHelpers()
-                .withHelper("isTrue", BooleanHelper.isTrue)
+                .withHelper("ifEqual", CustomHelper.ifEqual)
                 .build();
     }
 
-    public static void init() {
+    public static void init() throws IOException {
         Router.initEngine();
         Spark.staticFileLocation("/public");
         Router.configure();
     }
 
-    private static void configure(){
-        ControllerLogin controllerLogin = new ControllerLogin();
+    private static void configure() throws IOException {
+        ControllerLogin controllerLogin = new ControllerLogin(new SessionManageSessionAttribute());
         ControllerIndex controllerIndex = new ControllerIndex();
         ControllerEgresos controllerEgresos = new ControllerEgresos();
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
         ControllerIngreso controllerIngreso = new ControllerIngreso();
+
         PruebaRest pruebaRest = new PruebaRest();
 
-        AuthMiddleware authMiddleware = new AuthMiddleware();
+        if(ConfiguracionMercadoLibre.usarApi){
+            InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
+        }
 
-        Spark.before("/", authMiddleware::verificarSesion);
 
-        Spark.before("/auth", authMiddleware::noLogueesDosVeces);
+        AuthMiddleware authMiddleware = new AuthMiddleware(new SessionManageSessionAttribute());
+
+        Spark.before("*", authMiddleware::verificarSesion);
+
 
         Spark.get("/auth", controllerLogin::inicio, Router.engine);
 
         Spark.post("/auth", controllerLogin::login);
 
-        Spark.before("/dashboard", authMiddleware::ingresoConSesionIniciada);
-
         Spark.get("/dashboard", controllerIndex::mostrarIndice, Router.engine);
 
         Spark.get("/logout", controllerLogin::logout);
 
-        Spark.before("/egreso", authMiddleware::ingresoConSesionIniciada);
-
         Spark.get("/egreso", controllerEgresos::mostrarEgresos, Router.engine);
 
-        Spark.before("/ingreso", authMiddleware::ingresoConSesionIniciada);
+        Spark.get("/api/get-lista-de-provincias/:nombrePais", controllerEgresos::pasarProvincias);
+
+        Spark.get("/api/get-lista-de-ciudades/:nombreProvincia", controllerEgresos::pasarCiudades);
 
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
-
-        Spark.before("/presupuesto", authMiddleware::ingresoConSesionIniciada);
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
 
         Spark.get("/api/usuario/:id", pruebaRest::mostrar);
+
+        Spark.get("/ingresoAsociado", controllerIngreso::getIngresoAsociado);
+
 
     }
 }

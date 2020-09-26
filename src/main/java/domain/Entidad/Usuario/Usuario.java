@@ -11,13 +11,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table
+@Table(name = "usuario")
 public class Usuario extends Entidad{
     //Atributo
-    @Column
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column
+    @Column(name = "password")
     private String password;
 
     @Transient
@@ -31,6 +31,9 @@ public class Usuario extends Entidad{
 
     @Transient
     private BandejaMensaje bandejaDeMensajes;
+
+    public Usuario (){
+    }
 
     public Usuario(String nombre, String password, Rol rol, EntidadJuridica entidadPertenece) {
         this.nombre = nombre;

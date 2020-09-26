@@ -411,20 +411,35 @@
 											"top": 1201,
 											"width": 215,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAF0yfg5N8L861c=",
+											"_parent": {
+												"$ref": "AAAAAAF0RmWRFviaYf8="
+											},
+											"model": {
+												"$ref": "AAAAAAF0yfg5IML5l/g="
+											},
+											"font": "Arial;13;0",
+											"left": 965,
+											"top": 1216,
+											"width": 215,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 960,
 									"top": 1151,
 									"width": 225,
-									"height": 68
+									"height": 83
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 960,
 							"top": 1128,
 							"width": 225,
-							"height": 105,
+							"height": 113,
 							"nameLabel": {
 								"$ref": "AAAAAAF0RmWRFviZ6ms="
 							},
@@ -4822,11 +4837,11 @@
 								"$ref": "AAAAAAF0RmWRFviMHeY="
 							},
 							"font": "Arial;13;0",
-							"left": 624,
-							"top": 1224,
+							"left": 608,
+							"top": 1232,
 							"width": 401,
-							"height": 94,
-							"text": "\"Se debe permitir adjuntar un documento comercial (comprobante) a la operación de egreso de fondos\n(puede ser un documento o un enlace externo)\"\n¿Atributo en Comprobante o entidad en sí? En caso de ser un atributo en Comprobante, ¿está bien la relación con Presupuesto?"
+							"height": 107,
+							"text": "\"Se debe permitir adjuntar un documento comercial (comprobante) a la operación de egreso de fondos\n(puede ser un documento o un enlace externo)\"\n¿Atributo en Comprobante o entidad en sí? En caso de ser un atributo en Comprobante, ¿está bien la relación con Presupuesto? ¿O Egreso y Presupoesto deberían tener su propio \"repositorio\" de Comprobantes? Mutatis mutandis: Item."
 						},
 						{
 							"_type": "UMLNoteView",
@@ -4919,6 +4934,17 @@
 								"$ref": "AAAAAAF0RmWRGPkzFJY="
 							},
 							"name": "idEgreso",
+							"type": "INTEGER",
+							"length": 0,
+							"foreignKey": true
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAF0yfg5IML5l/g=",
+							"_parent": {
+								"$ref": "AAAAAAF0RmWRGPkzFJY="
+							},
+							"name": "idPresupuesto",
 							"type": "INTEGER",
 							"length": 0,
 							"foreignKey": true

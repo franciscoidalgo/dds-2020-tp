@@ -10,7 +10,7 @@ import java.util.List;
 
 public class OperacionIngreso extends Operacion {
 
-    private double montoTotal;
+    private final double montoTotal;
     private String descripcion;
     private List<OperacionEgreso> egresos;
 
@@ -32,6 +32,10 @@ public class OperacionIngreso extends Operacion {
 
     //Funcionalidad
     public void agregateEgreso(OperacionEgreso operacionEgreso){ this.egresos.add(operacionEgreso); }
+
+    public void agregarListaDeEgresos(List<OperacionEgreso> egresos){
+        this.egresos.addAll(egresos);
+    }
 
     public double saldoOperacion(){
         return this.montoTotal - this.montoTotalEgresos();

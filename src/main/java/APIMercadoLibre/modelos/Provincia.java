@@ -13,4 +13,12 @@ public class Provincia extends Identificable {
     public List<Ciudad> mostrarCiudades(){
         return Arrays.asList(this.cities);
     }
+
+    public Identificable getCountry (){
+        return this.country;
+    }
+
+    public Ciudad[] getCities(){
+        return this.cities;
+    }
 }
