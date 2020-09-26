@@ -1,8 +1,8 @@
-import {Clases,  Desplegable} from "./clases.js";
+import {Burbuja,  Desplegable} from "./burbuja.js";
 import {generaModalAlert,generaBoton} from "./modal.js"
 const burbujas = [
-    new Clases('burbuja-detalle','detalle-ingreso'),
-    new Clases('burbuja-egreso','egreso')
+    new Burbuja('burbuja-detalle','detalle-ingreso'),
+    new Burbuja('burbuja-egreso','egreso')
 ]
 
 const habilitadores = [
@@ -29,6 +29,7 @@ habilitadores.forEach((d) =>{
     d.elemento.onchange = () => d.habilitaObjetivo();
 });
 
+
 document.getElementById("vincular-auto").onclick = ()=>{
     let modal = generaModalAlert("Realizar Vinculacion Automatica","No se vincularan los Egresos seleccionados manualmente, ¿esta seguro de continuar?")
     let botonera = generaBotonera();
@@ -49,6 +50,7 @@ document.getElementById("vincular-auto").onclick = ()=>{
 
 window.eventoVincular = () => {
     alert("Magia para vincular!");
+    vincular();
     let modal = document.querySelector(".modal");
     modal.remove();
 }
@@ -58,4 +60,29 @@ window.eventoCancelar = () => {
     modal.remove();
 }
 
+//Magia para vincular
+function getIngreso (){
 
+}
+
+function getListaEgresos(){
+
+}
+
+function vincular (){
+    var dataIngresosEgresos = null;
+    dataIngresosEgresos = {
+        ingreso: getIngreso(),
+        listaEgresos: getListaEgresos(),
+    };
+    $.ajax({
+        type: "GET",
+        url: "/ingresoAsociado",
+        data: dataIngresosEgresos,
+        dataType:"json",
+        contentType: "application/json; charset=utf-f",
+        success: function(data){
+            console.log("Aca se persiste el ingreso con los egresos asociados");
+        }
+    })
+}

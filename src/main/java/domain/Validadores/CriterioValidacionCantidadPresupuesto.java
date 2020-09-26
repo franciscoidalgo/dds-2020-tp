@@ -2,10 +2,6 @@ package domain.Validadores;
 
 import domain.Operacion.Egreso.OperacionEgreso;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 public class CriterioValidacionCantidadPresupuesto implements CriterioValidacion {
     private int limitePresupuestos;
 

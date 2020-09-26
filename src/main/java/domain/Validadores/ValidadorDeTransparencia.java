@@ -11,8 +11,8 @@ public class ValidadorDeTransparencia {
 
     private List<CriterioValidacion> criteriosValidadores = new ArrayList<>();
     private static ValidadorDeTransparencia instancia = null;
-    private NotificadorResultadoValidacion notificador = NotificadorResultadoValidacion.instancia();
-    private Planificador planificador = Planificador.instancia();
+    private final NotificadorResultadoValidacion notificador = NotificadorResultadoValidacion.instancia();
+    private final Planificador planificador = Planificador.instancia();
 
 
 

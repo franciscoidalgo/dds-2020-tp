@@ -4,10 +4,10 @@ import java.time.LocalTime;
 
 public class Mensaje {
 
-    private LocalTime fechaEnvio;
+    private final LocalTime fechaEnvio;
     private LocalTime fechaLeido;
-    private String asunto;
-    private String mensaje;
+    private final String asunto;
+    private final String mensaje;
 
 
     public Mensaje(String asunto, String mensaje) {

@@ -1,19 +1,19 @@
-import {agregateEnTablaSimple, tablaTieneElementos} from './tabla.js';
+import {agregateContenidoEnTablaSimple, tablaTieneElementos} from './tabla.js';
 import {
     agregaContenidoEnDesplegable,
     contenidoDesplegableEs,
     contenidoSeleccionadoEn,
-    quitarDelDesplegableSegunContenido,
+    sacarDelDesplegableEscondiendo,
     seleccionarValorPara,
 } from './desplegable.js';
 import generaCategoria from './categoria.js';
 import generaTextbox from './textbox.js';
-import {Clases,  Desplegable} from "./clases.js";
+import {Burbuja,  Desplegable} from "./burbuja.js";
 
 const burbujas = [
-        new Clases('burbuja-proveedor','proveedor'),
-        new Clases('burbuja-compra','detalle-compra'),
-        new Clases('burbuja-pago','medio-de-pago')
+        new Burbuja('burbuja-proveedor','proveedor'),
+        new Burbuja('burbuja-compra','detalle-compra'),
+        new Burbuja('burbuja-pago','medio-de-pago')
 ]
 
 const ocultadores = [
@@ -60,36 +60,108 @@ const seccion = {
 
 
 /* Funciones */
+
 function agregaEnTablaSegunDesplegable(disparador, tabla, desplegable) {
 
     let nodoContenido = contenidoSeleccionadoEn(desplegable);
     let contenido = nodoContenido.innerHTML;
 
-    agregateEnTablaSimple(tabla, contenido);
-    seleccionarValorPara(desplegable, 0);
-
-    desplegable.focus();
-    tabla.scrollIntoView({ behavior: "smooth" });
-
-    quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
-    disparador["srcElement"].hidden = true;
+    agregateContenidoEnTablaSimple(tabla, contenido);
+    sacarContenidoSeteandoInicial(desplegable,nodoContenido,disparador);
 }
 
 function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
-
     let nodoContenido = contenidoSeleccionadoEn(desplegable);
     let contenido = nodoContenido.innerHTML;
     let categoria = generaCategoria(contenido, true);
 
+    sacarContenidoSeteandoInicial(desplegable,nodoContenido,disparador);
     seccion.appendChild(categoria);
-    seleccionarValorPara(desplegable, 0);
+    categoria.onclick = ()=>{eliminaCategoria(categoria)};//comportamiento en window
+}
 
-    quitarDelDesplegableSegunContenido(desplegable, nodoContenido);
 
-    desplegable.focus();
-    desplegable.scrollIntoView({ behavior: "smooth" });
+function cambiaATextboxParaVendedor(){
+    let contenedor = document.getElementById('vendedor').parentNode;
+    let contenido = generaTextbox(desplegable.vendedor);
+
+    boton.vendedor.value="Volver";
+    desplegable.vendedor.remove();
+
+    contenedor.appendChild(contenido);
+    boton.razonSocial.hidden = true;
+
+    desplegable.razonSocial.disabled = true;
+    entrada.dni.disabled = false;
+}
+
+function cambiaATextboxParaRazonSocial(){
+    let contenedor = desplegable.razonSocial.parentNode;
+    let textbox = generaTextbox(desplegable.razonSocial);
+
+    cambiaATextboxParaVendedor();
+
+    boton.razonSocial.value="Volver";
+    boton.razonSocial.hidden=false;
+    boton.vendedor.hidden = true;
+
+    desplegable.razonSocial.remove();
+    contenedor.appendChild(textbox);
+
+
+}
+
+function cambiaADesplegableParaVendedor(){
+    let contenedor = document.getElementById('vendedor').parentNode;
+
+   /* Rollback del estado incial */
+    boton.vendedor.value="Nuevo Vendedor";
+    boton.razonSocial.hidden = false;
+    entrada.dni.disabled = true;
+
+    /*Vuelo textbox para poner desplegable*/
+    contenedor.lastChild.remove();
+    contenedor.appendChild(desplegable.vendedor);
+}
+
+function cambiaADesplegableParaRazonSocial(){
+    let contenedor = document.getElementById('razon-social').parentNode;
+
+    /* Rollback del estado incial */
+    boton.razonSocial.value = "Nueva Razon Social";
+    boton.vendedor.hidden = false;
+
+    /*Vuelo textbox para poner desplegable*/
+    contenedor.lastChild.remove();
+    contenedor.appendChild(desplegable.razonSocial);
+
+    cambiaADesplegableParaVendedor();
+}
+
+
+function escondeMostrandoA(nodoEsconder,nodoMostrar){
+    nodoEsconder.hidden=true;
+    nodoMostrar.hidden=false;
+}
+function esconderMostrandoOpuestosSegun(parametroNot,opuesto,funcion){
+    parametroNot.hidden = !funcion(parametroNot);
+    opuesto.hidden = funcion(parametroNot);
+}
+
+function hayCategoriasSeleccionadas(nodoCategoria){
+    return nodoCategoria.childElementCount>1;
+}
+
+function manejadorEliminar (nodoObjetivo,desplegable){
+    let contenido = nodoObjetivo.firstElementChild.textContent;
+    agregaContenidoEnDesplegable(desplegable,contenido);
+    nodoObjetivo.remove();
+}
+
+function sacarContenidoSeteandoInicial(desplegable,nodoContenido,disparador){
+    seleccionarValorPara(desplegable, 0);//Setea --Seleccione--
+    sacarDelDesplegableEscondiendo(desplegable, nodoContenido);
     disparador["srcElement"].hidden = true;
-    categoria.onclick = ()=>{eliminaCategoria(categoria)};
 }
 
 
@@ -115,124 +187,115 @@ desplegable.comprobante.onchange = () => {
 /*Boton*/
 boton.agregarTabla.onclick = (e) => {
     let botonNuevo = e.target["nextElementSibling"];
-    let tabla = seccion.tablaDetalle;
     let contenido = document.getElementById('producto');
-    seccion.tablaDetalle.hidden = false;
-    seccion.msgTablaVacia.hidden = true;
+    let contenedor = contenido.parentNode;
+
+    escondeMostrandoA(seccion.msgTablaVacia,seccion.tablaDetalle);
 
     if(botonNuevo.value !== "Cancelar"){
         agregaEnTablaSegunDesplegable(e, seccion.tablaDetalle, contenido);
     }else{
-        agregateEnTablaSimple(tabla, contenido.value);
-        let contenedor = contenido.parentNode;
+        agregateContenidoEnTablaSimple(seccion.tablaDetalle, contenido.value);
         contenido.remove();
         boton.nuevoItem.value = "Nuevo";
         contenedor.appendChild(desplegable.producto);
         document.getElementById('agregar-tabla').hidden=true;
     }
-
-
 }
 
 boton.agregarCategoria.onclick = (e) => {
-    seccion.categoria.hidden = false;
-    seccion.msgCategoriasVacia.hidden = true;
+    escondeMostrandoA(seccion.msgCategoriasVacia, seccion.categoria);
     agregaEnCategoriaValorDesplegable(e, seccion.categoria, desplegable.categoria);
 }
 
 boton.razonSocial.onclick = () =>{
-    let contenedor = document.getElementById('razon-social').parentNode;
-
-    if(boton.razonSocial.value !== "Volver"){
-    let contenido = generaTextbox(desplegable.razonSocial);
-
-    boton.razonSocial.setAttribute("value","Volver");
-    desplegable.razonSocial.remove();
-
-    contenedor.appendChild(contenido);
-    boton.vendedor.hidden = true;
-
-    contenido = generaTextbox(desplegable.vendedor);
-    contenedor = document.getElementById('vendedor').parentNode;
-    desplegable.vendedor.remove();
-
-    contenedor.appendChild(contenido);
-    entrada.dni.disabled = false;
-
-    }else{
-
-        boton.razonSocial.setAttribute("value","Nueva Razon Social");
-        boton.vendedor.hidden = false;
-        entrada.dni.disabled = true;
-
-        contenedor.lastChild.remove();
-        contenedor.appendChild(desplegable.razonSocial);
-
-        contenedor = document.getElementById('vendedor').parentNode;
-
-        contenedor.lastChild.remove();
-        contenedor.appendChild(desplegable.vendedor);
-    }
-
+     boton.razonSocial.value !== "Volver"?
+         cambiaATextboxParaRazonSocial():cambiaADesplegableParaRazonSocial();
 }
 
 boton.vendedor.onclick = () =>{
-    let contenedor = document.getElementById('vendedor').parentNode;
-
-    if(boton.vendedor.value !== "Volver"){
-        let contenido = generaTextbox(desplegable.vendedor);
-
-        boton.vendedor.setAttribute("value","Volver");
-        desplegable.vendedor.remove();
-
-        contenedor.appendChild(contenido);
-        boton.razonSocial.hidden = true;
-
-        desplegable.razonSocial.disabled = true;
-        entrada.dni.disabled = false;
-
-    }else{
-
-        boton.vendedor.setAttribute("value","Nuevo Vendedor");
-        boton.razonSocial.hidden = false;
-        entrada.dni.disabled = true;
-        contenedor.lastChild.remove();
-        contenedor.appendChild(desplegable.vendedor);
-    }
-
+    boton.vendedor.value !== "Volver"?
+        cambiaATextboxParaVendedor():cambiaADesplegableParaVendedor();
 }
 
 boton.nuevoItem.onclick = ()=>{
     let contenedor = document.getElementById('producto').parentNode;
-    let contenido = generaTextbox(desplegable.producto);
+    let valorBoton =  boton.nuevoItem.value;
 
+    if(valorBoton !== "Cancelar"){
+    let contenido = generaTextbox(desplegable.producto);
     boton.nuevoItem.value = "Cancelar";
     desplegable.producto.remove();
     contenedor.appendChild(contenido);
-
-    contenido.onkeyup = ()=>{
-        document.getElementById('agregar-tabla').hidden = contenido.value==="";
+        contenido.onkeyup = ()=>{
+            boton.agregarTabla.hidden = contenido.value==="";
+        }
+    }else{
+        let contenido = document.getElementById('producto');
+        boton.nuevoItem.value = "Nuevo";
+        contenido.remove();
+        contenedor.appendChild(desplegable.producto);
     }
 }
 
 /*En ejecucion*/
+
 window.eliminarFila = (nodoFila) => {
-    let contenido = nodoFila.firstElementChild.textContent;
-
-    agregaContenidoEnDesplegable(desplegable.producto,contenido);
-    nodoFila.remove();
-
-    seccion.tablaDetalle.hidden = !tablaTieneElementos(seccion.tablaDetalle);
-    seccion.msgTablaVacia.hidden = tablaTieneElementos(seccion.tablaDetalle);
+    manejadorEliminar(nodoFila,desplegable.producto);
+    esconderMostrandoOpuestosSegun(seccion.tablaDetalle,seccion.msgTablaVacia,tablaTieneElementos);
 }
 
 window.eliminaCategoria = (nodoCategoria) => {
-    let contenido = nodoCategoria.firstElementChild.textContent;
-
-    agregaContenidoEnDesplegable(desplegable.categoria,contenido);
-    nodoCategoria.remove();
-
-    seccion.categoria.hidden = !seccion.categoria.childElementCount>1;
-    seccion.msgCategoriasVacia.hidden = seccion.categoria.childElementCount>1;
-
+    manejadorEliminar(nodoCategoria,desplegable.categoria);
+    esconderMostrandoOpuestosSegun(seccion.categoria,seccion.msgCategoriasVacia,hayCategoriasSeleccionadas);
 }
+
+/*Paises, provincias y ciudades */
+$(document).on("change", '#pais', function(e){
+    const urlBase = "/api/get-lista-de-provincias/";
+    const nombrePais = $("select#pais option:checked").text();
+    const urlFinal = urlBase.concat(nombrePais);
+
+    $.ajax({
+        url : urlFinal,
+        dataType: 'json',
+        success: function (json){
+            const $listaProvincias = $("#provincia");
+            const $listaCiudades = $("#ciudad");
+            $listaCiudades.prop("disabled", true);
+            $listaCiudades.empty();
+            $listaCiudades.append($("<option disabled selected></option>")
+                          .attr("value", "").text("-- Seleccione --"));
+
+            $listaProvincias.empty();
+            $listaProvincias.append($("<option disabled selected></option>")
+                            .attr("value", "").text("-- Seleccione --"));
+            $.each(json, function(index, item){
+                $listaProvincias.append($("<option></option>")
+                                .attr("value", item.id).text(item.name));
+            })
+        }
+    })
+});
+
+$(document).on("change", '#provincia', function(e){
+    const urlBase = "/api/get-lista-de-ciudades/";
+    const nombreProvincia = $("select#provincia option:checked").text();
+    const urlFinal = urlBase.concat(nombreProvincia);
+
+    $.ajax({
+        url : urlFinal,
+        dataType: 'json',
+        success: function (json){
+            const $listaCiudades = $("#ciudad");
+
+            $listaCiudades.empty();
+            $listaCiudades.append($("<option disabled selected></option>")
+                            .attr("value", "").text("-- Seleccione --"));
+            $.each(json, function(index, item){
+                $listaCiudades.append($("<option></option>")
+                                .attr("value", item.id).text(item.name));
+            })
+        }
+    })
+});

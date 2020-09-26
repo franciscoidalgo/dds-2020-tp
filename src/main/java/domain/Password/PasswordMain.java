@@ -13,7 +13,7 @@ public class PasswordMain {
         ValidatePasswordSpecialCharacter validatePasswordSpecialCharacter = new ValidatePasswordSpecialCharacter();
         ValidatePasswordDictionary validatePasswordDictionary = new ValidatePasswordDictionary();
 
-        ArrayList<PasswordCriteria> passwordCriteria = new ArrayList<PasswordCriteria>();
+        ArrayList<PasswordCriteria> passwordCriteria = new ArrayList<>();
 
         passwordCriteria.add(validatePasswordLength);
         passwordCriteria.add(validatePasswordNumber);

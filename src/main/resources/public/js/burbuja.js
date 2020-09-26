@@ -1,4 +1,4 @@
-export class Clases {
+export class Burbuja {
 
     constructor(idElemento, idElementoObjetivo) {
         this.elemento = document.getElementById(idElemento);
@@ -21,7 +21,7 @@ export class Clases {
 
 
     iconoSegunExpansion(){
-        return this.elementoObjetivo.hidden ? "fas fa-minus" : "fas fa-minus";
+        return this.elementoObjetivo.hidden ?  "fas fa-minus":"fas fa-plus" ;
     }
 }
 

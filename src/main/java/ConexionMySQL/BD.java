@@ -27,7 +27,9 @@ public class BD {
 			con.commit();
 			con.close();
 			st.close();
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 		
 		Statement stmt = null;
 		Connection c = conectar();
@@ -53,7 +55,9 @@ public class BD {
 			con.commit();
 			con.close();
 			st.close();
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 		
 		Statement stmt = null;
 		Connection c = conectar();

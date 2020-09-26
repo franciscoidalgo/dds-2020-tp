@@ -4,8 +4,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.function.Predicate;
 
 public class BusquedaCondicional {
-    private Predicate condicionPredicado;
-    private CriteriaQuery condicionCriterio;
+    private final Predicate condicionPredicado;
+    private final CriteriaQuery condicionCriterio;
 
     public BusquedaCondicional(Predicate condicionPredicado, CriteriaQuery condicionCriterio) {
         this.condicionPredicado = condicionPredicado;

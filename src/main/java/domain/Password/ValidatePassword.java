@@ -18,7 +18,7 @@ public class ValidatePassword {
                         }
                         return null;
                     })
-                    .reduce((aBoolean, aBoolean2) -> Boolean.logicalAnd(aBoolean, aBoolean2)).get();
+                    .reduce(Boolean::logicalAnd).get();
     }
 }
 
