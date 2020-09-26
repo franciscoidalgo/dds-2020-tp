@@ -922,21 +922,6 @@
 										},
 										{
 											"_type": "ERDColumnView",
-											"_id": "AAAAAAF0vKm01awbwOQ=",
-											"_parent": {
-												"$ref": "AAAAAAF0RmWRF/jImC4="
-											},
-											"model": {
-												"$ref": "AAAAAAF0vKm0gqwYcrU="
-											},
-											"font": "Arial;13;0",
-											"left": 701,
-											"top": 711,
-											"width": 214.3017578125,
-											"height": 13
-										},
-										{
-											"_type": "ERDColumnView",
 											"_id": "AAAAAAF0RmWRF/jQ1sU=",
 											"_parent": {
 												"$ref": "AAAAAAF0RmWRF/jImC4="
@@ -962,7 +947,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 701,
-											"top": 726,
+											"top": 711,
 											"width": 214.3017578125,
 											"height": 13
 										},
@@ -977,7 +962,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 701,
-											"top": 741,
+											"top": 726,
 											"width": 214.3017578125,
 											"height": 13
 										},
@@ -992,7 +977,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 701,
-											"top": 756,
+											"top": 741,
 											"width": 214.3017578125,
 											"height": 13
 										},
@@ -1007,7 +992,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 701,
-											"top": 771,
+											"top": 756,
 											"width": 214.3017578125,
 											"height": 13
 										},
@@ -1019,6 +1004,21 @@
 											},
 											"model": {
 												"$ref": "AAAAAAF0vArEu6sgbms="
+											},
+											"font": "Arial;13;0",
+											"left": 701,
+											"top": 771,
+											"width": 214.3017578125,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAF0yW61ZrxzqUc=",
+											"_parent": {
+												"$ref": "AAAAAAF0RmWRF/jImC4="
+											},
+											"model": {
+												"$ref": "AAAAAAF0yW61NrxwWvY="
 											},
 											"font": "Arial;13;0",
 											"left": 701,
@@ -2851,7 +2851,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 550,
-									"top": 817,
+									"top": 801,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -2868,7 +2868,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 670,
-									"top": 832,
+									"top": 816,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -2902,7 +2902,7 @@
 								"$ref": "AAAAAAF0RmWRF/jGJcw="
 							},
 							"lineStyle": 2,
-							"points": "696:824;536:824;536:856",
+							"points": "696:808;536:808;536:856",
 							"nameLabel": {
 								"$ref": "AAAAAAF0TYMBg6RNndM="
 							},
@@ -4783,8 +4783,8 @@
 								"$ref": "AAAAAAF0RmWRFviMHeY="
 							},
 							"font": "Arial;13;0",
-							"left": 208,
-							"top": 672,
+							"left": 912,
+							"top": 544,
 							"width": 288,
 							"height": 77,
 							"text": "Asumí que no se requiere llevar un histórico de las Categorías y Sectores a que perteneció una EntidadJurídica: sólo nos interesa conocer a qué Categoría y Sector pertenece actualmente."
@@ -4801,6 +4801,45 @@
 							"width": 377,
 							"height": 65,
 							"text": "Egreso y Presupuesto guardan ValorTotal por performance; ItemXEgreso e ItemXPresupuesto guardan Valor por consistencia (evntual cambio de Valor en Item)."
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAF0yXCv+LyPPKI=",
+							"_parent": {
+								"$ref": "AAAAAAF0RmWRFviMHeY="
+							},
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 704,
+							"width": 233,
+							"height": 64,
+							"text": "Sector y Categoría se deben persistir en la DB... pero, ¿es necesario que haya relación con EntidadJuridica?"
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAF0yXNmybyd1j0=",
+							"_parent": {
+								"$ref": "AAAAAAF0RmWRFviMHeY="
+							},
+							"font": "Arial;13;0",
+							"left": 624,
+							"top": 1224,
+							"width": 401,
+							"height": 94,
+							"text": "\"Se debe permitir adjuntar un documento comercial (comprobante) a la operación de egreso de fondos\n(puede ser un documento o un enlace externo)\"\n¿Atributo en Comprobante o entidad en sí? En caso de ser un atributo en Comprobante, ¿está bien la relación con Presupuesto?"
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAF0yXecZbysZzI=",
+							"_parent": {
+								"$ref": "AAAAAAF0RmWRFviMHeY="
+							},
+							"font": "Arial;13;0",
+							"left": 1824,
+							"top": 760,
+							"width": 373.35498046875,
+							"height": 64,
+							"text": "Revisar según link https://pymes.afip.gob.ar/estiloAFIP/pymes/ayuda/default.asp e implementación actual de API Rest."
 						}
 					]
 				},
@@ -6166,16 +6205,6 @@
 						},
 						{
 							"_type": "ERDColumn",
-							"_id": "AAAAAAF0vKm0gqwYcrU=",
-							"_parent": {
-								"$ref": "AAAAAAF0RmWRGflzLN8="
-							},
-							"name": "tipo",
-							"type": "VARCHAR",
-							"length": 0
-						},
-						{
-							"_type": "ERDColumn",
 							"_id": "AAAAAAF0RmWRGfmEwQo=",
 							"_parent": {
 								"$ref": "AAAAAAF0RmWRGflzLN8="
@@ -6234,6 +6263,17 @@
 							"name": "promVentaAnual",
 							"type": "FLOAT",
 							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAF0yW61NrxwWvY=",
+							"_parent": {
+								"$ref": "AAAAAAF0RmWRGflzLN8="
+							},
+							"name": "idSector",
+							"type": "INTEGER",
+							"length": 0,
+							"foreignKey": true
 						},
 						{
 							"_type": "ERDColumn",
