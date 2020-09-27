@@ -2257,6 +2257,7 @@
 											"model": {
 												"$ref": "AAAAAAF0TDgQqZ3DOe8="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 1285,
 											"top": 368,
@@ -2272,9 +2273,10 @@
 											"model": {
 												"$ref": "AAAAAAF0TDlL6p32YKY="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 1285,
-											"top": 383,
+											"top": 368,
 											"width": 222.0205078125,
 											"height": 13
 										}
@@ -2283,14 +2285,14 @@
 									"left": 1280,
 									"top": 303,
 									"width": 232.0205078125,
-									"height": 98
+									"height": 68
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 1280,
 							"top": 280,
 							"width": 232.0205078125,
-							"height": 121,
+							"height": 91,
 							"nameLabel": {
 								"$ref": "AAAAAAF0TDc4752cJ3w="
 							},
@@ -4635,7 +4637,7 @@
 									"font": "Arial;13;1",
 									"left": 1280,
 									"top": 469,
-									"width": 244.5380859375,
+									"width": 252.2314453125,
 									"height": 13,
 									"text": "ResultadoValidacion"
 								},
@@ -4661,7 +4663,7 @@
 											"font": "Arial;13;0",
 											"left": 1285,
 											"top": 492,
-											"width": 234.5380859375,
+											"width": 242.2314453125,
 											"height": 13
 										},
 										{
@@ -4676,7 +4678,7 @@
 											"font": "Arial;13;0",
 											"left": 1285,
 											"top": 507,
-											"width": 234.5380859375,
+											"width": 242.2314453125,
 											"height": 13
 										},
 										{
@@ -4691,22 +4693,37 @@
 											"font": "Arial;13;0",
 											"left": 1285,
 											"top": 522,
-											"width": 234.5380859375,
+											"width": 242.2314453125,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAF0zRwDh52BHOQ=",
+											"_parent": {
+												"$ref": "AAAAAAF0zOZ1Y3ZLb2Q="
+											},
+											"model": {
+												"$ref": "AAAAAAF0zRwDYp1+CdA="
+											},
+											"font": "Arial;13;0",
+											"left": 1285,
+											"top": 537,
+											"width": 242.2314453125,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 1280,
 									"top": 487,
-									"width": 244.5380859375,
-									"height": 53
+									"width": 252.2314453125,
+									"height": 68
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 1280,
 							"top": 464,
-							"width": 244.5380859375,
-							"height": 76,
+							"width": 252.2314453125,
+							"height": 91,
 							"nameLabel": {
 								"$ref": "AAAAAAF0zOZ1YnZKQ8Q="
 							},
@@ -4733,7 +4750,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1406,
-									"top": 425,
+									"top": 410,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -4750,7 +4767,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 1407,
-									"top": 419,
+									"top": 389,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -4784,7 +4801,7 @@
 								"$ref": "AAAAAAF0TDc47p2bY9s="
 							},
 							"lineStyle": 2,
-							"points": "1392:400;1392:464",
+							"points": "1392:370;1392:464",
 							"nameLabel": {
 								"$ref": "AAAAAAF0zOeg1XaTqjg="
 							},
@@ -4814,7 +4831,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1393,
-									"top": 570,
+									"top": 578,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -4848,7 +4865,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 1393,
-									"top": 558,
+									"top": 573,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -4865,7 +4882,7 @@
 								"$ref": "AAAAAAF0RmWRF/i+WF4="
 							},
 							"lineStyle": 2,
-							"points": "1408:616;1408:539",
+							"points": "1408:616;1408:554",
 							"nameLabel": {
 								"$ref": "AAAAAAF0zOeu03anm5k="
 							},
@@ -8226,6 +8243,16 @@
 							"type": "INTEGER",
 							"length": 0,
 							"foreignKey": true
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAF0zRwDYp1+CdA=",
+							"_parent": {
+								"$ref": "AAAAAAF0zOZ1YXZHF3o="
+							},
+							"name": "fechaLeido",
+							"type": "DATETIME",
+							"length": 0
 						}
 					]
 				}
