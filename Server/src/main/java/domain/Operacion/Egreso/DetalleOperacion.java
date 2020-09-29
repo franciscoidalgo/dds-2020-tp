@@ -16,7 +16,7 @@ public class DetalleOperacion extends EntidadPersistente {
     private List<Item> items;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(name = "categoria_x_detalle")
+    @JoinTable(name = "asociacion_categoria")
     private List<CategoriaOperacion> categorias;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)

@@ -11,10 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "operacion_ingreso")
+@PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
 public class OperacionIngreso extends Operacion {
-
-    @Column(name = "monto_total")
-    private double montoTotal;
 
     @Column(name = "descripcion")
     private String descripcion;
@@ -24,8 +22,7 @@ public class OperacionIngreso extends Operacion {
 
     //Constructor
     public OperacionIngreso(double montoTotal, String descripcion){
-        super();
-        this.montoTotal = montoTotal;
+        super(montoTotal);
         this.descripcion = descripcion;
         this.egresos = new ArrayList<>();
     }

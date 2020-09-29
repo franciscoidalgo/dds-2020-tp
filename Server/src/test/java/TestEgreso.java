@@ -54,7 +54,7 @@ public class TestEgreso {
         }
     }
 
-    @Test
+  /*  @Test
     public void testEstandarizacion_SeMuestraQueAlmacenadorTraePaisesDeLaApi() throws Exception {
         InfoMercadoLibre storage = InfoMercadoLibre.instancia();
         //Para mostrar por consola que muestra... descomentar
@@ -65,7 +65,7 @@ public class TestEgreso {
                 System.out.println(provincia.mostraNombre());
             });
         });
-        */
+        *//*
         Assert.assertTrue(!storage.getListaDePaises().isEmpty() && !storage.getListaDeMonedas().isEmpty());
-    }
+    }*/
 }

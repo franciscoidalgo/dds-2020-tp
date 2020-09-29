@@ -14,8 +14,16 @@ public abstract class Operacion extends EntidadPersistente {
     protected LocalTime fecha;
 
 
+    @Column(name = "monto_total")
+    protected double montoTotal;
+
     public Operacion() {
         this.fecha = LocalTime.now();
+    }
+
+    public Operacion(double montoTotal) {
+        this.fecha = LocalTime.now();
+        this.montoTotal =montoTotal;
     }
 
     //Getter Setter

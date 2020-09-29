@@ -13,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "operacion_egreso")
+@PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
 public class OperacionEgreso extends Operacion {
     //Atributos
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -31,16 +32,12 @@ public class OperacionEgreso extends Operacion {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
 
-    @Column(name = "monto_total")
-    private double montoTotal;
-
     //Constructor
 
     public OperacionEgreso(MedioDePago medioDePago, DetalleOperacion detalle, double montoTotal) {
-        super();
+        super(montoTotal);
         this.medioDePago = medioDePago;
         this.detalle = detalle;
-        this.montoTotal = montoTotal;
         this.revisores = new ArrayList<>();
         this.presupuestos = new ArrayList<>();
 
@@ -91,7 +88,7 @@ public class OperacionEgreso extends Operacion {
     /*Funcionales*/
     @Override
     public double montoTotal() {
-        return montoTotal;
+        return this.montoTotal;
     }
 
     public void agregaPresupuesto(Presupuesto unPresupuesto) throws Exception {
