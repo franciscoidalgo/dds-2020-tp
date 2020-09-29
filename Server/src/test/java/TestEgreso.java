@@ -20,10 +20,10 @@ public class TestEgreso {
     public void setUp() throws Exception {
         generador = Generador.instancia();
         //Presupuesto1
-        presupuesto1 = generador.generaPresupuesto();
+        presupuesto1 = generador.generaPresupuesto(1000);
 
         //Presupuesto2
-        presupuesto2 = generador.generaPresupuesto();
+        presupuesto2 = generador.generaPresupuesto(1500);
 
         //Egreso ya viene con un detalle generado
         unEgreso = generador.generaEgreso(0);

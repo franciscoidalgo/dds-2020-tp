@@ -28,8 +28,4 @@ public class Tarjeta extends MedioDePago {
 
     }
 
-    @Override
-    protected void actualizarTiposDePago() {
-
-    }
 }

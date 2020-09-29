@@ -1,14 +1,32 @@
 package domain.DireccionPostal;
 
 
+import domain.Entidad.Entidad;
 
-public class DireccionPostal {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "Direccion")
+public class DireccionPostal extends Entidad {
+
+    @Column(name = "pais")
     private String pais;
+
+    @Column(name = "provincia")
     private String provincia;
+
+    @Column(name = "ciudad")
     private String ciudad;
+
+    @Column(name = "calle")
     private String calle;
+
+    @Column(name = "altura")
     private String altura;
+
+    @Column(name = "piso")
     private String piso;
 
 

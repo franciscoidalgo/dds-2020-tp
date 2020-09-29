@@ -1,16 +1,32 @@
 package domain.Operacion.Egreso;
 
 import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
+import domain.Entidad.Entidad;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetalleCompra {
+@Entity
+@Table(name = "detalle_compra")
+public class DetalleCompra extends Entidad {
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "solicitud_id")
     private Solicitud solicitud;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_operacion_id")
     private List<CategoriaOperacion> categorias;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "comprobante_id")
     private Comprobante comprobante;
 
+    //Constructors
     public DetalleCompra(Solicitud solicitud, Proveedor proveedor) {
         this.solicitud = solicitud;
         this.categorias = new ArrayList<>();
@@ -18,6 +34,7 @@ public class DetalleCompra {
         this.comprobante = null;
     }
 
+    public DetalleCompra() {}
 
     //Getter and Setter
     public Solicitud getSolicitud() {
@@ -53,9 +70,6 @@ public class DetalleCompra {
     }
 
     //Funcionalidad
-    public double montoTotal() {
-        return this.solicitud.calcularSubtotal();
-    }
 
     public Boolean solicitudTieneItems(){
 

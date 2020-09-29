@@ -1,8 +1,17 @@
 package domain.Entidad;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "entidad_base")
 public class EntidadBase extends Entidad{
     //Atributos
+    @Column(name = "nombre")
     private String nombre;
+    @Column(name = "descripcion")
     private String descripcion;
     //Constructor
 
@@ -10,6 +19,8 @@ public class EntidadBase extends Entidad{
         this.nombre=nombre;
         this.descripcion= descripcion;
     }
+
+    public EntidadBase() {}
 
     //Getters-Setters
 

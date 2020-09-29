@@ -17,8 +17,4 @@ public class ATM extends MedioDePago {
         this.atm = atm;
     }
 
-    @Override
-    protected void actualizarTiposDePago() {
-
-    }
 }

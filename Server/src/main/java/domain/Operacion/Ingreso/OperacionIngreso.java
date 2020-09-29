@@ -5,23 +5,33 @@ import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Operacion;
 import domain.Entidad.Usuario.Usuario;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "operacion_ingreso")
 public class OperacionIngreso extends Operacion {
 
-    private final double montoTotal;
+    @Column(name = "monto_total")
+    private double montoTotal;
+
+    @Column(name = "descripcion")
     private String descripcion;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "operacion_egreso_id")
     private List<OperacionEgreso> egresos;
 
     //Constructor
-    public OperacionIngreso(double montoTotal, String descripcion, Usuario creadoPor){
-        super(creadoPor);
+    public OperacionIngreso(double montoTotal, String descripcion){
+        super();
         this.montoTotal = montoTotal;
         this.descripcion = descripcion;
         this.egresos = new ArrayList<>();
     }
-    //Este es el proceso de registro de la operacion
+
+    public OperacionIngreso() {}
 
     //Getter Setter
     public String getDescripcion() { return descripcion; }

@@ -7,30 +7,50 @@ import domain.Entidad.Usuario.Mensaje;
 import domain.Entidad.Usuario.Usuario;
 import domain.Validadores.ValidadorDeTransparencia;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "operacion_egreso")
 public class OperacionEgreso extends Operacion {
     //Atributos
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "detalle_compra_id")
     private DetalleCompra detalle;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "medio_de_pago_id")
     private MedioDePago medioDePago;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "revisores_id")
     private List<Usuario> revisores;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "presupuestos_id")
     private List<Presupuesto> presupuestos;
+
+    @Column(name = "monto_total")
+    private double montoTotal;
 
     //Constructor
 
-    public OperacionEgreso(MedioDePago medioDePago,
-                           DetalleCompra detalle,
-                           Usuario creadoPor) {
-        super(creadoPor);
+    public OperacionEgreso(MedioDePago medioDePago, DetalleCompra detalle,double montoTotal) {
+        super();
         this.medioDePago = medioDePago;
         this.detalle = detalle;
+        this.montoTotal = montoTotal;
         this.revisores = new ArrayList<>();
         this.presupuestos = new ArrayList<>();
 
     }
-    //Este es el proceso de registro de la operacion
 
+    public OperacionEgreso() {
+        super();
+        this.revisores = new ArrayList<>();
+        this.presupuestos = new ArrayList<>();
+    }
     //Getter Setter
 
     public MedioDePago getMedioDePago() {
@@ -65,10 +85,13 @@ public class OperacionEgreso extends Operacion {
         this.presupuestos = presupuestos;
     }
 
+    public void setMontoTotal(double monto){
+        this.montoTotal = monto;
+    }
     /*Funcionales*/
     @Override
     public double montoTotal() {
-        return this.detalle.montoTotal();
+        return montoTotal;
     }
 
     public void agregaPresupuesto(Presupuesto unPresupuesto) throws Exception {

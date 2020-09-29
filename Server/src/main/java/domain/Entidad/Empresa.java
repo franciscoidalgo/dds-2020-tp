@@ -7,12 +7,26 @@ import domain.Entidad.CategorizacionEmpresa.Categorizable;
 import domain.Entidad.CategorizacionEmpresa.Sector;
 import domain.Entidad.CategorizacionEmpresa.Categorizador;
 
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue("empresa")
 public class Empresa extends EntidadJuridica implements Categorizable {
     //Atributos
+    @Column(name = "actividad")
     private String actividad;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Sector sector;
+
+    @Column(name = "cant_personal")
     private int cantPersonal;
+
+    @Column(name = "prom_venta_anual")
     private int promVentasAnual;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_empresa_id")
     private Categoria categoria;
 
     //Constructor
@@ -24,6 +38,10 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         this.cantPersonal = cantPersonal;
         this.promVentasAnual = promVentasAnual;
         this.categoria = new Categorizador().categoriza(this);
+    }
+
+    public Empresa() {
+
     }
 
 

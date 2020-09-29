@@ -1,12 +1,24 @@
 package domain.Entidad.CategorizacionOperacion;
 
-public class CategoriaOperacion {
+import domain.Entidad.Entidad;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "categoria_operacion")
+public class CategoriaOperacion extends Entidad {
+
+    @Column(name = "descripcion")
     private String descripcion;
 
     //Constructor
     public CategoriaOperacion(String descripcion){
         this.descripcion = descripcion;
     }
+
+    public CategoriaOperacion() {}
 
     //Getter Setter
     public String getDescripcion() { return descripcion; }

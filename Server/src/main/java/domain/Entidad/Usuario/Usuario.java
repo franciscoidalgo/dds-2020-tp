@@ -5,10 +5,7 @@ import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
@@ -20,20 +17,22 @@ public class Usuario extends Entidad{
     @Column(name = "password")
     private String password;
 
-    @Transient
+    @Column(name = "rol",columnDefinition = "CHAR")
     private Rol rol;
 
-    @Transient
-    private EntidadJuridica entidadPertenece;//domain.Entidad Juridica a la que pertenece el usuario
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "entidad_pertenence_id")
+    private EntidadJuridica entidadPertenece;
 
-    @Transient
-    private Entidad entidadSeleccionada;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "entidad_seleccionada_id")
+    private EntidadJuridica entidadSeleccionada;
 
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "bandeja_mensaje_id")
     private BandejaMensaje bandejaDeMensajes;
 
-    public Usuario (){
-    }
+    public Usuario (){}
 
     public Usuario(String nombre, String password, Rol rol, EntidadJuridica entidadPertenece) {
         this.nombre = nombre;
@@ -82,7 +81,7 @@ public class Usuario extends Entidad{
         return entidadSeleccionada;
     }
 
-    public void setEntidadSeleccionada(Entidad entidadSeleccionada) {
+    public void setEntidadSeleccionada(EntidadJuridica entidadSeleccionada) {
         this.entidadSeleccionada = entidadSeleccionada;
     }
 
@@ -108,7 +107,7 @@ public class Usuario extends Entidad{
         unEgreso.sacaRevisor(this);
     }
 
-    public void entidadSeleccionada(Entidad seleccionada){
+    public void entidadSeleccionada(EntidadJuridica seleccionada){
         this.entidadSeleccionada = seleccionada;
     }
 

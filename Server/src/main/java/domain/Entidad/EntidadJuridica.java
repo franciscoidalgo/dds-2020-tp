@@ -6,18 +6,44 @@ import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
 import domain.Entidad.CategorizacionOperacion.Criterio;
 import domain.Operacion.Operacion;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name = "entidad_juridica")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
 public abstract class EntidadJuridica extends Entidad {
+
+    @Column(name = "razon_social")
     protected String razonSocial;
+
+    @Column(name = "nombre")
     protected String nombre;
+
+    @Column(name = "cuit")
     protected long CUIT;
+
+    @Column(name = "descripcion")
     protected String descripcion;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "direccion_id")
     protected DireccionPostal direccionPostal;
+
+    @Column(name = "cod_igj")
     protected long codIGJ;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "entidad_base_id")
     protected List<EntidadBase> entidadesBases;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "operacion_id")
     protected List<Operacion> operaciones;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "criterio_id")
     protected List<Criterio> criterios;
 
 
@@ -28,6 +54,12 @@ public abstract class EntidadJuridica extends Entidad {
         this.descripcion = descripcion;
         this.direccionPostal = direccionPostal;
         this.codIGJ = codIGJ;
+        this.entidadesBases = new ArrayList<>();
+        this.operaciones = new ArrayList<>();
+        this.criterios = new ArrayList<>();
+    }
+
+    public EntidadJuridica() {
         this.entidadesBases = new ArrayList<>();
         this.operaciones = new ArrayList<>();
         this.criterios = new ArrayList<>();

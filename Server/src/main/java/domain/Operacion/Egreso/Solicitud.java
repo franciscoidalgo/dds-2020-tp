@@ -1,11 +1,17 @@
 package domain.Operacion.Egreso;
 
+import domain.Entidad.Entidad;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solicitud {
+@Entity
+@Table(name = "pedido")
+public class Solicitud extends Entidad {
 
-
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
     private final List<Item> listaItems;
 
     //Constructor
@@ -22,9 +28,6 @@ public class Solicitud {
         this.listaItems.remove(nuevoItem);
     }
 
-    public double calcularSubtotal(){
-       return this.listaItems.isEmpty()? 0: this.listaItems.stream().mapToDouble(Item::getPrecio).sum();
-    }
     public List<Item> getListaItems() {
         return listaItems;
     }

@@ -42,9 +42,9 @@ class Generador {
         Item item2;
         Item item3;
 
-        item1 = new Item(5000,"una maquina");
-        item2 = new Item(1000,"pack de hojas A4");
-        item3 = new Item(10000,"un item de curiosa procedencia");
+        item1 = new Item("una maquina");
+        item2 = new Item("pack de hojas A4");
+        item3 = new Item("un item de curiosa procedencia");
 
         Solicitud unSolicitud;
         unSolicitud =new Solicitud();
@@ -55,7 +55,7 @@ class Generador {
         return unSolicitud;
     }
 
-    OperacionEgreso generaEgreso(int cantMinimaPresupuesto){
+    OperacionEgreso generaEgreso(double montoTotal){
 
         Proveedor unProveedor = new Proveedor(null,null,1231694,12356464,null);
         //MedioDePago unMedio = new MedioDePago(null);
@@ -64,7 +64,7 @@ class Generador {
         unCriterio.agregateCategoria(new CategoriaOperacion("Proyectazo"));
         DetalleCompra unDetalle = new DetalleCompra(unaSolicitud,unProveedor);
         unDetalle.setCategoriaOperacion(unCriterio.getCategorias());
-        return new OperacionEgreso(null,unDetalle,null);
+        return new OperacionEgreso(null,unDetalle,montoTotal);
     }
 
     OperacionEgreso generaEgresoConPresupuestos(int cantMinimaPresupuesto,int cantPresupuestos) throws Exception {
@@ -76,25 +76,25 @@ class Generador {
         unEgreso = this.generaEgreso(cantMinimaPresupuesto);
 
         DetalleCompra unDetalle = new DetalleCompra(unaSolicitud,unProveedor);
-        Presupuesto unPresupuesto = this.generaPresupuesto();
+        Presupuesto unPresupuesto = this.generaPresupuesto(1000);
 
         for(int i = 0; i<cantMinimaPresupuesto;i++) unEgreso.agregaPresupuesto(unPresupuesto);
 
         return unEgreso;
     }
 
-    Presupuesto generaPresupuesto(){
+    Presupuesto generaPresupuesto(double montoTotal){
        Solicitud unaSolicitudPresupuesto = new Generador().generaSolicitud();
         Criterio unCriterio = new Criterio("Proyectito");
         unCriterio.agregateCategoria(new CategoriaOperacion("Super Proyectito"));
         DetalleCompra unDetalle = new DetalleCompra(unaSolicitudPresupuesto,null);
         unDetalle.setCategoriaOperacion(unCriterio.getCategorias());
-       return new Presupuesto(unDetalle);
+       return new Presupuesto(unDetalle,montoTotal);
     }
 
     OperacionIngreso generaIngreso(long valorIngreso){
 
-        return new OperacionIngreso(valorIngreso,"Inversion de dudosa procedencia",null);
+        return new OperacionIngreso(valorIngreso,"Inversion de dudosa procedencia");
     }
 
     //No deberia ser el servicio de mercado libre el que genere la direccion, a mercadolibre solo le pedimos data de provincias

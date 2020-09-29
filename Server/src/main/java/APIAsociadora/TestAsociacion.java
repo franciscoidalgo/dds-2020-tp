@@ -16,9 +16,9 @@ public class TestAsociacion {
     public static void main(String[] args) throws IOException {
         //Declaracion de egresos e ingresos para probar
         ServicioAsociacion servicioAsociacion = ServicioAsociacion.getInstancia();
-        OperacionIngreso operacionIngreso = new OperacionIngreso(2000, "Un re ingreso", null);
-        OperacionEgreso egreso1 = new OperacionEgreso(null, new DetalleCompra(new Solicitud(), new Proveedor("un re proveedor",null, 42042042, 1, null)), null);
-        OperacionEgreso egreso2 = new OperacionEgreso(null, new DetalleCompra(new Solicitud(), new Proveedor("otro re proveedor",null, 43043043, 2, null)), null);
+        OperacionIngreso operacionIngreso = new OperacionIngreso(2000, "Un re ingreso");
+        OperacionEgreso egreso1 = new OperacionEgreso(null, new DetalleCompra(new Solicitud(), new Proveedor("un re proveedor",null, 42042042, 1, null)),1000);
+        OperacionEgreso egreso2 = new OperacionEgreso(null, new DetalleCompra(new Solicitud(), new Proveedor("otro re proveedor",null, 43043043, 2, null)),1000);
         OperacionEgreso[] arrayEgresos = new OperacionEgreso[]{egreso1, egreso2};
 
 
