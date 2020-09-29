@@ -1,13 +1,27 @@
 package domain.Entidad.Usuario;
 
+import domain.Entidad.EntidadPersistente;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalTime;
 
-public class Mensaje {
+@Entity
+@Table(name = "mensaje")
+public class Mensaje extends EntidadPersistente {
 
-    private final LocalTime fechaEnvio;
+    @Column(name = "fecha_envio",columnDefinition = "DATE")
+    private LocalTime fechaEnvio;
+
+    @Column(name = "fecha_leido",columnDefinition = "DATE")
     private LocalTime fechaLeido;
-    private final String asunto;
-    private final String mensaje;
+
+    @Column(name = "asunto")
+    private String asunto;
+
+    @Column(name = "mensaje")
+    private String mensaje;
 
 
     public Mensaje(String asunto, String mensaje) {
@@ -16,6 +30,8 @@ public class Mensaje {
         this.fechaEnvio = LocalTime.now();
         this.fechaLeido = null;
     }
+
+    public Mensaje() {}
 
     public LocalTime getFechaEnvio() {
         return fechaEnvio;

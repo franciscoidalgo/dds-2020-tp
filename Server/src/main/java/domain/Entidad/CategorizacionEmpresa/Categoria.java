@@ -1,10 +1,22 @@
 package domain.Entidad.CategorizacionEmpresa;
 
+import domain.Entidad.EntidadPersistente;
 
-public class Categoria{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "categoria")
+public class Categoria extends EntidadPersistente {
+
+    @Column(name = "maxCantPersonal")
     private Integer maxCantPersonal;
+
+    @Column(name = "maxPromAnual")
     private Integer maxPromAnual;
+
+    @Column(name = "nombre")
     private String nombre;
 
     //Constructor
@@ -13,6 +25,9 @@ public class Categoria{
         this.maxPromAnual = maxPromAnual;
         this.nombre = nombre;
     }
+
+    public Categoria() {}
+
     //Setters and getters
     public Integer getMaxCantPersonal() {
         return maxCantPersonal;

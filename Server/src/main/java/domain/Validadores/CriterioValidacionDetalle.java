@@ -15,11 +15,11 @@ public class CriterioValidacionDetalle implements CriterioValidacion {
         return ConfiguracionValidador.cantPresupuestos >0;
     }
 
-
     private Boolean verificaDetalleEgresoConAlgunPresupuesto(OperacionEgreso unEgreso) {
         return unEgreso.getPresupuestos().stream().
-                anyMatch(p -> p.coincidenSolicitud(unEgreso));
+                anyMatch(p -> p.coincidenPedido(unEgreso));
     }
+
 
     @Override
     public String resultado(OperacionEgreso unEgreso) {

@@ -1,14 +1,31 @@
 package domain.Operacion.Egreso;
 
 import domain.DireccionPostal.DireccionPostal;
+import domain.Entidad.EntidadPersistente;
 
-public class Proveedor {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "proveedor")
+public class Proveedor extends EntidadPersistente {
+
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "razon_social")
     private String razonSocial;
+
+    @Column(name = "dni")
     private int DNI;
+
+    @Column(name = "cuit")
     private long CUIT;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "direccion_id")
     private DireccionPostal dirPostal;
 
+    //Constructors
     public Proveedor(String nombre, String razonSocial, int DNI, long CUIT, DireccionPostal dirPostal){
         this.nombre = nombre;
         this.razonSocial = razonSocial;
@@ -16,6 +33,8 @@ public class Proveedor {
         this.CUIT = CUIT;
         this.dirPostal = dirPostal;
     }
+
+    public Proveedor() {}
 
     //Getter and Setter
     public String getNombre() {

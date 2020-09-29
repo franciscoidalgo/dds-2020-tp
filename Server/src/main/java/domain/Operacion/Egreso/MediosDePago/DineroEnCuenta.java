@@ -17,8 +17,4 @@ public class DineroEnCuenta extends MedioDePago {
         this.dineroEnCuenta = dineroEnCuenta;
     }
 
-    @Override
-    protected void actualizarTiposDePago() {
-
-    }
 }

@@ -17,8 +17,4 @@ public class Ticket extends MedioDePago {
         this.ticket = ticket;
     }
 
-    @Override
-    protected void actualizarTiposDePago() {
-
-    }
 }

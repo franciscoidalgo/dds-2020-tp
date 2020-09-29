@@ -1,8 +1,15 @@
-/*
+
 import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Entidad.Empresa;
+import domain.Entidad.EntidadJuridica;
+import domain.Entidad.Usuario.RolAdministrador;
+import domain.Entidad.Usuario.RolEstandar;
+import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
-import domain.Usuario.domain.Usuario;
+import domain.Validadores.CriterioValidacionCantidadPresupuesto;
+import domain.Validadores.CriterioValidacionDetalle;
+import domain.Validadores.CriterioValidacionSeleccion;
 import domain.Validadores.ValidadorDeTransparencia;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,39 +19,47 @@ import java.io.IOException;
 
 public class TestUsuario {
 
-        private domain.Usuario unEstandar;
-        private domain.Usuario unAdmin;
+        private Usuario unEstandar;
+        private Usuario unAdmin;
         private Criterio unCriterio;
         private Criterio unCriterioHijo;
 
     private OperacionEgreso unEgreso;
     private OperacionIngreso unIngreso;
-
-    private Generador generador;
-
-
+    private  Empresa empresaStandard;
     @Before
         public void setUp() throws IOException {
-            generador = Generador.instancia();
+
             //Inicializo 2 tipos de usuarios genericos.
-            unEstandar = generador.generaUsuarioEstandar();
-            unAdmin= generador.generaUsuarioAdmin();
+            unEstandar = new Usuario();
+            unEstandar.setRol(new RolEstandar());
+
+            unAdmin = new Usuario();
+            unAdmin.setRol(new RolAdministrador());
+
             //Inicializo ValidadorTransparencia
-            generador.inicializaValidadorTransparencia();
+            ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
+            validadorDeTransparencia.agregateCriterio(new CriterioValidacionCantidadPresupuesto());
+            validadorDeTransparencia.agregateCriterio(new CriterioValidacionDetalle());
+            validadorDeTransparencia.agregateCriterio(new CriterioValidacionSeleccion());
 
             //Se crea 1 un ingreso y 1 egreso
-            unEgreso = generador.generaEgreso(0);
-            unIngreso = generador.generaIngreso(5000);
+            unEgreso = new OperacionEgreso();
+            unEgreso.setMontoTotal(0);
 
-            //Se 2 crean los criterios
-            unEstandar.getEntidadPertenece().creaCriterio("Proyecto Nike");
-            unEstandar.getEntidadPertenece().creaCriterio("Proyecto Expansion");
+            unIngreso= new OperacionIngreso();
+            unIngreso.setMontoTotal(5000);
 
-            unCriterio = unEstandar.getEntidadPertenece().getCriterios().get(0);
-            unCriterioHijo = unEstandar.getEntidadPertenece().getCriterios().get(1);
+            //Inicializo
+            empresaStandard = new Empresa();
 
+            unEstandar.setEntidadPertenece(empresaStandard);
 
+            empresaStandard.agregaCriterio(new Criterio("Proyecto Nike"));
+            empresaStandard.agregaCriterio(new Criterio("Proyecto Expansion"));
 
+            unCriterio = empresaStandard.getCriterios().get(0);
+            unCriterioHijo = empresaStandard.getCriterios().get(1);
 
         }
     @Test
@@ -61,17 +76,6 @@ public class TestUsuario {
         unEstandar.darseDeAltaEn(unEgreso);
 
         Assert.assertEquals(unEgreso.getRevisores().get(0),unEstandar);
-    }
-
-    @Test
-    public void testUsuarioRecibeMensaje_CuandoSeDaDeAltaEnOperacion() throws InterruptedException {
-            unEstandar.getEntidadPertenece().realizaOperacion(unEgreso);
-            unEstandar.darseDeAltaEn(unEgreso);
-            ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
-            unEgreso.validaOperacion();
-            Thread.sleep(5000);
-
-          Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),1);
     }
 
     @Test
@@ -109,4 +113,3 @@ public class TestUsuario {
     }
 
 }
-*/

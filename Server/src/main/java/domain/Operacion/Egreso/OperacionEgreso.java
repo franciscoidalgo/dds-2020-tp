@@ -7,30 +7,47 @@ import domain.Entidad.Usuario.Mensaje;
 import domain.Entidad.Usuario.Usuario;
 import domain.Validadores.ValidadorDeTransparencia;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "operacion_egreso")
+@PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
 public class OperacionEgreso extends Operacion {
     //Atributos
-    private DetalleCompra detalle;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private DetalleOperacion detalle;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private MedioDePago medioDePago;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "usuario_revisa",
+            joinColumns = @JoinColumn(name = "revisores_id"),
+            inverseJoinColumns = @JoinColumn(name = "operacion_egreso_id")
+    )
     private List<Usuario> revisores;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
 
     //Constructor
 
-    public OperacionEgreso(MedioDePago medioDePago,
-                           DetalleCompra detalle,
-                           Usuario creadoPor) {
-        super(creadoPor);
+    public OperacionEgreso(MedioDePago medioDePago, DetalleOperacion detalle, double montoTotal) {
+        super(montoTotal);
         this.medioDePago = medioDePago;
         this.detalle = detalle;
         this.revisores = new ArrayList<>();
         this.presupuestos = new ArrayList<>();
 
     }
-    //Este es el proceso de registro de la operacion
 
+    public OperacionEgreso() {
+        super();
+        this.revisores = new ArrayList<>();
+        this.presupuestos = new ArrayList<>();
+    }
     //Getter Setter
 
     public MedioDePago getMedioDePago() {
@@ -41,11 +58,11 @@ public class OperacionEgreso extends Operacion {
         this.medioDePago = medioDePago;
     }
 
-    public DetalleCompra getDetalleValidable() {
+    public DetalleOperacion getDetalle() {
         return detalle;
     }
 
-    public void setDetalleValidable(DetalleCompra detalle) {
+    public void setDetalle(DetalleOperacion detalle) {
         this.detalle = detalle;
     }
 
@@ -65,10 +82,13 @@ public class OperacionEgreso extends Operacion {
         this.presupuestos = presupuestos;
     }
 
+    public void setMontoTotal(double monto){
+        this.montoTotal = monto;
+    }
     /*Funcionales*/
     @Override
     public double montoTotal() {
-        return this.detalle.montoTotal();
+        return this.montoTotal;
     }
 
     public void agregaPresupuesto(Presupuesto unPresupuesto) throws Exception {
@@ -106,7 +126,7 @@ public class OperacionEgreso extends Operacion {
 
 
     private Boolean puedeAgregarPresupuesto() {
-        return this.detalle.solicitudTieneItems();
+        return this.detalle.tieneItems();
     }
 
 }

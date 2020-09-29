@@ -1,45 +1,38 @@
 package domain.Operacion;
 
-import domain.Entidad.Usuario.Usuario;
+import domain.Entidad.EntidadPersistente;
 
+import javax.persistence.*;
 import java.time.LocalTime;
 
-public abstract class Operacion {
+@Entity
+@Table
+@Inheritance(strategy = InheritanceType.JOINED )
+public abstract class Operacion extends EntidadPersistente {
 
-
-    protected long nroOperacion;
+    @Column(columnDefinition = "DATE")
     protected LocalTime fecha;
-    protected Usuario creadoPor;
 
-    public Operacion(Usuario creadoPor) {
-        this.creadoPor = creadoPor;
+
+    @Column(name = "monto_total")
+    protected double montoTotal;
+
+    public Operacion() {
         this.fecha = LocalTime.now();
-        this.nroOperacion = 1; //Autogenerado
+    }
+
+    public Operacion(double montoTotal) {
+        this.fecha = LocalTime.now();
+        this.montoTotal =montoTotal;
     }
 
     //Getter Setter
-    public long getNroOperacion() {
-        return nroOperacion;
-    }
-
-    public void setNroOperacion(long nroOperacion) {
-        this.nroOperacion = nroOperacion;
-    }
-
     public LocalTime getFecha() {
         return fecha;
     }
 
     public void setFecha(LocalTime fecha) {
         this.fecha = fecha;
-    }
-
-    public Usuario getCreadoPor() {
-        return creadoPor;
-    }
-
-    public void setCreadoPor(Usuario creadoPor) {
-        this.creadoPor = creadoPor;
     }
 
     //Funcionalidad
