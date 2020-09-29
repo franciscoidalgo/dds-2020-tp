@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "operacion")
+@Table
 @Inheritance(strategy = InheritanceType.JOINED )
 public abstract class Operacion extends EntidadPersistente {
 

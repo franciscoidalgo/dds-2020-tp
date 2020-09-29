@@ -20,7 +20,6 @@ public class OperacionIngreso extends Operacion {
     private String descripcion;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "operacion_egreso_id")
     private List<OperacionEgreso> egresos;
 
     //Constructor

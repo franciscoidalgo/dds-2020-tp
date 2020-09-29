@@ -18,7 +18,7 @@ public class Criterio extends EntidadPersistente {
     private Criterio criterioHijo;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_id")
+    @JoinColumn(name = "criterio_id")
     private List<CategoriaOperacion> categorias;
 
     //Constructores

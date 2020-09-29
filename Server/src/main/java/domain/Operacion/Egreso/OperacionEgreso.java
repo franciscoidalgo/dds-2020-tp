@@ -16,19 +16,19 @@ import java.util.List;
 public class OperacionEgreso extends Operacion {
     //Atributos
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "detalle_compra_id")
     private DetalleOperacion detalle;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "medio_de_pago_id")
     private MedioDePago medioDePago;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "revisores_id")
+    @JoinTable(name = "usuario_revisa",
+            joinColumns = @JoinColumn(name = "revisores_id"),
+            inverseJoinColumns = @JoinColumn(name = "operacion_egreso_id")
+    )
     private List<Usuario> revisores;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "presupuestos_id")
     private List<Presupuesto> presupuestos;
 
     @Column(name = "monto_total")

@@ -26,7 +26,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     private int promVentasAnual;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_empresa_id")
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
     //Constructor

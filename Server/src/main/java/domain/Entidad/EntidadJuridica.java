@@ -35,15 +35,15 @@ public abstract class EntidadJuridica extends EntidadPersistente  implements Ent
     protected long codIGJ;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidad_base_id")
+    @JoinColumn(name = "entidad_juridica_id")
     protected List<EntidadBase> entidadesBases;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "operacion_id")
+    @JoinColumn(name = "entidad_juridica_id")
     protected List<Operacion> operaciones;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "criterio_id")
+    @JoinColumn(name = "entidad_juridica_id")
     protected List<Criterio> criterios;
 
 

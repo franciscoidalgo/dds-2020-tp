@@ -22,14 +22,12 @@ public class Usuario extends EntidadPersistente {
     private Rol rol;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidad_pertenence_id")
     private EntidadJuridica entidadPertenece;
 
     @Transient
     private Entidad entidadSeleccionada;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "bandeja_mensaje_id")
+    @OneToOne(mappedBy = "usuario",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private BandejaMensaje bandejaDeMensajes;
 
     public Usuario (){

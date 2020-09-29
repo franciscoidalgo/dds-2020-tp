@@ -13,11 +13,9 @@ import java.util.stream.Collectors;
 public class BandejaMensaje extends EntidadPersistente {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "bandeja_id")
     private final List<Mensaje> mensajes;
 
-    @OneToOne(mappedBy = "bandejaDeMensajes",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private  Usuario usuario;
 
     //Constructors

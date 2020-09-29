@@ -12,31 +12,29 @@ import java.util.List;
 public class DetalleOperacion extends EntidadPersistente {
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private List<Item> listaItems;
+    @JoinTable(name = "pedido")
+    private List<Item> items;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_operacion_id")
+    @JoinTable(name = "categoria_x_detalle")
     private List<CategoriaOperacion> categorias;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "comprobante_id")
     private Comprobante comprobante;
 
     //Constructors
     public DetalleOperacion(Proveedor proveedor) {
-        this.listaItems = new ArrayList<>();
+        this.items = new ArrayList<>();
         this.categorias = new ArrayList<>();
         this.proveedor = proveedor;
         this.comprobante = null;
     }
 
     public DetalleOperacion() {
-        this.listaItems = new ArrayList<>();
+        this.items = new ArrayList<>();
         this.categorias = new ArrayList<>();
 
     }
@@ -67,17 +65,17 @@ public class DetalleOperacion extends EntidadPersistente {
         this.comprobante = comprobante;
     }
 
-    public List<Item> getListaItems() {
-        return listaItems;
+    public List<Item> getItems() {
+        return items;
     }
     //Funcionalidad
 
     public Boolean tieneItems(){
-        return !this.listaItems.isEmpty();
+        return !this.items.isEmpty();
     }
 
     public Boolean coincidenPedido(DetalleOperacion unDetalle){
-        return unDetalle.getListaItems().stream().
+        return unDetalle.getItems().stream().
                 map(this::tenesEnListaItem).
                 reduce(Boolean::logicalAnd).get();
     }
@@ -87,11 +85,11 @@ public class DetalleOperacion extends EntidadPersistente {
     }
 
     public void agregaItem(Item nuevoItem){
-        this.listaItems.add(nuevoItem);
+        this.items.add(nuevoItem);
     }
 
     public void removeItem(Item nuevoItem){
-        this.listaItems.remove(nuevoItem);
+        this.items.remove(nuevoItem);
     }
 
     public void agregaCategoria(CategoriaOperacion unaCategoria){categorias.add(unaCategoria);}
@@ -99,7 +97,7 @@ public class DetalleOperacion extends EntidadPersistente {
     public void removeCategoria(CategoriaOperacion unaCategoria){categorias.remove(unaCategoria);}
 
     private Boolean tenesEnListaItem(Item unItem) {
-        return this.getListaItems().stream().
+        return this.getItems().stream().
                 anyMatch(item -> item.coincidenItems(unItem));
     }
 
