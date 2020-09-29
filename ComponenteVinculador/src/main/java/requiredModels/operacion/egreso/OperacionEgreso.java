@@ -15,6 +15,4 @@ public class OperacionEgreso extends Operacion {
     private MedioDePago medioDePago;
     private List<Usuario> revisores;
     private List<Presupuesto> presupuestos;
-
-
 }

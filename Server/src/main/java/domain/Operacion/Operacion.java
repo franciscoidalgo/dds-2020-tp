@@ -1,19 +1,19 @@
 package domain.Operacion;
 
 import domain.Entidad.Usuario.Usuario;
+import java.time.LocalDate;
 
-import java.time.LocalTime;
 
 public abstract class Operacion {
 
 
     protected long nroOperacion;
-    protected LocalTime fecha;
+    protected LocalDate fecha;
     protected Usuario creadoPor;
 
     public Operacion(Usuario creadoPor) {
         this.creadoPor = creadoPor;
-        this.fecha = LocalTime.now();
+        this.fecha = LocalDate.now();
         this.nroOperacion = 1; //Autogenerado
     }
 
@@ -26,11 +26,11 @@ public abstract class Operacion {
         this.nroOperacion = nroOperacion;
     }
 
-    public LocalTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

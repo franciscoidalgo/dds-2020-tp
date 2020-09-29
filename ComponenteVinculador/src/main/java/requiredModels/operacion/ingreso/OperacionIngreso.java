@@ -1,10 +1,13 @@
 package requiredModels.operacion.ingreso;
 
+import domain.criterio.CriterioAsociacion;
 import requiredModels.operacion.Operacion;
 import requiredModels.operacion.egreso.OperacionEgreso;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OperacionIngreso extends Operacion {
 
@@ -15,8 +18,10 @@ public class OperacionIngreso extends Operacion {
     //Funcionalidad
     public void agregateEgreso(OperacionEgreso operacionEgreso){ this.egresos.add(operacionEgreso); }
 
-    public void agregarListaDeEgresos(List<OperacionEgreso> egresos){
-        this.egresos.addAll(egresos);
+    public void agregarListaDeEgresos(List<OperacionEgreso> egresos, CriterioAsociacion criterioAsociacion){
+        List<OperacionEgreso> egresosValidos = egresos.stream()
+                .filter(criterioAsociacion.getCriterio())
+                .collect(Collectors.toList());
     }
 
 }
