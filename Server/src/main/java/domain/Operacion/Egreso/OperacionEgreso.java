@@ -17,7 +17,7 @@ public class OperacionEgreso extends Operacion {
     //Atributos
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "detalle_compra_id")
-    private DetalleCompra detalle;
+    private DetalleOperacion detalle;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "medio_de_pago_id")
@@ -36,7 +36,7 @@ public class OperacionEgreso extends Operacion {
 
     //Constructor
 
-    public OperacionEgreso(MedioDePago medioDePago, DetalleCompra detalle,double montoTotal) {
+    public OperacionEgreso(MedioDePago medioDePago, DetalleOperacion detalle, double montoTotal) {
         super();
         this.medioDePago = medioDePago;
         this.detalle = detalle;
@@ -61,11 +61,11 @@ public class OperacionEgreso extends Operacion {
         this.medioDePago = medioDePago;
     }
 
-    public DetalleCompra getDetalleValidable() {
+    public DetalleOperacion getDetalle() {
         return detalle;
     }
 
-    public void setDetalleValidable(DetalleCompra detalle) {
+    public void setDetalle(DetalleOperacion detalle) {
         this.detalle = detalle;
     }
 
@@ -129,7 +129,7 @@ public class OperacionEgreso extends Operacion {
 
 
     private Boolean puedeAgregarPresupuesto() {
-        return this.detalle.solicitudTieneItems();
+        return this.detalle.tieneItems();
     }
 
 }

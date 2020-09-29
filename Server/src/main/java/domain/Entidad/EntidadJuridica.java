@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "entidad_juridica")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo")
-public abstract class EntidadJuridica extends Entidad {
+public abstract class EntidadJuridica extends EntidadPersistente  implements Entidad {
 
     @Column(name = "razon_social")
     protected String razonSocial;
@@ -142,21 +142,15 @@ public abstract class EntidadJuridica extends Entidad {
         this.operaciones.add(unaOperacion);
     }
 
-    public void creaCriterio(String unNombre) {
-        this.criterios.add(new Criterio(unNombre));
+    public void agregaCriterio(Criterio unCriterio) {
+        this.criterios.add(unCriterio);
     }
 
-    public void creaCriterio(String unNombre, Criterio criterioPadre) {
-        Criterio criterio = new Criterio(unNombre);
-        this.criterios.add(criterio);
-        criterioPadre.setCriterioHijo(criterio);
+    public List<CategoriaOperacion> mostraCategoriasDe(Criterio unCriterio){
+        return  unCriterio.getCategorias();
     }
 
-    public void creaCategoria(Criterio unCriterio, String unNombre) {
-        unCriterio.agregateCategoria(new CategoriaOperacion(unNombre));
-    }
-
-    public boolean tieneEntidadBase(Entidad base) {
+    public boolean tieneEntidadBase(EntidadPersistente base) {
         return this.entidadesBases.contains(base);
     }
 

@@ -1,13 +1,13 @@
 package domain.Operacion.Egreso;
 
 import domain.DireccionPostal.DireccionPostal;
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "proveedor")
-public class Proveedor extends Entidad {
+public class Proveedor extends EntidadPersistente {
 
     @Column(name = "nombre")
     private String nombre;

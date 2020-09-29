@@ -1,15 +1,15 @@
 package repositorios.daos;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 import repositorios.BusquedaCondicional;
 
 import java.util.List;
 
 public class DAOMemoria<T> implements DAO<T>{
 
-    private final List<Entidad> entidades;
+    private final List<EntidadPersistente> entidades;
 
-    public DAOMemoria (List<Entidad> entidades){
+    public DAOMemoria (List<EntidadPersistente> entidades){
         this.entidades = entidades;
     }
 
@@ -39,7 +39,7 @@ public class DAOMemoria<T> implements DAO<T>{
 
     @Override
     public void agregar(Object unObjeto) {
-        this.entidades.add((Entidad) unObjeto);
+        this.entidades.add((EntidadPersistente) unObjeto);
     }
 
     @Override

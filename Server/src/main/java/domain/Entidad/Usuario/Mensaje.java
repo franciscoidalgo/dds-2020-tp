@@ -1,6 +1,6 @@
 package domain.Entidad.Usuario;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "mensaje")
-public class Mensaje extends Entidad {
+public class Mensaje extends EntidadPersistente {
 
     @Column(name = "fecha_envio",columnDefinition = "DATE")
     private LocalTime fechaEnvio;

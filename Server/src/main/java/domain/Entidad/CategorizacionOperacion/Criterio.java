@@ -1,6 +1,6 @@
 package domain.Entidad.CategorizacionOperacion;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "criterio")
-public class Criterio extends Entidad {
+public class Criterio extends EntidadPersistente {
 
     @Column(name = "nombre")
     private String nombre;

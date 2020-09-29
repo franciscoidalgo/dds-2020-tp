@@ -1,12 +1,12 @@
 package domain.Operacion.Egreso;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "comprobante")
-public class Comprobante extends Entidad {
+public class Comprobante extends EntidadPersistente {
     @Column(name = "nro_comprobante")
     private long nroComprobante;
 

@@ -1,7 +1,6 @@
 package domain.Operacion;
 
-import domain.Entidad.Entidad;
-import domain.Entidad.Usuario.Usuario;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -9,7 +8,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "operacion")
 @Inheritance(strategy = InheritanceType.JOINED )
-public abstract class Operacion extends Entidad {
+public abstract class Operacion extends EntidadPersistente {
 
     @Column(columnDefinition = "DATE")
     protected LocalTime fecha;

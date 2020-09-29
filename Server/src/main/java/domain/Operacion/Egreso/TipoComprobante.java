@@ -1,6 +1,6 @@
 package domain.Operacion.Egreso;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tipo_comprobante")
-public class TipoComprobante extends Entidad {
+public class TipoComprobante extends EntidadPersistente {
 
     @Column(name = "nombre")
     private String nombre;

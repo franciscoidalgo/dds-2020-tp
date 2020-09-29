@@ -1,6 +1,6 @@
 package middleware;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 import domain.Entidad.Usuario.Usuario;
 import repositorios.RepositorioDeTokens;
 import repositorios.factories.FactoryRepoTokens;
@@ -12,7 +12,7 @@ import static spark.Spark.halt;
 
 @Entity
 @Table(name = "login_token")
-public class LoginToken extends Entidad {
+public class LoginToken extends EntidadPersistente {
     @Column(name="token")
     private String token;
     @OneToOne

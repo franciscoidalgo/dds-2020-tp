@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("organizacion_social")
-public class OrganizacionSocial extends  EntidadJuridica {
+public class OrganizacionSocial extends EntidadJuridica{
 
     public OrganizacionSocial(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ) {
         super(razonSocial, nombre, CUIT, descripcion, direccionPostal, codIGJ);

@@ -1,9 +1,10 @@
 package domain.Validadores;
 
+import config.ConfiguracionValidador;
 import domain.Operacion.Egreso.OperacionEgreso;
 
 public class CriterioValidacionCantidadPresupuesto implements CriterioValidacion {
-    private int limitePresupuestos;
+    private final int limitePresupuestos = ConfiguracionValidador.cantPresupuestos;
 
 
 

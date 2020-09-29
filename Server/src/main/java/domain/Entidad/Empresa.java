@@ -37,12 +37,10 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         this.sector = sector;
         this.cantPersonal = cantPersonal;
         this.promVentasAnual = promVentasAnual;
-        this.categoria = new Categorizador().categoriza(this);
+        recategorizate();
     }
 
-    public Empresa() {
-
-    }
+    public Empresa() {}
 
 
     //Getters-Setters
@@ -60,8 +58,9 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         return sector;
     }
 
-    public void sector(Sector sector) {
+    public void setSector(Sector sector) {
         this.sector = sector;
+        recategorizate();
     }
 
     @Override
@@ -71,6 +70,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public void setCantPersonal(Integer cantPersonal) {
         this.cantPersonal = cantPersonal;
+        recategorizate();
     }
 
     @Override
@@ -80,15 +80,11 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public void setPromVentaAnual(Integer promVentasAnual) {
         this.promVentasAnual = promVentasAnual;
+        recategorizate();
     }
-
 
     public Categoria getCategoria() {
         return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
     }
 
     public String nombre() {
@@ -97,5 +93,11 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public String descripcion() {
         return this.descripcion;
+    }
+
+    private void recategorizate(){
+        if(this.sector != null) {
+            this.categoria = new Categorizador().categoriza(this);
+        }
     }
 }

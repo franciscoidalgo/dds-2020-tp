@@ -1,6 +1,7 @@
 package domain.Entidad.Usuario;
 
 import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario extends Entidad{
+public class Usuario extends EntidadPersistente {
     //Atributo
     @Column(name = "nombre")
     private String nombre;
@@ -24,15 +25,16 @@ public class Usuario extends Entidad{
     @JoinColumn(name = "entidad_pertenence_id")
     private EntidadJuridica entidadPertenece;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidad_seleccionada_id")
-    private EntidadJuridica entidadSeleccionada;
+    @Transient
+    private Entidad entidadSeleccionada;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "bandeja_mensaje_id")
     private BandejaMensaje bandejaDeMensajes;
 
-    public Usuario (){}
+    public Usuario (){
+        this.bandejaDeMensajes = new BandejaMensaje();
+    }
 
     public Usuario(String nombre, String password, Rol rol, EntidadJuridica entidadPertenece) {
         this.nombre = nombre;
@@ -81,7 +83,7 @@ public class Usuario extends Entidad{
         return entidadSeleccionada;
     }
 
-    public void setEntidadSeleccionada(EntidadJuridica entidadSeleccionada) {
+    public void setEntidadSeleccionada(Entidad entidadSeleccionada) {
         this.entidadSeleccionada = entidadSeleccionada;
     }
 
@@ -114,13 +116,5 @@ public class Usuario extends Entidad{
     public void recibiMensaje(Mensaje unMensaje){
         this.bandejaDeMensajes.agregateMensaje(unMensaje);
     }
-    /*
-    public void entidadSeleccionada(domain.Entidad seleccionada) throws Exception {
-        if (this.entidadPertenece == seleccionada || this.entidadPertenece.tieneEntidadBase(seleccionada)) {
-            this.entidadSeleccionada = seleccionada;
-        } else {
-            throw new Exception("No puede seleccionar esta entidad");
-        }
-    }*/
-    //Los if y el throw van en el test
+
 }

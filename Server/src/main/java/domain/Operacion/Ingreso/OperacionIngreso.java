@@ -31,7 +31,9 @@ public class OperacionIngreso extends Operacion {
         this.egresos = new ArrayList<>();
     }
 
-    public OperacionIngreso() {}
+    public OperacionIngreso() {
+        this.egresos = new ArrayList<>();
+    }
 
     //Getter Setter
     public String getDescripcion() { return descripcion; }
@@ -50,6 +52,8 @@ public class OperacionIngreso extends Operacion {
     public double saldoOperacion(){
         return this.montoTotal - this.montoTotalEgresos();
     }
+
+    public void setMontoTotal(double montoTotal) {this.montoTotal = montoTotal;}
 
     @Override
     public double montoTotal() {

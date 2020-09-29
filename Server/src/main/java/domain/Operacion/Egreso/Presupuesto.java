@@ -1,21 +1,21 @@
 package domain.Operacion.Egreso;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "presupuesto")
-public class Presupuesto extends Entidad {
+public class Presupuesto extends EntidadPersistente {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private DetalleCompra detalle;
+    private DetalleOperacion detalle;
 
     @Column(name = "monto_total")
     private double montoTotal;
 
     //Constructors
-    public Presupuesto(DetalleCompra detalle,double montoTotal) {
+    public Presupuesto(DetalleOperacion detalle, double montoTotal) {
         this.detalle = detalle;
         this.montoTotal =montoTotal;
     }
@@ -25,11 +25,11 @@ public class Presupuesto extends Entidad {
     }
 
     //Getters y Setters
-    public DetalleCompra getDetalle() {
+    public DetalleOperacion getDetalle() {
         return detalle;
     }
 
-    public void setDetalle(DetalleCompra detalle) {
+    public void setDetalle(DetalleOperacion detalle) {
         this.detalle = detalle;
     }
 
@@ -39,15 +39,15 @@ public class Presupuesto extends Entidad {
 
     //Funcionalidad
     public double montoTotal() {
-        return this.montoTotal();
+        return this.montoTotal;
     }
 
-    public Boolean coincidenSolicitud(OperacionEgreso unEgreso){
-        return this.getDetalle().coincidenSolicitud(unEgreso.getDetalleValidable());
+    public Boolean coincidenPedido(OperacionEgreso unEgreso){
+        return detalle.coincidenPedido(unEgreso.getDetalle());
     }
 
     public Boolean coincideProveedor(OperacionEgreso unEgreso){
-        return this.getDetalle().coincidenProveedores(unEgreso.getDetalleValidable());
+        return this.getDetalle().coincidenProveedores(unEgreso.getDetalle());
     }
 
 

@@ -4,18 +4,20 @@ package domain.Entidad;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.lang.annotation.Annotation;
 
 @Entity
 @Table(name = "entidad_base")
-public class EntidadBase extends Entidad{
+public class EntidadBase extends EntidadPersistente implements Entidad {
     //Atributos
     @Column(name = "nombre")
     private String nombre;
+
     @Column(name = "descripcion")
     private String descripcion;
     //Constructor
 
-    EntidadBase(String nombre, String descripcion){
+    public EntidadBase(String nombre, String descripcion){
         this.nombre=nombre;
         this.descripcion= descripcion;
     }
@@ -32,11 +34,14 @@ public class EntidadBase extends Entidad{
         this.descripcion = descripcion;
     }
 
+    @Override
     public String nombre() {
         return nombre;
     }
 
+    @Override
     public String descripcion() {
         return descripcion;
     }
+
 }

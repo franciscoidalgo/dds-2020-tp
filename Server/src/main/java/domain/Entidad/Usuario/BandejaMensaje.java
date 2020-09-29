@@ -1,6 +1,6 @@
 package domain.Entidad.Usuario;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "bandeja_mensajes")
-public class BandejaMensaje extends Entidad {
+public class BandejaMensaje extends EntidadPersistente {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "bandeja_id")

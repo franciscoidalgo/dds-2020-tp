@@ -1,6 +1,6 @@
 package domain.Entidad.CategorizacionEmpresa;
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "categoria")
-public class Categoria extends Entidad {
+public class Categoria extends EntidadPersistente {
 
     @Column(name = "maxCantPersonal")
     private Integer maxCantPersonal;

@@ -1,7 +1,7 @@
 package domain.DireccionPostal;
 
 
-import domain.Entidad.Entidad;
+import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Direccion")
-public class DireccionPostal extends Entidad {
+public class DireccionPostal extends EntidadPersistente {
 
     @Column(name = "pais")
     private String pais;

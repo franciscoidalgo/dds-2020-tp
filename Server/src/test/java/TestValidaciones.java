@@ -1,3 +1,5 @@
+import domain.Entidad.Empresa;
+import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
 import domain.Validadores.*;
 import org.junit.Assert;
@@ -12,10 +14,10 @@ public class TestValidaciones {
     private Presupuesto presupuesto1;
     private Presupuesto presupuesto2;
     private Presupuesto presupuesto3;
-    private Solicitud solicitudP1;
-    private Solicitud solicitudP2;
-    private Solicitud solicitudP3;
-    private Solicitud solicitudEgreso;
+    private DetalleOperacion pedidoP1;
+    private DetalleOperacion pedidoP2;
+    private DetalleOperacion pedidoP3;
+    private DetalleOperacion pedidoEgreso;
     private Proveedor   pedro;
     private Proveedor   pablo;
     private Proveedor   simon;
@@ -27,8 +29,6 @@ public class TestValidaciones {
 
 
     private ValidadorDeTransparencia validadorDeTransparencia;
-    private Generador generador;
-
 
     @Before
     public void setUp() throws Exception {
@@ -38,58 +38,61 @@ public class TestValidaciones {
         simon = new Proveedor("Simon","Simon SRL",77777777,777777777,null);
 
         /* Inicializo Detalles*/
-        solicitudP1 = new Solicitud();
-        solicitudP2 = new Solicitud();
-        solicitudP3 = new Solicitud();
-        solicitudEgreso = new Solicitud();
+        pedidoP1 = new DetalleOperacion();
+        pedidoP2 = new DetalleOperacion();
+        pedidoP3 = new DetalleOperacion();
+        pedidoEgreso = new DetalleOperacion();
 
+        pedidoP1.setProveedor(pedro);
+        pedidoP1.agregaItem(new Item("Hojas"));
+        pedidoP1.agregaItem(new Item("Lapiceras"));
+        pedidoP1.agregaItem(new Item("Carpetas"));
 
-        solicitudP1.agregaItem(new Item("Hojas"));
-        solicitudP1.agregaItem(new Item("Lapiceras"));
-        solicitudP1.agregaItem(new Item("Carpetas"));
+        pedidoP2.setProveedor(pablo);
+        pedidoP2.agregaItem(new Item("Hojas"));
+        pedidoP2.agregaItem(new Item("Lapiceras"));
+        pedidoP2.agregaItem(new Item("Carpetas"));
 
+        pedidoP3.setProveedor(simon);
+        pedidoP3.agregaItem(new Item("Hojas"));
+        pedidoP3.agregaItem(new Item("Lapiceras"));
+        pedidoP3.agregaItem(new Item("Carpetas"));
 
-        solicitudP2.agregaItem(new Item("Hojas"));
-        solicitudP2.agregaItem(new Item("Lapiceras"));
-        solicitudP2.agregaItem(new Item("Carpetas"));
-
-        solicitudP3.agregaItem(new Item("Hojas"));
-        solicitudP3.agregaItem(new Item("Lapiceras"));
-        solicitudP3.agregaItem(new Item("Carpetas"));
-
-        solicitudEgreso.agregaItem(new Item("Hojas"));
-        solicitudEgreso.agregaItem(new Item("Lapiceras"));
-        solicitudEgreso.agregaItem(new Item("Carpetas"));
+        pedidoEgreso.setProveedor(pedro);
+        pedidoEgreso.agregaItem(new Item("Hojas"));
+        pedidoEgreso.agregaItem(new Item("Lapiceras"));
+        pedidoEgreso.agregaItem(new Item("Carpetas"));
 
         /*Inicializo Presupuestos*/
-        presupuesto1 = new Presupuesto(new DetalleCompra(solicitudP1,pedro),1000);
-        presupuesto2 = new Presupuesto(new DetalleCompra(solicitudP2,pablo),10000);
-        presupuesto3 = new Presupuesto(new DetalleCompra(solicitudP3,simon),1000000);
+        presupuesto1 = new Presupuesto(pedidoP1,1000);
+        presupuesto2 = new Presupuesto(pedidoP2,10000);
+        presupuesto3 = new Presupuesto(pedidoP3,1000000);
 
 
         /*Inicializo Egreso*/
         unEgreso = new OperacionEgreso(null,null,1000);
-        unEgreso.setDetalleValidable(new DetalleCompra(solicitudEgreso,pedro));
+        unEgreso.setDetalle(pedidoEgreso);
         unEgreso.agregaPresupuesto(presupuesto1);
         unEgreso.agregaPresupuesto(presupuesto2);
         unEgreso.agregaPresupuesto(presupuesto3);
 
 
         /*Inicializo Validador de transparencia*/
-        generador = Generador.instancia();
-        generador.inicializaValidadorTransparencia();
         validadorDeTransparencia = ValidadorDeTransparencia.instancia();
         criterioCantPresupuesto = new CriterioValidacionCantidadPresupuesto();
         criterioDetalle = new CriterioValidacionDetalle();
         criterioSeleccion = new CriterioValidacionSeleccion();
 
-
+        validadorDeTransparencia.agregateCriterio(criterioSeleccion);
+        validadorDeTransparencia.agregateCriterio(criterioDetalle);
+        validadorDeTransparencia.agregateCriterio(criterioCantPresupuesto);
 
     }
 
 
     @Test
     public void testHayTresPresupuestosCargados(){
+
         Assert.assertEquals(unEgreso.getPresupuestos().size(),3);
     }
 
@@ -113,32 +116,39 @@ public class TestValidaciones {
 
     @Test
     public void testPasaValidadoTransparencia(){
+
         Assert.assertTrue(validadorDeTransparencia.validaEgreso(unEgreso));
     }
 
     @Test
     public void testTransparencia_EgresoNoTieneProveedorDeMenorPresupuesto(){
-        unEgreso.getDetalleValidable().setProveedor(pablo);
-        solicitudEgreso.agregaItem(new Item("Hojas"));
-        solicitudEgreso.agregaItem(new Item("Lapiceras"));
-        solicitudEgreso.agregaItem(new Item("Carpetas"));
-
+        unEgreso.getDetalle().setProveedor(pablo);
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
 
     @Test
     public void testTransparencia_EgresoNoCumpleConCantMinPresupuestos() throws Exception {
         Presupuesto presupuesto4;
-        presupuesto4 = new Presupuesto(new DetalleCompra(solicitudP3,pablo),5);
+        presupuesto4 = new Presupuesto(pedidoP3,5);
+        pedidoP3.setProveedor(pablo);
         unEgreso.agregaPresupuesto(presupuesto4);
 
          Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
 
     @Test
-    public void testTransparencia_EgresoDebeEstarAsociadoAUnPresupuesto(){
-        solicitudEgreso.agregaItem(new Item("Carpetas"));
+    public void testTransparencia_EgresoNoTieneMismosItemsQueSusPresupuestos(){
+        pedidoEgreso.agregaItem(new Item("Zapatos"));
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
 
+    @Test
+    public void testUsuarioRecibeMensaje_CuandoSeDaDeAltaEnOperacion() throws InterruptedException {
+        Usuario unEstandar = new Usuario();
+        unEstandar.darseDeAltaEn(unEgreso);
+        unEgreso.validaOperacion();
+        Thread.sleep(5000);
+
+        Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),1);
+    }
 }

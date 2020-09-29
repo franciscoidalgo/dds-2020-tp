@@ -1,20 +1,10 @@
 package domain.Entidad;
 
-import javax.persistence.*;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-@MappedSuperclass
-public class Entidad {
-
-    @Id
-    @GeneratedValue
-    private int id;
-
-    public void setId (int id){
-        this.id = id;
-    }
-
-    public int getId (){
-        return id;
-    }
-
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public interface Entidad {
+    String nombre();
+    String descripcion();
 }
