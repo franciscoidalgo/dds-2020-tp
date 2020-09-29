@@ -20,7 +20,7 @@ public class ControllerIngreso {
     public String getIngresoAsociado(Request request, Response response) throws IOException {
         Gson gson = new Gson();
         ServicioAsociacion servicioAsociacion = ServicioAsociacion.getInstancia();
-        OperacionIngreso operacionIngresoResultante = servicioAsociacion.getIngresoAsociado(request.queryParams("ingreso"), request.queryParams("listaEgresos"));
+        OperacionIngreso operacionIngresoResultante = servicioAsociacion.getIngresoAsociado(request.queryParams("ingreso"), request.queryParams("listaEgresos"), request.queryParams("fechaDesde"), request.queryParams("fechaHasta"));
 
         return gson.toJson(operacionIngresoResultante);
     }

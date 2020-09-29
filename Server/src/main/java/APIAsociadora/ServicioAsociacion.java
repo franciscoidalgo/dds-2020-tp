@@ -28,9 +28,9 @@ public class ServicioAsociacion {
     }
 
 
-    public OperacionIngreso getIngresoAsociado (String operacionIngreso, String listaEgresos) throws IOException {
+    public OperacionIngreso getIngresoAsociado (String operacionIngreso, String listaEgresos, String fechaDesde, String fechaHasta) throws IOException {
         AsociadoraService asociadoraService = this.retrofit.create(AsociadoraService.class);
-        Call<OperacionIngreso> requestIngresoVinculado = asociadoraService.ingresoVinculado(operacionIngreso, listaEgresos);
+        Call<OperacionIngreso> requestIngresoVinculado = asociadoraService.ingresoVinculado(operacionIngreso, listaEgresos, fechaDesde, fechaHasta);
         Response<OperacionIngreso> responseIngresoVinculado = requestIngresoVinculado.execute();
         OperacionIngreso ingresoAsociado = responseIngresoVinculado.body();
         return ingresoAsociado;

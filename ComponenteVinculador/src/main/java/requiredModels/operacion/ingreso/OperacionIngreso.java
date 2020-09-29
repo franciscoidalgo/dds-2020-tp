@@ -1,5 +1,6 @@
 package requiredModels.operacion.ingreso;
 
+import com.google.gson.Gson;
 import domain.criterio.CriterioAsociacion;
 import requiredModels.operacion.Operacion;
 import requiredModels.operacion.egreso.OperacionEgreso;
@@ -18,10 +19,12 @@ public class OperacionIngreso extends Operacion {
     //Funcionalidad
     public void agregateEgreso(OperacionEgreso operacionEgreso){ this.egresos.add(operacionEgreso); }
 
-    public void agregarListaDeEgresos(List<OperacionEgreso> egresos, CriterioAsociacion criterioAsociacion){
-        List<OperacionEgreso> egresosValidos = egresos.stream()
+    public void agregarListaDeEgresos(List<OperacionEgreso> nuevosEgresos, CriterioAsociacion criterioAsociacion){
+        List<OperacionEgreso> egresosValidos = nuevosEgresos.stream()
                 .filter(criterioAsociacion.getCriterio())
                 .collect(Collectors.toList());
+        System.out.println(egresosValidos);
+        System.out.println(this.egresos.addAll(egresosValidos));
     }
 
 }
