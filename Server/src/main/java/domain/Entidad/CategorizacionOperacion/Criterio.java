@@ -1,11 +1,24 @@
 package domain.Entidad.CategorizacionOperacion;
 
+import domain.Entidad.EntidadPersistente;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Criterio {
+@Entity
+@Table(name = "criterio")
+public class Criterio extends EntidadPersistente {
+
+    @Column(name = "nombre")
     private String nombre;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "criterioHijo_id")
     private Criterio criterioHijo;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "criterio_id")
     private List<CategoriaOperacion> categorias;
 
     //Constructores
@@ -18,6 +31,10 @@ public class Criterio {
     public Criterio(String nombre) {
         this.nombre = nombre;
         this.criterioHijo = null;
+        this.categorias = new ArrayList<>();
+    }
+
+    public Criterio() {
         this.categorias = new ArrayList<>();
     }
 

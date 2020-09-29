@@ -1,16 +1,29 @@
 package domain.Operacion.Egreso;
 
-public class Comprobante {
+import domain.Entidad.EntidadPersistente;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "comprobante")
+public class Comprobante extends EntidadPersistente {
+    @Column(name = "nro_comprobante")
     private long nroComprobante;
-    private ComprobanteDePago tipoComprobante;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private TipoComprobante tipoComprobante;
+
+    @Column(name = "path")
     private String path;
 
     //Constructor
-    public Comprobante(long nroComprobante, ComprobanteDePago tipoComprobante, String path) {
+    public Comprobante(long nroComprobante, TipoComprobante tipoComprobante, String path) {
         this.nroComprobante = nroComprobante;
         this.tipoComprobante = tipoComprobante;
         this.path = path;
     }
+
+    public Comprobante() {}
 
 
     //Getter Setter
@@ -21,10 +34,10 @@ public class Comprobante {
         this.nroComprobante = nroComprobante;
     }
 
-    public ComprobanteDePago getTipoComprobante() {
+    public TipoComprobante getTipoComprobante() {
         return tipoComprobante;
     }
-    public void setTipoComprobante(ComprobanteDePago tipoComprobante) {
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
         this.tipoComprobante = tipoComprobante;
     }
 

@@ -1,13 +1,44 @@
 package domain.Operacion.Egreso;
 
-public abstract class MedioDePago {
-    protected long id;
+import domain.Entidad.EntidadPersistente;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "medio_de_pago")
+public class MedioDePago extends EntidadPersistente {
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "moneda")
+    private String moneda;
+
+    //Constructors
+    public MedioDePago() {}
+
+    public MedioDePago(String nombre,String moneda) {
+        this.nombre = nombre;
+        this.moneda = moneda;
+    }
 
     //Getter Setter
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    //Funcionalidad
-    protected abstract void actualizarTiposDePago();
-    //Ni idea que hace este metodo
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
+    }
+
 }

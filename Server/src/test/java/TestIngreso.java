@@ -11,12 +11,11 @@ public class TestIngreso {
 
     @Before
     public void setUp() {
+        unIngreso = new OperacionIngreso();
+        unIngreso.setMontoTotal(100000);
 
-
-        unIngreso = new Generador().generaIngreso(100000);
-
-        //Egreso con un detalle generico de 16000
-        unEgreso = new Generador().generaEgreso(0);
+        unEgreso = new OperacionEgreso();
+        unEgreso.setMontoTotal(16000);
     }
 
 

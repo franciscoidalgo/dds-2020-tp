@@ -1,18 +1,35 @@
 package domain.Entidad.CategorizacionEmpresa;
 
+import domain.Entidad.EntidadPersistente;
+
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Sector {
 
+@Entity
+@Table(name = "sector")
+public class Sector extends EntidadPersistente {
 
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "descripcion")
     private String descripcion;
-    private ArrayList<Categoria> categoria;
+
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "sector_id")
+    private List<Categoria> categoria;
 
 
     public Sector(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.categoria = new ArrayList<>();
+    }
+
+    public Sector() {
         this.categoria = new ArrayList<>();
     }
 
@@ -33,11 +50,11 @@ public class Sector {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<Categoria> getCategoria() {
+    public List<Categoria> getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(ArrayList<Categoria> categoria) {
+    public void setCategoria(List<Categoria> categoria) {
         this.categoria = categoria;
     }
 

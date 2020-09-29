@@ -1,23 +1,31 @@
 package domain.Operacion.Egreso;
 
-public class Item {
-    private double precio;
+import domain.Entidad.EntidadPersistente;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "item")
+public class Item extends EntidadPersistente {
+
+    @Column(name = "descripcion")
     private String descripcion;
 
-    public Item(double precio, String descripcion) {
-        this.precio = precio;
+    //Constructor
+    public Item(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    //Getters and Setters
-    public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = precio; }
+    public Item() {}
 
+    //Setters+Getters
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public String getDescripcion() { return descripcion; }
 
     //Funcionalidad
     public Boolean coincidenItems(Item otroItem) {
-        return this.getDescripcion().contentEquals(otroItem.getDescripcion()) && this.getPrecio() == otroItem.getPrecio();
+        return this.getDescripcion().contentEquals(otroItem.getDescripcion());
     }
 }

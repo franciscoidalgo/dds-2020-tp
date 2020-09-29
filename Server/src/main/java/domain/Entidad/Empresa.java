@@ -7,12 +7,26 @@ import domain.Entidad.CategorizacionEmpresa.Categorizable;
 import domain.Entidad.CategorizacionEmpresa.Sector;
 import domain.Entidad.CategorizacionEmpresa.Categorizador;
 
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue("empresa")
 public class Empresa extends EntidadJuridica implements Categorizable {
     //Atributos
+    @Column(name = "actividad")
     private String actividad;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Sector sector;
+
+    @Column(name = "cant_personal")
     private int cantPersonal;
+
+    @Column(name = "prom_venta_anual")
     private int promVentasAnual;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
     //Constructor
@@ -23,8 +37,10 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         this.sector = sector;
         this.cantPersonal = cantPersonal;
         this.promVentasAnual = promVentasAnual;
-        this.categoria = new Categorizador().categoriza(this);
+        recategorizate();
     }
+
+    public Empresa() {}
 
 
     //Getters-Setters
@@ -42,8 +58,9 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         return sector;
     }
 
-    public void sector(Sector sector) {
+    public void setSector(Sector sector) {
         this.sector = sector;
+        recategorizate();
     }
 
     @Override
@@ -53,6 +70,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public void setCantPersonal(Integer cantPersonal) {
         this.cantPersonal = cantPersonal;
+        recategorizate();
     }
 
     @Override
@@ -62,15 +80,11 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public void setPromVentaAnual(Integer promVentasAnual) {
         this.promVentasAnual = promVentasAnual;
+        recategorizate();
     }
-
 
     public Categoria getCategoria() {
         return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
     }
 
     public String nombre() {
@@ -79,5 +93,11 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public String descripcion() {
         return this.descripcion;
+    }
+
+    private void recategorizate(){
+        if(this.sector != null) {
+            this.categoria = new Categorizador().categoriza(this);
+        }
     }
 }

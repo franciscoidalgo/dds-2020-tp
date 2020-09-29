@@ -1,17 +1,38 @@
 package domain.Entidad.Usuario;
 
+import domain.Entidad.EntidadPersistente;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BandejaMensaje {
+@Entity
+@Table(name = "bandeja_mensajes")
+public class BandejaMensaje extends EntidadPersistente {
 
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private final List<Mensaje> mensajes;
 
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private  Usuario usuario;
+
+    //Constructors
     public BandejaMensaje() {
         this.mensajes = new ArrayList<>();
     }
+
+    //Getters + Setters
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    //Funcionalidades
 
     public void filtraPorLeido(){
         this.mensajes.stream()
@@ -33,26 +54,11 @@ public class BandejaMensaje {
     public void borrarMensaje(Mensaje unMensaje){
         this.mensajes.remove(unMensaje);
     }
-    /*
-    Despues haces
-    try{ borrarMensaje(mensaje) }
-    catch(Exception e){
-            System.out.println("No se pudo encontrar mensaje. No existe"); }
-     */
 
     public Mensaje mostraMensaje(int pos){
         mensajes.get(pos).actualizateLeido();
         return mensajes.get(pos);
     }
-    /*
-    Despues haces
-    try{ mostraMensaje(pos) }
-    catch(Exception e){
-       System.out.println("No se pudo encontrar mensaje. No existe");
-    }
-     */
-
-    //Estas dos pruebas en un main o un test
 
     public List<Mensaje> getMensajes() {
         return mensajes;
