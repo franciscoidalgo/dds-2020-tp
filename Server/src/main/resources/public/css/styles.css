@@ -552,26 +552,9 @@ tr {
     border: 1px solid #808080;
 }
 
-.tabla-detalle tr:nth-child(odd) {
+.tabla-detalle tr:nth-child(odd),
+#seccion-mensajes tr:nth-child(odd) {
     background-color: #D6E6EC;
-}
-
-.tabla-bandeja tr.invalido {
-    background-color: #F9D9DD;
-}
-
-.tabla-bandeja th,
-.tabla-bandeja td {
-    border: solid #808080;
-    border-width: 0 0 1px 0;
-}
-
-.tabla-bandeja tr:hover {
-    background-color: #d1cebd;
-}
-
-.tabla-bandeja tr:target {
-    background-color: red;
 }
 
 .nav-tabla {
@@ -673,4 +656,92 @@ tr {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     text-align: center;
+}
+
+
+/*Bandeja Mensajes*/
+
+.invalido {
+    color: #f04b5e;
+}
+
+.valido {
+    color: #559152;
+}
+
+.tabla-bandeja th,
+#seccion-mensajes td {
+    border: solid #808080;
+    border-width: 0 0 1px 0;
+    padding: 2rem;
+}
+
+#seccion-mensajes tr:hover {
+    background-color: #ededed;
+}
+
+#seccion-mensajes tr:target {
+    background-color: red;
+}
+
+#mensaje-detalle p span {
+    font-weight: 700;
+}
+
+#mensaje-detalle h3 {
+    text-decoration: underline;
+}
+
+
+/*Tooltip*/
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 50rem;
+    color: #fff;
+    border-radius: 6px;
+    padding: 5px 5rem;
+    position: absolute;
+    z-index: 1;
+    bottom: -30%;
+    left: 120%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 40%;
+    left: -2%;
+    margin-left: 2px;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltiptext-valida {
+    background-color: #559152;
+}
+
+.tooltiptext-valida::after {
+    border-color: transparent #559152 transparent transparent;
+}
+
+.tooltiptext-invalida {
+    background-color: #f04b5e;
+}
+
+.tooltiptext-invalida::after {
+    border-color: transparent #f04b5e transparent transparent;
 }
