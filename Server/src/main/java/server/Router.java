@@ -35,6 +35,7 @@ public class Router {
         ControllerEgresos controllerEgresos = new ControllerEgresos();
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
         ControllerIngreso controllerIngreso = new ControllerIngreso();
+        ControllerBandejaMensajes controllerBandeja = new ControllerBandejaMensajes();
 
         PruebaRest pruebaRest = new PruebaRest();
 
@@ -65,6 +66,8 @@ public class Router {
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
+
+        Spark.get("/bandeja", controllerBandeja::mostrarBandeja, Router.engine);
 
         Spark.get("/api/usuario/:id", pruebaRest::mostrar);
 
