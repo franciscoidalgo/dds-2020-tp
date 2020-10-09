@@ -46,7 +46,7 @@ function mockJson(cantMensajes) {
                 "presupuestos": {
                     "id": [1, 2, 3, 4]
                 },
-                "categorias": ["xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"]
+                "categorias": ["categoria", "categoria", "categoria", "categoria", "categoria", "categoria", "categoria", "categoria"]
             }
         });
     }
@@ -69,10 +69,13 @@ function getRandomDate() {
 }
 
 /*********************************************************************/
-const dataJson = JSON.parse(mockJson(20)); //Simulacion de la data que traeria en un AJAX
+const dataJson = JSON.parse(mockJson(45)); //Simulacion de la data que traeria en un AJAX
+var countRender = 0;
+var btnSiguiente = document.getElementById("siguiente");
+var btnAnterior = document.getElementById("anterior");
 
 /* Funciones */
-function generarFila(data) {
+function buildFila(data) {
     const tbodyMensajes = document.getElementById("seccion-mensajes");
     var tr = document.createElement("tr");
     const egreso = data.egreso;
@@ -91,14 +94,11 @@ function generarFila(data) {
     tbodyMensajes.appendChild(tr);
 }
 
-
-
 function setIconoValidoSegun(condicion) {
     return condicion ?
         '<i class="fas fa-check-circle valido"></i>' :
         '<i class="fas fa-exclamation-circle invalido"></i>';
 }
-
 
 function setDataARow(tr, data) {
     var tdHTML = document.createElement("td");
@@ -111,11 +111,12 @@ function orderByID(a, b) {
     return a.egreso.id - b.egreso.id;
 }
 
-function templateMensaje(data) {
+function buildTemplateMensaje(data) {
+    const contenedorHTML = document.getElementById("mensaje-detalle");
     const egreso = data.egreso;
     const proveedor = egreso.proveedor;
     const medioDePago = egreso.medioDePago;
-    const msj = `
+    const template = `
         <header>
             <div class="d-flex jc-sb ai-center fw-700">
                 <div class="tooltip">   
@@ -147,7 +148,7 @@ function templateMensaje(data) {
                 <h3>Detalle de la operacion</h3>
                 <p><span>Monto total:</span> ${medioDePago.moneda} $${medioDePago.monto}</p>
                 <p><span>Tipo comprobante:</span> ${medioDePago.comprobante.tipo}</p>
-                <p><span>Comprobante: </span>${medioDePago.comprobante.path}</p>
+                <p><span>Comprobante</span>: <a id="ver-comprobante" href=${medioDePago.comprobante.path} target="blank">ver comprobante</a></p>
                 <p><span>Cantidad Presupuestos: </span>${egreso.presupuestos.id.length}</p>
             </section>
             <table class="txt-centrado tabla">
@@ -162,50 +163,88 @@ function templateMensaje(data) {
             </table>
         </main>    
     `
-    return msj;
+    contenedorHTML.innerHTML = template;
+}
+
+function buildCategorias(vectorCategorias) {
+    const contenedorHTML = document.getElementById("contenedor-categorias");
+
+    for (var i = 0; i < vectorCategorias.length; i++) {
+        let contenido = generaCategoria(vectorCategorias[i], true);
+        contenedorHTML.appendChild(contenido);
+    }
+}
+
+function buildTablaDetalle(vectorItems) {
+    let contenedorHTML = document.getElementById("tabla-detalle");
+
+    for (var i = 0; i < vectorItems.length; i++) {
+        let tr = document.createElement("tr");
+        let contenido = document.createElement("td");
+        contenido.innerHTML = vectorItems[i];
+        tr.appendChild(contenido);
+        contenedorHTML.appendChild(tr);
+    }
+}
+
+function buildTooltip(vectorMsjResultado) {
+    const contenedorHTML = document.getElementById("mensaje-resultado");
+    contenedorHTML.scrollIntoView({ behavior: "smooth" });
+    for (var i = 0; i < vectorMsjResultado.length; i++) {
+        let contenido = document.createElement("p");
+        contenido.innerHTML = vectorMsjResultado[i];
+        contenedorHTML.appendChild(contenido);
+    }
 }
 
 function mostrarMensaje(data) {
     const categorias = data.egreso.categorias;
     const items = data.egreso.detalle.items;
     const msjResultado = data.cuerpoMensaje;
-    var contenedorHTML = document.getElementById("mensaje-detalle");
-    var contenido = templateMensaje(data);
 
-    //Asocio el Template al contenedor Mensaje
-    contenedorHTML.innerHTML = contenido;
-    //Asocio las categorias al Mensaje
-    contenedorHTML = document.getElementById("contenedor-categorias");
-    for (var i = 0; i < categorias.length; i++) {
-        contenido = generaCategoria(categorias[i], true);
-        contenedorHTML.appendChild(contenido);
-    }
-    //Asocio las Items del Egreso al Mensaje
-    contenedorHTML = document.getElementById("tabla-detalle");
-    for (var i = 0; i < items.length; i++) {
-        var tr = document.createElement("tr");
-        contenido = document.createElement("td");
-        contenido.innerHTML = items[i];
-        tr.appendChild(contenido);
-        contenedorHTML.appendChild(tr);
-    }
-    contenedorHTML.scrollIntoView({ behavior: "smooth" });
-    //Asocio los mensajes al TOOLTIP
-    contenedorHTML = document.getElementById("mensaje-resultado");
-    for (var i = 0; i < msjResultado.length; i++) {
-        contenido = document.createElement("p");
-        contenido.innerHTML = msjResultado[i];
-        contenedorHTML.appendChild(contenido);
-    }
+    buildTemplateMensaje(data);
+    buildCategorias(categorias);
+    buildTablaDetalle(items);
+    buildTooltip(msjResultado);
 
 }
 
-/* Eventos */
-window.onload = () => {
+function renderTabla(data) {
+    var paginaHTML = document.getElementById("cant-paginas");
     var data = dataJson.data.sort(orderByID); //Ordenado por id
 
-    for (var i = 0; i < data.length; i++) {
-        generarFila(data[i]);
+    cleanTabla();
 
+    for (var i = countRender, j = 10; j > 0 && i < data.length; i++, j--) {
+        buildFila(data[i]);
+        countRender = i + 1;
     }
+
+    paginaHTML.innerText = setToStringCantPaginas(data.length);
+}
+
+function cleanTabla() {
+    const tbody = document.getElementById("seccion-mensajes");
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+    }
+}
+
+function setToStringCantPaginas(size) {
+    if (size == 0) {
+        return "0 de 0"
+    }
+    return size > countRender ?
+        `${1+countRender-10}-${countRender} de ${size}` : `${1+countRender-size%10}-${size} de ${countRender}`
+}
+/* Eventos */
+
+
+window.onload = () => renderTabla(dataJson);
+
+btnSiguiente.onclick = () => renderTabla(dataJson)
+
+btnAnterior.onclick = () => {
+    countRender -= 2 + ((countRender - 1) % 10); /****************VER ACA */
+    renderTabla(dataJson);
 }

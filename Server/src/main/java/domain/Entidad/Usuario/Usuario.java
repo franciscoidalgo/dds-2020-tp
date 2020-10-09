@@ -27,7 +27,7 @@ public class Usuario extends EntidadPersistente {
     @Transient
     private Entidad entidadSeleccionada;
 
-    @OneToOne(mappedBy = "usuario",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @Embedded
     private BandejaMensaje bandejaDeMensajes;
 
     public Usuario (){

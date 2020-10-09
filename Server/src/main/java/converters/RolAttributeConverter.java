@@ -20,6 +20,5 @@ public class RolAttributeConverter implements AttributeConverter<Rol,Character> 
         return dbData == 'a'? new RolAdministrador():new RolEstandar();
     }
 
-
 }
 

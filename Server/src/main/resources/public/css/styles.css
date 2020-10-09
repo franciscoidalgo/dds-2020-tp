@@ -692,6 +692,12 @@ tr {
     text-decoration: underline;
 }
 
+#ver-comprobante {
+    text-decoration: underline;
+    color: #015B81;
+    font-weight: 700;
+}
+
 
 /*Tooltip*/
 

@@ -45,12 +45,16 @@
             <input type="text" name="busqueda" id="busqueda" placeholder="Buscar en bandeja de mensajes...">
             <div class="contenedor-filtrado">
                 <p class="fw-700">Filtrar Por</p><br>
+
                 <input type="checkbox" name="visto" id="visto" value="visto" checked>
                 <label for="todas">Ver todas</label>
+
                 <input type="checkbox" name="todas" id="todas" value="todas" disabled>
                 <label for="visto">Vistos</label>
+
                 <input type="checkbox" name="transparentes" id="transparentes" value="transparentes" disabled>
                 <label for="transparentes">Transparentes</label>
+
                 <input type="checkbox" name="invalidas" id="invalidas" value="invalidas" disabled>
                 <label for="invalidas">Invalidas</label>
             </div>
@@ -59,6 +63,13 @@
     </section>
     <!--Mensajes-->
     <main class="seccion">
+        <!-- Nav paginas-->
+        <nav class="d-flex nav-tabla">
+            <p id="cant-paginas"></p>
+            <a id="anterior" href="#"><i class="far fa-arrow-alt-circle-left"></i></a>
+            <a id="siguiente" href="#"><i class="far fa-arrow-alt-circle-right"></i></a>
+        </nav>
+        <!-- Tabla -->
         <table class="txt-centrado tabla tabla-bandeja">
             <thead class="bg-primario fw-700 th-principal">
                 <tr>
@@ -73,13 +84,6 @@
             <tbody id="seccion-mensajes">
             </tbody>
         </table>
-        <nav class="d-flex nav-tabla">
-            <a href="#">anterior</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">siguiente</a>
-        </nav>
         <hr>
         <!--Mensaje En detalle-->
         <article id="mensaje-detalle" class="seccion">

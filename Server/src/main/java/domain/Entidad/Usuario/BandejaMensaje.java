@@ -8,28 +8,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "bandeja_mensajes")
-public class BandejaMensaje extends EntidadPersistente {
+@Embeddable
+public class BandejaMensaje {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private final List<Mensaje> mensajes;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private  Usuario usuario;
-
     //Constructors
     public BandejaMensaje() {
         this.mensajes = new ArrayList<>();
-    }
-
-    //Getters + Setters
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     //Funcionalidades
