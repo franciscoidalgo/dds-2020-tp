@@ -35,8 +35,9 @@ public class Router {
         ControllerEgresos controllerEgresos = new ControllerEgresos();
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
         ControllerIngreso controllerIngreso = new ControllerIngreso();
+        ControllerMensajes controllerMensajes = new ControllerMensajes();
 
-        PruebaRest pruebaRest = new PruebaRest();
+        ApiRest apiRest = new ApiRest();
 
         if(ConfiguracionMercadoLibre.usarApi){
             InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
@@ -66,10 +67,13 @@ public class Router {
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
 
-        Spark.get("/api/usuario/:id", pruebaRest::mostrar);
+        Spark.get("/api/usuario/:id", apiRest::mostrarUsuario);
 
         Spark.get("/ingresoAsociado", controllerIngreso::getIngresoAsociado);
 
+        Spark.get("/mensajes", controllerMensajes::mostrarMensajes, Router.engine);
+
+        Spark.get("/getMensajes", apiRest::mostrarMensajes);
 
     }
 }

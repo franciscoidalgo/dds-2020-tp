@@ -5,6 +5,7 @@ import domain.Entidad.EntidadPersistente;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -12,10 +13,16 @@ import java.time.LocalTime;
 public class Mensaje extends EntidadPersistente {
 
     @Column(name = "fecha_envio",columnDefinition = "DATE")
-    private LocalTime fechaEnvio;
+    private LocalDate fechaEnvio;
+
+    @Column(columnDefinition = "TIME")
+    private LocalTime horaEnvio;
 
     @Column(name = "fecha_leido",columnDefinition = "DATE")
-    private LocalTime fechaLeido;
+    private LocalDate fechaLeido;
+
+    @Column(columnDefinition = "TIME")
+    private LocalTime horaLeido;
 
     @Column(name = "asunto")
     private String asunto;
@@ -23,21 +30,28 @@ public class Mensaje extends EntidadPersistente {
     @Column(name = "mensaje")
     private String mensaje;
 
-
     public Mensaje(String asunto, String mensaje) {
         this.asunto = asunto;
         this.mensaje = mensaje;
-        this.fechaEnvio = LocalTime.now();
+        this.fechaEnvio = LocalDate.now();
+        this.horaEnvio = LocalTime.now();
         this.fechaLeido = null;
+        this.horaLeido = null;
     }
 
     public Mensaje() {}
 
-    public LocalTime getFechaEnvio() {
+    public LocalDate getFechaEnvio() {
         return fechaEnvio;
     }
-    public LocalTime getFechaLeido() {
+    public LocalTime getHoraEnvio(){
+        return this.horaEnvio;
+    }
+    public LocalDate getFechaLeido() {
         return fechaLeido;
+    }
+    public LocalTime getHoraLeido(){
+        return this.horaLeido;
     }
 
     public String getAsunto() {
@@ -48,6 +62,6 @@ public class Mensaje extends EntidadPersistente {
     }
 
     public void actualizateLeido(){
-        this.fechaLeido = LocalTime.now();
+        this.fechaLeido = LocalDate.now();
     }
 }
