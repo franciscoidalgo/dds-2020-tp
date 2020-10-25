@@ -1,4 +1,4 @@
-package converters;
+package Persistencia.converters;
 
 import domain.Entidad.Usuario.Rol;
 import domain.Entidad.Usuario.RolAdministrador;

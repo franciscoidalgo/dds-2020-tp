@@ -1,4 +1,4 @@
-package ConexionMySQL;
+package Persistencia;
 
 import javax.persistence.*;
 import java.util.function.Supplier;

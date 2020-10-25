@@ -51,6 +51,7 @@ public class ControllerLogin {
             }
 
         } catch (Exception e) {
+            System.out.println(e);
             request.session().attribute("loginFailed", true);
             response.redirect("/auth");
         }

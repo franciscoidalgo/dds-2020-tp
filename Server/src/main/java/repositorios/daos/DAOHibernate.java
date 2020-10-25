@@ -2,7 +2,7 @@ package repositorios.daos;
 
 
 
-import ConexionMySQL.EntityManagerHelper;
+import Persistencia.EntityManagerHelper;
 import repositorios.BusquedaCondicional;
 
 import javax.persistence.criteria.CriteriaBuilder;

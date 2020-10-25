@@ -1,6 +1,6 @@
 package repositorios;
 
-import ConexionMySQL.EntityManagerHelper;
+import Persistencia.EntityManagerHelper;
 import repositorios.daos.DAO;
 
 import javax.persistence.criteria.CriteriaBuilder;

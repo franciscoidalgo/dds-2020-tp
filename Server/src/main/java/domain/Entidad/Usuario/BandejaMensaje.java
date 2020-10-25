@@ -1,7 +1,5 @@
 package domain.Entidad.Usuario;
 
-import domain.Entidad.EntidadPersistente;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,6 +15,7 @@ public class BandejaMensaje {
     //Constructors
     public BandejaMensaje() {
         this.mensajes = new ArrayList<>();
+        this.mensajes.add(new Mensaje("Bienvenida", "Bienvenido al sistema de gestion GeSoc."));
     }
 
     //Funcionalidades

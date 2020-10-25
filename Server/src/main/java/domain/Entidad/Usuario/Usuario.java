@@ -34,6 +34,13 @@ public class Usuario extends EntidadPersistente {
         this.bandejaDeMensajes = new BandejaMensaje();
     }
 
+    public Usuario(String nombre, String password, Rol rol) {
+        this.nombre = nombre;
+        this.password = password;
+        this.rol = rol;
+        this.bandejaDeMensajes = new BandejaMensaje();
+    }
+
     public Usuario(String nombre, String password, Rol rol, EntidadJuridica entidadPertenece) {
         this.nombre = nombre;
         this.password = password;

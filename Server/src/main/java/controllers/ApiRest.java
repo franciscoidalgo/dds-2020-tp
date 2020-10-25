@@ -1,14 +1,11 @@
 package controllers;
 
 import com.google.gson.Gson;
-import domain.Entidad.Usuario.BandejaMensaje;
 import domain.Entidad.Usuario.Mensaje;
 import domain.Entidad.Usuario.Usuario;
-import repositorios.RepositorioBandejasDeMensajes;
 import repositorios.RepositorioDeUsuarios;
 import repositorios.TestUsuariosEnMemoria;
 import repositorios.daos.DAOMemoria;
-import repositorios.factories.FactoryRepoBandeja;
 import repositorios.factories.FactoryRepoUsuario;
 import spark.Request;
 import spark.Response;
@@ -26,22 +23,13 @@ public class ApiRest {
         return jUsuario;
     }
 
+
+
     public String mostrarMensajes(Request request, Response response){
-        RepositorioBandejasDeMensajes repositorioBandejasDeMensajes = FactoryRepoBandeja.get();
+        RepositorioDeUsuarios repositorioDeUsuarios = FactoryRepoUsuario.get();
+        Usuario usuarioLogueado = repositorioDeUsuarios.buscar(request.session().attribute("userId"));
         Gson gson = new Gson();
-        List<Mensaje> listaMensajes;
-        try{
-            listaMensajes =
-                    repositorioBandejasDeMensajes.buscarBandejaDeUsuario(request.session().attribute("userId"))
-                            .getMensajes();
-        }catch(Exception e){
-            RepositorioDeUsuarios repositorioDeUsuarios = FactoryRepoUsuario.get();
-            BandejaMensaje bandejaDelUsuario = new BandejaMensaje();
-            bandejaDelUsuario.setUsuario(repositorioDeUsuarios.buscar(request.session().attribute("userId")));
-            bandejaDelUsuario.getMensajes().add(new Mensaje("Bienvenida", "¡Bienvenid@ al sistema de gestion Gesoc!"));
-            listaMensajes = bandejaDelUsuario.getMensajes();
-            repositorioBandejasDeMensajes.agregar(bandejaDelUsuario);
-        }
+        List<Mensaje> listaMensajes = usuarioLogueado.getBandejaDeMensajes().getMensajes();
         String jMensajes = gson.toJson(listaMensajes);
         response.type("application/json");
         return jMensajes;
