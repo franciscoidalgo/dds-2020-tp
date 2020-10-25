@@ -11,7 +11,7 @@ public class EntityManagerHelper {
 
     static {
         try {
-            emf = Persistence.createEntityManagerFactory("ConexionMySQL");
+            emf = Persistence.createEntityManagerFactory("db");
             threadLocal = new ThreadLocal<>();
         } catch (Exception e) {
             e.printStackTrace();
