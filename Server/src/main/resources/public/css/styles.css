@@ -373,6 +373,7 @@ main {
     padding: .5rem;
     background-color: white;
     color: black;
+    box-shadow: 4px 6px 10px #555555;
 }
 
 .carta img {
