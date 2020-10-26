@@ -1,5 +1,6 @@
 import {Burbuja,  Desplegable} from "./burbuja.js";
 import {generaModalAlert,generaBoton} from "./modal.js"
+
 const burbujas = [
     new Burbuja('burbuja-detalle','detalle-ingreso'),
     new Burbuja('burbuja-egreso','egreso')
@@ -62,27 +63,28 @@ window.eventoCancelar = () => {
 
 //Magia para vincular
 function getIngreso (){
+    var data = {
+            "tipo": $("#tipo-ingreso").val(),
+            "monto":$("#monto-total").val(),
+            "descripcion": $("#descripcion").value
 
-}
-
-function getListaEgresos(){
-
+    };
+    return data;
 }
 
 function vincular (){
-    var dataIngresosEgresos = null;
-    dataIngresosEgresos = {
+    var data= {
         ingreso: getIngreso(),
-        listaEgresos: getListaEgresos(),
+        listaEgresos: [],
     };
-    $.ajax({
-        type: "GET",
-        url: "/ingresoAsociado",
-        data: dataIngresosEgresos,
-        dataType:"json",
-        contentType: "application/json; charset=utf-f",
-        success: function(data){
-            console.log("Aca se persiste el ingreso con los egresos asociados");
+    console.log(data);
+    fetch("/ingresoAsociado", {
+        method: 'POST', // potencial 'POST'
+        body: JSON.stringify(data),
+        headers:{
+            'Content-Type': "application/json; charset=utf-f"
         }
-    })
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
 }
