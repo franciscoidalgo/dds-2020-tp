@@ -27,7 +27,7 @@
                 <button id="btn-close" class="btn-primario"><i class="fas fa-times"></i></button>
             </div>
             <li><a href="#"><i class="fas fa-user"></i>Panel Personal</a></li>
-            <li><a href="bandeja"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
+            <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
             <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
             <li><a href="egreso"><i class="fas fa-file-invoice"></i>Nuevo Egreso</a></li>
             <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
@@ -93,7 +93,7 @@
                 <select name="pais" id="pais" required>
                     <option value="" disabled selected>-- Seleccione --</option>
                     {{#each paises}}
-                        <option value="" >{{nombre}}</option>
+                        <option value={{nombre}} >{{nombre}}</option>
                     {{/each}}
                 </select>
                     <br>
@@ -101,19 +101,17 @@
                 <select name="provincia" id="provincia" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
                     {{#each provincias}}
-                        <option value="">{{nombre}}</option>
+                        <option value={{nombre}}>{{nombre}}</option>
                     {{/each}}
-                    <option value="">algo</option>
                 </select><br>
                 <label for="ciudad">Ciudad</label><br>
                 <select name="ciudad" id="ciudad" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
                     {{#each provincias as |provincia| }}
                         {{#each provincia.cities}}
-                            <option value="">{{nombre}}</option>
+                            <option value={{nombre}}>{{nombre}}</option>
                         {{/each}}
                     {{/each}}
-                    <option value="">algo</option>
                 </select><br>
                 <label for="calle">Calle</label><br>
                 <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9]{1,}" title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... " required><br>

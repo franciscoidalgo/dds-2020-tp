@@ -47,7 +47,8 @@ const boton = {
     agregarCategoria: document.getElementById('agregar-categoria'),
     razonSocial: document.getElementById('nueva-razon-social'),
     vendedor: document.getElementById('nuevo-vendedor'),
-    nuevoItem: document.getElementById('nuevo-item')
+    nuevoItem: document.getElementById('nuevo-item'),
+    submit: document.getElementById('nuevo-item'),
 
 };
 
@@ -299,3 +300,69 @@ $(document).on("change", '#provincia', function(e){
         }
     })
 });
+//PARA PROVEEDOR
+
+/* SUBMIT */
+function obtenerProductosSeleccionados(){
+    let productos = document.getElementsByTagName("td")
+    let data = []
+    for(let i = 0 ; i < productos.length;i++){
+        var producto = productos[i].innerText;
+        if(producto !== ""){
+            data.push(productos)
+        }
+    }
+    return data;
+}
+
+function obtenerCategoriasSeleccionadas(){
+    let categorias = document.getElementsByClassName("categoria-seleccionada")
+    let data = []
+    for(let i = 0 ; i < categorias.length;i++){
+        data.push(categorias[i].firstChild.innerText)
+    }
+    return data;
+}
+
+boton.submit.onclick = () => {
+    var url = '/egreso';
+    var data = {
+        "egreso": {
+            "proveedor": {
+                "razonSocial": $("#razon-social").val(),
+                "cuit": $("#dni").val(),
+                "nombre": $("#vendedor").val(),
+                "pais": $("#pais").val(),
+                "provincia": $("#provincia").val(),
+                "ciudad": $("#ciudad").val(),
+                "calle": $("#calle").val(),
+                "altura": $("#altura").val(),
+                "piso": $("#piso").val(),
+                "dpto": $("#dpto").val()
+            },
+            "detalle": {
+                "items": obtenerProductosSeleccionados(),
+            },
+            "medioDePago": {
+                "moneda": $("#moneda").val(),
+                "costo": $("#costo").val(),
+                "comprobante": {
+                    "tipo": $("#tipo-comprobante").val(),
+                    "path": $("#comprobante").val()
+                }
+            },
+            "categorias": obtenerCategoriasSeleccionadas()
+        }
+    };
+
+    fetch(url, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers:{
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+
+}
