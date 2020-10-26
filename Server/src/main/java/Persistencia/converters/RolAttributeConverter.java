@@ -12,7 +12,7 @@ import javax.persistence.Converter;
 public class RolAttributeConverter implements AttributeConverter<Rol,Character> {
     @Override
     public Character convertToDatabaseColumn(Rol rol) {
-        return rol.getClass().getSimpleName().toLowerCase().charAt(0);
+        return rol instanceof RolAdministrador? 'a' : 'e';
     }
 
     @Override
