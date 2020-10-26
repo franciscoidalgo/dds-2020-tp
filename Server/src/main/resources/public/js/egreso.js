@@ -329,47 +329,6 @@ boton.submit.onclick = () => {
     var data = {
         "egreso": {
             "proveedor": {
-                "razonSocial": $("razon-social").value,
-                "cuit": $("dni").value,
-                "nombre": $("vendedor").value,
-                "pais": $("pais").value(),
-                "provincia": $("provincia").value(),
-                "ciudad": $("ciudad").value(),
-                "calle": $("calle").value(),
-                "altura": $("altura").value(),
-                "piso": $("piso").value(),
-                "dpto": $("dpto").value()
-            },
-            "detalle": {
-                "items": obtenerProductosSeleccionados(),
-            },
-            "medioDePago": {
-                "moneda": $("moneda").value,
-                "monto": $("monto").value,
-                "comprobante": {
-                    "tipo": $("tipo-comprobante").value,
-                    "path": $("comprobante").value
-                }
-            },
-            "categorias": obtenerCategoriasSeleccionadas()
-        }
-    };
-
-    fetch(url, {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(data), // data can be `string` or {object}!
-        headers:{
-            'Content-Type': 'application/json'
-        }
-    }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
-
-}
-document.getElementById("prueba").onclick = () => {
-    var data = {
-        "egreso": {
-            "proveedor": {
                 "razonSocial": $("#razon-social").val(),
                 "cuit": $("#dni").val(),
                 "nombre": $("#vendedor").val(),
@@ -395,5 +354,15 @@ document.getElementById("prueba").onclick = () => {
             "categorias": obtenerCategoriasSeleccionadas()
         }
     };
-    console.log(data);
+
+    fetch(url, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers:{
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+
 }

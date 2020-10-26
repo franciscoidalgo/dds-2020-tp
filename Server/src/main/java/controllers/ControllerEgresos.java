@@ -5,6 +5,7 @@ import APIMercadoLibre.modelos.Ciudad;
 import APIMercadoLibre.modelos.Provincia;
 import com.google.gson.Gson;
 import config.ConfiguracionMercadoLibre;
+import domain.Operacion.Egreso.OperacionEgreso;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -48,8 +49,12 @@ public class ControllerEgresos {
     }
 
     public String submitEgreso(Request request,Response response) throws IOException{
-        System.out.println(request.body());
-        System.out.println(response.body());
-        return "Peticion Joya";
+
+        Gson gson = new Gson();
+        String egreso = gson.toJson(request.body());
+
+        System.out.println(egreso);
+
+        return egreso;
     }
 }
