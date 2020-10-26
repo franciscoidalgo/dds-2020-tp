@@ -46,4 +46,10 @@ public class ControllerEgresos {
         response.type("application/json");
         return jCiudades;
     }
+
+    public String submitEgreso(Request request,Response response) throws IOException{
+        System.out.println(request.body());
+        System.out.println(response.body());
+        return "Peticion Joya";
+    }
 }

@@ -149,6 +149,9 @@ public class TestValidaciones {
         unEgreso.validaOperacion();
         Thread.sleep(5000);
 
-        Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),1);
+        System.out.println(unEstandar.getBandejaDeMensajes().mostraMensaje(0).getMensaje());
+        System.out.println(unEstandar.getBandejaDeMensajes().mostraMensaje(1).getMensaje());
+        Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),2);
+
     }
 }
