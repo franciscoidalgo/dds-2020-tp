@@ -150,6 +150,7 @@ public class TestValidaciones {
         Thread.sleep(5000);
 
         System.out.println(unEstandar.getBandejaDeMensajes().mostraMensaje(0).getMensaje());
+        System.out.println(unEstandar.getBandejaDeMensajes().mostraMensaje(1).getAsunto());
         System.out.println(unEstandar.getBandejaDeMensajes().mostraMensaje(1).getMensaje());
         Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),2);
 

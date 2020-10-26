@@ -25,7 +25,7 @@ public class NotificadorResultadoValidacion {
     }
 
     private String asuntoMensaje(OperacionEgreso unEgreso) {
-        return "domain.Operacion Egreso #" + unEgreso.getId();
+        return "Operacion Egreso #" + unEgreso.getId();
     }
 
     private String detalleResultado(ValidadorDeTransparencia validador,OperacionEgreso unEgreso) {
@@ -36,9 +36,10 @@ public class NotificadorResultadoValidacion {
     }
 
     private String cuerpoMensaje(ValidadorDeTransparencia validador,OperacionEgreso unEgreso) {
-        return validador.validaEgreso(unEgreso) ? "domain.Operacion Valida" : "domain.Operacion invalida"+//Titulo
-                "\n En detalle: \n"+
+        return validador.validaEgreso(unEgreso) ? "Operacion Valida" : "Operacion invalida"+//Titulo
+                "En detalle: "+
                 this.detalleResultado(validador,unEgreso);//Todos los detalles
+        /* TODO: HACER LA MAGIA ACA */
     }
 
 

@@ -49,12 +49,8 @@ public class ControllerEgresos {
     }
 
     public String submitEgreso(Request request,Response response) throws IOException{
+        System.out.println(request.body());
 
-        Gson gson = new Gson();
-        String egreso = gson.toJson(request.body());
-
-        System.out.println(egreso);
-
-        return egreso;
+        return request.body();
     }
 }

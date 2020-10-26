@@ -47,8 +47,7 @@ const boton = {
     agregarCategoria: document.getElementById('agregar-categoria'),
     razonSocial: document.getElementById('nueva-razon-social'),
     vendedor: document.getElementById('nuevo-vendedor'),
-    nuevoItem: document.getElementById('nuevo-item'),
-    submit: document.getElementById('nuevo-item'),
+    nuevoItem: document.getElementById('nuevo-item')
 
 };
 
@@ -273,7 +272,7 @@ $(document).on("change", '#pais', function(e){
                             .attr("value", "").text("-- Seleccione --"));
             $.each(json, function(index, item){
                 $listaProvincias.append($("<option></option>")
-                                .attr("value", item.id).text(item.name));
+                                .attr("value", item.name).text(item.name));
             })
         }
     })
@@ -295,7 +294,7 @@ $(document).on("change", '#provincia', function(e){
                             .attr("value", "").text("-- Seleccione --"));
             $.each(json, function(index, item){
                 $listaCiudades.append($("<option></option>")
-                                .attr("value", item.id).text(item.name));
+                                .attr("value", item.name).text(item.name));
             })
         }
     })
@@ -307,7 +306,7 @@ function obtenerProductosSeleccionados(){
     let productos = document.getElementsByTagName("td")
     let data = []
     for(let i = 0 ; i < productos.length;i++){
-        var producto = productos[i].innerText;
+        var producto = {"descripcion":productos[i].innerText};
         if(producto !== ""){
             data.push(productos)
         }
@@ -324,7 +323,7 @@ function obtenerCategoriasSeleccionadas(){
     return data;
 }
 
-boton.submit.onclick = () => {
+document.getElementById("operacion-egreso").onsubmit = (e) => {
     var url = '/egreso';
     var data = {
         "egreso": {
@@ -341,7 +340,7 @@ boton.submit.onclick = () => {
                 "dpto": $("#dpto").val()
             },
             "detalle": {
-                "items": obtenerProductosSeleccionados(),
+                "items": obtenerProductosSeleccionados()
             },
             "medioDePago": {
                 "moneda": $("#moneda").val(),
@@ -354,15 +353,12 @@ boton.submit.onclick = () => {
             "categorias": obtenerCategoriasSeleccionadas()
         }
     };
-
-    fetch(url, {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(data), // data can be `string` or {object}!
-        headers:{
-            'Content-Type': 'multipart/form-data'
-        }
-    }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
+    e.preventDefault();
+    $.ajax({
+        url : url,
+        dataType: 'json',
+        type: "POST",
+        data:JSON.stringify(data)
+    })
 
 }

@@ -24,4 +24,10 @@ public class ControllerIngreso {
 
         return gson.toJson(operacionIngresoResultante);
     }
+
+    public String submitIngreso(Request request,Response response) throws IOException{
+        System.out.println(request.body());
+
+        return request.body();
+    }
 }

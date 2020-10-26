@@ -35,6 +35,7 @@ document.getElementById("vincular-auto").onclick = ()=>{
     let modal = generaModalAlert("Realizar Vinculacion Automatica","No se vincularan los Egresos seleccionados manualmente, ¿esta seguro de continuar?")
     let botonera = generaBotonera();
     let boton = generaBoton("Cancelar",eventoCancelar);
+    let form = document.getElementById("operacion-egreso");
 
     //Agrego Boton a Botonera
     boton.className="btn btn-danger";
@@ -47,6 +48,7 @@ document.getElementById("vincular-auto").onclick = ()=>{
     //Agrego Boton a Modal
     modal.firstElementChild.appendChild(botonera);
     document.body.appendChild(modal);
+    form.onsubmit;
 }
 
 window.eventoVincular = () => {
@@ -77,8 +79,8 @@ function vincular (){
         ingreso: getIngreso(),
         listaEgresos: [],
     };
-    console.log(data);
-    fetch("/ingresoAsociado", {
+
+    fetch("/ingreso", {
         method: 'POST', // potencial 'POST'
         body: JSON.stringify(data),
         headers:{
@@ -87,4 +89,8 @@ function vincular (){
     }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => console.log('Success:', response));
+}
+document.getElementById("operacion-egreso").onsubmit = (e)=> {
+    e.preventDefault();
+    vincular();
 }

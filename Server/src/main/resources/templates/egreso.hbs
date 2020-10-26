@@ -48,7 +48,7 @@
         {{else}}
         <h1> Presupuesto </h1>
     {{/if}}
-    <form action="" method="post">
+    <form id="operacion-egreso" action="" method="post">
         <!-- Seccion Proveedor-->
         <div id="burbuja-proveedor" class="burbuja  d-flex jc-sb ai-center">
             <div class="d-flex jc-sb">
@@ -100,18 +100,10 @@
                 <label for="provincia">Provincia</label><br>
                 <select name="provincia" id="provincia" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
-                    {{#each provincias}}
-                        <option value={{nombre}}>{{nombre}}</option>
-                    {{/each}}
                 </select><br>
                 <label for="ciudad">Ciudad</label><br>
                 <select name="ciudad" id="ciudad" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
-                    {{#each provincias as |provincia| }}
-                        {{#each provincia.cities}}
-                            <option value={{nombre}}>{{nombre}}</option>
-                        {{/each}}
-                    {{/each}}
                 </select><br>
                 <label for="calle">Calle</label><br>
                 <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9]{1,}" title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... " required><br>

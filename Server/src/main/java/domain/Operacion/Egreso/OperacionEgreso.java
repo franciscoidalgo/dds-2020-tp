@@ -6,6 +6,10 @@ import domain.Operacion.Operacion;
 import domain.Entidad.Usuario.Mensaje;
 import domain.Entidad.Usuario.Usuario;
 import domain.Validadores.ValidadorDeTransparencia;
+import repositorios.Repositorio;
+import repositorios.RepositorioDeUsuarios;
+import repositorios.factories.FactoryRepo;
+import repositorios.factories.FactoryRepoUsuario;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -114,8 +118,12 @@ public class OperacionEgreso extends Operacion {
 
 
     public void notificaRevisores(Mensaje unMensaje) {
-        this.revisores.forEach(usuario ->
-                usuario.recibiMensaje(unMensaje));
+        RepositorioDeUsuarios repo = FactoryRepoUsuario.get();
+        this.revisores.forEach(usuario ->{
+            usuario.recibiMensaje(unMensaje);
+            repo.modificar(usuario);
+        });
+
     }
 
     public void validaOperacion() {
