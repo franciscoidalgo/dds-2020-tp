@@ -1,3 +1,4 @@
+import com.google.gson.Gson;
 import domain.Entidad.Empresa;
 import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
@@ -92,7 +93,7 @@ public class TestValidaciones {
 
     @Test
     public void testHayTresPresupuestosCargados(){
-
+        System.out.println(new Gson().toJson(unEgreso));
         Assert.assertEquals(unEgreso.getPresupuestos().size(),3);
     }
 

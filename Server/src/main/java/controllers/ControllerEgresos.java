@@ -6,6 +6,9 @@ import APIMercadoLibre.modelos.Provincia;
 import com.google.gson.Gson;
 import config.ConfiguracionMercadoLibre;
 import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Operacion;
+import repositorios.Repositorio;
+import repositorios.factories.FactoryRepo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -49,7 +52,12 @@ public class ControllerEgresos {
     }
 
     public String submitEgreso(Request request,Response response) throws IOException{
-        System.out.println(request.body());
+        Gson gson = new Gson();
+        Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
+        OperacionEgreso operacionEgreso = gson.fromJson(request.body(), OperacionEgreso.class);
+
+        System.out.println(gson.toJson(operacionEgreso));
+        //repoEgreso.agregar(operacionEgreso);
 
         return request.body();
     }
