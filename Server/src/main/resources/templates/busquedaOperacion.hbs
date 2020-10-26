@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="/img/gsicon.png"/>
+    <title>Bandeja de Mensajes</title>
+</head>
+
+<body>
+<header class="contenedor-barra d-flex jc-sb">
+    <!--Menu Hamb -->
+    <button id="btn-menu"><i class="fas fa-bars"></i></button>
+    <nav id="navbar" class="navbar">
+        <ul class="d-flex f-dir-col contenido-navbar">
+            <div class="d-flex jc-sb ">
+                <h2 class="txt-centrado">Menu</h2>
+                <button id="btn-close" class="btn-primario"><i class="fas fa-times"></i></button>
+            </div>
+            <li><a href="#"><i class="fas fa-user"></i>Panel Personal</a></li>
+            <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
+            <li><a href="egreso"><i class="fas fa-file-invoice"></i>Nuevo Egreso</a></li>
+            <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
+            <li><a href="#"><i class="fas fa-file-import"></i>Buscar Ingresos</a></li>
+            <li><a href="#"><i class="fas fa-file-export"></i>Buscar Egresos</a></li>
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+        </ul>
+    </nav>
+    <!--Logo -->
+    <div class="ai-center txt-centrado">
+        <a href="#">
+            <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
+        </a>
+    </div>
+</header>
+<!--Filtros de busqueda-->
+<section class="seccion">
+    <h1> Busqueda Operaciones </h1>
+    <div class="ai-center">
+        <label for="operacion">Operacion</label><br>
+        <select name="operacion" id="operacion" required>
+            <option value="" disabled selected>-- Seleccione --</option>
+            <option value="egreso">Egreso</option>
+            <option value="ingreso">Ingreso</option>
+        </select><br>
+        <hr>
+
+        <label for="criterio">Criterio</label><br>
+        <select name="criterio" id="criterio" required>
+            <option value="" disabled selected>-- Seleccione --</option>
+            <option value="0">Criterio 1</option>
+            <option value="1">Criterio 2</option>
+            <option value="2">Criterio 3</option>
+        </select><br>
+        <hr>
+        <label for="subcriterio">Subcriterio</label><br>
+        <select name="subcriterio" id="subcriterio" required>
+            <option value="" disabled selected>-- Seleccione --</option>
+            <option value="0">subcriterio 1</option>
+            <option value="1">subcriterio 2</option>
+            <option value="2">subcriterio 3</option>
+        </select><br>
+        <hr>
+        <div class="d-flex jc-sb">
+            <label><input type="checkbox" id="cat1" value="cat1"> cat1</label>
+            <label><input type="checkbox" id="cat2" value="cat2"> cat2</label>
+            <label><input type="checkbox" id="cat3" value="cat3"> cat3</label>
+            <label><input type="checkbox" id="cat4" value="cat4"> cat4</label>
+            <label><input type="checkbox" id="cat5" value="cat5"> cat5</label>
+            <label><input type="checkbox" id="cat6" value="cat6"> cat6</label>
+            <label><input type="checkbox" id="cat7" value="cat7"> cat7</label>
+        </div>
+    </div>
+    <hr>
+</section>
+<!--Mensajes-->
+<main class="seccion">
+    <!-- Nav paginas-->
+    <nav class="d-flex nav-tabla">
+        <p id="cant-paginas"></p>
+        <a id="anterior" href="#"><i class="far fa-arrow-alt-circle-left"></i></a>
+        <a id="siguiente" href="#"><i class="far fa-arrow-alt-circle-right"></i></a>
+    </nav>
+    <!-- Tabla -->
+    <table class="txt-centrado tabla tabla-bandeja">
+        <thead class="bg-primario fw-700 th-principal">
+        <tr>
+            <th>#ID</th>
+            <th>Razon Social</th>
+            <th>Proveedor</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+            <th>Resultado</th>
+        </tr>
+        </thead>
+        <tbody id="seccion-mensajes">
+        </tbody>
+    </table>
+    <hr>
+    <!--Mensaje En detalle-->
+    <article id="mensaje-detalle" class="seccion">
+    </article>
+</main>
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/bandejaMensaje.js"></script>
+<script type="module" src="js/categoria.js"></script>
+</body>
+
+</html>
