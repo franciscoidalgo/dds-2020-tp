@@ -66,7 +66,7 @@ window.eventoCancelar = () => {
 //Magia para vincular
 function getIngreso (){
     var data = {
-            "monto":$("#monto-total").val(),
+            "montoTotal":$("#monto-total").val(),
             "descripcion": $("#descripcion").val()
     };
     return data;
@@ -79,16 +79,16 @@ document.getElementById("agregar-egreso").onclick = () => {
 
 document.getElementById("operacion-ingreso").onsubmit = (e)=> {
     var url = "/ingresoAsociado"
-    var data= {
-        "ingreso": getIngreso(),
-        "listaEgresos": egresosSeleccionados
-    };
-
     e.preventDefault();
+
     $.ajax({
         url : url,
         dataType: 'json',
         type: "GET",
-        data:JSON.stringify(data)
+        data:{
+            "ingreso" : JSON.stringify(getIngreso()),
+            "listaEgresos" : JSON.stringify(egresosSeleccionados)
+        }
     })
+
 }

@@ -28,6 +28,8 @@ public class ControllerEgresos {
             InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
             parametros.put("paises", infoMercadoLibre.getListaDePaises());
         }
+        Repositorio<OperacionEgreso> repo = FactoryRepo.get(OperacionEgreso.class);
+        parametros.put("egresos", repo.buscarTodos());
 
         parametros.put("egreso", true);
         return new ModelAndView(parametros, "egreso.hbs");
