@@ -55,7 +55,7 @@ public class ControllerEgresos {
         Gson gson = new Gson();
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         OperacionEgreso operacionEgreso = gson.fromJson(request.body(), OperacionEgreso.class);
-
+        System.out.println(request.body());
         System.out.println(gson.toJson(operacionEgreso));
         //repoEgreso.agregar(operacionEgreso);
 
