@@ -19,7 +19,7 @@ function generaBotonera(){
     return botonera;
 }
 
-
+var egresosSeleccionados=[];
 
 /*Eventos!*/
 burbujas.forEach((b)=>{
@@ -66,31 +66,29 @@ window.eventoCancelar = () => {
 //Magia para vincular
 function getIngreso (){
     var data = {
-            "tipo": $("#tipo-ingreso").val(),
             "monto":$("#monto-total").val(),
-            "descripcion": $("#descripcion").value
-
+            "descripcion": $("#descripcion").val()
     };
     return data;
 }
+document.getElementById("agregar-egreso").onclick = () => {
+    var seleccionado = document.getElementById("egreso-seleccionado").value;
+    egresosSeleccionados.push({"id":seleccionado});
+    console.log(egresosSeleccionados);
+}
 
-function vincular (){
+document.getElementById("operacion-ingreso").onsubmit = (e)=> {
+    var url = "/ingresoAsociado"
     var data= {
-        ingreso: getIngreso(),
-        listaEgresos: [],
+        "ingreso": getIngreso(),
+        "listaEgresos": egresosSeleccionados
     };
 
-    fetch("/ingreso", {
-        method: 'POST', // potencial 'POST'
-        body: JSON.stringify(data),
-        headers:{
-            'Content-Type': "application/json; charset=utf-f"
-        }
-    }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
-}
-document.getElementById("operacion-egreso").onsubmit = (e)=> {
     e.preventDefault();
-    vincular();
+    $.ajax({
+        url : url,
+        dataType: 'json',
+        type: "GET",
+        data:JSON.stringify(data)
+    })
 }

@@ -85,7 +85,7 @@ public class Router {
 
         Spark.get("/api/usuario/:id", apiRest::mostrarUsuario);
 
-        Spark.post("/ingresoAsociado", controllerIngreso::getIngresoAsociado);
+        Spark.get("/ingresoAsociado", controllerIngreso::getIngresoAsociado);
 
         Spark.post("/ingreso", controllerIngreso::submitIngreso);
 

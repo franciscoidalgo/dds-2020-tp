@@ -80,53 +80,16 @@
             </div>
             <!-- Formulario Asociar Egreso-->
             <fieldset id="egreso" class="burbuja ">
-                <table class="txt-centrado tabla">
-                    <caption class="fw-700">Egresos Vinculados</caption>
-                    <thead class="bg-primario fw-700 th-principal">
-                    <tr>
-                        <th></th>
-                        <th>#ID</th>
-                        <th>Fecha</th>
-                        <th>Descripcion</th>
-                        <th>Monto total</th>
-                        <th> </th>
-                    </tr>
-                    </thead>
-                    <tbody class="tabla-detalle">
-                    <tr>
-                        <td><input type="checkbox" name="1" id="1"></td>
-                        <td>9989781</td>
-                        <td>12-12-2012</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                        <td>10000</td>
+                <label for="egreso-seleccionado">Egreso</label>
+                <select name="egreso-seleccionado" id="egreso-seleccionado" required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each egresos}}
+                    <option value = {{id}}> Egreso #{{id}} (proveedor: {{detalle.proveedor.nombre}}, fecha: {{fecha}}, monto: {{montoTotal}})</option>
+                    {{/each}}
 
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="2" id="2"></td>
-                        <td>9989781</td>
-                        <td>12-12-2012</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                        <td>10000</td>
+                </select>
 
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="3" id="3"></td>
-                        <td>9989781</td>
-                        <td>12-12-2012</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                        <td>10000</td>
-
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="4" id="4"></td>
-                        <td>9989781</td>
-                        <td>12-12-2012</td>
-                        <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </td>
-                        <td>10000</td>
-                    </tr>
-                    </tbody>
-
-                </table>
+                <input id="agregar-egreso" type="button" value="agregar" class="btn btn-primario">
                 <hr>
                 <input id="vincular-auto" type="button" value="Vincular Auto" class="btn btn-secundario float-r">
             </fieldset>
