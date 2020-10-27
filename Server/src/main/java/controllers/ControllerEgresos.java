@@ -5,19 +5,20 @@ import APIMercadoLibre.modelos.Ciudad;
 import APIMercadoLibre.modelos.Provincia;
 import com.google.gson.Gson;
 import config.ConfiguracionMercadoLibre;
+import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Operacion;
 import repositorios.Repositorio;
+import repositorios.RepositorioDeUsuarios;
 import repositorios.factories.FactoryRepo;
+import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControllerEgresos {
@@ -55,11 +56,14 @@ public class ControllerEgresos {
 
     public String submitEgreso(Request request,Response response) throws IOException{
         Gson gson = new Gson();
+        RepositorioDeUsuarios repo = FactoryRepoUsuario.get();
+        Usuario usuarioLogueado = repo.buscar(request.session().attribute("userId"));
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         OperacionEgreso operacionEgreso = gson.fromJson(request.body(), OperacionEgreso.class);
-        System.out.println(request.body());
-        System.out.println(gson.toJson(operacionEgreso));
-        //repoEgreso.agregar(operacionEgreso);
+        operacionEgreso.setFecha(LocalDate.now());
+        operacionEgreso.setRevisores(new ArrayList<>());
+        usuarioLogueado.darseDeAltaEn(operacionEgreso);
+        repoEgreso.agregar(operacionEgreso);
 
         return request.body();
     }

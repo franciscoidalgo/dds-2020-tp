@@ -17,9 +17,11 @@ public class TestAsociacion {
         OperacionIngreso operacionIngreso = new OperacionIngreso(2000, "Un re ingreso");
         OperacionEgreso egreso1 = new OperacionEgreso(null, new DetalleOperacion(new Proveedor("un re proveedor",null, 42042042, 1, null)),1000);
         OperacionEgreso egreso2 = new OperacionEgreso(null, new DetalleOperacion(new Proveedor("otro re proveedor",null, 43043043, 2, null)),1000);
+        OperacionEgreso egreso3 = new OperacionEgreso(null, new DetalleOperacion(new Proveedor("un re proveedoooooooooooooooooooooooooooooooor",null, 42042042, 1, null)),1000);
         egreso1.setFecha(LocalDate.of(2020,9,29));
-        egreso2.setFecha(LocalDate.of(2020,8,16));
-        OperacionEgreso[] arrayEgresos = new OperacionEgreso[]{egreso1, egreso2};
+        egreso2.setFecha(LocalDate.of(2020,8,23));
+        egreso3.setFecha(LocalDate.of(2020, 8, 24));
+        OperacionEgreso[] arrayEgresos = new OperacionEgreso[]{egreso1, egreso2, egreso3, egreso3};
 
 
 
