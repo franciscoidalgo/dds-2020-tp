@@ -306,9 +306,8 @@ function obtenerProductosSeleccionados(){
     let productos = document.getElementsByTagName("td")
     let data = []
     for(let i = 0 ; i < productos.length;i++){
-        var producto = {"descripcion":productos[i].innerText};
         if(producto !== ""){
-            data.push(productos)
+            data.push({"descripcion":productos[i].innerText});
         }
     }
     return data;
@@ -318,7 +317,7 @@ function obtenerCategoriasSeleccionadas(){
     let categorias = document.getElementsByClassName("categoria-seleccionada")
     let data = []
     for(let i = 0 ; i < categorias.length;i++){
-        data.push(categorias[i].firstChild.innerText)
+        data.push({"descripcion":categorias[i].firstChild.innerText})
     }
     return data;
 }
@@ -326,32 +325,38 @@ function obtenerCategoriasSeleccionadas(){
 document.getElementById("operacion-egreso").onsubmit = (e) => {
     var url = '/egreso';
     var data = {
-        "egreso": {
+        "detalle": {
+            "items": obtenerProductosSeleccionados(),
+            "categorias": obtenerCategoriasSeleccionadas(),
             "proveedor": {
+                "nombre": $("#proveedor").val(),
                 "razonSocial": $("#razon-social").val(),
-                "cuit": $("#dni").val(),
-                "nombre": $("#vendedor").val(),
+                "DNI": $("#dni").val(),
+                "CUIT": $("#dni").val(),
                 "pais": $("#pais").val(),
                 "provincia": $("#provincia").val(),
-                "ciudad": $("#ciudad").val(),
-                "calle": $("#calle").val(),
-                "altura": $("#altura").val(),
-                "piso": $("#piso").val(),
-                "dpto": $("#dpto").val()
+                "ciudad": $("#ciudad").val()
             },
-            "detalle": {
-                "items": obtenerProductosSeleccionados()
+       "comprobante":{
+            "tipoComprobante":{
+                "nombre":$("#tipo-comprobante").val(),
+                "descripcion":"soy un comprobante"
             },
-            "medioDePago": {
-                "moneda": $("#moneda").val(),
-                "costo": $("#costo").val(),
-                "comprobante": {
-                    "tipo": $("#tipo-comprobante").val(),
-                    "path": $("#comprobante").val()
-                }
-            },
-            "categorias": obtenerCategoriasSeleccionadas()
-        }
+            "path":$("#comprobante").val(),
+            }
+        },
+
+
+       "medioDePago":{
+            "nombre":$("#medio-de-pago").val(),
+            "moneda":$("#moneda").val()
+        },
+
+        "revisores": [],
+        "presupuestos": [],
+        "fecha": {},
+        "montoTotal": $("#costo").val()
+
     };
     e.preventDefault();
     $.ajax({
