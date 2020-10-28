@@ -63,30 +63,24 @@ window.eventoCancelar = () => {
     modal.remove();
 }
 
-//Magia para vincular
-function getIngreso (){
-    var data = {
-            "montoTotal":$("#monto-total").val(),
-            "descripcion": $("#descripcion").val()
-    };
-    return data;
-}
 document.getElementById("agregar-egreso").onclick = () => {
     var seleccionado = document.getElementById("egreso-seleccionado").value;
-    egresosSeleccionados.push({"id":seleccionado});
-    console.log(egresosSeleccionados);
+    if(seleccionado != ""){
+        egresosSeleccionados.push(seleccionado);
+    }
 }
 
 document.getElementById("operacion-ingreso").onsubmit = (e)=> {
-    var url = "/ingresoAsociado"
+    var url = "/ingreso"
     e.preventDefault();
 
     $.ajax({
         url : url,
         dataType: 'json',
-        type: "GET",
+        type: "POST",
         data:{
-            "ingreso" : JSON.stringify(getIngreso()),
+            "montoTotal" : $("#monto-total").val(),
+            "descripcion" : $("#descripcion").val(),
             "listaEgresos" : JSON.stringify(egresosSeleccionados)
         }
     })

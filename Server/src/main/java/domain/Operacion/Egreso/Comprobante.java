@@ -7,9 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "comprobante")
 public class Comprobante extends EntidadPersistente {
+    /*
     @Column(name = "nro_comprobante")
     private long nroComprobante;
-
+    */
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private TipoComprobante tipoComprobante;
 
@@ -17,8 +18,8 @@ public class Comprobante extends EntidadPersistente {
     private String path;
 
     //Constructor
-    public Comprobante(long nroComprobante, TipoComprobante tipoComprobante, String path) {
-        this.nroComprobante = nroComprobante;
+    public Comprobante(/*long nroComprobante,*/ TipoComprobante tipoComprobante, String path) {
+        //this.nroComprobante = nroComprobante;
         this.tipoComprobante = tipoComprobante;
         this.path = path;
     }
@@ -27,13 +28,14 @@ public class Comprobante extends EntidadPersistente {
 
 
     //Getter Setter
+    /*
     public long getNroComprobante() {
         return nroComprobante;
     }
     public void setNroComprobante(long nroComprobante) {
         this.nroComprobante = nroComprobante;
     }
-
+    */
     public TipoComprobante getTipoComprobante() {
         return tipoComprobante;
     }

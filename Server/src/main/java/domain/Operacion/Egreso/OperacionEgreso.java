@@ -33,6 +33,8 @@ public class OperacionEgreso extends Operacion {
     )
     private List<Usuario> revisores;
 
+    private boolean estaAsociado = false;
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
 
@@ -135,6 +137,10 @@ public class OperacionEgreso extends Operacion {
 
     private Boolean puedeAgregarPresupuesto() {
         return this.detalle.tieneItems();
+    }
+
+    public void marcateComoAsociado (){
+        this.estaAsociado = true;
     }
 
 }
