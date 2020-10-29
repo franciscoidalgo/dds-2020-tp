@@ -331,7 +331,6 @@ document.getElementById("operacion-egreso").onsubmit = (e) => {
     e.preventDefault();
     $.ajax({
         url : url,
-        dataType: 'json',
         type: "POST",
         data:{
             "items": JSON.stringify(obtenerProductosSeleccionados()),
@@ -378,6 +377,11 @@ window.cerrarModal = () => {
 }
 
 window.recargarPagina = () => {
-    window.location.reload();
+    window.location.reload(true);
 }
 
+function generaBotonera(){
+    let botonera = document.createElement("div");
+    botonera.className = "d-flex jc-se"
+    return botonera;
+}

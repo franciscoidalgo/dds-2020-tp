@@ -108,5 +108,5 @@ window.cerrarModal = () => {
 }
 
 window.recargarPagina = () => {
-    window.location.reload();
+    window.location.reload(true);
 }
