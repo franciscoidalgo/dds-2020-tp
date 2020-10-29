@@ -55,14 +55,14 @@ public class ControllerEgresos {
         return jCiudades;
     }
 
-    public Response submitEgreso(Request request,Response response) throws IOException{
+    public Response submitEgreso(Request request,Response response) {
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         RepositorioDeUsuarios repoUsuarios = FactoryRepoUsuario.get();
         Usuario usuarioLogueado = repoUsuarios.buscar(request.session().attribute("userId"));
         OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
         operacionEgreso.agregateRevisor(usuarioLogueado);
         repoEgreso.agregar(operacionEgreso);
-        response.redirect("/dashboard");
+        response.status(200);
 
         return response;
     }
