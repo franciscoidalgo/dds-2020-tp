@@ -39,10 +39,17 @@ public class OperacionIngreso extends Operacion {
     public void setEgresos(List<OperacionEgreso> egresos) { this.egresos = egresos; }
 
     //Funcionalidad
-    public void agregateEgreso(OperacionEgreso operacionEgreso){ this.egresos.add(operacionEgreso); }
+    public void agregateEgreso(OperacionEgreso operacionEgreso){
+        if(!this.egresos.contains(operacionEgreso)){
+            this.egresos.add(operacionEgreso);
+            operacionEgreso.marcateComoAsociado();
+        }
+    }
 
     public void agregarListaDeEgresos(List<OperacionEgreso> egresos){
-        this.egresos.addAll(egresos);
+        for(OperacionEgreso operacionEgreso : egresos){
+            agregateEgreso(operacionEgreso);
+        }
     }
 
     public double saldoOperacion(){

@@ -6,9 +6,7 @@ import domain.Operacion.Operacion;
 import domain.Entidad.Usuario.Mensaje;
 import domain.Entidad.Usuario.Usuario;
 import domain.Validadores.ValidadorDeTransparencia;
-import repositorios.Repositorio;
 import repositorios.RepositorioDeUsuarios;
-import repositorios.factories.FactoryRepo;
 import repositorios.factories.FactoryRepoUsuario;
 
 import javax.persistence.*;
@@ -32,6 +30,9 @@ public class OperacionEgreso extends Operacion {
             inverseJoinColumns = @JoinColumn(name = "operacion_egreso_id")
     )
     private List<Usuario> revisores;
+
+    @Column(name = "esta_asociado", columnDefinition = "CHAR")
+    private Boolean estaAsociado = false;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
@@ -135,6 +136,14 @@ public class OperacionEgreso extends Operacion {
 
     private Boolean puedeAgregarPresupuesto() {
         return this.detalle.tieneItems();
+    }
+
+    public void marcateComoAsociado (){
+        this.estaAsociado = true;
+    }
+
+    public Boolean estaAsociado (){
+        return this.estaAsociado;
     }
 
 }

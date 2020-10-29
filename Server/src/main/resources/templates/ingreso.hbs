@@ -63,7 +63,7 @@
                         </select>
                     </div>
                     <label for="monto-total">Monto Total</label><br>
-                    <input type="number" name="monto-total" id="monto-total" min="0" disabled placeholder="Ingrese monto total..." required><br>
+                    <input type="number" name="monto-total" id="monto-total" min="0" step="0.01" disabled placeholder="Ingrese monto total..." required><br>
                     <label for="descripcion">Descripcion</label><br>
                     <textarea name="descripcion" id="descripcion" disabled placeholder="Ingrese descripcion..." required></textarea>
                     <br>
@@ -83,6 +83,7 @@
                 <label for="egreso-seleccionado">Egreso</label>
                 <select name="egreso-seleccionado" id="egreso-seleccionado" required>
                     <option value="" disabled selected>-- Seleccione --</option>
+                    <option value="">Ninguno</option>
                     {{#each egresos}}
                     <option value = {{id}}> Egreso #{{id}} (proveedor: {{detalle.proveedor.nombre}}, fecha: {{fecha}}, monto: {{montoTotal}})</option>
                     {{/each}}

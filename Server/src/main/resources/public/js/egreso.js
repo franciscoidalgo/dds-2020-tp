@@ -9,6 +9,8 @@ import {
 import generaCategoria from './categoria.js';
 import generaTextbox from './textbox.js';
 import {Burbuja,  Desplegable} from "./burbuja.js";
+import {generaModalAlert,generaBoton} from "./modal.js"
+
 
 const burbujas = [
         new Burbuja('burbuja-proveedor','proveedor'),
@@ -306,8 +308,8 @@ function obtenerProductosSeleccionados(){
     let productos = document.getElementsByTagName("td")
     let data = []
     for(let i = 0 ; i < productos.length;i++){
-        if(producto !== ""){
-            data.push({"descripcion":productos[i].innerText});
+        if(productos[i].innerText !== ""){
+            data.push(productos[i].innerText);
         }
     }
     return data;
@@ -317,53 +319,65 @@ function obtenerCategoriasSeleccionadas(){
     let categorias = document.getElementsByClassName("categoria-seleccionada")
     let data = []
     for(let i = 0 ; i < categorias.length;i++){
-        data.push({"descripcion":categorias[i].firstChild.innerText})
+        if(categorias[i].firstChild.innerText !== ""){
+            data.push(categorias[i].firstChild.innerText)
+        }
     }
     return data;
 }
 
 document.getElementById("operacion-egreso").onsubmit = (e) => {
     var url = '/egreso';
-    var data = {
-        "detalle": {
-            "items": obtenerProductosSeleccionados(),
-            "categorias": obtenerCategoriasSeleccionadas(),
-            "proveedor": {
-                "nombre": $("#proveedor").val(),
-                "razonSocial": $("#razon-social").val(),
-                "DNI": $("#dni").val(),
-                "CUIT": $("#dni").val(),
-                "pais": $("#pais").val(),
-                "provincia": $("#provincia").val(),
-                "ciudad": $("#ciudad").val()
-            },
-       "comprobante":{
-            "tipoComprobante":{
-                "nombre":$("#tipo-comprobante").val(),
-                "descripcion":"soy un comprobante"
-            },
-            "path":$("#comprobante").val(),
-            }
-        },
-
-
-       "medioDePago":{
-            "nombre":$("#medio-de-pago").val(),
-            "moneda":$("#moneda").val()
-        },
-
-        "revisores": [],
-        "presupuestos": [],
-        "fecha": {},
-        "montoTotal": $("#costo").val()
-
-    };
     e.preventDefault();
     $.ajax({
         url : url,
         dataType: 'json',
         type: "POST",
-        data:JSON.stringify(data)
-    })
+        data:{
+            "items": JSON.stringify(obtenerProductosSeleccionados()),
+            "categorias": JSON.stringify(obtenerCategoriasSeleccionadas()),
+            "nombreProveedor": $("#vendedor").val(),
+            "razonSocial": $("#razon-social").val(),
+            "DNI": $("#dni").val(),
+            "pais": $("#pais").val(),
+            "provincia": $("#provincia").val(),
+            "ciudad": $("#ciudad").val(),
+            "calle": $("#calle").val(),
+            "altura": $("#altura").val(),
+            "piso": $("#piso").val(),
+            "dpto": $("#dpto").val(),
+            "tipoComprobante":$("#tipo-comprobante").val(),
+            "path":$("#comprobante").val(),
+            "medioDePago":$("#medio-de-pago").val(),
+            "moneda":$("#moneda").val(),
+            "montoTotal": $("#costo").val()
+        },
+        success: function(response){
+                    let modal = generaModalAlert("Operacion exitosa","El egreso se genero correctamente.");
+                    let botonera = generaBotonera();
+                    let boton = generaBoton("Ok",recargarPagina);
+                    botonera.appendChild(boton);
+                    modal.firstElementChild.appendChild(botonera);
+                    document.body.appendChild(modal);
+                },
+                error: function(){
+                    let modal = generaModalAlert("Error", "Hubo un error al generar el egreso.");
+                    let botonera = generaBotonera();
+                    let boton = generaBoton("Ok",cerrarModal);
+                    botonera.appendChild(boton);
+                    modal.firstElementChild.appendChild(botonera);
+                    document.body.appendChild(modal);
+                }
+    });
 
 }
+
+window.cerrarModal = () => {
+    let modal = document.querySelector(".modal");
+    modal.remove();
+}
+
+window.recargarPagina = () => {
+    window.location.reload();
+}
+

@@ -29,15 +29,19 @@ public class DireccionPostal extends EntidadPersistente {
     @Column(name = "piso")
     private String piso;
 
+    @Column(name = "dpto")
+    private String dpto;
+
 
     //Constructor
-    public DireccionPostal(String pais, String ciudad, String provincia, String calle, String altura, String piso) {
+    public DireccionPostal(String pais, String provincia, String ciudad, String calle, String altura, String piso, String dpto) {
         this.pais = pais;
         this.ciudad = ciudad;
         this.provincia = provincia;
         this.calle = calle;
         this.altura = altura;
         this.piso = piso;
+        this.dpto = dpto;
     }
 
     public DireccionPostal(){}

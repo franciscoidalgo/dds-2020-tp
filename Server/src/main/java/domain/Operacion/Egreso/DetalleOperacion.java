@@ -33,6 +33,13 @@ public class DetalleOperacion extends EntidadPersistente {
         this.comprobante = null;
     }
 
+    public DetalleOperacion(Proveedor proveedor, List<Item> items, List<CategoriaOperacion> categoriaOperaciones, Comprobante comprobante) {
+        this.items = items;
+        this.categorias = categoriaOperaciones;
+        this.proveedor = proveedor;
+        this.comprobante = comprobante;
+    }
+
     public DetalleOperacion() {
         this.items = new ArrayList<>();
         this.categorias = new ArrayList<>();
