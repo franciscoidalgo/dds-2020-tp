@@ -27,19 +27,23 @@ public class ControllerIngreso {
         return new ModelAndView(parametros, "ingreso.hbs");
     }
 
-    public Response submitIngreso(Request request,Response response){
+    public Response submitIngreso(Request request,Response response) throws Exception {
         Gson gson = new Gson();
         Repositorio<OperacionIngreso> operacionIngresoRepositorio = FactoryRepo.get(OperacionIngreso.class);
         Repositorio<OperacionEgreso> operacionEgresoRepositorio = FactoryRepo.get(OperacionEgreso.class);
-        List<Integer> idsEgresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), Integer[].class));
         OperacionIngreso operacionIngreso = new OperacionIngreso(Float.parseFloat(request.queryParams("montoTotal")), request.queryParams("descripcion"));
-        for(Integer id : idsEgresos){
-            OperacionEgreso aux = operacionEgresoRepositorio.buscar(id);
-            operacionIngreso.agregateEgreso(aux);
-            operacionEgresoRepositorio.modificar(aux);
+        try{
+            List<Integer> idsEgresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), Integer[].class));
+            for(Integer id : idsEgresos){
+                OperacionEgreso aux = operacionEgresoRepositorio.buscar(id);
+                operacionIngreso.agregateEgreso(aux);
+                operacionEgresoRepositorio.modificar(aux);
+            }
+        }catch(Exception e){
+            throw new Exception("No se asocio ningun egreso");
         }
         operacionIngresoRepositorio.agregar(operacionIngreso);
-        response.redirect("/dashboard");
+        response.status(200);
         return response;
     }
 }

@@ -1,6 +1,7 @@
 import {Burbuja,  Desplegable} from "./burbuja.js";
 import {generaModalAlert,generaBoton} from "./modal.js"
 
+
 const burbujas = [
     new Burbuja('burbuja-detalle','detalle-ingreso'),
     new Burbuja('burbuja-egreso','egreso')
@@ -75,13 +76,37 @@ document.getElementById("operacion-ingreso").onsubmit = (e)=> {
 
     $.ajax({
         url : "/ingreso",
-        dataType: 'json',
         type: "POST",
+        dataType: 'text',
         data:{
             "montoTotal" : $("#monto-total").val(),
             "descripcion" : $("#descripcion").val(),
             "listaEgresos" : JSON.stringify(egresosSeleccionados)
+        },
+        success: function(response){
+            let modal = generaModalAlert("Operacion exitosa","El ingreso se genero correctamente.");
+            let botonera = generaBotonera();
+            let boton = generaBoton("Ok",recargarPagina);
+            botonera.appendChild(boton);
+            modal.firstElementChild.appendChild(botonera);
+            document.body.appendChild(modal);
+        },
+        error: function(){
+            let modal = generaModalAlert("Error", "Hubo un error al generar el ingreso.");
+            let botonera = generaBotonera();
+            let boton = generaBoton("Ok",cerrarModal);
+            botonera.appendChild(boton);
+            modal.firstElementChild.appendChild(botonera);
+            document.body.appendChild(modal);
         }
     });
+}
 
+window.cerrarModal = () => {
+    let modal = document.querySelector(".modal");
+    modal.remove();
+}
+
+window.recargarPagina = () => {
+    window.location.reload();
 }

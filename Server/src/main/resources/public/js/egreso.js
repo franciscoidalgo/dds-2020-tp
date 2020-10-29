@@ -9,6 +9,8 @@ import {
 import generaCategoria from './categoria.js';
 import generaTextbox from './textbox.js';
 import {Burbuja,  Desplegable} from "./burbuja.js";
+import {generaModalAlert,generaBoton} from "./modal.js"
+
 
 const burbujas = [
         new Burbuja('burbuja-proveedor','proveedor'),
@@ -349,7 +351,33 @@ document.getElementById("operacion-egreso").onsubmit = (e) => {
             "medioDePago":$("#medio-de-pago").val(),
             "moneda":$("#moneda").val(),
             "montoTotal": $("#costo").val()
-        }
+        },
+        success: function(response){
+                    let modal = generaModalAlert("Operacion exitosa","El egreso se genero correctamente.");
+                    let botonera = generaBotonera();
+                    let boton = generaBoton("Ok",recargarPagina);
+                    botonera.appendChild(boton);
+                    modal.firstElementChild.appendChild(botonera);
+                    document.body.appendChild(modal);
+                },
+                error: function(){
+                    let modal = generaModalAlert("Error", "Hubo un error al generar el egreso.");
+                    let botonera = generaBotonera();
+                    let boton = generaBoton("Ok",cerrarModal);
+                    botonera.appendChild(boton);
+                    modal.firstElementChild.appendChild(botonera);
+                    document.body.appendChild(modal);
+                }
     });
 
 }
+
+window.cerrarModal = () => {
+    let modal = document.querySelector(".modal");
+    modal.remove();
+}
+
+window.recargarPagina = () => {
+    window.location.reload();
+}
+
