@@ -1,24 +1,4 @@
 import generaCategoria from './categoria.js';
-/* Genero mock de Jsons */
-function mockJson(cantMensajes) {
-    var data = [{"fechaEnvio":{"year":2020,"month":10,"day":28},"horaEnvio":{"hour":15,"minute":30,"second":8,"nano":0},"asunto":" {Egreso#0 Razon Social: Pedro S.A Proveedor: Pedro Monto: 1000.0 Fecha: 2020-10-28 Resultado: Operacion Valida","mensaje":"En detalle: Seleccion Presupuesto: Valida\nSolicitud Coinciden Con Presupuesto: Valida\nCantidad Presupuesto: Valida","id":4}];
-    return JSON.parse(data);
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
-function getRandomDate() {
-    const date = randomDate(new Date(2012, 0, 1), new Date());
-    return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
-}
-
-/*********************************************************************/
 
 var countRender = 0;
 var btnSiguiente = document.getElementById("siguiente");
@@ -28,19 +8,29 @@ var btnAnterior = document.getElementById("anterior");
 function buildFila(data) {
     const tbodyMensajes = document.getElementById("seccion-mensajes");
     let tr = document.createElement("tr");
+
     //Discriminador
     let asuntoSeparado = data.asunto.split("--")
+    let idEgreso = asuntoSeparado[0].slice(8);
+    let esValida = true;
 
     for(let i = 0; i <asuntoSeparado.length;i++){
         let asunto = asuntoSeparado[i].toLocaleLowerCase()
-        let esValida = "valida" === asuntoSeparado[i].toLocaleLowerCase()
+        esValida = "valida" === asuntoSeparado[i].toLocaleLowerCase()
         esValidacion(asunto)?
             setDataARow(tr, setIconoValidoSegun(esValida)):
             setDataARow(tr,asuntoSeparado[i]);
     }
 
     tr.className = "txt-left"
-    tr.onclick = () => { mostrarMensaje(data) };
+    tr.onclick = () => {
+        if(idEgreso!== ""){
+        getMensajeDesdeApi(idEgreso,esValida,data.mensaje)
+
+        }else{
+            //render mensajeComun
+        }
+    };
     tbodyMensajes.appendChild(tr);
     if(asuntoSeparado.length === 1){
         let mensajeGenerico = tr.firstChild;
@@ -71,45 +61,45 @@ function orderByID(a, b) {
     return a.egreso.id - b.egreso.id;
 }
 
-function buildTemplateMensaje(data) {
+function buildTemplateMensaje(egreso,esValida) {
     const contenedorHTML = document.getElementById("mensaje-detalle");
-    const egreso = data.egreso;
-    const proveedor = egreso.proveedor;
-    const medioDePago = egreso.medioDePago;
+    const proveedor = egreso.detalle.proveedor;
+    const direccion = proveedor.dirPostal;
+    //const medioDePago = egreso.medioDePago;
     const template = `
         <header>
             <div class="d-flex jc-sb ai-center fw-700">
                 <div class="tooltip">   
-                    <h2>Egreso #${egreso.id}${setIconoValidoSegun(data.resultadoValidacion)}</h2>
-                    <div id="mensaje-resultado" class="tooltiptext tooltiptext-${data.resultadoValidacion?"valida":"invalida"}">
+                    <h2>Egreso #${egreso.id}${setIconoValidoSegun(esValida)}</h2>
+                    <div id="mensaje-resultado" class="tooltiptext tooltiptext-${esValida?"valida":"invalida"}">
                     </div>
                 </div>
-                <p>Fecha: ${egreso.fecha}</p> 
+                <p>Fecha: ${egreso.fecha.day}-${egreso.fecha.month}-${egreso.fecha.year}</p> 
             </div>
             <div id='contenedor-categorias' class="d-flex contenedor-categorias">
             </div>
-        </header>  
+        </header> 
         <main>
             <section>
                 <h3>Informacion del Proveedor</h3>
                 <div class="d-flex jc-sb">  
                     <div>
-                        <p><span>CUIT/DNI:</span> ${proveedor.cuit}</p>
+                        <p><span>CUIT/DNI:</span> ${proveedor.CUIT}</p>
                         <p><span>Nombre vendedor:</span> ${proveedor.nombre}</p>
                         <p><span>Razon Social:</span> ${proveedor.razonSocial}</p>
                     </div>
                     <div>
-                        <p><span>Region:</span> ${proveedor.pais}, ${proveedor.provincia}, ${proveedor.ciudad}</p>
-                        <p><span>Direccion:</span> ${proveedor.calle} ${proveedor.altura}, ${proveedor.piso} ${proveedor.dpto}</p>
+                        <p><span>Region:</span> ${direccion.pais}, ${direccion.provincia}, ${direccion.ciudad}</p>
+                        <p><span>Direccion:</span> ${direccion.calle} ${direccion.altura}, ${direccion.piso} ${direccion.dpto}</p>
                     </div>
                 </div>
             </section>
             <section>
                 <h3>Detalle de la operacion</h3>
-                <p><span>Monto total:</span> ${medioDePago.moneda} $${medioDePago.monto}</p>
-                <p><span>Tipo comprobante:</span> ${medioDePago.comprobante.tipo}</p>
-                <p><span>Comprobante</span>: <a id="ver-comprobante" href=${medioDePago.comprobante.path} target="blank">ver comprobante</a></p>
-                <p><span>Cantidad Presupuestos: </span>${egreso.presupuestos.id.length}</p>
+                <p><span>Monto total:</span> ${/*medioDePago.moneda*/"Monto"} $${egreso.montoTotal}</p>
+                <p><span>Tipo comprobante:</span> ${/*medioDePago.comprobante.tipo*/"tipo comprobante"}</p>
+                <p><span>Comprobante</span>: <a id="ver-comprobante" href=${/*medioDePago.comprobante.path*/"tipo comprobante"} target="blank">ver comprobante</a></p>
+                <p><span>Cantidad Presupuestos: </span>${egreso.presupuestos.length}</p>
             </section>
             <table class="txt-centrado tabla">
                 <caption class="fw-700">Servicios/Productos</caption>
@@ -141,14 +131,15 @@ function buildTablaDetalle(vectorItems) {
     for (var i = 0; i < vectorItems.length; i++) {
         let tr = document.createElement("tr");
         let contenido = document.createElement("td");
-        contenido.innerHTML = vectorItems[i];
+        contenido.innerHTML = vectorItems[i].descripcion;
         tr.appendChild(contenido);
         contenedorHTML.appendChild(tr);
     }
 }
 
-function buildTooltip(vectorMsjResultado) {
+function buildTooltip(resultadoMensaje) {
     const contenedorHTML = document.getElementById("mensaje-resultado");
+    let vectorMsjResultado = resultadoMensaje.split("\n");
     contenedorHTML.scrollIntoView({ behavior: "smooth" });
     for (var i = 0; i < vectorMsjResultado.length; i++) {
         let contenido = document.createElement("p");
@@ -157,15 +148,15 @@ function buildTooltip(vectorMsjResultado) {
     }
 }
 
-function mostrarMensaje(data) {
-    const categorias = data.egreso.categorias;
-    const items = data.egreso.detalle.items;
-    const msjResultado = data.cuerpoMensaje;
+function mostrarMensaje(egreso,esValida,detalleValidacion) {
+    const detalle = egreso.detalle;
 
-    buildTemplateMensaje(data);
-    buildCategorias(categorias);
-    buildTablaDetalle(items);
-    buildTooltip(msjResultado);
+    //const msjResultado = data.cuerpoMensaje;
+
+    buildTemplateMensaje(egreso,esValida);
+    buildCategorias(detalle.categorias);
+    buildTablaDetalle(detalle.items);
+    buildTooltip(detalleValidacion);
 
 }
 
@@ -196,6 +187,24 @@ function setToStringCantPaginas(size) {
         `${1+countRender-10}-${countRender} de ${size}` : `${1+countRender-size%10}-${size} de ${countRender}`
 }
 /* Eventos */
+
+window.onload = () => {
+    //renderTabla(dataJson)
+    var url = "/getMensajes";
+    fetch(url)
+        .then(response => response.json())
+        .then(data => renderTabla(data))
+        .catch(reason => console.log(reason));
+};
+
+function getMensajeDesdeApi(id,esValida,detalleValidacion){
+    var url = "/api/get-egreso/"+id;
+    console.log(url);
+    fetch(url)
+        .then(response => response.json())
+        .then(data => mostrarMensaje(data,esValida,detalleValidacion))
+        .catch(reason => console.log(reason));
+}
 
 
 window.onload = () => {

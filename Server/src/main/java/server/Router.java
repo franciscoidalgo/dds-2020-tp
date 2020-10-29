@@ -79,6 +79,8 @@ public class Router {
 
         Spark.get("/api/get-lista-de-ciudades/:nombreProvincia", controllerEgresos::pasarCiudades);
 
+        Spark.get("/api/get-egreso/:id", apiRest::pasarEgresos);
+
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);

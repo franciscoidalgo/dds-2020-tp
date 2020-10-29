@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import domain.DireccionPostal.DireccionPostal;
 import domain.Entidad.Empresa;
 import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
@@ -26,7 +27,7 @@ public class TestValidaciones {
     private Proveedor   pedro;
     private Proveedor   pablo;
     private Proveedor   simon;
-
+    private DireccionPostal dir;
 
     private CriterioValidacionCantidadPresupuesto criterioCantPresupuesto;
     private CriterioValidacionDetalle criterioDetalle;
@@ -38,7 +39,8 @@ public class TestValidaciones {
     @Before
     public void setUp() throws Exception {
         /* Inicializo Proveedores */
-        pedro = new Proveedor("Pedro","Pedro S.A",99999999,999999999,null);
+        dir = new DireccionPostal("pais", "ciudad", "provincia", "calle","altura", "piso","dpto");
+        pedro = new Proveedor("Pedro","Pedro S.A",99999999,999999999,dir);
         pablo = new Proveedor("Pablo","Pablo Bros",88888888,888888888,null);
         simon = new Proveedor("Simon","Simon SRL",77777777,777777777,null);
 
