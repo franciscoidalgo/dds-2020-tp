@@ -71,11 +71,10 @@ document.getElementById("agregar-egreso").onclick = () => {
 }
 
 document.getElementById("operacion-ingreso").onsubmit = (e)=> {
-    var url = "/ingreso"
     e.preventDefault();
 
     $.ajax({
-        url : url,
+        url : "/ingreso",
         dataType: 'json',
         type: "POST",
         data:{
@@ -83,6 +82,6 @@ document.getElementById("operacion-ingreso").onsubmit = (e)=> {
             "descripcion" : $("#descripcion").val(),
             "listaEgresos" : JSON.stringify(egresosSeleccionados)
         }
-    })
+    });
 
 }

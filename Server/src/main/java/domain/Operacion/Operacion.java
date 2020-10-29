@@ -36,6 +36,10 @@ public abstract class Operacion extends EntidadPersistente {
         this.fecha = fecha;
     }
 
+    public double getMontoTotal(){
+        return montoTotal;
+    }
+
     //Funcionalidad
     protected abstract double montoTotal();
 }

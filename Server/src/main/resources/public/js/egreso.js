@@ -350,6 +350,6 @@ document.getElementById("operacion-egreso").onsubmit = (e) => {
             "moneda":$("#moneda").val(),
             "montoTotal": $("#costo").val()
         }
-    })
+    });
 
 }

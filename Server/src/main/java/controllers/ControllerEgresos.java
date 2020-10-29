@@ -62,6 +62,7 @@ public class ControllerEgresos {
         OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
         operacionEgreso.agregateRevisor(usuarioLogueado);
         repoEgreso.agregar(operacionEgreso);
+        response.redirect("/dashboard");
 
         return response;
     }

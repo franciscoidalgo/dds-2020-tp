@@ -109,7 +109,7 @@
                     <!--<option value="algo"  >algo</option>-->
                 </select><br>
                 <label for="calle">Calle</label><br>
-                <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9]{1,}" title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... " required><br>
+                <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9\s]{1,}" title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... " required><br>
                 <div class="d-flex jc-sb contenedor-limitado">
                     <div class="contenido-direccion">
                         <label for="altura">Altura</label><br>
@@ -166,7 +166,7 @@
                 <br>
 
                 <label for="costo">Costo Total</label><br>
-                <input type="number" name="costo" id="costo" min="0" placeholder="Ingrese costo total... " required><br>
+                <input type="number" name="costo" id="costo" min="0" step="0.01" placeholder="Ingrese costo total... " required><br>
 
             </div>
         </fieldset>

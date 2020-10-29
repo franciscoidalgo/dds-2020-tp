@@ -16,12 +16,14 @@ import spark.Response;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ControllerIngreso {
     public ModelAndView mostrarIngresos(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
         Repositorio<OperacionEgreso> repo = FactoryRepo.get(OperacionEgreso.class);
-        parametros.put("egresos", repo.buscarTodos());
+        List<OperacionEgreso> egresosSinVincular =  repo.buscarTodos().stream().filter(egreso -> !egreso.estaAsociado()).collect(Collectors.toList());
+        parametros.put("egresos", egresosSinVincular);
         return new ModelAndView(parametros, "ingreso.hbs");
     }
 
@@ -31,13 +33,13 @@ public class ControllerIngreso {
         Repositorio<OperacionEgreso> operacionEgresoRepositorio = FactoryRepo.get(OperacionEgreso.class);
         List<Integer> idsEgresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), Integer[].class));
         OperacionIngreso operacionIngreso = new OperacionIngreso(Float.parseFloat(request.queryParams("montoTotal")), request.queryParams("descripcion"));
-        OperacionEgreso aux;
         for(Integer id : idsEgresos){
-            aux = operacionEgresoRepositorio.buscar(id);
+            OperacionEgreso aux = operacionEgresoRepositorio.buscar(id);
             operacionIngreso.agregateEgreso(aux);
             operacionEgresoRepositorio.modificar(aux);
         }
         operacionIngresoRepositorio.agregar(operacionIngreso);
+        response.redirect("/dashboard");
         return response;
     }
 }
