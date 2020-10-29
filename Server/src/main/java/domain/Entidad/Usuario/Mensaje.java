@@ -1,6 +1,9 @@
 package domain.Entidad.Usuario;
 
 import domain.Entidad.EntidadPersistente;
+import domain.Operacion.Egreso.DetalleOperacion;
+import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Egreso.Proveedor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +41,15 @@ public class Mensaje extends EntidadPersistente {
         this.fechaLeido = null;
         this.horaLeido = null;
     }
+    public Mensaje( OperacionEgreso egreso,String resultadoValidacion,String detalleResultado) {
+        this.fechaEnvio = LocalDate.now();
+        this.horaEnvio = LocalTime.now();
+        this.fechaLeido = null;
+        this.horaLeido = null;
+
+        setSegunEgreso(egreso, resultadoValidacion,detalleResultado);
+
+    }
 
     public Mensaje() {}
 
@@ -64,4 +76,19 @@ public class Mensaje extends EntidadPersistente {
     public void actualizateLeido(){
         this.fechaLeido = LocalDate.now();
     }
+
+    public void setSegunEgreso(OperacionEgreso egreso,String resultadoValidacion,String detalleResultado){
+        DetalleOperacion detalle = egreso.getDetalle();
+        Proveedor proveedor = detalle.getProveedor();
+
+        this.asunto = " Egreso#"+ egreso.getId() +
+                      "--" + proveedor.getRazonSocial() +
+                      "--" + proveedor.getNombre() +
+                      "--$" + egreso.montoTotal() +
+                      "--" + egreso.getFecha().toString()+
+                      "--" + resultadoValidacion ;
+        this.mensaje = detalleResultado;
+    }
+
+
 }

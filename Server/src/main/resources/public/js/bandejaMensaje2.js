@@ -1,8 +1,58 @@
 import generaCategoria from './categoria.js';
 /* Genero mock de Jsons */
 function mockJson(cantMensajes) {
-    var data = [{"fechaEnvio":{"year":2020,"month":10,"day":28},"horaEnvio":{"hour":15,"minute":30,"second":8,"nano":0},"asunto":" {Egreso#0 Razon Social: Pedro S.A Proveedor: Pedro Monto: 1000.0 Fecha: 2020-10-28 Resultado: Operacion Valida","mensaje":"En detalle: Seleccion Presupuesto: Valida\nSolicitud Coinciden Con Presupuesto: Valida\nCantidad Presupuesto: Valida","id":4}];
-    return JSON.parse(data);
+    var data = [];
+    var object = {};
+    const proveedores = ["Pedro", "Juan", "Jose", "Simon", "Maria", "Flor", "Caro", "Fer"];
+    const moneda = ["US", "AR", "YU", "YE", "RU", "RE", "EU", "UR"];
+    const razonSocial = ["una SA", "una SRL", "una Organizacion"];
+    const tipoComprobante = ["Ticket", "Factura", "Recibo"];
+    const msjValido = ["Cantidad Presupuesto: Valida", "Solicitud Coinciden Con Presupuesto: Valida", "Seleccion Presupuesto: Valida"];
+    const msjInvalido = ["Cantidad Presupuesto: Invalida", "Solicitud Coinciden Con Presupuesto: Invalida", "Seleccion Presupuesto: Invalida"];
+
+    for (var i = 0; i < cantMensajes; i++) {
+        var resValidacion = getRandomInt(0, 2)
+        data.push({
+            "resultadoValidacion": resValidacion,
+            "cuerpoMensaje": resValidacion ? msjValido : msjInvalido,
+            "visto": getRandomInt(0, 2),
+            "egreso": {
+                "id": getRandomInt(0, 99999),
+                "fecha": getRandomDate(),
+                "proveedor": {
+                    "razonSocial": razonSocial[getRandomInt(0, razonSocial.length)],
+                    "cuit": "99-999999-9",
+                    "nombre": proveedores[getRandomInt(0, proveedores.length)],
+                    "pais": "Argentina",
+                    "provincia": "Buenos Aires",
+                    "ciudad": "San Fernando",
+                    "calle": "una calle",
+                    "altura": 1234,
+                    "piso": 1,
+                    "dpto": "b"
+                },
+                "detalle": {
+                    "items": ["producto", "producto", "producto", "producto", "producto", "producto"],
+
+                },
+                "medioDePago": {
+                    "moneda": moneda[getRandomInt(0, moneda.length)],
+                    "monto": getRandomInt(0, 99999),
+                    "comprobante": {
+                        "tipo": tipoComprobante[getRandomInt(0, tipoComprobante.length)],
+                        "path": "./zaraza/zaraza.jpg"
+                    }
+                },
+                "presupuestos": {
+                    "id": [1, 2, 3, 4]
+                },
+                "categorias": ["categoria", "categoria", "categoria", "categoria", "categoria", "categoria", "categoria", "categoria"]
+            }
+        });
+    }
+
+    object.data = data;
+    return JSON.stringify(object);
 }
 
 function getRandomInt(min, max) {
@@ -19,7 +69,7 @@ function getRandomDate() {
 }
 
 /*********************************************************************/
-
+const dataJson = JSON.parse(mockJson(45)); //Simulacion de la data que traeria en un AJAX
 var countRender = 0;
 var btnSiguiente = document.getElementById("siguiente");
 var btnAnterior = document.getElementById("anterior");
@@ -27,44 +77,34 @@ var btnAnterior = document.getElementById("anterior");
 /* Funciones */
 function buildFila(data) {
     const tbodyMensajes = document.getElementById("seccion-mensajes");
-    let tr = document.createElement("tr");
-    //Discriminador
-    let asuntoSeparado = data.asunto.split("--")
+    var tr = document.createElement("tr");
+    const egreso = data.egreso;
+    setDataARow(tr, egreso.id);
+    setDataARow(tr, egreso.proveedor.razonSocial);
+    setDataARow(tr, egreso.proveedor.nombre);
+    setDataARow(tr, `${egreso.medioDePago.moneda} $${egreso.medioDePago.monto}`);
+    setDataARow(tr, egreso.fecha);
+    setDataARow(tr, setIconoValidoSegun(data.resultadoValidacion));
 
-    for(let i = 0; i <asuntoSeparado.length;i++){
-        let asunto = asuntoSeparado[i].toLocaleLowerCase()
-        let esValida = "valida" === asuntoSeparado[i].toLocaleLowerCase()
-        esValidacion(asunto)?
-            setDataARow(tr, setIconoValidoSegun(esValida)):
-            setDataARow(tr,asuntoSeparado[i]);
+    if (!data.visto) {
+        tr.className += "fw-700"
     }
 
-    tr.className = "txt-left"
     tr.onclick = () => { mostrarMensaje(data) };
     tbodyMensajes.appendChild(tr);
-    if(asuntoSeparado.length === 1){
-        let mensajeGenerico = tr.firstChild;
-        mensajeGenerico.setAttribute("colspan","6");
-        mensajeGenerico.className = "txt-centrado";
-    }
-}
-function esValidacion (cadena){
-
-    return "valida" === cadena || "invalida" === cadena;
 }
 
+function setIconoValidoSegun(condicion) {
+    return condicion ?
+        '<i class="fas fa-check-circle valido"></i>' :
+        '<i class="fas fa-exclamation-circle invalido"></i>';
+}
 
 function setDataARow(tr, data) {
     var tdHTML = document.createElement("td");
 
     tdHTML.innerHTML = data;
     tr.appendChild(tdHTML);
-}
-
-function setIconoValidoSegun(cadena) {
-    return cadena ?
-        '<i class="fas fa-check-circle valido"></i>' :
-        '<i class="fas fa-exclamation-circle invalido"></i>';
 }
 
 function orderByID(a, b) {
@@ -171,6 +211,8 @@ function mostrarMensaje(data) {
 
 function renderTabla(data) {
     var paginaHTML = document.getElementById("cant-paginas");
+    var data = dataJson.data.sort(orderByID); //Ordenado por id
+
     cleanTabla();
 
     for (var i = countRender, j = 10; j > 0 && i < data.length; i++, j--) {
@@ -198,14 +240,7 @@ function setToStringCantPaginas(size) {
 /* Eventos */
 
 
-window.onload = () => {
-    //renderTabla(dataJson)
-    var url = "/getMensajes";
-    fetch(url)
-        .then(response => response.json())
-        .then(data => renderTabla(data))
-        .catch(reason => console.log(reason));
-};
+window.onload = () => renderTabla(dataJson);
 
 btnSiguiente.onclick = () => renderTabla(dataJson)
 

@@ -15,8 +15,8 @@ public class TareaValidacionEjemplo extends TimerTask {
             System.out.println("MyTimerTask se ejecutó a las " + new Date());
 
             if (validatePasswordLength.validatePassword("domain/Password"))
-                System.out.println("domain.Password special character... OK");
+                System.out.println("Password special character... OK");
             else
-                System.out.println("domain.Password special character... NOT OK");
+                System.out.println("Password special character... NOT OK");
         }
 }

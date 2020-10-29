@@ -6,6 +6,10 @@ import domain.Validadores.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import repositorios.Repositorio;
+import repositorios.RepositorioDeUsuarios;
+import repositorios.factories.FactoryRepo;
+import repositorios.factories.FactoryRepoUsuario;
 
 
 public class TestValidaciones {
@@ -145,10 +149,18 @@ public class TestValidaciones {
 
     @Test
     public void testUsuarioRecibeMensaje_CuandoSeDaDeAltaEnOperacion() throws InterruptedException {
-        Usuario unEstandar = new Usuario();
+        RepositorioDeUsuarios repoUsers = FactoryRepoUsuario.get();
+        Usuario unEstandar = repoUsers.buscar(1);
+
+        Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
+
+
         unEstandar.darseDeAltaEn(unEgreso);
+        repoEgreso.agregar(unEgreso);
         unEgreso.validaOperacion();
-        Thread.sleep(5000);
+
+
+        Thread.sleep(10000);
 
         System.out.println(unEstandar.getBandejaDeMensajes().mostraMensaje(0).getMensaje());
         System.out.println(unEstandar.getBandejaDeMensajes().mostraMensaje(1).getAsunto());
@@ -156,4 +168,7 @@ public class TestValidaciones {
         Assert.assertEquals(unEstandar.getBandejaDeMensajes().getMensajes().size(),2);
 
     }
+
+
+
 }

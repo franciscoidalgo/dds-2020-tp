@@ -21,13 +21,9 @@ public class NotificadorResultadoValidacion {
     }
 
     private Mensaje generaMensaje(ValidadorDeTransparencia validador, OperacionEgreso unEgreso) {
-       return new Mensaje(this.asuntoMensaje(unEgreso), this.cuerpoMensaje(validador,unEgreso));
+        String detalle = "En detalle: " + this.detalleResultado(validador,unEgreso);
+       return new Mensaje(unEgreso, this.cuerpoMensaje(validador,unEgreso),detalle);
     }
-
-    private String asuntoMensaje(OperacionEgreso unEgreso) {
-        return "Operacion Egreso #" + unEgreso.getId();
-    }
-
     private String detalleResultado(ValidadorDeTransparencia validador,OperacionEgreso unEgreso) {
         return validador.getCriteriosValidadores().stream().
                 map(criterioValidacion -> criterioValidacion.resultado(unEgreso))
@@ -36,10 +32,7 @@ public class NotificadorResultadoValidacion {
     }
 
     private String cuerpoMensaje(ValidadorDeTransparencia validador,OperacionEgreso unEgreso) {
-        return validador.validaEgreso(unEgreso) ? "Operacion Valida" : "Operacion invalida"+//Titulo
-                "En detalle: "+
-                this.detalleResultado(validador,unEgreso);//Todos los detalles
-        /* TODO: HACER LA MAGIA ACA */
+        return validador.validaEgreso(unEgreso) ? "Valida" : "invalida";
     }
 
 

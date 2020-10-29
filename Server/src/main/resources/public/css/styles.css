@@ -131,6 +131,10 @@ main {
     text-align: center;
 }
 
+.txt-left {
+    text-align:left;
+}
+
 .fw-400 {
     font-weight: 400;
 }
@@ -673,7 +677,7 @@ tr {
 .tabla-bandeja th,
 #seccion-mensajes td {
     border: solid #808080;
-    border-width: 0 0 1px 0;
+    border-width: 1px 0 1px 0;
     padding: 2rem;
 }
 
