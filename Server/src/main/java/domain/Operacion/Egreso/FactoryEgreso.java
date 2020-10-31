@@ -1,7 +1,6 @@
 package domain.Operacion.Egreso;
 
 import com.google.gson.Gson;
-import domain.DireccionPostal.DireccionPostal;
 import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
 import spark.Request;
 
@@ -17,19 +16,17 @@ public class FactoryEgreso {
         List<String> descripcionesItems = Arrays.asList(gson.fromJson(request.queryParams("items"), String[].class));
         List<String> descripcionesCategorias = Arrays.asList(gson.fromJson(request.queryParams("items"), String[].class));
         for(String descripcion : descripcionesItems){
-            items.add(new Item(descripcion));
+            items.add(new Item(descripcion,null, null));//todo hardcode
         }
         for(String descripcion : descripcionesCategorias){
             categorias.add(new CategoriaOperacion(descripcion));
         }
-        OperacionEgreso operacionEgreso = new OperacionEgreso(
-                new MedioDePago(request.queryParams("medioDePago"), request.queryParams("moneda")),
+        OperacionEgreso operacionEgreso = new OperacionEgreso(null,2000,null,null,null,null,null);
+                /*new MedioDePago(request.queryParams("medioDePago"), request.queryParams("moneda")),
                 new DetalleOperacion(
                         new Proveedor(
-                                request.queryParams("nombreProveedor"),
                                 request.queryParams("razonSocial"),
-                                new Integer(request.queryParams("DNI")),
-                                Long.parseLong(request.queryParams("DNI")),
+                                Long.parseLong(request.queryParams("CUIT")),
                                 new DireccionPostal(
                                         request.queryParams("pais"),
                                         request.queryParams("provincia"),
@@ -43,13 +40,16 @@ public class FactoryEgreso {
                         categorias,
                         new Comprobante()
                 ),
-                Double.parseDouble(request.queryParams("montoTotal"))
+                Double.parseDouble(request.queryParams("montoTotal")),
+                null
                 );
         if(request.queryParams("tipoComprobante").equals("Niguno")){
             operacionEgreso.getDetalle().getComprobante().setTipoComprobante(null);
         }else{
             operacionEgreso.getDetalle().getComprobante().setTipoComprobante(new TipoComprobante(request.queryParams("tipoComprobante"), null));
         }
+
+                 */
         return operacionEgreso;
 
     }

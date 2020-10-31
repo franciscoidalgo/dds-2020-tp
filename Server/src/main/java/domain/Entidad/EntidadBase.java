@@ -2,13 +2,14 @@ package domain.Entidad;
 
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.lang.annotation.Annotation;
 
 @Entity
-@Table(name = "entidad_base")
-public class EntidadBase extends EntidadPersistente implements Entidad {
+@DiscriminatorValue("base")
+public class EntidadBase extends Entidad {
     //Atributos
     @Column(name = "nombre")
     private String nombre;

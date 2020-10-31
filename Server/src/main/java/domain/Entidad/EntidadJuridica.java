@@ -10,10 +10,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-@Table(name = "entidad_juridica")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo")
-public abstract class EntidadJuridica extends EntidadPersistente  implements Entidad {
+@DiscriminatorValue("juridica")
+public abstract class EntidadJuridica extends Entidad {
 
     @Column(name = "razon_social")
     protected String razonSocial;
@@ -34,35 +32,19 @@ public abstract class EntidadJuridica extends EntidadPersistente  implements Ent
     @Column(name = "cod_igj")
     protected long codIGJ;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidad_juridica_id")
-    protected List<EntidadBase> entidadesBases;
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidad_juridica_id")
-    protected List<Operacion> operaciones;
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidad_juridica_id")
-    protected List<Criterio> criterios;
-
 
     public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ) {
+        super();
         this.razonSocial = razonSocial;
         this.nombre = nombre;
         this.CUIT = CUIT;
         this.descripcion = descripcion;
         this.direccionPostal = direccionPostal;
         this.codIGJ = codIGJ;
-        this.entidadesBases = new ArrayList<>();
-        this.operaciones = new ArrayList<>();
-        this.criterios = new ArrayList<>();
     }
 
     public EntidadJuridica() {
-        this.entidadesBases = new ArrayList<>();
-        this.operaciones = new ArrayList<>();
-        this.criterios = new ArrayList<>();
+        super();
     }
 
     public String getRazonSocial() {
@@ -111,47 +93,6 @@ public abstract class EntidadJuridica extends EntidadPersistente  implements Ent
 
     public void setCodIGJ(long codIGJ) {
         this.codIGJ = codIGJ;
-    }
-
-    public List<EntidadBase> getEntidadesBases() {
-        return entidadesBases;
-    }
-
-    public void setEntidadesBases(ArrayList<EntidadBase> entidadesBases) {
-        this.entidadesBases = entidadesBases;
-    }
-
-    public List<Operacion> getOperaciones() {
-        return operaciones;
-    }
-
-    public void setOperaciones(ArrayList<Operacion> operaciones) {
-        this.operaciones = operaciones;
-    }
-
-    public List<Criterio> getCriterios() {
-        return criterios;
-    }
-
-    public void setCriterios(ArrayList<Criterio> criterios) {
-        this.criterios = criterios;
-    }
-
-    //Funcionalidades!
-    public void realizaOperacion(Operacion unaOperacion) {
-        this.operaciones.add(unaOperacion);
-    }
-
-    public void agregaCriterio(Criterio unCriterio) {
-        this.criterios.add(unCriterio);
-    }
-
-    public List<CategoriaOperacion> mostraCategoriasDe(Criterio unCriterio){
-        return  unCriterio.getCategorias();
-    }
-
-    public boolean tieneEntidadBase(EntidadPersistente base) {
-        return this.entidadesBases.contains(base);
     }
 
 }

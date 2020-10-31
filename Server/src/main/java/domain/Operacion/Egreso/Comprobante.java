@@ -7,19 +7,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "comprobante")
 public class Comprobante extends EntidadPersistente {
-    /*
-    @Column(name = "nro_comprobante")
-    private long nroComprobante;
-    */
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "tipo_comprobante")
     private TipoComprobante tipoComprobante;
 
     @Column(name = "path")
     private String path;
 
     //Constructor
-    public Comprobante(/*long nroComprobante,*/ TipoComprobante tipoComprobante, String path) {
-        //this.nroComprobante = nroComprobante;
+    public Comprobante(TipoComprobante tipoComprobante, String path) {
+
         this.tipoComprobante = tipoComprobante;
         this.path = path;
     }
@@ -28,14 +26,7 @@ public class Comprobante extends EntidadPersistente {
 
 
     //Getter Setter
-    /*
-    public long getNroComprobante() {
-        return nroComprobante;
-    }
-    public void setNroComprobante(long nroComprobante) {
-        this.nroComprobante = nroComprobante;
-    }
-    */
+
     public TipoComprobante getTipoComprobante() {
         return tipoComprobante;
     }

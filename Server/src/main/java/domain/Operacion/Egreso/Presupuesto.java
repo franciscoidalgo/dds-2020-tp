@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Table(name = "presupuesto")
 public class Presupuesto extends EntidadPersistente {
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "detalle_id")
     private DetalleOperacion detalle;
 
     @Column(name = "monto_total")

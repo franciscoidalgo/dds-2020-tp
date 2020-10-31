@@ -24,7 +24,7 @@ public class DireccionPostal extends EntidadPersistente {
     private String calle;
 
     @Column(name = "altura")
-    private String altura;
+    private Integer altura;
 
     @Column(name = "piso")
     private String piso;
@@ -34,7 +34,7 @@ public class DireccionPostal extends EntidadPersistente {
 
 
     //Constructor
-    public DireccionPostal(String pais, String provincia, String ciudad, String calle, String altura, String piso, String dpto) {
+    public DireccionPostal(String pais, String ciudad, String provincia, String calle, Integer altura, String piso,String dpto) {
         this.pais = pais;
         this.ciudad = ciudad;
         this.provincia = provincia;
@@ -71,5 +71,35 @@ public class DireccionPostal extends EntidadPersistente {
         this.provincia = provincia;
     }
 
+    public String getCalle() {
+        return calle;
+    }
 
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public Integer getAltura() {
+        return altura;
+    }
+
+    public void setAltura(Integer altura) {
+        this.altura = altura;
+    }
+
+    public String getPiso() {
+        return piso;
+    }
+
+    public void setPiso(String piso) {
+        this.piso = piso;
+    }
+
+    public String getDpto() {
+        return dpto;
+    }
+
+    public void setDpto(String dpto) {
+        this.dpto = dpto;
+    }
 }

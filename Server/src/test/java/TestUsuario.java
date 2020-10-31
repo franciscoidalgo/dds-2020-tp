@@ -1,4 +1,4 @@
-
+/*
 import domain.Entidad.CategorizacionOperacion.Criterio;
 import domain.Entidad.Empresa;
 import domain.Entidad.EntidadJuridica;
@@ -113,3 +113,4 @@ public class TestUsuario {
     }
 
 }
+ */

@@ -22,12 +22,30 @@ function tieneSeleccionables(desplegable) {
     return desplegable.options.length > 1;
 }
 
-function agregaContenidoEnDesplegable(desplegable,contenido){
+function agregaContenidoEnDesplegable(desplegable,contenido,setSeleccion){
     let option = document.createElement("option");
     option.value=contenido;
     option.id=contenido;
     option.innerText=contenido;
     desplegable.appendChild(option);
+    option.selected = setSeleccion;
 }
 
-export { contenidoSeleccionadoEn, seleccionarValorPara, contenidoDesplegableEs, sacarDelDesplegableEscondiendo, tieneSeleccionables,agregaContenidoEnDesplegable };
+function cleanDesplegable(desplegable){
+    var options = desplegable.children;
+
+    for(let i=0; i<options.length;i++){
+        options[i].remove();
+    }
+    agregaContenidoEnDesplegable(desplegable,"",true);
+    options[0].disable=true;
+    options[0].innerText="-- Seleccione --";
+
+}
+export { contenidoSeleccionadoEn,
+    seleccionarValorPara,
+    contenidoDesplegableEs,
+    sacarDelDesplegableEscondiendo,
+    tieneSeleccionables,
+    agregaContenidoEnDesplegable,
+    cleanDesplegable };

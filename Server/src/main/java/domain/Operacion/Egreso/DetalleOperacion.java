@@ -11,37 +11,38 @@ import java.util.List;
 @Table(name = "detalle_operacion")
 public class DetalleOperacion extends EntidadPersistente {
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(name = "pedido")
-    private List<Item> items;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Pedido> pedidos;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(name = "asociacion_categoria")
     private List<CategoriaOperacion> categorias;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "comprobante_id")
     private Comprobante comprobante;
 
     //Constructors
     public DetalleOperacion(Proveedor proveedor) {
-        this.items = new ArrayList<>();
+        this.pedidos = new ArrayList<>();
         this.categorias = new ArrayList<>();
         this.proveedor = proveedor;
         this.comprobante = null;
     }
 
-    public DetalleOperacion(Proveedor proveedor, List<Item> items, List<CategoriaOperacion> categoriaOperaciones, Comprobante comprobante) {
-        this.items = items;
+    public DetalleOperacion(Proveedor proveedor, List<Pedido> items, List<CategoriaOperacion> categoriaOperaciones, Comprobante comprobante) {
+        this.pedidos = items;
         this.categorias = categoriaOperaciones;
         this.proveedor = proveedor;
         this.comprobante = comprobante;
     }
 
     public DetalleOperacion() {
-        this.items = new ArrayList<>();
+        this.pedidos = new ArrayList<>();
         this.categorias = new ArrayList<>();
 
     }
@@ -72,41 +73,49 @@ public class DetalleOperacion extends EntidadPersistente {
         this.comprobante = comprobante;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<CategoriaOperacion> getCategorias() {
+        return categorias;
+    }
+
+
     //Funcionalidad
 
     public Boolean tieneItems(){
-        return !this.items.isEmpty();
+        return !this.pedidos.isEmpty();
     }
 
     public Boolean coincidenPedido(DetalleOperacion unDetalle){
-        return unDetalle.getItems().stream().
-                map(this::tenesEnListaItem).
-                reduce(Boolean::logicalAnd).get();
+        return unDetalle.getPedidos().stream().
+                anyMatch(pedido -> pedido.coincidenPedidos(unDetalle.pedidos)) &&
+                          unDetalle.getPedidos().size() == this.getPedidos().size();
     }
 
     public Boolean coincidenProveedores(DetalleOperacion unDetalle){
         return this.proveedor == unDetalle.getProveedor();
     }
 
-    public void agregaItem(Item nuevoItem){
-        this.items.add(nuevoItem);
+    public void agregaPedido(Pedido nuevoItem){
+        this.pedidos.add(nuevoItem);
     }
 
-    public void removeItem(Item nuevoItem){
-        this.items.remove(nuevoItem);
+    public void removePedido(Pedido nuevoItem){
+        this.pedidos.remove(nuevoItem);
     }
 
     public void agregaCategoria(CategoriaOperacion unaCategoria){categorias.add(unaCategoria);}
 
     public void removeCategoria(CategoriaOperacion unaCategoria){categorias.remove(unaCategoria);}
 
-    private Boolean tenesEnListaItem(Item unItem) {
-        return this.getItems().stream().
-                anyMatch(item -> item.coincidenItems(unItem));
+    public Float calcularMontoTotal(){
+        return pedidos.stream().map(Pedido::precioTotal).reduce(Float::sum).get();
     }
-
 
 }

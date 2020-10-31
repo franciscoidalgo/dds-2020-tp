@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="shortcut icon" href="/img/gsicon.png"/>
-    <title>Bandeja de Mensajes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Busqueda</title>
 </head>
 
 <body>
@@ -33,82 +34,215 @@
     </nav>
     <!--Logo -->
     <div class="ai-center txt-centrado">
-        <a href="#">
+        <a href="dashboard">
             <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
         </a>
     </div>
 </header>
-<!--Filtros de busqueda-->
-<section class="seccion">
-    <h1> Busqueda Operaciones </h1>
-    <div class="ai-center">
-        <label for="operacion">Operacion</label><br>
-        <select name="operacion" id="operacion" required>
-            <option value="" disabled selected>-- Seleccione --</option>
-            <option value="egreso">Egreso</option>
-            <option value="ingreso">Ingreso</option>
-        </select><br>
-        <hr>
 
-        <label for="criterio">Criterio</label><br>
-        <select name="criterio" id="criterio" required>
-            <option value="" disabled selected>-- Seleccione --</option>
-            <option value="0">Criterio 1</option>
-            <option value="1">Criterio 2</option>
-            <option value="2">Criterio 3</option>
-        </select><br>
-        <hr>
-        <label for="subcriterio">Subcriterio</label><br>
-        <select name="subcriterio" id="subcriterio" required>
-            <option value="" disabled selected>-- Seleccione --</option>
-            <option value="0">subcriterio 1</option>
-            <option value="1">subcriterio 2</option>
-            <option value="2">subcriterio 3</option>
-        </select><br>
-        <hr>
-        <div class="d-flex jc-sb">
-            <label><input type="checkbox" id="cat1" value="cat1"> cat1</label>
-            <label><input type="checkbox" id="cat2" value="cat2"> cat2</label>
-            <label><input type="checkbox" id="cat3" value="cat3"> cat3</label>
-            <label><input type="checkbox" id="cat4" value="cat4"> cat4</label>
-            <label><input type="checkbox" id="cat5" value="cat5"> cat5</label>
-            <label><input type="checkbox" id="cat6" value="cat6"> cat6</label>
-            <label><input type="checkbox" id="cat7" value="cat7"> cat7</label>
-        </div>
-    </div>
-    <hr>
-</section>
-<!--Mensajes-->
 <main class="seccion">
-    <!-- Nav paginas-->
-    <nav class="d-flex nav-tabla">
-        <p id="cant-paginas"></p>
-        <a id="anterior" href="#"><i class="far fa-arrow-alt-circle-left"></i></a>
-        <a id="siguiente" href="#"><i class="far fa-arrow-alt-circle-right"></i></a>
-    </nav>
-    <!-- Tabla -->
-    <table class="txt-centrado tabla tabla-bandeja">
-        <thead class="bg-primario fw-700 th-principal">
-        <tr>
-            <th>#ID</th>
-            <th>Razon Social</th>
-            <th>Proveedor</th>
-            <th>Monto</th>
-            <th>Fecha</th>
-            <th>Resultado</th>
-        </tr>
-        </thead>
-        <tbody id="seccion-mensajes">
-        </tbody>
-    </table>
-    <hr>
-    <!--Mensaje En detalle-->
-    <article id="mensaje-detalle" class="seccion">
-    </article>
-</main>
-<script type="module" src="js/generales.js"></script>
-<script type="module" src="js/bandejaMensaje.js"></script>
-<script type="module" src="js/categoria.js"></script>
-</body>
+    <h1>Busqueda de Operacion</h1>
+    <!--Copiar aqui-->
+    <section class="burbuja">
+        <div>
+            <h4>Operacion</h4>
+            <label for="seleccion-operacion">Tipo de operacion </label><br>
+            <select name="seleccion-operacion" id="seleccion-operacion" required>
+                <option value="" disabled selected>-- Seleccione --</option>
+                <option value="egreso">Egreso</option>
+                <option value="ingreso">Ingreso</option>
+            </select>
+        </div>
+        <hr>
+        <div id="seccion-seleccion-criterio" hidden>
+            <h4>Criterios</h4>
+            <select name="criterio" id="criterio">
+                <option value="" disabled selected>-- Seleccione --</option>
+                <option value="">Economico</option>
+                <option value="">Proyecto</option>
+                <option value="">Alcance</option>
+            </select>
+            <br>
+        </div>
 
+        <div id="seccion-seleccion-categoria" hidden>
+            <h4>Seleccione Categorias</h4>
+
+            <!--Categorias seleccionadas-->
+            <div class="d-flex m-0 contenedor-categorias">
+                <div class="categoria fw-700">
+                    <p>Economico</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Ejecutivo</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Directivo</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Barrial</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Comercio</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Construccion</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Cooperativa &quot;Somos una cooperativa &quot;</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Social</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Simple</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>Internacional</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>unaCategoria</p>
+                </div>
+                <div class="categoria fw-700">
+                    <p>unaCategoria</p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <h4>Categorias Seleccionadas</h4>
+            <!--Categorias seleccionadas-->
+            <div class="d-flex m-0 contenedor-categorias">
+                <div class="categoria-seleccionada fw-700">
+                    <p>Economico</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Ejecutivo</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Directivo</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Barrial</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Comercio</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Construccion</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Cooperativa &quot;Somos una cooperativa &quot;</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Social</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Simple</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>Internacional</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>unaCategoria</p>
+                </div>
+                <div class="categoria-seleccionada fw-700">
+                    <p>unaCategoria</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <table class="txt-centrado tabla">
+            <thead class="bg-primario fw-700 th-principal">
+            <tr>
+                <th>#ID</th>
+                <th>Generado Por</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+            </tr>
+            </thead>
+            <tbody class="tabla-detalle">
+            <tr>
+                <td>9989781</td>
+                <td>Fernando</td>
+                <td>12-12-2012</td>
+                <td>9999999</td>
+            </tr>
+            <tr>
+                <td>9989781</td>
+                <td>Fernando</td>
+                <td>12-12-2012</td>
+                <td>9999999</td>
+            </tr>
+            <tr>
+                <td>9989781</td>
+                <td>Fernando</td>
+                <td>12-12-2012</td>
+                <td>9999999</td>
+            </tr>
+            <tr>
+                <td>9989781</td>
+                <td>Fernando</td>
+                <td>12-12-2012</td>
+                <td>9999999</td>
+            </tr>
+            <tr>
+                <td>9989781</td>
+                <td>Fernando</td>
+                <td>12-12-2012</td>
+                <td>9999999</td>
+            </tr>
+            <tr>
+                <td>9989781</td>
+                <td>Fernando</td>
+                <td>12-12-2012</td>
+                <td>9999999</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!--Copiar aqui-->
+        <hr>
+        <article id="egreso" class="seccion">
+            <header>
+                <h3>Egreso #12457</h3>
+            </header>
+
+            <div class="seccion">
+                <section class="d-flex jc-sb">
+                    <p>Generado Por: Fernando</p>
+                    <p>Fecha: 99/99/9999</p>
+                </section>
+                <section class="d-flex jc-sb">
+                    <p>Monto total:5000</p>
+                    <p>Comprobante: Ticket</p>
+                </section>
+            </div>
+
+
+            <table class="txt-centrado tabla">
+                <caption class="fw-700">Servicios/Productos</caption>
+                <thead class="bg-primario fw-700 th-principal">
+                <tr>
+                    <th>Descripcion</th>
+                </tr>
+                </thead>
+                <tbody class="tabla-detalle">
+                <tr>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+</body>
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/busquedaOperacion.js"></script>
 </html>

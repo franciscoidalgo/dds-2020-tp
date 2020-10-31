@@ -3,27 +3,13 @@ package server;
 import APIMercadoLibre.InfoMercadoLibre;
 import config.ConfiguracionMercadoLibre;
 import controllers.*;
-import domain.Entidad.Usuario.RolAdministrador;
-import domain.Entidad.Usuario.Usuario;
-import domain.Operacion.Egreso.*;
-import domain.Validadores.CriterioValidacionCantidadPresupuesto;
-import domain.Validadores.CriterioValidacionDetalle;
-import domain.Validadores.CriterioValidacionSeleccion;
 import domain.Validadores.ValidadorDeTransparencia;
 import middleware.AuthMiddleware;
 import middleware.sessionManager.SessionManageSessionAttribute;
-import repositorios.Repositorio;
-import repositorios.RepositorioDeUsuarios;
-import repositorios.factories.FactoryRepo;
-import repositorios.factories.FactoryRepoUsuario;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.CustomHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Router {
     private static HandlebarsTemplateEngine engine;
@@ -49,6 +35,7 @@ public class Router {
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
         ControllerIngreso controllerIngreso = new ControllerIngreso();
         ControllerMensajes controllerMensajes = new ControllerMensajes();
+        ControllerBusquedaOperacion controllerBusquedaOperacion = new ControllerBusquedaOperacion();
         ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
 
         ApiRest apiRest = new ApiRest();
@@ -81,6 +68,10 @@ public class Router {
 
         Spark.get("/api/get-egreso/:id", apiRest::pasarEgresos);
 
+        Spark.get("/api/get-proveedor/:id", apiRest::mostrarProveedores);
+
+        Spark.get("/api/get-item-segun-tipo/:id", apiRest::mostraItemsSegunTipo);
+
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
@@ -92,6 +83,8 @@ public class Router {
         Spark.get("/mensajes", controllerMensajes::mostrarMensajes, Router.engine);
 
         Spark.get("/getMensajes", apiRest::mostrarMensajes);
+
+        Spark.get("/busquedaOperacion", controllerBusquedaOperacion::mostrarBusquedaOperacion,Router.engine);
 
 
     }

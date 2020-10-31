@@ -17,13 +17,13 @@ public class TestUsuariosEnMemoria {
         Usuario test1 = new Usuario("Francisco Idalgo",
                 "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
                 new RolAdministrador(),
-                new OrganizacionSocial("x", "x", 123, "x", new DireccionPostal(), 123));
+                null);//new OrganizacionSocial("x", "x", 123, "x", new DireccionPostal(), 123));
         test1.setId(1);
         //aguanteelgrupo9
         Usuario test2 = new Usuario("El Admin",
                 "828b26c012c8a52b19bddbbb55b1048458031f2a165d4bab72312c22532a19b9",
                 new RolAdministrador(),
-                new OrganizacionSocial("x", "x", 123, "x", new DireccionPostal(), 123));
+                null);//new OrganizacionSocial("x", "x", 123, "x", new DireccionPostal(), 123));
         test2.setId(2);
 
         listaDeUsuarios.add(test1);

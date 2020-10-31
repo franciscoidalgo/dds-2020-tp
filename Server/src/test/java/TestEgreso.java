@@ -1,8 +1,4 @@
-import APIMercadoLibre.InfoMercadoLibre;
-import domain.Operacion.Egreso.DetalleOperacion;
-import domain.Operacion.Egreso.Item;
-import domain.Operacion.Egreso.OperacionEgreso;
-import domain.Operacion.Egreso.Presupuesto;
+import domain.Operacion.Egreso.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +28,7 @@ public class TestEgreso {
         unEgreso = new OperacionEgreso();
         unEgreso.setMontoTotal(1500);
         detalleOperacion = new DetalleOperacion();
-        detalleOperacion.agregaItem(new Item("lapicera"));
+        detalleOperacion.agregaPedido(new Pedido(new Item("lapicera",new TipoDeItem("Producto"), (float) 20.50),100));
         unEgreso.setDetalle(detalleOperacion);
     }
 

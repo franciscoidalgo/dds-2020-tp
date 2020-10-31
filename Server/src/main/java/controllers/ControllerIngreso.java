@@ -31,12 +31,13 @@ public class ControllerIngreso {
         Gson gson = new Gson();
         Repositorio<OperacionIngreso> operacionIngresoRepositorio = FactoryRepo.get(OperacionIngreso.class);
         Repositorio<OperacionEgreso> operacionEgresoRepositorio = FactoryRepo.get(OperacionEgreso.class);
-        OperacionIngreso operacionIngreso = new OperacionIngreso(Float.parseFloat(request.queryParams("montoTotal")), request.queryParams("descripcion"));
+        OperacionIngreso operacionIngreso = new OperacionIngreso(null,Float.parseFloat(request.queryParams("montoTotal")),null,request.queryParams("descripcion"),null);
         try{
             List<Integer> idsEgresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), Integer[].class));
             for(Integer id : idsEgresos){
                 OperacionEgreso aux = operacionEgresoRepositorio.buscar(id);
-                operacionIngreso.agregateEgreso(aux);
+                aux.setIngreso(operacionIngreso);
+                //operacionIngreso.agregateEgreso(aux);
                 operacionEgresoRepositorio.modificar(aux);
             }
         }catch(Exception e){

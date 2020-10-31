@@ -2,6 +2,8 @@
 package domain.Operacion.Egreso;
 
 
+import domain.Entidad.EntidadJuridica;
+import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Operacion;
 import domain.Entidad.Usuario.Mensaje;
 import domain.Entidad.Usuario.Usuario;
@@ -10,6 +12,7 @@ import repositorios.RepositorioDeUsuarios;
 import repositorios.factories.FactoryRepoUsuario;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +21,12 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
 public class OperacionEgreso extends Operacion {
     //Atributos
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "detalle_id")
     private DetalleOperacion detalle;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "medio_de_pago_id")
     private MedioDePago medioDePago;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -34,18 +39,38 @@ public class OperacionEgreso extends Operacion {
     @Column(name = "esta_asociado", columnDefinition = "CHAR")
     private Boolean estaAsociado = false;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany( cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
 
-    //Constructor
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private OperacionIngreso ingreso;
 
-    public OperacionEgreso(MedioDePago medioDePago, DetalleOperacion detalle, double montoTotal) {
-        super(montoTotal);
-        this.medioDePago = medioDePago;
+    public OperacionEgreso(LocalDate fecha, double montoTotal, EntidadJuridica entidadJuridica, DetalleOperacion detalle, MedioDePago medioDePago, OperacionIngreso ingreso, Integer cantPresupuestos) {
+        super(fecha, montoTotal, entidadJuridica);
         this.detalle = detalle;
+        this.medioDePago = medioDePago;
         this.revisores = new ArrayList<>();
+        this.estaAsociado = false;
         this.presupuestos = new ArrayList<>();
+        this.ingreso = ingreso;
+        this.cantPresupuestos = cantPresupuestos;
+    }
 
+    @Column(name = "cant_presupuestos")
+    private Integer cantPresupuestos;
+
+
+
+
+    //Constructor
+    public OperacionEgreso(DetalleOperacion detalle, MedioDePago medioDePago, OperacionIngreso ingreso, Integer cantPresupuestos) {
+        this.detalle = detalle;
+        this.medioDePago = medioDePago;
+        this.revisores = new ArrayList<>();
+        this.estaAsociado = false;
+        this.presupuestos = new ArrayList<>();
+        this.ingreso = ingreso;
+        this.cantPresupuestos = cantPresupuestos;
     }
 
     public OperacionEgreso() {
@@ -55,6 +80,13 @@ public class OperacionEgreso extends Operacion {
     }
     //Getter Setter
 
+    public Integer getCantPresupuestos() {
+        return cantPresupuestos;
+    }
+
+    public void setCantPresupuestos(Integer cantPresupuestos) {
+        this.cantPresupuestos = cantPresupuestos;
+    }
     public MedioDePago getMedioDePago() {
         return medioDePago;
     }
@@ -90,10 +122,32 @@ public class OperacionEgreso extends Operacion {
     public void setMontoTotal(double monto){
         this.montoTotal = monto;
     }
+
+    public Boolean getEstaAsociado() {
+        return estaAsociado;
+    }
+
+    public void setEstaAsociado(Boolean estaAsociado) {
+        this.estaAsociado = estaAsociado;
+    }
+
+    public void setPresupuestos(List<Presupuesto> presupuestos) {
+        this.presupuestos = presupuestos;
+    }
+
+    public OperacionIngreso getIngreso() {
+        return ingreso;
+    }
+
+    public void setIngreso(OperacionIngreso ingreso) {
+        this.ingreso = ingreso;
+    }
+
     /*Funcionales*/
     @Override
     public double montoTotal() {
-        return this.montoTotal;
+
+        return this.detalle.calcularMontoTotal();
     }
 
     public void agregaPresupuesto(Presupuesto unPresupuesto) throws Exception {

@@ -12,8 +12,15 @@ import javax.persistence.*;
 @Table(name = "usuario")
 public class Usuario extends EntidadPersistente {
     //Atributo
+
+    @Column(name = "apellido")
+    private String apellido;
+
     @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -22,14 +29,12 @@ public class Usuario extends EntidadPersistente {
     private Rol rol;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private EntidadJuridica entidadPertenece;
-
-    @Transient
-    private Entidad entidadSeleccionada;
+    private Entidad entidadPertenece;
 
     @Embedded
     private BandejaMensaje bandejaDeMensajes;
 
+    //Constructors
     public Usuario (){
         this.bandejaDeMensajes = new BandejaMensaje();
     }
@@ -41,15 +46,23 @@ public class Usuario extends EntidadPersistente {
         this.bandejaDeMensajes = new BandejaMensaje();
     }
 
-    public Usuario(String nombre, String password, Rol rol, EntidadJuridica entidadPertenece) {
+    public Usuario(String nombre, String password, Rol rol, Entidad entidadPertenece) {
         this.nombre = nombre;
         this.password = password;
         this.rol = rol;
         this.entidadPertenece = entidadPertenece;
-        this.entidadSeleccionada = entidadPertenece;
         this.bandejaDeMensajes = new BandejaMensaje();
     }
 
+    public Usuario(String apellido, String nombre, String username, String password, Rol rol, Entidad entidadPertenece, BandejaMensaje bandejaDeMensajes) {
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+        this.entidadPertenece = entidadPertenece;
+        this.bandejaDeMensajes = bandejaDeMensajes;
+    }
 //Getters-Setters
 
     public String getNombre() {
@@ -76,22 +89,6 @@ public class Usuario extends EntidadPersistente {
         this.rol = rol;
     }
 
-    public EntidadJuridica getEntidadPertenece() {
-        return entidadPertenece;
-    }
-
-    public void setEntidadPertenece(EntidadJuridica entidadPertenece) {
-        this.entidadPertenece = entidadPertenece;
-    }
-
-    public Entidad getEntidadSeleccionada() {
-        return entidadSeleccionada;
-    }
-
-    public void setEntidadSeleccionada(Entidad entidadSeleccionada) {
-        this.entidadSeleccionada = entidadSeleccionada;
-    }
-
     public BandejaMensaje getBandejaDeMensajes() {
         return bandejaDeMensajes;
     }
@@ -100,11 +97,30 @@ public class Usuario extends EntidadPersistente {
         this.bandejaDeMensajes = bandejaDeMensajes;
     }
 
-    //Funcionalidades
-
-    public  void asociaEgresoAIngreso(OperacionEgreso unEgreso, OperacionIngreso unIngreso){
-        unIngreso.agregateEgreso(unEgreso);
+    public String getApellido() {
+        return apellido;
     }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Entidad getEntidadPertenece() {
+        return entidadPertenece;
+    }
+
+    public void setEntidadPertenece(Entidad entidadPertenece) {
+        this.entidadPertenece = entidadPertenece;
+    }
+    //Funcionalidades
 
     public void darseDeAltaEn(OperacionEgreso unEgreso){
         unEgreso.agregateRevisor(this);
@@ -112,10 +128,6 @@ public class Usuario extends EntidadPersistente {
 
     public void darseDeBajaEn(OperacionEgreso unEgreso){
         unEgreso.sacaRevisor(this);
-    }
-
-    public void entidadSeleccionada(EntidadJuridica seleccionada){
-        this.entidadSeleccionada = seleccionada;
     }
 
     public void recibiMensaje(Mensaje unMensaje){

@@ -1,16 +1,13 @@
 package domain.Validadores;
 
-import config.ConfiguracionValidador;
 import domain.Operacion.Egreso.OperacionEgreso;
 
 public class CriterioValidacionCantidadPresupuesto implements CriterioValidacion {
-    private final int limitePresupuestos = ConfiguracionValidador.cantPresupuestos;
-
 
 
     @Override
     public Boolean validaEgreso(OperacionEgreso unEgreso) {
-        return this.limitePresupuestos == unEgreso.getPresupuestos().size();
+        return unEgreso.getCantPresupuestos() == unEgreso.getPresupuestos().size();
     }
 
     @Override

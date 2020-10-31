@@ -1,6 +1,5 @@
 import com.google.gson.Gson;
 import domain.DireccionPostal.DireccionPostal;
-import domain.Entidad.Empresa;
 import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
 import domain.Validadores.*;
@@ -39,10 +38,10 @@ public class TestValidaciones {
     @Before
     public void setUp() throws Exception {
         /* Inicializo Proveedores */
-        dir = new DireccionPostal("pais", "ciudad", "provincia", "calle","altura", "piso","dpto");
-        pedro = new Proveedor("Pedro","Pedro S.A",99999999,999999999,dir);
-        pablo = new Proveedor("Pablo","Pablo Bros",88888888,888888888,null);
-        simon = new Proveedor("Simon","Simon SRL",77777777,777777777,null);
+        dir = new DireccionPostal("pais", "ciudad", "provincia", "calle",2000, "piso","dpto");
+        pedro = new Proveedor("Pedro S.A",999999999,dir);
+        pablo = new Proveedor("Pablo Bros",888888888,null);
+        simon = new Proveedor("Simon SRL",777777777,null);
 
         /* Inicializo Detalles*/
         pedidoP1 = new DetalleOperacion();
@@ -51,24 +50,24 @@ public class TestValidaciones {
         pedidoEgreso = new DetalleOperacion();
 
         pedidoP1.setProveedor(pedro);
-        pedidoP1.agregaItem(new Item("Hojas"));
-        pedidoP1.agregaItem(new Item("Lapiceras"));
-        pedidoP1.agregaItem(new Item("Carpetas"));
+        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)200),300));
+        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 25),200));
+        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 25),25));
 
         pedidoP2.setProveedor(pablo);
-        pedidoP2.agregaItem(new Item("Hojas"));
-        pedidoP2.agregaItem(new Item("Lapiceras"));
-        pedidoP2.agregaItem(new Item("Carpetas"));
+        pedidoP2.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)500),300));
+        pedidoP2.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 200),200));
+        pedidoP2.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 200),25));
 
         pedidoP3.setProveedor(simon);
-        pedidoP3.agregaItem(new Item("Hojas"));
-        pedidoP3.agregaItem(new Item("Lapiceras"));
-        pedidoP3.agregaItem(new Item("Carpetas"));
+        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)400),300));
+        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 25),200));
+        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 25),25));
 
         pedidoEgreso.setProveedor(pedro);
-        pedidoEgreso.agregaItem(new Item("Hojas"));
-        pedidoEgreso.agregaItem(new Item("Lapiceras"));
-        pedidoEgreso.agregaItem(new Item("Carpetas"));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)200),300));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 25),200));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 25),25));
 
         /*Inicializo Presupuestos*/
         presupuesto1 = new Presupuesto(pedidoP1,1000);
@@ -77,7 +76,7 @@ public class TestValidaciones {
 
 
         /*Inicializo Egreso*/
-        unEgreso = new OperacionEgreso(null,null,1000);
+        unEgreso = new OperacionEgreso(null, new MedioDePago("Pagares","Pesos"), null, 5);
         unEgreso.setDetalle(pedidoEgreso);
         unEgreso.agregaPresupuesto(presupuesto1);
         unEgreso.agregaPresupuesto(presupuesto2);
@@ -145,7 +144,8 @@ public class TestValidaciones {
 
     @Test
     public void testTransparencia_EgresoNoTieneMismosItemsQueSusPresupuestos(){
-        pedidoEgreso.agregaItem(new Item("Zapatos"));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("zapatos",new TipoDeItem("Producto"), (float)200),300));
+
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
 

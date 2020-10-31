@@ -1,6 +1,5 @@
 package domain.Validadores;
 
-import config.ConfiguracionValidador;
 import domain.Operacion.Egreso.OperacionEgreso;
 
 public class CriterioValidacionDetalle implements CriterioValidacion {
@@ -12,7 +11,7 @@ public class CriterioValidacionDetalle implements CriterioValidacion {
 
     private Boolean requierePresupuesto(OperacionEgreso unEgreso) {
 
-        return ConfiguracionValidador.cantPresupuestos >0;
+        return unEgreso.getCantPresupuestos() >0;
     }
 
     private Boolean verificaDetalleEgresoConAlgunPresupuesto(OperacionEgreso unEgreso) {

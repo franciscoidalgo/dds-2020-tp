@@ -1,5 +1,7 @@
 package domain.Operacion;
 
+import domain.Entidad.Entidad;
+import domain.Entidad.EntidadJuridica;
 import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
@@ -14,6 +16,8 @@ public abstract class Operacion extends EntidadPersistente {
     @Column(columnDefinition = "DATE")
     protected LocalDate fecha;
 
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    protected Entidad entidad;
 
     @Column(name = "monto_total")
     protected double montoTotal;
@@ -22,9 +26,10 @@ public abstract class Operacion extends EntidadPersistente {
         this.fecha = LocalDate.now();
     }
 
-    public Operacion(double montoTotal) {
-        this.fecha = LocalDate.now();
+    public Operacion(LocalDate fecha,double montoTotal,Entidad entidad) {
+        this.fecha = fecha;
         this.montoTotal =montoTotal;
+        this.entidad = entidad;
     }
 
     //Getter Setter
