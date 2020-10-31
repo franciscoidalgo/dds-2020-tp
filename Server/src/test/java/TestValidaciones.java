@@ -116,13 +116,13 @@ public class TestValidaciones {
     }
 
     @Test
-    public void testPasaValidadoTransparencia(){
+    public void testPasaValidadoTransparencia() throws Exception {
 
         Assert.assertTrue(validadorDeTransparencia.validaEgreso(unEgreso));
     }
 
     @Test
-    public void testTransparencia_EgresoNoTieneProveedorDeMenorPresupuesto(){
+    public void testTransparencia_EgresoNoTieneProveedorDeMenorPresupuesto() throws Exception {
         unEgreso.getDetalle().setProveedor(pablo);
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
@@ -138,7 +138,7 @@ public class TestValidaciones {
     }
 
     @Test
-    public void testTransparencia_EgresoNoTieneMismosItemsQueSusPresupuestos(){
+    public void testTransparencia_EgresoNoTieneMismosItemsQueSusPresupuestos() throws Exception {
         pedidoEgreso.agregaItem(new Item("Zapatos"));
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }
