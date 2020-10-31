@@ -29,16 +29,24 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+
+
+
+    @Column(name = "cod_igj")
+    private long codIGJ;
     //Constructor
 
     public Empresa(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ, String actividad, Sector sector, int cantPersonal, int promVentasAnual) {
-        super(razonSocial, nombre, CUIT, descripcion, direccionPostal, codIGJ);
+        super(razonSocial, nombre, CUIT, descripcion, direccionPostal);
         this.actividad = actividad;
         this.sector = sector;
+        this.codIGJ = codIGJ;
         this.cantPersonal = cantPersonal;
         this.promVentasAnual = promVentasAnual;
         recategorizate();
     }
+
+
 
     public Empresa() {}
 
@@ -52,7 +60,29 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     public void setActividad(String actividad) {
         this.actividad = actividad;
     }
+    public Sector getSector() {
+        return sector;
+    }
 
+    public int getCantPersonal() {
+        return cantPersonal;
+    }
+
+    public void setCantPersonal(int cantPersonal) {
+        this.cantPersonal = cantPersonal;
+    }
+
+    public int getPromVentasAnual() {
+        return promVentasAnual;
+    }
+
+    public void setPromVentasAnual(int promVentasAnual) {
+        this.promVentasAnual = promVentasAnual;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
     @Override
     public Sector sector() {
         return sector;
@@ -62,7 +92,13 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         this.sector = sector;
         recategorizate();
     }
+    public long getCodIGJ() {
+        return codIGJ;
+    }
 
+    public void setCodIGJ(long codIGJ) {
+        this.codIGJ = codIGJ;
+    }
     @Override
     public Integer cantPersonal() {
         return cantPersonal;

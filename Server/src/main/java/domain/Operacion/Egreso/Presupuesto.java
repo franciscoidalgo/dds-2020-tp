@@ -12,6 +12,8 @@ public class Presupuesto extends EntidadPersistente {
     @JoinColumn(name = "detalle_id")
     private DetalleOperacion detalle;
 
+
+
     @Column(name = "monto_total")
     private double montoTotal;
 
@@ -29,7 +31,9 @@ public class Presupuesto extends EntidadPersistente {
     public DetalleOperacion getDetalle() {
         return detalle;
     }
-
+    public double getMontoTotal() {
+        return montoTotal;
+    }
     public void setDetalle(DetalleOperacion detalle) {
         this.detalle = detalle;
     }
@@ -40,7 +44,7 @@ public class Presupuesto extends EntidadPersistente {
 
     //Funcionalidad
     public double montoTotal() {
-        return this.montoTotal;
+        return this.getDetalle().calcularMontoTotal();
     }
 
     public Boolean coincidenPedido(OperacionEgreso unEgreso){

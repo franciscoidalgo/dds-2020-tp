@@ -10,8 +10,12 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/styles.css">
+    {{#if egreso}}
+        <title>Egresos</title>
+    {{else}}
+        <title>Presupuesto</title>
+    {{/if}}
 
-    <title>Egresos</title>
 
     <link rel="shortcut icon" href="/img/gsicon.png"/>
 
@@ -219,11 +223,23 @@
                        disabled >
                 <br>
                 <hr>
-                <label for="cantPresupuestos">Fecha</label><br>
-                <input type="number" name="cantPresupuestos" id="cantPresupuestos" min="1" placeholder="Cantidad de pruesupuestos" required>
+                {{#if egreso}}
+                <label for="cantPresupuestos">Necesita Presupuestos</label><br>
+                <input type="number" name="cantPresupuestos" id="cantPresupuestos" min="0" placeholder="Cantidad de pruesupuestos..." required>
+                {{/if}}
                 <br>
                 <label for="fecha">Fecha</label><br>
                 <input type="date" name="fecha" id="fecha" required max={{hoy}}><br>
+                {{#unless egreso}}
+                    <label for="egreso-a-asociar">Seleccione Egreso</label><br>
+                    <select name="egreso-a-asociar" id="egreso-a-asociar" required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        {{#each egresos}}
+                            <option value = {{id}}> Egreso #{{id}} (proveedor: {{detalle.proveedor.nombre}}, fecha: {{fecha}}, monto: {{montoTotal}})</option>
+                        {{/each}}
+                    </select>
+               {{/unless}}
+
                 <div class="d-flex ">
                     <div>
                         <label for="categoria">Categoria</label><br>
@@ -248,17 +264,29 @@
                 </div>
             </div>
         </fieldset>
+        <div id="burbuja-configuracion" class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="fas fa-truck-moving"></i></p>
+                <h3>Seleccion de Proveedor</h3>
+            </div>
+            <p><i class="fas fa-minus"></i></p>
+        </div>
         <input type="submit" value="Siguiente" class="btn btn-primario float-r">
     </form>
 </main>
 
-<script type="module" src="js/egreso.js"></script>
+
+{{#if egreso}}
+    <script type="module" src="js/egreso.js"></script>
+{{else}}
+    <script type="module" src="js/presupuestos.js"></script>
+{{/if}}
+
 <script type="module" src="js/tabla.js"></script>
 <script type="module" src="js/desplegable.js"></script>
 <script type="module" src="js/categoria.js"></script>
 <script type="module" src="js/textbox.js"></script>
 <script type="module" src="js/generales.js"></script>
-<script type="module" src="js/test_api.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 

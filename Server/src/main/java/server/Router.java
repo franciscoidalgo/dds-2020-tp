@@ -36,8 +36,6 @@ public class Router {
         ControllerIngreso controllerIngreso = new ControllerIngreso();
         ControllerMensajes controllerMensajes = new ControllerMensajes();
         ControllerBusquedaOperacion controllerBusquedaOperacion = new ControllerBusquedaOperacion();
-        ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
-
         ApiRest apiRest = new ApiRest();
 
         if(ConfiguracionMercadoLibre.usarApi){
@@ -71,10 +69,17 @@ public class Router {
         Spark.get("/api/get-proveedor/:id", apiRest::mostrarProveedores);
 
         Spark.get("/api/get-item-segun-tipo/:id", apiRest::mostraItemsSegunTipo);
+        Spark.get("/api/get-egresos-vincular/:fechaMin/:fechaMax", apiRest::pasarEgresosNoVinculados);
+        Spark.get("/api/get-egresos", apiRest::pasarTodosEgresos);
+        Spark.get("/api/get-ingreso", apiRest::pasarTodosIngresos);
+
+
 
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
+
+        Spark.post("/presupuesto", controllerPresupuesto::submitPresupuesto);
 
         Spark.get("/api/usuario/:id", apiRest::mostrarUsuario);
 

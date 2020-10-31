@@ -80,7 +80,7 @@ let jsonPost = {
         path:""
     },
     fecha:"2021-02-28",
-    cantPresupuestos:0
+    idEgresos:0
 }
 
 
@@ -98,7 +98,7 @@ function buildProveedor(){
     jsonPost.proveedor.dpto = document.getElementById("dpto").value
 
     jsonPost.fecha = document.getElementById("fecha").value;
-    jsonPost.cantPresupuestos = document.getElementById("cantPresupuestos").value;
+    jsonPost.idEgresos = document.getElementById("egreso-a-asociar").value;
     jsonPost.comprobante.path = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno')?"":document.getElementById("comprobante").value;
 }
 function buildMedioDePagos(){
@@ -413,7 +413,7 @@ $(document).on("change", '#provincia', function (e) {
 
 /* SUBMIT */
 document.getElementById("operacion-egreso").onsubmit = (e) => {
-    var url = '/egreso';
+    var url = '/presupuesto';
 
     buildProveedor();
     buildMedioDePagos();

@@ -1,5 +1,6 @@
 import {Burbuja,  Desplegable} from "./burbuja.js";
 import {generaModalAlert,generaBoton} from "./modal.js"
+import {cleanDesplegable, contenidoDesplegableEs, contenidoSeleccionadoEn} from "./desplegable.js"
 
 
 const burbujas = [
@@ -19,6 +20,38 @@ function generaBotonera(){
     botonera.className = "d-flex jc-se"
     return botonera;
 }
+function generarOptionEgreso(data) {
+    let template = `Egreso #${data.id} (proveedor: ${data.detalle.proveedor.razonSocial}, fecha: ${data.fecha.day}-${data.fecha.month}+${data.fecha.year}, monto: ${data.montoTotal})`
+    let option = document.createElement("option");
+    option.id = data.id
+    option.value = data.id;
+    option.innerText = template;
+
+    return option;
+}
+function cargarDesplegableCon(data){
+    let desplegableEgreso = document.getElementById("seleccion-egresos");
+    for(let i = 0; i < data.length;i++){
+        desplegableEgreso.appendChild(generarOptionEgreso(data[i])) ;
+    }
+}
+
+function cleanDesplegableEgreso(){
+    let desplegableEgreso = document.getElementById("seleccion-egresos");
+    cleanDesplegable(desplegableEgreso);
+    desplegableEgreso.innerHTML ='<option value="" disabled selected>-- Seleccione --</option> <option value="">Ninguno</option>'
+}
+
+function agregarEgresoALista(egreso){
+    let seccion = document.getElementById("egresos-seleccionados");
+    let contenido = document.createElement("li");
+
+    contenido.innerText = contenidoSeleccionadoEn(egreso).innerText;
+    contenido.id = egreso.value;
+
+    //TODO AGREGAR BORRAR
+    seccion.appendChild(contenido);
+}
 
 var egresosSeleccionados=[];
 
@@ -30,6 +63,33 @@ burbujas.forEach((b)=>{
 habilitadores.forEach((d) =>{
     d.elemento.onchange = () => d.habilitaObjetivo();
 });
+
+
+document.getElementById("fecha").onchange = ()=>{
+    let valor = document.getElementById("fecha").value;
+    let fechaAceptabilidad = document.getElementById("fecha-aceptabilidad");
+    let desplegableEgreso =document.getElementById("seleccion-egresos");
+
+    desplegableEgreso.disabled = true;
+    fechaAceptabilidad.disabled = false;
+    fechaAceptabilidad.value = "";
+}
+
+document.getElementById("fecha-aceptabilidad").onchange = ()=>{
+    let fechaMax = document.getElementById("fecha-aceptabilidad").value;
+    let desplegableEgreso =document.getElementById("seleccion-egresos");
+    cleanDesplegableEgreso();
+    let url = `/api/get-egresos-vincular/${fechaMax}`;
+    console.log(url);
+    fetch(url)
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(data => cargarDesplegableCon(data));
+
+    desplegableEgreso.disabled = false;
+
+}
+
 
 
 document.getElementById("vincular-auto").onclick = ()=>{
@@ -65,10 +125,12 @@ window.eventoCancelar = () => {
 }
 
 document.getElementById("agregar-egreso").onclick = () => {
-    var seleccionado = document.getElementById("egreso-seleccionado").value;
-    if(seleccionado != ""){
-        egresosSeleccionados.push(seleccionado);
+    var seleccionado = document.getElementById("seleccion-egresos");
+    if(seleccionado.value !== ""){
+        egresosSeleccionados.push(seleccionado.value);
     }
+    agregarEgresoALista(seleccionado);
+
 }
 
 document.getElementById("operacion-ingreso").onsubmit = (e)=> {
@@ -81,7 +143,9 @@ document.getElementById("operacion-ingreso").onsubmit = (e)=> {
         data:{
             "montoTotal" : $("#monto-total").val(),
             "descripcion" : $("#descripcion").val(),
-            "listaEgresos" : JSON.stringify(egresosSeleccionados)
+            "listaEgresos" : JSON.stringify(egresosSeleccionados),
+            "fecha":$("#fecha").val(),
+            "fechaAceptabilidad":$("#fecha-aceptabilidad").val()
         },
         success: function(response){
             let modal = generaModalAlert("Operacion exitosa","El ingreso se genero correctamente.");

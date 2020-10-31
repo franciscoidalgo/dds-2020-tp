@@ -7,10 +7,11 @@ const seccionSeleccionCriterio =document.getElementById("seccion-seleccion-crite
 
     if(seleccion === "egreso"){
         console.log("debo buscar en la api criterios y categorias");
-    }else{
-        console.log("debo solo mostrar ingresos");
         seccionSeleccionCriterio.hidden = false;
         seccionSeleccionCategoria.hidden = false;
+    }else{
+        console.log("debo solo mostrar ingresos");
+
     }
 
 }

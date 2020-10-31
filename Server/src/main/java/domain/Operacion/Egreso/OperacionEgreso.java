@@ -2,6 +2,7 @@
 package domain.Operacion.Egreso;
 
 
+import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Operacion;
@@ -21,15 +22,15 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
 public class OperacionEgreso extends Operacion {
     //Atributos
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "detalle_id")
     private DetalleOperacion detalle;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "medio_de_pago_id")
     private MedioDePago medioDePago;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "usuario_revisa",
             joinColumns = @JoinColumn(name = "revisores_id"),
             inverseJoinColumns = @JoinColumn(name = "operacion_egreso_id")
@@ -39,12 +40,20 @@ public class OperacionEgreso extends Operacion {
     @Column(name = "esta_asociado", columnDefinition = "CHAR")
     private Boolean estaAsociado = false;
 
-    @OneToMany( cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private OperacionIngreso ingreso;
 
+    @Column(name = "cant_presupuestos")
+    private Integer cantPresupuestos;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Categoria> categorias;
+
+
+    //Constructor
     public OperacionEgreso(LocalDate fecha, double montoTotal, EntidadJuridica entidadJuridica, DetalleOperacion detalle, MedioDePago medioDePago, OperacionIngreso ingreso, Integer cantPresupuestos) {
         super(fecha, montoTotal, entidadJuridica);
         this.detalle = detalle;
@@ -56,13 +65,6 @@ public class OperacionEgreso extends Operacion {
         this.cantPresupuestos = cantPresupuestos;
     }
 
-    @Column(name = "cant_presupuestos")
-    private Integer cantPresupuestos;
-
-
-
-
-    //Constructor
     public OperacionEgreso(DetalleOperacion detalle, MedioDePago medioDePago, OperacionIngreso ingreso, Integer cantPresupuestos) {
         this.detalle = detalle;
         this.medioDePago = medioDePago;
@@ -87,6 +89,7 @@ public class OperacionEgreso extends Operacion {
     public void setCantPresupuestos(Integer cantPresupuestos) {
         this.cantPresupuestos = cantPresupuestos;
     }
+
     public MedioDePago getMedioDePago() {
         return medioDePago;
     }
@@ -119,7 +122,7 @@ public class OperacionEgreso extends Operacion {
         this.presupuestos = presupuestos;
     }
 
-    public void setMontoTotal(double monto){
+    public void setMontoTotal(double monto) {
         this.montoTotal = monto;
     }
 
@@ -141,6 +144,14 @@ public class OperacionEgreso extends Operacion {
 
     public void setIngreso(OperacionIngreso ingreso) {
         this.ingreso = ingreso;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
     /*Funcionales*/
@@ -174,7 +185,7 @@ public class OperacionEgreso extends Operacion {
 
     public void notificaRevisores(Mensaje unMensaje) {
         RepositorioDeUsuarios repo = FactoryRepoUsuario.get();
-        this.revisores.forEach(usuario ->{
+        this.revisores.forEach(usuario -> {
             usuario.recibiMensaje(unMensaje);
             repo.modificar(usuario);
         });
@@ -192,12 +203,25 @@ public class OperacionEgreso extends Operacion {
         return this.detalle.tieneItems();
     }
 
-    public void marcateComoAsociado (){
+    public void marcateComoAsociado() {
         this.estaAsociado = true;
     }
 
-    public Boolean estaAsociado (){
+    public Boolean estaAsociado() {
         return this.estaAsociado;
+    }
+
+    public List<Item> getItems() {
+        return this.detalle.getItems();
+    }
+
+    private Boolean pertenecesAlPeriodo(LocalDate fechaMax) {
+        return this.fecha.isBefore(fechaMax);
+    }
+
+    public Boolean faltaVinculacion(LocalDate fechaMax) {
+
+        return this.pertenecesAlPeriodo(fechaMax) && !this.estaAsociado ;
     }
 
 }

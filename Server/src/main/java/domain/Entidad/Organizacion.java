@@ -1,6 +1,7 @@
 package domain.Entidad;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,10 +13,11 @@ public class Organizacion extends EntidadPersistente{
 
     @OneToMany(mappedBy = "organizacion", cascade = {CascadeType.ALL})
     private List<Entidad> entidades;
+
     //Constructors
-    public Organizacion(String nombre, List<Entidad> entidades) {
+    public Organizacion(String nombre) {
         this.nombre = nombre;
-        this.entidades = entidades;
+        this.entidades = new ArrayList<>();
     }
 
     public Organizacion(){}
@@ -35,5 +37,9 @@ public class Organizacion extends EntidadPersistente{
 
     public void setEntidades(List<Entidad> entidades) {
         this.entidades = entidades;
+    }
+
+    public void agregarEntidad(Entidad entidad){
+        this.entidades.add(entidad);
     }
 }

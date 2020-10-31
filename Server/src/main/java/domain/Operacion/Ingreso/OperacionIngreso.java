@@ -1,6 +1,7 @@
 package domain.Operacion.Ingreso;
 
 
+import domain.Entidad.Entidad;
 import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Operacion;
@@ -24,8 +25,8 @@ public class OperacionIngreso extends Operacion {
 
 
     //Constructor
-    public OperacionIngreso(LocalDate fecha, double montoTotal, EntidadJuridica entidadJuridica, String descripcion, LocalDate fechaAceptabilidad) {
-        super(fecha, montoTotal, entidadJuridica);
+    public OperacionIngreso(LocalDate fecha, double montoTotal, Entidad entidad, String descripcion, LocalDate fechaAceptabilidad) {
+        super(fecha, montoTotal, entidad);
         this.descripcion = descripcion;
         this.fechaAceptabilidad = fechaAceptabilidad;
     }
@@ -36,6 +37,8 @@ public class OperacionIngreso extends Operacion {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
+    public LocalDate getFechaAceptabilidad() {return fechaAceptabilidad;}
+    public void setFechaAceptabilidad(LocalDate fechaAceptabilidad) {this.fechaAceptabilidad = fechaAceptabilidad;}
     //Funcionalidad
 
     public void setMontoTotal(double montoTotal) {this.montoTotal = montoTotal;}

@@ -29,19 +29,15 @@ public abstract class EntidadJuridica extends Entidad {
     @JoinColumn(name = "direccion_id")
     protected DireccionPostal direccionPostal;
 
-    @Column(name = "cod_igj")
-    protected long codIGJ;
 
-
-    public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ) {
-        super();
+    public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal) {
         this.razonSocial = razonSocial;
         this.nombre = nombre;
         this.CUIT = CUIT;
         this.descripcion = descripcion;
         this.direccionPostal = direccionPostal;
-        this.codIGJ = codIGJ;
     }
+
 
     public EntidadJuridica() {
         super();
@@ -87,12 +83,5 @@ public abstract class EntidadJuridica extends Entidad {
         this.direccionPostal = direccionPostal;
     }
 
-    public long getCodIGJ() {
-        return codIGJ;
-    }
-
-    public void setCodIGJ(long codIGJ) {
-        this.codIGJ = codIGJ;
-    }
 
 }

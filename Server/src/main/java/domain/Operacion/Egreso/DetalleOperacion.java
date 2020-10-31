@@ -6,6 +6,7 @@ import domain.Entidad.EntidadPersistente;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "detalle_operacion")
@@ -114,8 +115,12 @@ public class DetalleOperacion extends EntidadPersistente {
 
     public void removeCategoria(CategoriaOperacion unaCategoria){categorias.remove(unaCategoria);}
 
-    public Float calcularMontoTotal(){
-        return pedidos.stream().map(Pedido::precioTotal).reduce(Float::sum).get();
+    public double calcularMontoTotal(){
+        return pedidos.stream().mapToDouble(Pedido::precioTotal).sum();
+    }
+
+    public List<Item> getItems(){
+        return this.getPedidos().stream().map(pedido -> pedido.getItem()).collect(Collectors.toList());
     }
 
 }

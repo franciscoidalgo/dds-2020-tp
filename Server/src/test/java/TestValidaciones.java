@@ -1,5 +1,9 @@
 import com.google.gson.Gson;
 import domain.DireccionPostal.DireccionPostal;
+import domain.Entidad.Entidad;
+import domain.Entidad.EntidadJuridica;
+import domain.Entidad.Organizacion;
+import domain.Entidad.OrganizacionSocial;
 import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
 import domain.Validadores.*;
@@ -40,34 +44,35 @@ public class TestValidaciones {
         /* Inicializo Proveedores */
         dir = new DireccionPostal("pais", "ciudad", "provincia", "calle",2000, "piso","dpto");
         pedro = new Proveedor("Pedro S.A",999999999,dir);
-        pablo = new Proveedor("Pablo Bros",888888888,null);
-        simon = new Proveedor("Simon SRL",777777777,null);
+        pablo = new Proveedor("Pablo Bros",888888888,dir);
+        simon = new Proveedor("Simon SRL",777777777,dir);
 
         /* Inicializo Detalles*/
+        TipoDeItem tipo = new TipoDeItem("test");
         pedidoP1 = new DetalleOperacion();
         pedidoP2 = new DetalleOperacion();
         pedidoP3 = new DetalleOperacion();
         pedidoEgreso = new DetalleOperacion();
 
         pedidoP1.setProveedor(pedro);
-        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)200),300));
-        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 25),200));
-        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 25),25));
+        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)200),300));
+        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 25),200));
+        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 25),25));
 
         pedidoP2.setProveedor(pablo);
-        pedidoP2.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)500),300));
-        pedidoP2.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 200),200));
-        pedidoP2.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 200),25));
+        pedidoP2.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)500),300));
+        pedidoP2.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 200),200));
+        pedidoP2.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 200),25));
 
         pedidoP3.setProveedor(simon);
-        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)400),300));
-        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 25),200));
-        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 25),25));
+        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)400),300));
+        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 25),200));
+        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 25),25));
 
         pedidoEgreso.setProveedor(pedro);
-        pedidoEgreso.agregaPedido(new Pedido(new Item("Hojas",new TipoDeItem("Producto"), (float)200),300));
-        pedidoEgreso.agregaPedido(new Pedido(new Item("Lapiceras",new TipoDeItem("Producto"), (float) 25),200));
-        pedidoEgreso.agregaPedido(new Pedido(new Item("Carpetas",new TipoDeItem("Producto"), (float) 25),25));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)200),300));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 25),200));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 25),25));
 
         /*Inicializo Presupuestos*/
         presupuesto1 = new Presupuesto(pedidoP1,1000);
@@ -98,7 +103,6 @@ public class TestValidaciones {
 
     @Test
     public void testHayTresPresupuestosCargados(){
-        System.out.println(new Gson().toJson(unEgreso));
         Assert.assertEquals(unEgreso.getPresupuestos().size(),3);
     }
 
@@ -152,7 +156,21 @@ public class TestValidaciones {
     @Test
     public void testUsuarioRecibeMensaje_CuandoSeDaDeAltaEnOperacion() throws InterruptedException {
         RepositorioDeUsuarios repoUsers = FactoryRepoUsuario.get();
+        Repositorio<Organizacion> organizacionRepositorio = FactoryRepo.get(Organizacion.class);
+        Repositorio<OrganizacionSocial> organizacionSocialRepositorio = FactoryRepo.get(OrganizacionSocial.class);
         Usuario unEstandar = repoUsers.buscar(1);
+
+        OrganizacionSocial organizacionSocial = new OrganizacionSocial("Razon Social","nombre ficticio",379317769,"una descri",new DireccionPostal("pais","ciudad","prov","calle",1234,"2","b"));
+        Organizacion organizacion = new Organizacion("dani sa");
+
+        organizacion.agregarEntidad(organizacionSocial);
+        unEstandar.setEntidadPertenece(organizacionSocial);
+
+        organizacionRepositorio.agregar(organizacion);
+        organizacionSocialRepositorio.agregar(organizacionSocial);
+
+        organizacionSocial.setOrganizacion(organizacion);
+        repoUsers.modificar(unEstandar);
 
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
 

@@ -65,7 +65,7 @@ function buildTemplateMensaje(egreso,esValida) {
     const contenedorHTML = document.getElementById("mensaje-detalle");
     const proveedor = egreso.detalle.proveedor;
     const direccion = proveedor.dirPostal;
-    //const medioDePago = egreso.medioDePago;
+    let medioDePago = egreso.medioDePago;
     const template = `
         <header>
             <div class="d-flex jc-sb ai-center fw-700">
@@ -85,7 +85,6 @@ function buildTemplateMensaje(egreso,esValida) {
                 <div class="d-flex jc-sb">  
                     <div>
                         <p><span>CUIT/DNI:</span> ${proveedor.CUIT}</p>
-                        <p><span>Nombre vendedor:</span> ${proveedor.nombre}</p>
                         <p><span>Razon Social:</span> ${proveedor.razonSocial}</p>
                     </div>
                     <div>
@@ -96,10 +95,10 @@ function buildTemplateMensaje(egreso,esValida) {
             </section>
             <section>
                 <h3>Detalle de la operacion</h3>
-                <p><span>Monto total:</span> ${/*medioDePago.moneda*/"Monto"} $${egreso.montoTotal}</p>
-                <p><span>Tipo comprobante:</span> ${/*medioDePago.comprobante.tipo*/"tipo comprobante"}</p>
+                <p><span>Monto total:</span> ${medioDePago.moneda} $${egreso.montoTotal}</p>
+                <p><span>Tipo comprobante:</span> ${medioDePago.nombre}</p>
                 <p><span>Comprobante</span>: <a id="ver-comprobante" href=${/*medioDePago.comprobante.path*/"tipo comprobante"} target="blank">ver comprobante</a></p>
-                <p><span>Cantidad Presupuestos: </span>${egreso.presupuestos.length}</p>
+                <p><span>Cantidad Presupuestos: </span>${egreso.cantPresupuestos}</p>
             </section>
             <table class="txt-centrado tabla">
                 <caption class="fw-700">Servicios/Productos</caption>
@@ -154,8 +153,8 @@ function mostrarMensaje(egreso,esValida,detalleValidacion) {
     //const msjResultado = data.cuerpoMensaje;
 
     buildTemplateMensaje(egreso,esValida);
-    buildCategorias(detalle.categorias);
-    buildTablaDetalle(detalle.items);
+    buildCategorias(egreso.categorias);
+    buildTablaDetalle(egreso.items);
     buildTooltip(detalleValidacion);
 
 }
@@ -189,7 +188,6 @@ function setToStringCantPaginas(size) {
 /* Eventos */
 
 window.onload = () => {
-    //renderTabla(dataJson)
     var url = "/getMensajes";
     fetch(url)
         .then(response => response.json())
