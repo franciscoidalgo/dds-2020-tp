@@ -78,7 +78,9 @@ public class ControllerEgresos {
             OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
             usuarioLogueado.getEntidadPertenece().realizaOperacion(operacionEgreso);
             //todo agregar usuario
+            usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
+            repoUsuarios.modificar(usuarioLogueado);
             operacionEgreso.validaOperacion();
             response.status(200);
        }catch (Exception e){
