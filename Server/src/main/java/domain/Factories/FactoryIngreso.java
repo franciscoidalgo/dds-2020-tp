@@ -23,6 +23,7 @@ public class FactoryIngreso {
         List<Integer> idsEgresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), Integer[].class));
         for(Integer id : idsEgresos){
         OperacionEgreso aux = operacionEgresoRepositorio.buscar(id);
+        aux.setIngreso(operacionIngreso);
         operacionEgresoRepositorio.modificar(aux);
         }
         return  operacionIngreso;
