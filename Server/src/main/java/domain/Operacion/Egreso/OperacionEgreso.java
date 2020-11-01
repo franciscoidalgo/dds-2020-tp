@@ -215,13 +215,8 @@ public class OperacionEgreso extends Operacion {
         return this.detalle.getItems();
     }
 
-    private Boolean pertenecesAlPeriodo(LocalDate fechaMax) {
-        return this.fecha.isBefore(fechaMax);
-    }
-
     public Boolean faltaVinculacion(LocalDate fechaMax) {
-
-        return this.pertenecesAlPeriodo(fechaMax) && !this.estaAsociado ;
+        return this.fecha.isBefore(fechaMax) && !this.estaAsociado ;
     }
 
 }

@@ -12,9 +12,10 @@ import {Burbuja, Desplegable} from "./burbuja.js";
 import {generaBoton, generaModalAlert} from "./modal.js"
 
 const burbujas = [
-    new Burbuja('burbuja-proveedor', 'razon-social'),
+    new Burbuja('burbuja-proveedor', 'proveedor'),
     new Burbuja('burbuja-compra', 'detalle-compra'),
-    new Burbuja('burbuja-pago', 'medio-de-pago')
+    new Burbuja('burbuja-pago', 'medio-de-pago'),
+    new Burbuja('burbuja-configuracion', 'configuracion')
 ]
 
 const ocultadores = [
@@ -24,8 +25,7 @@ const ocultadores = [
 
 const habilitadores = [
     new Desplegable('pais', 'provincia'),
-    new Desplegable('provincia', 'ciudad'),
-    new Desplegable('moneda', 'tipo-pago'),
+    new Desplegable('provincia', 'ciudad')
 ];
 
 /* Estados Iniciales */
@@ -71,9 +71,6 @@ let jsonPost = {
         id:-1
     },
     pedido:[],
-    medioDePago: {
-        moneda:"",
-        idTipoDePago:1},
     idCategorias:[],
     comprobante:{
         tipoComprobante:1,
@@ -101,11 +98,7 @@ function buildProveedor(){
     jsonPost.idEgresos = document.getElementById("egreso-a-asociar").value;
     jsonPost.comprobante.path = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno')?"":document.getElementById("comprobante").value;
 }
-function buildMedioDePagos(){
-    jsonPost.medioDePago.moneda = contenidoSeleccionadoEn(document.getElementById("moneda")).innerText
-    jsonPost.medioDePago.idTipoDePago = document.getElementById("tipo-pago").value
 
-}
 /* Funciones */
 
 function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
@@ -236,8 +229,22 @@ function sacarContenidoSeteandoInicial(desplegable, nodoContenido, disparador) {
     disparador["srcElement"].hidden = true;
 }
 
+function habilitarAgregarItem(){
+    let tipoBien = document.getElementById("tipoDeItem");
+    let bien = document.getElementById("bien");
+    let cantidad = document.getElementById("cantidad");
+    let costo = document.getElementById("costo");
 
+    boton.agregarTabla.hidden = !(tipoBien.value !== "" && bien.value !=="" && cantidad.value && costo.value);
+}
 /*Eventos!*/
+
+document.getElementById("cantidad").onchange = () =>{
+    habilitarAgregarItem();
+}
+document.getElementById("costo").onchange= () => {
+    habilitarAgregarItem();
+}
 
 /*Repetidos*/
 burbujas.forEach((b) => {
@@ -277,14 +284,13 @@ boton.agregarTabla.onclick = (e) => {
     escondeMostrandoA(seccion.msgTablaVacia, seccion.tablaDetalle);
 
     if (botonNuevo.value !== "Cancelar") {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.innerText,item)
+        agregateContenidoEnTablaSimple(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.value,item)
         item.nombre = contenidoSeleccionadoEn(bien).innerText
     } else {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, bien.value,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.innerText,item)
+        agregateContenidoEnTablaSimple(seccion.tablaDetalle, bien.value,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.value,item)
         bien.remove();
         boton.nuevoItem.value = "Nuevo";
         contenedor.appendChild(desplegable.bien);
-        btnAgregarTabla.hidden = true;
         bien.disabled = true;
         item.nombre = bien.value
     }
@@ -292,6 +298,7 @@ boton.agregarTabla.onclick = (e) => {
     item.precioUnitario = costo.value
     item.cantidad = cantidad.value
 
+    btnAgregarTabla.hidden = true;
     jsonPost.pedido.push(item);
 }
 
@@ -338,12 +345,14 @@ document.querySelector("select#tipoDeItem").onchange = () =>{
         fetch(url)
             .then(response => response.json())
             .then(data => {
+                cleanDesplegable(desplegable);
                 for(let i= 0; i<data.length ; i++){
                     agregaContenidoEnDesplegable(desplegable,data[i].descripcion,false)
                 }
             })
             .catch(reason => console.log(reason))
         desplegable.disabled = false;
+        habilitarAgregarItem
     }
 }
 /*En ejecucion*/
@@ -416,7 +425,7 @@ document.getElementById("operacion-egreso").onsubmit = (e) => {
     var url = '/presupuesto';
 
     buildProveedor();
-    buildMedioDePagos();
+
 
     console.log(jsonPost)
     e.preventDefault();

@@ -12,13 +12,13 @@ import {Burbuja, Desplegable} from "./burbuja.js";
 import {generaBoton, generaModalAlert} from "./modal.js"
 
 const burbujas = [
-    new Burbuja('burbuja-proveedor', 'razon-social'),
+    new Burbuja('burbuja-proveedor', 'proveedor'),
     new Burbuja('burbuja-compra', 'detalle-compra'),
-    new Burbuja('burbuja-pago', 'medio-de-pago')
+    new Burbuja('burbuja-pago', 'medio-de-pago'),
+    new Burbuja('burbuja-configuracion', 'configuracion')
 ]
 
 const ocultadores = [
-    new Desplegable('bien', 'agregar-tabla'),
     new Desplegable('categoria', 'agregar-categoria'),
 ];
 
@@ -236,9 +236,22 @@ function sacarContenidoSeteandoInicial(desplegable, nodoContenido, disparador) {
     disparador["srcElement"].hidden = true;
 }
 
+function habilitarAgregarItem(){
+    let tipoBien = document.getElementById("tipoDeItem");
+    let bien = document.getElementById("bien");
+    let cantidad = document.getElementById("cantidad");
+    let costo = document.getElementById("costo");
 
+    boton.agregarTabla.hidden = !(tipoBien.value !== "" && bien.value !=="" && cantidad.value && costo.value);
+}
 /*Eventos!*/
 
+document.getElementById("cantidad").onchange = () =>{
+    habilitarAgregarItem();
+}
+document.getElementById("costo").onchange= () =>{
+    habilitarAgregarItem();
+}
 /*Repetidos*/
 burbujas.forEach((b) => {
     b.elemento.onclick = () => b.ocultaBurbuja();
@@ -260,6 +273,8 @@ desplegable.razonSocial.onchange = () => getProveedoresFromAPI();
 
 
 /*Boton*/
+
+
 boton.agregarTabla.onclick = (e) => {
     let botonNuevo = document.getElementById('nuevo-item');
     let bien = document.getElementById('bien');
@@ -277,22 +292,23 @@ boton.agregarTabla.onclick = (e) => {
     escondeMostrandoA(seccion.msgTablaVacia, seccion.tablaDetalle);
 
     if (botonNuevo.value !== "Cancelar") {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.innerText,item)
+        agregateContenidoEnTablaSimple(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.value,item)
         item.nombre = contenidoSeleccionadoEn(bien).innerText
     } else {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, bien.value,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.innerText,item)
+        agregateContenidoEnTablaSimple(seccion.tablaDetalle, bien.value,contenidoSeleccionadoEn(tipo).innerText,cantidad.value,costo.value,item)
         bien.remove();
         boton.nuevoItem.value = "Nuevo";
         contenedor.appendChild(desplegable.bien);
-        btnAgregarTabla.hidden = true;
-        bien.disabled = true;
+
         item.nombre = bien.value
     }
     item.idTipo = tipo.value
     item.precioUnitario = costo.value
     item.cantidad = cantidad.value
-
+    btnAgregarTabla.hidden = true;
+    bien.disabled = true;
     jsonPost.pedido.push(item);
+
 }
 
 boton.agregarCategoria.onclick = (e) => {
@@ -338,12 +354,14 @@ document.querySelector("select#tipoDeItem").onchange = () =>{
         fetch(url)
             .then(response => response.json())
             .then(data => {
+                cleanDesplegable(desplegable);
                 for(let i= 0; i<data.length ; i++){
                     agregaContenidoEnDesplegable(desplegable,data[i].descripcion,false)
                 }
             })
             .catch(reason => console.log(reason))
         desplegable.disabled = false;
+        habilitarAgregarItem()
     }
 }
 /*En ejecucion*/
@@ -451,6 +469,8 @@ window.cerrarModal = () => {
 }
 
 window.recargarPagina = () => {
+    desplegable.razonSocial.focus();
+    desplegable.razonSocial.scrollIntoView({behavior:"smooth"});
     window.location.reload(true);
 }
 

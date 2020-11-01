@@ -76,7 +76,6 @@ function crearTablaEgresos(data){
     return tablaIngresos;
 }
 
-
 function settearEncabezado(tr,descripcion){
     let th = document.createElement("th");
     tr.appendChild(th);
@@ -94,6 +93,7 @@ function settearFilaEgreso(tbody,data){
     tr.innerHTML = td;
     tbody.appendChild(tr);
 }
+
 function settearFilaIngresos(tbody,data){
     let tr = document.createElement("tr");
 
@@ -105,4 +105,12 @@ function settearFilaIngresos(tbody,data){
     tr.innerHTML = td;
     tbody.appendChild(tr);
 }
+
+
+function  crearTablaSeleccionEgreso(){
+
+}
+
+
+
 export {agregateContenidoEnTablaSimple, tablaTieneElementos,crearTablaIngresos,crearTablaEgresos};

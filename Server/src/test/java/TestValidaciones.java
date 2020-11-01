@@ -160,8 +160,8 @@ public class TestValidaciones {
         Repositorio<OrganizacionSocial> organizacionSocialRepositorio = FactoryRepo.get(OrganizacionSocial.class);
         Usuario unEstandar = repoUsers.buscar(1);
 
-        OrganizacionSocial organizacionSocial = new OrganizacionSocial("Razon Social","nombre ficticio",379317769,"una descri",new DireccionPostal("pais","ciudad","prov","calle",1234,"2","b"));
-        Organizacion organizacion = new Organizacion("dani sa");
+        OrganizacionSocial organizacionSocial = new OrganizacionSocial("Organizacion Social S.A","nombre ficticio",999317799,"una descri",new DireccionPostal("Argentina","CABA","Provincia","Av Independencia 9999",1234,"2","b"));
+        Organizacion organizacion = new Organizacion("Organizacion");
 
         organizacion.agregarEntidad(organizacionSocial);
         unEstandar.setEntidadPertenece(organizacionSocial);

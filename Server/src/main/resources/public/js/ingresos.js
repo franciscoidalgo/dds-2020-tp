@@ -21,7 +21,7 @@ function generaBotonera(){
     return botonera;
 }
 function generarOptionEgreso(data) {
-    let template = `Egreso #${data.id} (proveedor: ${data.detalle.proveedor.razonSocial}, fecha: ${data.fecha.day}-${data.fecha.month}+${data.fecha.year}, monto: ${data.montoTotal})`
+    let template = `Egreso #${data.id} (proveedor: ${data.detalle.proveedor.razonSocial}, fecha: ${data.fecha.day}-${data.fecha.month}-${data.fecha.year}, monto: ${data.montoTotal})`
     let option = document.createElement("option");
     option.id = data.id
     option.value = data.id;
@@ -31,6 +31,7 @@ function generarOptionEgreso(data) {
 }
 function cargarDesplegableCon(data){
     let desplegableEgreso = document.getElementById("seleccion-egresos");
+    console.log(data);
     for(let i = 0; i < data.length;i++){
         desplegableEgreso.appendChild(generarOptionEgreso(data[i])) ;
     }
@@ -42,18 +43,34 @@ function cleanDesplegableEgreso(){
     desplegableEgreso.innerHTML ='<option value="" disabled selected>-- Seleccione --</option> <option value="">Ninguno</option>'
 }
 
-function agregarEgresoALista(egreso){
+function agregarEgresoALista(egreso,posicion){
     let seccion = document.getElementById("egresos-seleccionados");
     let contenido = document.createElement("li");
+    let btn = document.createElement("button");
 
     contenido.innerText = contenidoSeleccionadoEn(egreso).innerText;
     contenido.id = egreso.value;
+    contenido.appendChild(btn)
+    btn.value = "Quitar";
+    btn.innerText = "Quitar";
+    btn.type = "button"
+    btn.className = "btn btn-formulario-danger"
+    contenido.style.fontSize="1.4rem";
+    contenido.style.fontWeight="bold";
+
+    btn.onclick = () =>{
+        egresosSeleccionados.splice(posicion, 1);
+        auxSeleccionados.splice(posicion, 1);
+        contenido.remove();
+    }
 
     //TODO AGREGAR BORRAR
     seccion.appendChild(contenido);
+
 }
 
 var egresosSeleccionados=[];
+var auxSeleccionados=[];
 
 /*Eventos!*/
 burbujas.forEach((b)=>{
@@ -66,14 +83,17 @@ habilitadores.forEach((d) =>{
 
 
 document.getElementById("fecha").onchange = ()=>{
-    let valor = document.getElementById("fecha").value;
+    let monto = document.getElementById("monto-total").value;
     let fechaAceptabilidad = document.getElementById("fecha-aceptabilidad");
     let desplegableEgreso =document.getElementById("seleccion-egresos");
 
+    if(monto >0){
     desplegableEgreso.disabled = true;
     fechaAceptabilidad.disabled = false;
     fechaAceptabilidad.value = "";
+    }
 }
+
 
 document.getElementById("fecha-aceptabilidad").onchange = ()=>{
     let fechaMax = document.getElementById("fecha-aceptabilidad").value;
@@ -129,7 +149,8 @@ document.getElementById("agregar-egreso").onclick = () => {
     if(seleccionado.value !== ""){
         egresosSeleccionados.push(seleccionado.value);
     }
-    agregarEgresoALista(seleccionado);
+    let posicion = egresosSeleccionados.length;
+    agregarEgresoALista(seleccionado,posicion);
 
 }
 
@@ -172,5 +193,8 @@ window.cerrarModal = () => {
 }
 
 window.recargarPagina = () => {
+    let inicio = document.getElementById("burbuja-detalle")
+    inicio.focus();
+    inicio.scrollIntoView({ behavior: "smooth" });
     window.location.reload(true);
 }

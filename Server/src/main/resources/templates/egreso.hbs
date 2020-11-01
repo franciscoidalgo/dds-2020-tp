@@ -186,23 +186,29 @@
             </div>
         </fieldset>
         <!-- Seccion Medio de Pago-->
+
         <div id="burbuja-pago" class="burbuja d-flex jc-sb ai-center">
             <div class="d-flex jc-sb">
                 <p><i class="far fa-credit-card"></i></p>
-                <h3>Seleccion de Medio de Pago</h3>
+                {{#if egreso}}
+                    <h3>Seleccion de Medio de Pago</h3>
+                {{else}}
+                    <h3>Seleccion Documentacion</h3>
+                {{/if}}
             </div>
             <p><i class="fas fa-minus"></i></p>
         </div>
         <!-- Formulario Medio de Pago-->
         <fieldset id="medio-de-pago" class="burbuja ">
             <div class="contenedor-entrada">
+                {{#if egreso}}
                 <label for="moneda">Moneda</label><br>
                 <select name="moneda" id="moneda" required>
                     <option value="" disabled selected>-- Seleccione --</option>
                     {{#each monedas}}
                         <option value={{nombre}} >{{nombre}}</option>
                     {{/each}}
-                    <option value="a" >algoo</option>
+                    <option value="a">algoo</option>
                 </select><br>
                 <label for="tipo-pago">Tipo de pago</label><br>
                 <select name="tipo-pago" id="tipo-pago" disabled required>
@@ -211,6 +217,7 @@
                         <option value={{id}} >{{nombre}}</option>
                     {{/each}}
                 </select><br>
+                {{/if}}
                 <label for="tipo-comprobante">Tipo comprobante</label><br>
                 <select name="tipo-comprobante" id="tipo-comprobante">
                     <option value="" disabled selected>-- Seleccione --</option>
@@ -220,12 +227,30 @@
                 </select><br>
                 <label for="comprobante">Comprobante</label><br>
                 <input type="file" name="comprobante" id="comprobante" placeholder="Ingrese comprobante... "
-                       disabled >
+                       disabled>
                 <br>
-                <hr>
+            </div>
+
+        </fieldset>
+        <!-- Seccion Configuracion-->
+        <div id="burbuja-configuracion" class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="far fa-file-alt"></i></p>
+            {{#if egreso}}
+                <h3>Propiedades del Egreso</h3>
+            {{else}}
+                <h3>Propiedades del Presupuesto</h3>
+            {{/if}}
+            </div>
+            <p><i class="fas fa-minus"></i></p>
+        </div>
+        <!-- Form Configuracion-->
+        <fieldset id="configuracion" class="burbuja ">
+            <div class="contenedor-entrada">
                 {{#if egreso}}
-                <label for="cantPresupuestos">Necesita Presupuestos</label><br>
-                <input type="number" name="cantPresupuestos" id="cantPresupuestos" min="0" placeholder="Cantidad de pruesupuestos..." required>
+                    <label for="cantPresupuestos">Necesita Presupuestos</label><br>
+                    <input type="number" name="cantPresupuestos" id="cantPresupuestos" min="0"
+                           placeholder="Cantidad de pruesupuestos..." required>
                 {{/if}}
                 <br>
                 <label for="fecha">Fecha</label><br>
@@ -235,10 +260,12 @@
                     <select name="egreso-a-asociar" id="egreso-a-asociar" required>
                         <option value="" disabled selected>-- Seleccione --</option>
                         {{#each egresos}}
-                            <option value = {{id}}> Egreso #{{id}} (proveedor: {{detalle.proveedor.nombre}}, fecha: {{fecha}}, monto: {{montoTotal}})</option>
+                            <option value= {{id}}> Egreso #{{id}} (proveedor: {{detalle.proveedor.nombre}},
+                                fecha: {{fecha}}, monto: {{montoTotal}})
+                            </option>
                         {{/each}}
                     </select>
-               {{/unless}}
+                {{/unless}}
 
                 <div class="d-flex ">
                     <div>
@@ -264,13 +291,6 @@
                 </div>
             </div>
         </fieldset>
-        <div id="burbuja-configuracion" class="burbuja  d-flex jc-sb ai-center">
-            <div class="d-flex jc-sb">
-                <p><i class="fas fa-truck-moving"></i></p>
-                <h3>Seleccion de Proveedor</h3>
-            </div>
-            <p><i class="fas fa-minus"></i></p>
-        </div>
         <input type="submit" value="Siguiente" class="btn btn-primario float-r">
     </form>
 </main>

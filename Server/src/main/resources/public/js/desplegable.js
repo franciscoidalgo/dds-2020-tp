@@ -32,14 +32,11 @@ function agregaContenidoEnDesplegable(desplegable,contenido,setSeleccion){
 }
 
 function cleanDesplegable(desplegable){
-    var options = desplegable.children;
+    desplegable.innerHTML = ""
+    agregaContenidoEnDesplegable(desplegable,"-- Seleccione --",true);
+    desplegable.children[0].disable=true;
 
-    for(let i=0; i<options.length;i++){
-        options[i].remove();
-    }
-    agregaContenidoEnDesplegable(desplegable,"",true);
-    options[0].disable=true;
-    options[0].innerText="-- Seleccione --";
+
 
 }
 export { contenidoSeleccionadoEn,

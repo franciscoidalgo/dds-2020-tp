@@ -258,6 +258,16 @@ main {
     color: #0187C0;
     transition: color 1s, background-color 1s;
 }
+.btn-formulario-danger {
+    margin-left: 1rem;
+    align-self: flex-end;
+    text-align: initial;
+    background-color: transparent;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #c0012f;
+    transition: color 1s, background-color 1s;
+}
 
 .btn-formulario:hover {
     color: #555555;
@@ -535,7 +545,10 @@ form div.burbuja {
     resize: none;
 }
 
-
+#egresos-seleccionados{
+    padding: 0;
+    margin: 0;
+}
 /*Tabla*/
 
 .th-principal th {

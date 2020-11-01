@@ -3,6 +3,9 @@ package server;
 import APIMercadoLibre.InfoMercadoLibre;
 import config.ConfiguracionMercadoLibre;
 import controllers.*;
+import domain.Validadores.CriterioValidacionCantidadPresupuesto;
+import domain.Validadores.CriterioValidacionDetalle;
+import domain.Validadores.CriterioValidacionSeleccion;
 import domain.Validadores.ValidadorDeTransparencia;
 import middleware.AuthMiddleware;
 import middleware.sessionManager.SessionManageSessionAttribute;
@@ -36,6 +39,12 @@ public class Router {
         ControllerIngreso controllerIngreso = new ControllerIngreso();
         ControllerMensajes controllerMensajes = new ControllerMensajes();
         ControllerBusquedaOperacion controllerBusquedaOperacion = new ControllerBusquedaOperacion();
+        ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
+
+        validadorDeTransparencia.agregateCriterio(new CriterioValidacionCantidadPresupuesto());
+        validadorDeTransparencia.agregateCriterio(new CriterioValidacionDetalle());
+        validadorDeTransparencia.agregateCriterio(new CriterioValidacionSeleccion());
+
         ApiRest apiRest = new ApiRest();
 
         if(ConfiguracionMercadoLibre.usarApi){
@@ -69,7 +78,7 @@ public class Router {
         Spark.get("/api/get-proveedor/:id", apiRest::mostrarProveedores);
 
         Spark.get("/api/get-item-segun-tipo/:id", apiRest::mostraItemsSegunTipo);
-        Spark.get("/api/get-egresos-vincular/:fechaMin/:fechaMax", apiRest::pasarEgresosNoVinculados);
+        Spark.get("/api/get-egresos-vincular/:fechaMax", apiRest::pasarEgresosNoVinculados);
         Spark.get("/api/get-egresos", apiRest::pasarTodosEgresos);
         Spark.get("/api/get-ingreso", apiRest::pasarTodosIngresos);
 
