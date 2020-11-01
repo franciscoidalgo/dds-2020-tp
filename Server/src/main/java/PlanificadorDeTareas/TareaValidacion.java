@@ -20,7 +20,12 @@ public class TareaValidacion extends TimerTask {
     @Override
     public void run() {
         System.out.println("Ejecución tarea validación: "+ new Date());
-        ValidadorDeTransparencia.instancia().notificaResultados(this.egreso);
+        try {
+            ValidadorDeTransparencia.instancia().notificaResultados(this.egreso);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }

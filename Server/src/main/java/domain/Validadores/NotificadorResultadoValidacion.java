@@ -16,11 +16,11 @@ public class NotificadorResultadoValidacion {
         return instancia;
     }
 
-    public void enviaResultados(ValidadorDeTransparencia validadorDeTransparencia,OperacionEgreso unEgreso){
+    public void enviaResultados(ValidadorDeTransparencia validadorDeTransparencia,OperacionEgreso unEgreso) throws Exception {
         unEgreso.notificaRevisores(this.generaMensaje(validadorDeTransparencia,unEgreso));
     }
 
-    private Mensaje generaMensaje(ValidadorDeTransparencia validador, OperacionEgreso unEgreso) {
+    private Mensaje generaMensaje(ValidadorDeTransparencia validador, OperacionEgreso unEgreso) throws Exception {
         String detalle = "En detalle: " + this.detalleResultado(validador,unEgreso);
        return new Mensaje(unEgreso, this.cuerpoMensaje(validador,unEgreso),detalle);
     }
@@ -31,7 +31,7 @@ public class NotificadorResultadoValidacion {
 
     }
 
-    private String cuerpoMensaje(ValidadorDeTransparencia validador,OperacionEgreso unEgreso) {
+    private String cuerpoMensaje(ValidadorDeTransparencia validador,OperacionEgreso unEgreso) throws Exception {
         return validador.validaEgreso(unEgreso) ? "Valida" : "invalida";
     }
 

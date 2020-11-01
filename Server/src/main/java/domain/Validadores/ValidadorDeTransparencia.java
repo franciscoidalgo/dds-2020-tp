@@ -2,9 +2,12 @@ package domain.Validadores;
 
 import domain.Operacion.Egreso.OperacionEgreso;
 import PlanificadorDeTareas.Planificador;
+import repositorios.Repositorio;
+import repositorios.factories.FactoryRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ValidadorDeTransparencia {
 
@@ -40,20 +43,31 @@ public class ValidadorDeTransparencia {
     public static ValidadorDeTransparencia instancia(){
         if (instancia == null) {
             instancia = new ValidadorDeTransparencia();
+            Repositorio<OperacionEgreso> repoEgresos = FactoryRepo.get(OperacionEgreso.class);
+            List<OperacionEgreso> egresos = repoEgresos.buscarTodos();
+            for(OperacionEgreso egreso : egresos){
+                instancia.realizaValidacionAutomatica(egreso);
+            }
+
         }
         return instancia;
     }
 
-    public Boolean validaEgreso(OperacionEgreso unEgreso) {
-        return this.criteriosValidadores.stream()
+    public Boolean validaEgreso(OperacionEgreso unEgreso) throws Exception {
+        Optional<Boolean> resultado = this.criteriosValidadores.stream()
                 .map(unCriterio -> unCriterio.validaEgreso(unEgreso))
-                .reduce(Boolean::logicalAnd).get();
+                .reduce(Boolean::logicalAnd);
+        if (resultado.isPresent()){
+            return resultado.get();
+        }else{
+            throw new Exception("Hubo un error al validar");
+        }
     }
 
     public void realizaValidacionAutomatica(OperacionEgreso unEgreso) {
         planificador.planificaTareaValidacion(unEgreso);
     }
-    public void notificaResultados(OperacionEgreso unEgreso) {
+    public void notificaResultados(OperacionEgreso unEgreso) throws Exception {
         notificador.enviaResultados(this,unEgreso);
     }
 
