@@ -97,9 +97,25 @@ public class ApiRest {
 
     public String pasarTodosEgresos(Request request,Response response){
 
-        //TODO hacerlo para que sean de la entidad
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
 
-        return null;
+        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
+        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
+        List<EgresoDTO> egresoDTOList = new ArrayList<>();
+        String jsonEgreso;
+
+        //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
+        List<OperacionEgreso> egresos = repositorioEgreso.buscarTodos();
+
+        egresos.forEach(egreso -> {
+            EgresoDTO egresoDTO = generarEgresoDTO(egreso);
+            egresoDTOList.add(egresoDTO);
+        });
+
+        jsonEgreso = gson.toJson(egresoDTOList);
+        response.type("application/json");
+        return jsonEgreso;
     }
 
     public String pasarTodosIngresos(Request request,Response response){
@@ -193,6 +209,7 @@ public class ApiRest {
         ingresoDTO.setDescripcion(ingreso.getDescripcion());
         ingresoDTO.setFechaAceptacion(ingreso.getFechaAceptabilidad());
         ingresoDTO.setFechaRealizada(ingreso.getFecha());
+        ingresoDTO.setMonto(ingreso.montoTotal());
 
         return ingresoDTO;
     }

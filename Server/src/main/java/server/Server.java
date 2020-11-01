@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Server {
     public static void main(String[] args) throws Exception {
-        //iniciarScheduler();
+        iniciarScheduler();
         Spark.port(9000);
         Router.init();
         DebugScreen.enableDebugScreen();

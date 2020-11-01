@@ -9,6 +9,7 @@ public class IngresoDTO {
     public LocalDate fechaRealizada;
     public LocalDate fechaAceptacion;
     public String descripcion;
+    public Double monto;
 
 
     public int getId() {
@@ -49,5 +50,13 @@ public class IngresoDTO {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
     }
 }

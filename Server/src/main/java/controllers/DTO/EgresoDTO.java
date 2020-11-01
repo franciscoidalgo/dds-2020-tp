@@ -14,8 +14,6 @@ import java.util.List;
 
 public class EgresoDTO {
 
-
-
     public Integer id;
     public DetalleOperacion detalle;
     public MedioDePago medioDePago;

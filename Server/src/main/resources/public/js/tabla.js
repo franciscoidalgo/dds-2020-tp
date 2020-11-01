@@ -26,4 +26,83 @@ function addFilaInnerHTML(fila,descripcion,posicion){
     cell.innerHTML=descripcion;
 }
 
-export {agregateContenidoEnTablaSimple, tablaTieneElementos};
+function crearTablaIngresos(data){
+    let tablaIngresos = document.createElement("table");
+    let tablaHeader = document.createElement("thead");
+    let tablaBody = document.createElement("tbody");
+    let tr = document.createElement("tr");
+
+    tablaIngresos.className = "txt-centrado tabla";
+    tablaHeader.className = "bg-primario fw-700 th-principal";
+
+    tablaIngresos.appendChild(tablaHeader);
+    tablaHeader.appendChild(tr);
+
+    settearEncabezado(tr,"#ID")
+    settearEncabezado(tr,"Descripcion")
+    settearEncabezado(tr,"Fecha Realizada")
+    settearEncabezado(tr,"Fecha Aceptabilidad")
+    settearEncabezado(tr,"Monto")
+    //TODO SALDO?
+    tablaIngresos.appendChild(tablaBody);
+    for(let i = 0 ; i < data.length;i++){
+        settearFilaIngresos(tablaBody,data[i]);
+    }
+    return tablaIngresos;
+}
+
+function crearTablaEgresos(data){
+    let tablaIngresos = document.createElement("table");
+    let tablaHeader = document.createElement("thead");
+    let tablaBody = document.createElement("tbody");
+    let tr = document.createElement("tr");
+
+    tablaIngresos.className = "txt-centrado tabla";
+    tablaHeader.className = "bg-primario fw-700 th-principal";
+
+    tablaIngresos.appendChild(tablaHeader);
+    tablaHeader.appendChild(tr);
+
+    settearEncabezado(tr,"#ID")
+    settearEncabezado(tr,"Razon Social")
+    settearEncabezado(tr,"Fecha")
+    settearEncabezado(tr,"Necesita Presupuestos")
+    settearEncabezado(tr,"Monto")
+    //TODO SALDO?
+    tablaIngresos.appendChild(tablaBody);
+    for(let i = 0 ; i < data.length;i++){
+        settearFilaEgreso(tablaBody,data[i]);
+    }
+    return tablaIngresos;
+}
+
+
+function settearEncabezado(tr,descripcion){
+    let th = document.createElement("th");
+    tr.appendChild(th);
+    th.innerText = descripcion;
+}
+
+function settearFilaEgreso(tbody,data){
+    let tr = document.createElement("tr");
+
+    let td = `  <td>${data.id}</td>
+                <td>${data.detalle.proveedor.razonSocial}</td>
+                <td>${data.fecha.day}-${data.fecha.month}-${data.fecha.year}</td>
+                <td>${data.cantPresupuestos}</td>
+                <td>${data.montoTotal}</td>`
+    tr.innerHTML = td;
+    tbody.appendChild(tr);
+}
+function settearFilaIngresos(tbody,data){
+    let tr = document.createElement("tr");
+
+    let td = `  <td>${data.id}</td>
+                <td>${data.descripcion}</td>
+                <td>${data.fechaRealizada.day}-${data.fechaRealizada.month}-${data.fechaRealizada.year}</td>
+                <td>${data.fechaAceptacion.day}-${data.fechaAceptacion.month}-${data.fechaAceptacion.year}</td>
+                <td>${data.monto}</td>`
+    tr.innerHTML = td;
+    tbody.appendChild(tr);
+}
+export {agregateContenidoEnTablaSimple, tablaTieneElementos,crearTablaIngresos,crearTablaEgresos};
