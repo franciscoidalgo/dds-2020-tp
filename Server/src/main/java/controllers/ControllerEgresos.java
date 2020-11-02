@@ -70,26 +70,35 @@ public class ControllerEgresos {
         return jCiudades;
     }
 
-    public Response submitEgreso(Request request,Response response) {
+    public String submitEgreso(Request request,Response response) {
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         RepositorioDeUsuarios repoUsuarios = FactoryRepoUsuario.get();
+        JsonObject mensajeRta = new JsonObject();
+
+
         try {
+
             Usuario usuarioLogueado = repoUsuarios.buscar(request.session().attribute("userId"));
             OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
             usuarioLogueado.getEntidadPertenece().realizaOperacion(operacionEgreso);
             //todo agregar usuario
             usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
-            repoUsuarios.modificar(usuarioLogueado);
             operacionEgreso.validaOperacion();
+            repoUsuarios.modificar(usuarioLogueado);
+            //Response
+            mensajeRta.addProperty("idEgreso", ""+operacionEgreso.getId());
             response.status(200);
+            response.type("application/json");
+            return new Gson().toJson(mensajeRta);
        }catch (Exception e){
             response.status(404);
-            response.body("No se pudo cargar");
+            mensajeRta.addProperty("mensaje", "No se pudo cargar operacion");
             response.type("application/json");
+            return new Gson().toJson(mensajeRta);
        }
 
-        return response;
+
     }
 
 

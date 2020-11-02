@@ -23,6 +23,8 @@ public class EgresoDTO {
     //private List<Presupuesto> presupuestos;
     //private OperacionIngreso ingreso;
     public Integer cantPresupuestos;
+
+    public Integer cantPresupuestosFaltantes;
     public LocalDate fecha;
     public double montoTotal;
     public List<Categoria> categorias;
@@ -99,5 +101,13 @@ public class EgresoDTO {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public Integer getCantPresupuestosFaltantes() {
+        return cantPresupuestosFaltantes;
+    }
+
+    public void setCantPresupuestosFaltantes(Integer cantPresupuestosFaltantes) {
+        this.cantPresupuestosFaltantes = cantPresupuestosFaltantes;
     }
 }

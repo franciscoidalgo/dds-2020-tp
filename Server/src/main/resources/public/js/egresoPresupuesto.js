@@ -127,6 +127,7 @@ function cambiaATextboxParaRazonSocial() {
     boton.razonSocial.hidden = false;
     idProveedorSeleccionado = -1;
     desplegable.razonSocial.remove();
+    desplegable.pais.value = "";
     contenedor.appendChild(textbox);
 }
 
@@ -237,7 +238,7 @@ function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
     let contenido = nodoContenido.innerHTML;
     let categoria = generaCategoria(contenido, true);
     let idCategoria = desplegable.value;
-    let jCategoria = {id: idCategoria};
+    let jCategoria = {idCategoria};
 
     sacarContenidoSeteandoInicial(desplegable, nodoContenido, disparador);
     seccion.appendChild(categoria);
@@ -258,39 +259,37 @@ function hayCategoriasSeleccionadas(nodoCategoria) {
 
 function manejadorEliminar(nodoObjetivo, desplegable) {
     let contenido = nodoObjetivo.firstElementChild.textContent;
+    //TODO QUE NO TOME REPETIDOS
     agregaContenidoEnDesplegable(desplegable, contenido, false);
     nodoObjetivo.remove();
 }
 
 function getProveedor() {
-    let jProveedor = {
-        proveedor: {}
-    }
+    let jProveedor = {proveedor:{}}
     let esTextboxRazonSocial = desplegable.razonSocial.hasAttribute("type", "text");
+    let valorRazonSocial =esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : desplegable.razonSocial.value
 
-    jProveedor.proveedor.razonSocial = esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : desplegable.razonSocial.value;
-    jProveedor.proveedor.cuit = entrada.cuit.value
-    jProveedor.proveedor.pais = contenidoSeleccionadoEn(desplegable.pais).innerText
-    jProveedor.proveedor.provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText
-    jProveedor.proveedor.ciudad = contenidoSeleccionadoEn(desplegable.ciudad).innerText
-    jProveedor.proveedor.calle = entrada.calle.value
-    jProveedor.proveedor.altura = entrada.altura.value
-    jProveedor.proveedor.piso = entrada.piso.value
-    jProveedor.proveedor.dpto = entrada.dpto.value
+    jProveedor.proveedor.razonSocial = valorRazonSocial;
+    jProveedor.proveedor.cuit = entrada.cuit.value;
+    jProveedor.proveedor.pais = contenidoSeleccionadoEn(desplegable.pais).innerText;
+    jProveedor.proveedor.provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText;
+    jProveedor.proveedor.ciudad = contenidoSeleccionadoEn(desplegable.ciudad).innerText;
+    jProveedor.proveedor.calle = entrada.calle.value;
+    jProveedor.proveedor.altura = entrada.altura.value;
+    jProveedor.proveedor.piso = entrada.piso.value;
+    jProveedor.proveedor.dpto = entrada.dpto.value;
     jProveedor.id = idProveedorSeleccionado;
 
     return jProveedor;
 }
 
 function getComprobante() {
-    let jComprobante = {
-        comprobante: {}
-    }
+    let jComprobante = {comprobante:{}}
 
     jComprobante.comprobante.tipoComprobante =  desplegable.comprobante.value;
     jComprobante.comprobante.path =contenidoDesplegableEs(desplegable.comprobante, 'Ninguno') ? "" : entrada.path.value;
 
-    return jComprobante
+    return jComprobante.comprobante;
 
 }
 
@@ -298,10 +297,10 @@ function getTemplateJson(){
     let jsonTemplate = {}
 
     jsonTemplate.fecha = entrada.fecha.value;
-    jsonTemplate.pedido = jPedido;
-    jsonTemplate.categoria = jCategorias;
+    jsonTemplate.pedido = jPedido.pedido;
+    jsonTemplate.idCategorias = jCategorias.idCategorias;
     jsonTemplate.proveedor = getProveedor();
-    jsonTemplate.proveedor = getComprobante();
+    jsonTemplate.comprobante = getComprobante();
     return jsonTemplate;
 }
 /** Eventos **/
@@ -406,7 +405,7 @@ desplegable.bien.onchange = () => habilitarBtnAgregarTabla()
 desplegable.tipoDeItem.onchange = () => getItemsFromAPI();
 
 desplegable.pais.onchange = () => {
-    let provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText;
+    let provincia = contenidoSeleccionadoEn(desplegable.pais).innerText;
     let url = "/api/get-lista-de-provincias/" + provincia;
     cargarDesplegableDesdeAPIML(desplegable.provincia, url);
     desplegable.provincia.disabled = false;

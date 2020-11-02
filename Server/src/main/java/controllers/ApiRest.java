@@ -83,7 +83,7 @@ public class ApiRest {
         //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
         List<OperacionEgreso> egresos = repositorioEgreso.buscarTodos();
 
-        egresos = egresos.stream().filter(egreso -> egreso.getFecha().isBefore(fechaMax)).collect(Collectors.toList());
+        egresos = egresos.stream().filter(egreso -> egreso.podesVincularteSegunFecha(fechaMax)).collect(Collectors.toList());
 
         egresos.forEach(egreso -> {
             EgresoDTO egresoDTO = generarEgresoDTO(egreso);
@@ -109,7 +109,7 @@ public class ApiRest {
         //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
         List<OperacionEgreso> egresos = repositorioEgreso.buscarTodos();
 
-        egresos = egresos.stream().filter(egreso -> egreso.faltaVinculacion(fechaMax)).collect(Collectors.toList());
+        egresos = egresos.stream().filter(egreso -> egreso.tenesFechaIgualOAnterior(fechaMax)).collect(Collectors.toList());
 
         egresos.forEach(egreso -> {
             EgresoDTO egresoDTO = generarEgresoDTO(egreso);
@@ -225,6 +225,7 @@ public class ApiRest {
         egresoDTO.setMontoTotal(egreso.montoTotal());
         egresoDTO.setCategorias(egreso.getCategorias());
         egresoDTO.setFecha(egreso.getFecha());
+        egresoDTO.setCantPresupuestosFaltantes(egreso.cantPresupuestosFaltantes());
 
         return egresoDTO;
     }

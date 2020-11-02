@@ -38,10 +38,10 @@ function cleanDesplegable(desplegable){
 }
 
 function crearOptionEgreso(desplegable,data){
-    let template = ` <option value= ${data.id}> Egreso #${data.id} proveedor: ${data.detalle.proveedor.nombre},
-        fecha: ${data.fecha}, monto: ${data.montoTotal}
+    let template = ` <option value= ${data.id}> Egreso #${data.id} proveedor: ${data.detalle.proveedor.razonSocial},
+        fecha: ${data.fecha.day}-${data.fecha.month}-${data.fecha.year}, Faltan ${data.cantPresupuestosFaltantes} presupuestos , monto:$ ${data.montoTotal}
     </option>`
-    desplegable.innerHTML = template;
+    desplegable.innerHTML += template;
 }
 export { contenidoSeleccionadoEn,
     seleccionarValorPara,

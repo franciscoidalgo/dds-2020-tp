@@ -215,8 +215,14 @@ public class OperacionEgreso extends Operacion {
         return this.detalle.getItems();
     }
 
-    public Boolean faltaVinculacion(LocalDate fechaMax) {
+    public Boolean podesVincularteSegunFecha(LocalDate fechaMax) {
         return this.fecha.isBefore(fechaMax) && !this.estaAsociado ;
     }
 
+    public Boolean tenesFechaIgualOAnterior(LocalDate fechaMax){
+        return this.fecha.isBefore(fechaMax) || this.fecha.isEqual(fechaMax) ;
+    }
+    public int cantPresupuestosFaltantes(){
+        return Math.max(this.cantPresupuestos - this.presupuestos.size(), 0);
+    }
 }

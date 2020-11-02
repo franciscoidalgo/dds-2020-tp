@@ -676,6 +676,15 @@ tr {
     text-align: center;
 }
 
+.modal-fail i,
+.modal-fail h1{
+    color: #d63447;
+}
+
+.modal-success i,
+.modal-success h1{
+    color: #559152;
+}
 
 /*Bandeja Mensajes*/
 
