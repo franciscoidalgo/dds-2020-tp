@@ -15,4 +15,4 @@ function generaTextbox(etiqueta){
     return nodoTextbox;
 }
 
-export default generaTextbox;
+export {generaTextbox};

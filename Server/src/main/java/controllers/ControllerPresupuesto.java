@@ -56,7 +56,7 @@ public class ControllerPresupuesto {
         JsonElement jsonElement = parser.parse(request.body());
         JsonObject rootObject = jsonElement.getAsJsonObject();
         try{
-            Integer idEgreso = rootObject.get("idEgresos").getAsInt();
+            Integer idEgreso = rootObject.get("idEgreso").getAsInt();
             DetalleOperacion detalleOperacion = FactoryDetalle.get(request);
             Presupuesto presupuesto = new Presupuesto();
             presupuesto.setDetalle(detalleOperacion);

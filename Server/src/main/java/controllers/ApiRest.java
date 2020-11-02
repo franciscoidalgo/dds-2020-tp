@@ -83,6 +83,32 @@ public class ApiRest {
         //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
         List<OperacionEgreso> egresos = repositorioEgreso.buscarTodos();
 
+        egresos = egresos.stream().filter(egreso -> egreso.getFecha().isBefore(fechaMax)).collect(Collectors.toList());
+
+        egresos.forEach(egreso -> {
+            EgresoDTO egresoDTO = generarEgresoDTO(egreso);
+            egresoDTOList.add(egresoDTO);
+        });
+
+        jsonEgreso = gson.toJson(egresoDTOList);
+        response.type("application/json");
+        return jsonEgreso;
+    }
+
+    public  String pasarEgresosSegunFecha(Request request,Response response){
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+
+        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
+        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
+        List<EgresoDTO> egresoDTOList = new ArrayList<>();
+        String jsonEgreso;
+
+        LocalDate fechaMax = LocalDate.parse(request.params("fechaMax"));
+
+        //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
+        List<OperacionEgreso> egresos = repositorioEgreso.buscarTodos();
+
         egresos = egresos.stream().filter(egreso -> egreso.faltaVinculacion(fechaMax)).collect(Collectors.toList());
 
         egresos.forEach(egreso -> {

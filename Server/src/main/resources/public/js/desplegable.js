@@ -35,9 +35,13 @@ function cleanDesplegable(desplegable){
     desplegable.innerHTML = ""
     agregaContenidoEnDesplegable(desplegable,"-- Seleccione --",true);
     desplegable.children[0].disable=true;
+}
 
-
-
+function crearOptionEgreso(desplegable,data){
+    let template = ` <option value= ${data.id}> Egreso #${data.id} proveedor: ${data.detalle.proveedor.nombre},
+        fecha: ${data.fecha}, monto: ${data.montoTotal}
+    </option>`
+    desplegable.innerHTML = template;
 }
 export { contenidoSeleccionadoEn,
     seleccionarValorPara,
@@ -45,4 +49,5 @@ export { contenidoSeleccionadoEn,
     sacarDelDesplegableEscondiendo,
     tieneSeleccionables,
     agregaContenidoEnDesplegable,
-    cleanDesplegable };
+    cleanDesplegable,
+    crearOptionEgreso};

@@ -75,6 +75,8 @@ public class Router {
 
         Spark.get("/api/get-egreso/:id", apiRest::pasarEgresos);
 
+        Spark.get("/api/get-egreso-segun-fecha/:fechaMax", apiRest::pasarEgresosSegunFecha);
+
         Spark.get("/api/get-proveedor/:id", apiRest::mostrarProveedores);
 
         Spark.get("/api/get-item-segun-tipo/:id", apiRest::mostraItemsSegunTipo);

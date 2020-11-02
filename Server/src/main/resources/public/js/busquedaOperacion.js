@@ -45,8 +45,8 @@ document.getElementById("btn-seleccion").onclick = () => {
 
     if (seleccion === "egreso") {
         console.log("debo buscar en la api criterios y categorias");
-        seccionSeleccionCriterio.hidden = false;
-        seccionSeleccionCategoria.hidden = false;
+       // seccionSeleccionCriterio.hidden = false;
+       // seccionSeleccionCategoria.hidden = false;
         renderizarEgreso();
     } else {
         renderizarIngreso();

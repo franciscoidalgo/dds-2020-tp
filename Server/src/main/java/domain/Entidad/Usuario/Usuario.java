@@ -54,14 +54,14 @@ public class Usuario extends EntidadPersistente {
         this.bandejaDeMensajes = new BandejaMensaje();
     }
 
-    public Usuario(String apellido, String nombre, String username, String password, Rol rol, Entidad entidadPertenece, BandejaMensaje bandejaDeMensajes) {
+    public Usuario(String apellido, String nombre, String username, String password, Rol rol, Entidad entidadPertenece) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.username = username;
         this.password = password;
         this.rol = rol;
         this.entidadPertenece = entidadPertenece;
-        this.bandejaDeMensajes = bandejaDeMensajes;
+        this.bandejaDeMensajes = new BandejaMensaje();
     }
 //Getters-Setters
 

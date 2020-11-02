@@ -17,7 +17,6 @@ import java.util.List;
 public abstract class Entidad extends EntidadPersistente{
 
     @ManyToOne
-    @JoinColumn( referencedColumnName = "id")
     protected Organizacion organizacion;
 
     @OneToMany(mappedBy = "entidad",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

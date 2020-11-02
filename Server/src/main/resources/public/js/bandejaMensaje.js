@@ -95,8 +95,8 @@ function buildTemplateMensaje(egreso,esValida) {
             </section>
             <section>
                 <h3>Detalle de la operacion</h3>
-                <p><span>Monto total:</span> ${medioDePago.moneda} $${egreso.montoTotal}</p>
-                <p><span>Tipo comprobante:</span> ${medioDePago.nombre}</p>
+                <p><span>Monto total:</span> ${medioDePago.tipoDePago.nombre} $${egreso.montoTotal}</p>
+                <p><span>Tipo comprobante:</span> ${egreso.detalle.comprobante.tipoComprobante.nombre}</p>
                 <p><span>Comprobante</span>: <a id="ver-comprobante" href=${/*medioDePago.comprobante.path*/"tipo comprobante"} target="blank">ver comprobante</a></p>
                 <p><span>Cantidad Presupuestos: </span>${egreso.cantPresupuestos}</p>
             </section>
@@ -153,7 +153,7 @@ function mostrarMensaje(egreso,esValida,detalleValidacion) {
     //const msjResultado = data.cuerpoMensaje;
 
     buildTemplateMensaje(egreso,esValida);
-    buildCategorias(egreso.categorias);
+   //buildCategorias(egreso.categorias);
     buildTablaDetalle(egreso.items);
     buildTooltip(detalleValidacion);
 

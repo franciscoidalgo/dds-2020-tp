@@ -9,9 +9,10 @@ function agregateContenidoEnTablaSimple(tabla, descripcion,tipo,cantidad,precioU
     addFilaInnerHTML(fila,tipo,1)
     addFilaInnerHTML(fila,cantidad,2)
     addFilaInnerHTML(fila,precioUnitario,3)
+    addFilaInnerHTML(fila,cantidad*precioUnitario,4)
 
     icono.className = classDelete;
-    fila.insertCell(4).appendChild(icono);
+    fila.insertCell(5).appendChild(icono);
 
     icono.onclick = ()=>{eliminarFila(fila,item)};
 }
