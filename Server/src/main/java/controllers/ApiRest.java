@@ -217,8 +217,9 @@ public class ApiRest {
 
     private EgresoDTO generarEgresoDTO(OperacionEgreso egreso){
         EgresoDTO egresoDTO = new EgresoDTO();
+
         egresoDTO.setId(egreso.getId());
-        egresoDTO.setItems(egreso.getItems());
+        egresoDTO.setPedido(egreso.getDetalle().getPedidos());
         egresoDTO.setCantPresupuestos(egreso.getCantPresupuestos());
         egresoDTO.setDetalle(egreso.getDetalle());
         egresoDTO.setMedioDePago(egreso.getMedioDePago());

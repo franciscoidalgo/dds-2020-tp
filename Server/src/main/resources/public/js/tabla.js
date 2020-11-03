@@ -1,6 +1,15 @@
-function agregateContenidoEnTablaSimple(tabla, descripcion,tipo,cantidad,precioUnitario,item) {
+function agregateFilaEnTablaSimpleConBorrador(tabla, descripcion, tipo, cantidad, precioUnitario, item) {
     let classDelete = "fas fa-minus-square";
     let icono = document.createElement("i");
+    let fila = agregateFilaEnTablaDetalleSimple(tabla, descripcion,tipo,cantidad,precioUnitario);
+
+    icono.className = classDelete;
+    fila.insertCell(5).appendChild(icono);
+
+    icono.onclick = ()=>{eliminarFila(fila,item)};
+}
+
+function agregateFilaEnTablaDetalleSimple(tabla, descripcion,tipo,cantidad,precioUnitario) {
     let fila = tabla.children[1].insertRow(-1);
 
     console.log(tipo)
@@ -10,11 +19,7 @@ function agregateContenidoEnTablaSimple(tabla, descripcion,tipo,cantidad,precioU
     addFilaInnerHTML(fila,cantidad,2)
     addFilaInnerHTML(fila,precioUnitario,3)
     addFilaInnerHTML(fila,cantidad*precioUnitario,4)
-
-    icono.className = classDelete;
-    fila.insertCell(5).appendChild(icono);
-
-    icono.onclick = ()=>{eliminarFila(fila,item)};
+    return fila;
 }
 
 function tablaTieneElementos(tabla){
@@ -108,10 +113,8 @@ function settearFilaIngresos(tbody,data){
 }
 
 
-function  crearTablaSeleccionEgreso(){
-
-}
 
 
 
-export {agregateContenidoEnTablaSimple, tablaTieneElementos,crearTablaIngresos,crearTablaEgresos};
+
+export {agregateFilaEnTablaSimpleConBorrador, tablaTieneElementos,crearTablaIngresos,crearTablaEgresos,agregateFilaEnTablaDetalleSimple};

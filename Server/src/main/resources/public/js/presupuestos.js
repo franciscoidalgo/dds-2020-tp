@@ -13,8 +13,6 @@ function getJsonPresupuesto() {
     return template
 }
 
-
-
 /** Eventos **/
 
 document.getElementById("fecha").onchange = () =>{

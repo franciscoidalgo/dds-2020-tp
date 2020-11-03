@@ -2,10 +2,7 @@ package controllers.DTO;
 
 import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Entidad.Usuario.Usuario;
-import domain.Operacion.Egreso.DetalleOperacion;
-import domain.Operacion.Egreso.Item;
-import domain.Operacion.Egreso.MedioDePago;
-import domain.Operacion.Egreso.Presupuesto;
+import domain.Operacion.Egreso.*;
 import domain.Operacion.Ingreso.OperacionIngreso;
 
 import javax.persistence.*;
@@ -18,7 +15,8 @@ public class EgresoDTO {
     public DetalleOperacion detalle;
     public MedioDePago medioDePago;
 
-    public List<Item> items;
+    public List<Pedido> pedido;
+
     //private Boolean estaAsociado = false;
     //private List<Presupuesto> presupuestos;
     //private OperacionIngreso ingreso;
@@ -69,13 +67,6 @@ public class EgresoDTO {
         return medioDePago;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
 
     public Integer getCantPresupuestos() {
         return cantPresupuestos;
@@ -109,5 +100,13 @@ public class EgresoDTO {
 
     public void setCantPresupuestosFaltantes(Integer cantPresupuestosFaltantes) {
         this.cantPresupuestosFaltantes = cantPresupuestosFaltantes;
+    }
+
+    public List<Pedido> getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(List<Pedido> pedido) {
+        this.pedido = pedido;
     }
 }

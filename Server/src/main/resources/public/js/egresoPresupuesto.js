@@ -1,4 +1,4 @@
-import {agregateContenidoEnTablaSimple, tablaTieneElementos} from './tabla.js';
+import {agregateFilaEnTablaSimpleConBorrador, tablaTieneElementos} from './tabla.js';
 import {
     agregaContenidoEnDesplegable, cleanDesplegable,
     contenidoDesplegableEs,
@@ -342,10 +342,10 @@ boton.agregarTabla.onclick = () => {
     escondeMostrandoA(seccion.msgTablaVacia, seccion.tablaDetalle);
 
     if (botonNuevo.value !== "Cancelar") {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
+        agregateFilaEnTablaSimpleConBorrador(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
         item.nombre = contenidoSeleccionadoEn(bien).innerText
     } else {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, bien.value, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
+        agregateFilaEnTablaSimpleConBorrador(seccion.tablaDetalle, bien.value, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
         bien.remove();
         boton.nuevoItem.value = "Nuevo";
         contenedor.appendChild(desplegable.bien);

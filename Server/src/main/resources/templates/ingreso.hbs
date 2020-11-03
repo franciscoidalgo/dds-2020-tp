@@ -59,8 +59,9 @@
                     <label for="tipo-ingreso">Tipo de Ingreso</label><br>
                     <select name="tipo-ingreso" id="tipo-ingreso" required>
                         <option value="" disabled selected>-- Seleccione --</option>
-                        <option value="">Donacion</option>
-                        <option value="">Prestamo</option>
+                        {{#each tipoIngreso}}
+                            <option value= {{id}}>{{nombre}} </option>
+                        {{/each}}
                     </select>
                 </div>
                 <label for="monto-total">Monto Total</label><br>

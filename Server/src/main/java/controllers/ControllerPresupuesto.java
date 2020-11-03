@@ -52,12 +52,11 @@ public class ControllerPresupuesto {
         Repositorio<OperacionEgreso> operacionEgresoRepositorio = FactoryRepo.get(OperacionEgreso.class);
         JsonParser parser = new JsonParser();
 
-
+        System.out.println("***********me llego la request el id");
         JsonObject mensajeRta = new JsonObject();
         try{
             JsonElement jsonElement = parser.parse(request.body());
             JsonObject rootObject = jsonElement.getAsJsonObject();
-            System.out.println("***********me llego la request el id");
             int idEgreso = rootObject.get("idEgreso").getAsInt();
             System.out.println("***********Tengo el id");
             DetalleOperacion detalleOperacion = FactoryDetalle.get(request);

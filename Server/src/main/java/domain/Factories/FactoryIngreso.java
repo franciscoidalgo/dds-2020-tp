@@ -11,7 +11,7 @@ import spark.Request;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-
+/*
 public class FactoryIngreso {
     public static OperacionIngreso get(Request request) {
         Gson gson = new Gson();
@@ -29,3 +29,5 @@ public class FactoryIngreso {
         return  operacionIngreso;
     }
 }
+
+*/

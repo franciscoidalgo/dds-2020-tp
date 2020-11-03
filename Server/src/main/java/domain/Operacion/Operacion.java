@@ -20,7 +20,7 @@ public abstract class Operacion extends EntidadPersistente {
     protected Entidad entidad;
 
     @Column(name = "monto_total")
-    protected double montoTotal;
+    protected double  montoTotal;
 
     public Operacion() {
         this.fecha = LocalDate.now();

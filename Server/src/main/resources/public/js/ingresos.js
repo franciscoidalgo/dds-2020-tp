@@ -1,11 +1,11 @@
-import {Burbuja,  Desplegable} from "./burbuja.js";
-import {generaModalAlert,generaBoton} from "./modal.js"
+import {Burbuja, Desplegable} from "./burbuja.js";
+import {generaModalAlert, generaBoton, generarModalOK, generarModalFail} from "./modal.js"
 import {cleanDesplegable, contenidoDesplegableEs, contenidoSeleccionadoEn} from "./desplegable.js"
 
 
 const burbujas = [
-    new Burbuja('burbuja-detalle','detalle-ingreso'),
-    new Burbuja('burbuja-egreso','egreso')
+    new Burbuja('burbuja-detalle', 'detalle-ingreso'),
+    new Burbuja('burbuja-egreso', 'egreso')
 ]
 
 const habilitadores = [
@@ -15,11 +15,12 @@ const habilitadores = [
 
 /*Funciones!*/
 
-function generaBotonera(){
+function generaBotonera() {
     let botonera = document.createElement("div");
     botonera.className = "d-flex jc-se"
     return botonera;
 }
+
 function generarOptionEgreso(data) {
     let template = `Egreso #${data.id} (proveedor: ${data.detalle.proveedor.razonSocial}, fecha: ${data.fecha.day}-${data.fecha.month}-${data.fecha.year}, monto: ${data.montoTotal})`
     let option = document.createElement("option");
@@ -29,21 +30,22 @@ function generarOptionEgreso(data) {
 
     return option;
 }
-function cargarDesplegableCon(data){
+
+function cargarDesplegableCon(data) {
     let desplegableEgreso = document.getElementById("seleccion-egresos");
     console.log(data);
-    for(let i = 0; i < data.length;i++){
-        desplegableEgreso.appendChild(generarOptionEgreso(data[i])) ;
+    for (let i = 0; i < data.length; i++) {
+        desplegableEgreso.appendChild(generarOptionEgreso(data[i]));
     }
 }
 
-function cleanDesplegableEgreso(){
+function cleanDesplegableEgreso() {
     let desplegableEgreso = document.getElementById("seleccion-egresos");
     cleanDesplegable(desplegableEgreso);
-    desplegableEgreso.innerHTML ='<option value="" disabled selected>-- Seleccione --</option> <option value="">Ninguno</option>'
+    desplegableEgreso.innerHTML = '<option value="" disabled selected>-- Seleccione --</option> <option value="">Ninguno</option>'
 }
 
-function agregarEgresoALista(egreso,posicion){
+function agregarEgresoALista(egreso, posicion) {
     let seccion = document.getElementById("egresos-seleccionados");
     let contenido = document.createElement("li");
     let btn = document.createElement("button");
@@ -55,10 +57,10 @@ function agregarEgresoALista(egreso,posicion){
     btn.innerText = "Quitar";
     btn.type = "button"
     btn.className = "btn btn-formulario-danger"
-    contenido.style.fontSize="1.4rem";
-    contenido.style.fontWeight="bold";
+    contenido.style.fontSize = "1.4rem";
+    contenido.style.fontWeight = "bold";
 
-    btn.onclick = () =>{
+    btn.onclick = () => {
         egresosSeleccionados.splice(posicion, 1);
         auxSeleccionados.splice(posicion, 1);
         contenido.remove();
@@ -69,35 +71,35 @@ function agregarEgresoALista(egreso,posicion){
 
 }
 
-var egresosSeleccionados=[];
-var auxSeleccionados=[];
+var egresosSeleccionados = [];
+var auxSeleccionados = [];
 
 /*Eventos!*/
-burbujas.forEach((b)=>{
+burbujas.forEach((b) => {
     b.elemento.onclick = () => b.ocultaBurbuja();
 })
 
-habilitadores.forEach((d) =>{
+habilitadores.forEach((d) => {
     d.elemento.onchange = () => d.habilitaObjetivo();
 });
 
 
-document.getElementById("fecha").onchange = ()=>{
+document.getElementById("fecha").onchange = () => {
     let monto = document.getElementById("monto-total").value;
     let fechaAceptabilidad = document.getElementById("fecha-aceptabilidad");
-    let desplegableEgreso =document.getElementById("seleccion-egresos");
+    let desplegableEgreso = document.getElementById("seleccion-egresos");
 
-    if(monto >0){
-    desplegableEgreso.disabled = true;
-    fechaAceptabilidad.disabled = false;
-    fechaAceptabilidad.value = "";
+    if (monto > 0) {
+        desplegableEgreso.disabled = true;
+        fechaAceptabilidad.disabled = false;
+        fechaAceptabilidad.value = "";
     }
 }
 
 
-document.getElementById("fecha-aceptabilidad").onchange = ()=>{
+document.getElementById("fecha-aceptabilidad").onchange = () => {
     let fechaMax = document.getElementById("fecha-aceptabilidad").value;
-    let desplegableEgreso =document.getElementById("seleccion-egresos");
+    let desplegableEgreso = document.getElementById("seleccion-egresos");
     cleanDesplegableEgreso();
     let url = `/api/get-egresos-vincular/${fechaMax}`;
     console.log(url);
@@ -111,19 +113,18 @@ document.getElementById("fecha-aceptabilidad").onchange = ()=>{
 }
 
 
-
-document.getElementById("vincular-auto").onclick = ()=>{
-    let modal = generaModalAlert("Realizar Vinculacion Automatica","No se vincularan los Egresos seleccionados manualmente, ¿esta seguro de continuar?")
+document.getElementById("vincular-auto").onclick = () => {
+    let modal = generaModalAlert("Realizar Vinculacion Automatica", "No se vincularan los Egresos seleccionados manualmente, ¿esta seguro de continuar?")
     let botonera = generaBotonera();
-    let boton = generaBoton("Cancelar",eventoCancelar);
+    let boton = generaBoton("Cancelar", eventoCancelar);
     let form = document.getElementById("operacion-egreso");
 
     //Agrego Boton a Botonera
-    boton.className="btn btn-danger";
+    boton.className = "btn btn-danger";
     botonera.appendChild(boton);
 
     //Agrego Boton a Botonera
-    boton = generaBoton("Vincular",eventoVincular);
+    boton = generaBoton("Vincular", eventoVincular);
     botonera.appendChild(boton);
 
     //Agrego Boton a Modal
@@ -146,45 +147,59 @@ window.eventoCancelar = () => {
 
 document.getElementById("agregar-egreso").onclick = () => {
     var seleccionado = document.getElementById("seleccion-egresos");
-    if(seleccionado.value !== ""){
+    if (seleccionado.value !== "") {
         egresosSeleccionados.push(seleccionado.value);
     }
     let posicion = egresosSeleccionados.length;
-    agregarEgresoALista(seleccionado,posicion);
+    agregarEgresoALista(seleccionado, posicion);
 
 }
 
-document.getElementById("operacion-ingreso").onsubmit = (e)=> {
+function getIngresoJSON() {
+    let montoTotal = document.getElementById("monto-total");
+    let descripcion = document.getElementById("descripcion");
+    let fecha = document.getElementById("fecha");
+    let fechaAceptabilidad = document.getElementById("fecha-aceptabilidad");
+    let tipoPedido = document.getElementById("tipo-ingreso");
+    let ingresoJSON = {}
+
+    ingresoJSON.monto = montoTotal.value;
+    ingresoJSON.descripcion = descripcion.value;
+    ingresoJSON.listaEgresos = egresosSeleccionados;
+    ingresoJSON.fechaRealizada = fecha.value;
+    ingresoJSON.fechaAceptacion = fechaAceptabilidad.value;
+    ingresoJSON.tipoPedido = tipoPedido.value;
+
+    return ingresoJSON;
+}
+
+
+document.getElementById("operacion-ingreso").onsubmit = (e) => {
+    let url = "/ingreso";
+    let jsonIngreso = getIngresoJSON();
+
+    console.log(jsonIngreso);
     e.preventDefault();
 
-    $.ajax({
-        url : "/ingreso",
-        type: "POST",
-        dataType: 'text',
-        data:{
-            "montoTotal" : $("#monto-total").val(),
-            "descripcion" : $("#descripcion").val(),
-            "listaEgresos" : JSON.stringify(egresosSeleccionados),
-            "fecha":$("#fecha").val(),
-            "fechaAceptabilidad":$("#fecha-aceptabilidad").val()
+    let init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        success: function(response){
-            let modal = generaModalAlert("Operacion exitosa","El ingreso se genero correctamente.");
-            let botonera = generaBotonera();
-            let boton = generaBoton("Ok",recargarPagina);
-            botonera.appendChild(boton);
-            modal.firstElementChild.appendChild(botonera);
-            document.body.appendChild(modal);
-        },
-        error: function(){
-            let modal = generaModalAlert("Error", "Hubo un error al generar el ingreso.");
-            let botonera = generaBotonera();
-            let boton = generaBoton("Ok",cerrarModal);
-            botonera.appendChild(boton);
-            modal.firstElementChild.appendChild(botonera);
-            document.body.appendChild(modal);
-        }
-    });
+        body: JSON.stringify(jsonIngreso)
+    }
+
+    fetch(url, init)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json()
+            } else {
+                throw 'No se pudo registrar el ingreso. Verifique que todos los campos esten completos. En caso de haber vinculado manualmente, verifique que los egresos seleccionado no superen al costo del ingreso'
+            }
+        })
+        .then(data => generarModalOK("Se registro el ingreso correctamente en el sistema. Podras identificarlo como Ingreso#" + data.idIngreso))
+        .catch(reason => generarModalFail(reason))
+
 }
 
 window.cerrarModal = () => {
@@ -195,6 +210,6 @@ window.cerrarModal = () => {
 window.recargarPagina = () => {
     let inicio = document.getElementById("burbuja-detalle")
     inicio.focus();
-    inicio.scrollIntoView({ behavior: "smooth" });
+    inicio.scrollIntoView({behavior: "smooth"});
     window.location.reload(true);
 }
