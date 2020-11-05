@@ -1,9 +1,7 @@
 package domain.Usuario.BandejaMensaje;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Embeddable
@@ -13,7 +11,26 @@ public class BandejaMensaje {
     private List<Mensaje> mensajes;
 
 
+    public class BandejaMensajeDTO{
+        private List<Mensaje> mensajes;
+        private int cantMensajes;
 
+        public List<Mensaje> getMensajes() {
+            return mensajes;
+        }
+
+        public void setMensajes(List<Mensaje> mensajes) {
+            this.mensajes = mensajes;
+        }
+
+        public int getCantMensajes() {
+            return cantMensajes;
+        }
+
+        public void setCantMensajes(int cantMensajes) {
+            this.cantMensajes = cantMensajes;
+        }
+    }
     //Constructors
     public BandejaMensaje() {
         this.mensajes = new ArrayList<>();
@@ -48,7 +65,17 @@ public class BandejaMensaje {
     }
 
     public List<Mensaje> getMensajes() {
-        return mensajes;
+        List<Mensaje> mensajesMostrar = mensajes;
+        Collections.reverse(mensajesMostrar);
+        return mensajesMostrar;
+
+    }
+
+    public BandejaMensajeDTO toDTO(){
+            BandejaMensajeDTO mensajesDTO = new BandejaMensajeDTO();
+            mensajesDTO.setCantMensajes(this.mensajes.size());
+            mensajesDTO.setMensajes(this.getMensajes());
+            return mensajesDTO;
     }
 
 }

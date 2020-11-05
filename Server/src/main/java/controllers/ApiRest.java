@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 import controllers.convertersDTO.ConverterIngresoSubmit;
+import domain.Usuario.BandejaMensaje.BandejaMensaje;
 import domain.Usuario.BandejaMensaje.Mensaje;
 import domain.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
@@ -42,8 +43,9 @@ public class ApiRest {
         RepositorioDeUsuarios repositorioDeUsuarios = FactoryRepoUsuario.get();
         Usuario usuarioLogueado = repositorioDeUsuarios.buscar(request.session().attribute("userId"));
         Gson gson = new Gson();
-        List<Mensaje> listaMensajes = usuarioLogueado.getBandejaDeMensajes().getMensajes();
-        String jMensajes = gson.toJson(listaMensajes);
+        //TODO BUSCAR POR MAX Y MIN MENSAJES ----> GANAR EN OPTIMIZACION
+        BandejaMensaje bandejaMensaje =usuarioLogueado.getBandejaDeMensajes();
+        String jMensajes = gson.toJson(bandejaMensaje.toDTO());
         response.type("application/json");
         return jMensajes;
     }
@@ -207,21 +209,13 @@ public class ApiRest {
 
 
         egresoDTO.setId(egreso.getId());
-        System.out.println("---------------->CARGANDO DETALLE");
         egresoDTO.setPedido(egreso.getDetalle().getPedidos());
-        System.out.println("---------------->Cant Presupuesto");
         egresoDTO.setCantPresupuestos(egreso.getCantPresupuestos());
-        System.out.println("---------------->");
         egresoDTO.setDetalle(egreso.getDetalle());
-        System.out.println("---------------->");
         egresoDTO.setMedioDePago(egreso.getMedioDePago());
-        System.out.println("---------------->");
         egresoDTO.setMontoTotal(egreso.montoTotal());
-        System.out.println("---------------->");
         egresoDTO.setCategorias(egreso.getCategorias());
-        System.out.println("---------------->");
         egresoDTO.setFecha(egreso.getFecha().toString());
-        System.out.println("---------------->");
         egresoDTO.setCantPresupuestosFaltantes(egreso.cantPresupuestosFaltantes());
 
         return egresoDTO;

@@ -38,14 +38,14 @@ public class Mensaje extends EntidadPersistente {
         this.mensaje = mensaje;
         this.fechaEnvio = LocalDate.now();
         this.horaEnvio = LocalTime.now();
-        this.fechaLeido = null;
-        this.horaLeido = null;
+        this.fechaLeido = LocalDate.now();
+        this.horaLeido = LocalTime.now();
     }
     public Mensaje( OperacionEgreso egreso,String resultadoValidacion,String detalleResultado) {
         this.fechaEnvio = LocalDate.now();
         this.horaEnvio = LocalTime.now();
-        this.fechaLeido = null;
-        this.horaLeido = null;
+        this.fechaLeido = LocalDate.now();
+        this.horaLeido = LocalTime.now();
 
         setSegunEgreso(egreso, resultadoValidacion,detalleResultado);
 

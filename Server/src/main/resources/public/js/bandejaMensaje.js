@@ -2,11 +2,22 @@ import {generaCategoria} from './generales/categoria.js';
 import {agregateFilaEnTablaDetalleSimple} from "./generales/tabla.js";
 import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 
-var countRender = 0;
-var btnSiguiente = document.getElementById("siguiente");
-var btnAnterior = document.getElementById("anterior");
+
+const boton = {
+    siguiente: document.getElementById("siguiente"),
+    anterior: document.getElementById("anterior")
+}
+let countRender = 0;
+let cantMaxima = 0;
+let dataMensajes = {};
 
 /* Funciones */
+function fueLeido(dataMensaje) {
+    return  dataMensaje.fechaEnvio.toLocaleString() ===
+        dataMensaje.fechaLeido.toLocaleString() &&
+        dataMensaje.horaEnvio.toLocaleString() ===
+        dataMensaje.horaLeido.toLocaleString();
+}
 function buildFila(data) {
     const tbodyMensajes = document.getElementById("seccion-mensajes");
     let tr = document.createElement("tr");
@@ -15,7 +26,6 @@ function buildFila(data) {
     let asuntoSeparado = data.asunto.split("--")
     let idEgreso = asuntoSeparado[0].slice(8);
     let esValida = true;
-
     for (let i = 0; i < asuntoSeparado.length; i++) {
         let asunto = asuntoSeparado[i].toLocaleLowerCase()
         esValida = "valida" === asuntoSeparado[i].toLocaleLowerCase()
@@ -25,9 +35,11 @@ function buildFila(data) {
     }
 
     tr.className = "txt-left"
+    tr.style.fontWeight=fueLeido(data)?"700":"400";
     tr.onclick = () => {
         if (idEgreso !== "") {
             getMensajeDesdeApi(idEgreso, esValida, data.mensaje)
+            tr.style.fontWeight="400";
 
         } else {
             //render mensajeComun
@@ -129,7 +141,10 @@ function buildTemplateMensaje(egreso, esValida) {
                     </tfoot>                
                 </table>
             </section>
-        </main>    
+        </main>  
+        <footer>
+            <button id="btn-no-revisar" class="btn btn-formulario-danger">Dejar de Revisar</button>
+        </footer>  
     `
     contenedorHTML.innerHTML = template;
 }
@@ -142,6 +157,8 @@ function buildCategorias(vectorCategorias) {
         contenedorHTML.appendChild(contenido);
     }
 }
+
+
 
 function buildTablaDetalle(vectorItems) {
     let tabla = document.getElementById("tabla-detalle");
@@ -157,9 +174,7 @@ function buildTablaDetalle(vectorItems) {
         contadorMontos += subtotal;
     }
 
-    console.log(vectorItems);
     for (let i = 0; i < vectorItems.length; i++) {
-        console.log(vectorItems[i]);
         agregarEnTablaDetalleDesdeAPI(vectorItems[i]);
     }
 
@@ -177,7 +192,9 @@ function buildTooltip(resultadoMensaje) {
         contenedorHTML.appendChild(contenido);
     }
 }
+function buildBotonDejarRevisar(){
 
+}
 function mostrarMensaje(egreso, esValida, detalleValidacion) {
     const detalle = egreso.detalle;
 
@@ -187,12 +204,12 @@ function mostrarMensaje(egreso, esValida, detalleValidacion) {
     //buildCategorias(egreso.categorias);
     buildTablaDetalle(detalle.pedidos);
     buildTooltip(detalleValidacion);
+    buildBotonDejarRevisar();
 
 }
 
 function renderTabla(data) {
     var paginaHTML = document.getElementById("cant-paginas");
-    console.log(data)
     cleanTabla();
 
     for (let i = countRender, j = 10; j > 0 && i < data.length; i++, j--) {
@@ -200,7 +217,11 @@ function renderTabla(data) {
         countRender = i + 1;
     }
 
-    paginaHTML.innerText = setToStringCantPaginas(data.length);
+    paginaHTML.innerText = setToStringCantPaginas();
+
+    boton.anterior.hidden = countRender <= 10;
+    boton.siguiente.hidden = countRender >= cantMaxima;
+
 }
 
 function cleanTabla() {
@@ -210,25 +231,13 @@ function cleanTabla() {
     }
 }
 
-function setToStringCantPaginas(size) {
-    if (size == 0) {
+function setToStringCantPaginas() {
+    if (cantMaxima == 0) {
         return "0 de 0"
     }
-    return size > countRender ?
-        `${1 + countRender - 10}-${countRender} de ${size}` : `${1 + countRender - size % 10}-${size} de ${countRender}`
+    return cantMaxima > countRender ?
+        `${1 + countRender - 10}-${countRender} de ${cantMaxima}` : `${1 + countRender - cantMaxima % 10}-${cantMaxima} de ${countRender}`
 }
-
-/* Eventos */
-
-window.addEventListener("load",() => {
-    let url = "/mensajes/todos";
-    mostrarLoader();
-    console.log(url)
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {renderTabla(data);esconderLoader();})
-        .catch(reason => console.log(reason));
-})
 
 function getMensajeDesdeApi(id, esValida, detalleValidacion) {
     var url = "/api/get-egreso/" + id;
@@ -238,12 +247,37 @@ function getMensajeDesdeApi(id, esValida, detalleValidacion) {
         .catch(reason => console.log(reason));
 }
 
+/* Eventos */
+
+window.addEventListener("load", () => {
+    let url = "/mensajes/todos";
+    mostrarLoader();
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            dataMensajes = data.mensajes;
+            cantMaxima = data.cantMensajes;
+            renderTabla(dataMensajes);
+            esconderLoader();
+        })
+        .catch(reason => console.log(reason));
+})
 
 
-btnSiguiente.onclick = () => renderTabla(dataJson)
+boton.siguiente.onclick = () => {
+    renderTabla(dataMensajes)
+    countRender = Math.min(countRender, cantMaxima);
 
-btnAnterior.onclick = () => {
-    countRender -= 2 + ((countRender - 1) % 10);
-    /****************VER ACA */
-    renderTabla(dataJson);
+}
+
+boton.anterior.onclick = () => {
+    let resto = countRender % 10;
+    if (resto > 0) {
+        countRender -= resto + 10;
+    } else {
+        countRender -= 20;
+        countRender = Math.max(countRender, 0);
+    }
+
+    renderTabla(dataMensajes);
 }
