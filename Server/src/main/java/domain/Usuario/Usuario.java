@@ -8,6 +8,7 @@ import domain.Usuario.BandejaMensaje.BandejaMensaje;
 import domain.Usuario.BandejaMensaje.Mensaje;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -129,8 +130,10 @@ public class Usuario extends EntidadPersistente {
         unEgreso.agregateRevisor(this);
     }
 
-    public void darseDeBajaEn(OperacionEgreso unEgreso){
+    public List<Mensaje> darseDeBajaEn(OperacionEgreso unEgreso){
         unEgreso.sacaRevisor(this);
+        List<Mensaje>  mensajesBorrar=  bandejaDeMensajes.sacarMensajeRelacionadosA(unEgreso);
+       return mensajesBorrar;
     }
 
     public void recibiMensaje(Mensaje unMensaje){

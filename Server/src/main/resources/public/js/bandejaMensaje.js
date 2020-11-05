@@ -1,6 +1,7 @@
 import {generaCategoria} from './generales/categoria.js';
 import {agregateFilaEnTablaDetalleSimple} from "./generales/tabla.js";
 import {esconderLoader, mostrarLoader} from "./generales/loader.js";
+import {generarModalOK} from "./generales/modal.js";
 
 
 const boton = {
@@ -11,13 +12,24 @@ let countRender = 0;
 let cantMaxima = 0;
 let dataMensajes = {};
 
+const MENSAJE_REVISOR = "Dejaste de ser revisor de esta operacion. Puedes volver a seleccionarte como revisor, en el panel de busqueda"
+
 /* Funciones */
 function fueLeido(dataMensaje) {
-    return  dataMensaje.fechaEnvio.toLocaleString() ===
-        dataMensaje.fechaLeido.toLocaleString() &&
-        dataMensaje.horaEnvio.toLocaleString() ===
-        dataMensaje.horaLeido.toLocaleString();
+    console.log(dataMensaje.fechaEnvio.year);
+    console.log(dataMensaje.fechaLeido.year);
+    console.log(dataMensaje.fechaEnvio);
+    console.log(dataMensaje.fechaLeido);
+
+    return dataMensaje.fechaEnvio.year ===  dataMensaje.fechaLeido.year &&
+        dataMensaje.fechaEnvio.month ===  dataMensaje.fechaLeido.month &&
+        dataMensaje.fechaEnvio.day ===  dataMensaje.fechaLeido.day &&
+        dataMensaje.horaEnvio.hour === dataMensaje.horaLeido.hour &&
+        dataMensaje.horaEnvio.minute === dataMensaje.horaLeido.minute &&
+        dataMensaje.horaEnvio.second === dataMensaje.horaLeido.second ;
+
 }
+
 function buildFila(data) {
     const tbodyMensajes = document.getElementById("seccion-mensajes");
     let tr = document.createElement("tr");
@@ -35,11 +47,11 @@ function buildFila(data) {
     }
 
     tr.className = "txt-left"
-    tr.style.fontWeight=fueLeido(data)?"700":"400";
+    tr.style.fontWeight = fueLeido(data) ? "700" : "400";
     tr.onclick = () => {
         if (idEgreso !== "") {
-            getMensajeDesdeApi(idEgreso, esValida, data.mensaje)
-            tr.style.fontWeight="400";
+            getMensajeDesdeApi(idEgreso, esValida, data.mensaje,data.id)
+            tr.style.fontWeight = "400";
 
         } else {
             //render mensajeComun
@@ -158,8 +170,6 @@ function buildCategorias(vectorCategorias) {
     }
 }
 
-
-
 function buildTablaDetalle(vectorItems) {
     let tabla = document.getElementById("tabla-detalle");
     let total = document.getElementById("total");
@@ -192,9 +202,26 @@ function buildTooltip(resultadoMensaje) {
         contenedorHTML.appendChild(contenido);
     }
 }
-function buildBotonDejarRevisar(){
+
+function dejarDeRevisar(egresoID) {
+    let url = "/api/revisor/delete/" + egresoID;
+    mostrarLoader();
+    fetch(url,{method:"DELETE"})
+        .then(response => response.json())
+        .then(data => {
+            esconderLoader();
+            generarModalOK(MENSAJE_REVISOR)
+        })
+        .catch(reason => console.log(reason));
+
 
 }
+
+function buildBotonDejarRevisar(egreso) {
+    let btn = document.getElementById("btn-no-revisar");
+    btn.onclick = () => dejarDeRevisar(egreso.id);
+}
+
 function mostrarMensaje(egreso, esValida, detalleValidacion) {
     const detalle = egreso.detalle;
 
@@ -204,7 +231,7 @@ function mostrarMensaje(egreso, esValida, detalleValidacion) {
     //buildCategorias(egreso.categorias);
     buildTablaDetalle(detalle.pedidos);
     buildTooltip(detalleValidacion);
-    buildBotonDejarRevisar();
+    buildBotonDejarRevisar(egreso);
 
 }
 
@@ -239,8 +266,9 @@ function setToStringCantPaginas() {
         `${1 + countRender - 10}-${countRender} de ${cantMaxima}` : `${1 + countRender - cantMaxima % 10}-${cantMaxima} de ${countRender}`
 }
 
-function getMensajeDesdeApi(id, esValida, detalleValidacion) {
-    var url = "/api/get-egreso/" + id;
+function getMensajeDesdeApi(id, esValida, detalleValidacion,idMensaje) {
+    let url = `/api/get-egreso/${id}/${idMensaje}`;
+
     fetch(url)
         .then(response => response.json())
         .then(data => mostrarMensaje(data, esValida, detalleValidacion))

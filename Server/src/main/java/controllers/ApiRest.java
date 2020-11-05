@@ -4,6 +4,7 @@ package controllers;
 import Persistencia.TypeAdapterHibernate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 import controllers.convertersDTO.ConverterIngresoSubmit;
@@ -52,16 +53,22 @@ public class ApiRest {
 
     public String pasarEgresosSegunID(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-        Repositorio<OperacionEgreso> repositorioEgreso;
+        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        Repositorio<Mensaje> repositorioMensaje = FactoryRepo.get(Mensaje.class);
         Integer idEgreso;
+        Integer idMensaje;
+        Mensaje mensaje;
         OperacionEgreso egreso;
         EgresoDTO egresoDTO;
         String jsonEgreso;
 
+        idEgreso = Integer.parseInt(request.params("idEgreso"));
+        idMensaje = Integer.parseInt(request.params("idMensaje"));
 
-        idEgreso = Integer.parseInt(request.params("id"));
-        repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        mensaje = repositorioMensaje.buscar(idMensaje);
+        mensaje.actualizateLeido();
 
+        repositorioMensaje.modificar(mensaje);
         egreso = repositorioEgreso.buscar(idEgreso);
         egresoDTO = generarEgresoDTO(egreso);
 
@@ -69,6 +76,29 @@ public class ApiRest {
         response.type("application/json");
 
         return jsonEgreso;
+    }
+
+    public String sacarRevisor(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        Repositorio<OperacionEgreso> repositorioEgreso;
+        Usuario usuario = FactoryRepo.get(Usuario.class).buscar(request.session().attribute("userId"));
+        Integer idEgreso;
+        OperacionEgreso egreso;
+        JsonObject mensajeRta = new JsonObject();
+
+
+        idEgreso = Integer.parseInt(request.params("idEgreso"));
+        repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        egreso = repositorioEgreso.buscar(idEgreso);
+        List<Mensaje>mensajesBorrar =usuario.darseDeBajaEn(egreso);
+        FactoryRepo.get(Usuario.class).modificar(usuario);
+
+        mensajesBorrar.forEach(mensaje ->FactoryRepo.get(Mensaje.class).eliminar(mensaje));
+
+        mensajeRta.addProperty("mensaje","Operacion Realizada");
+        response.type("application/json");
+
+        return gson.toJson(mensajeRta);
     }
 
     public String pasarEgresosNoVinculados(Request request, Response response) {

@@ -74,6 +74,7 @@ public class Router {
             Spark.get("/ciudades/:nombreProvincia", controllerEgresos::pasarCiudades);
             Spark.get("/proveedor/:id", apiRest::mostrarProveedores);
             Spark.get("/items/:idTipoItem", apiRest::mostraItemsSegunTipo);
+            Spark.delete("/revisor/delete/:idEgreso", apiRest::sacarRevisor);
 
         });
 
@@ -85,7 +86,7 @@ public class Router {
 
 
 
-        Spark.get("/api/get-egreso/:id", apiRest::pasarEgresosSegunID);
+        Spark.get("/api/get-egreso/:idEgreso/:idMensaje", apiRest::pasarEgresosSegunID);
 
         Spark.get("/api/get-egreso-segun-fecha/:fechaMax", apiRest::pasarEgresosSegunFecha);
         Spark.get("/api/get-egresos-vincular/:fechaMax", apiRest::pasarEgresosNoVinculados);
