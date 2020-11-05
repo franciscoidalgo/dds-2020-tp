@@ -37,13 +37,11 @@ public class OperacionEgreso extends Operacion {
     )
     private List<Usuario> revisores;
 
-    @Column(name = "esta_asociado", columnDefinition = "CHAR")
-    private Boolean estaAsociado = false;
-
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "operacion_ingreso_operacion_id")
     private OperacionIngreso ingreso;
 
     @Column(name = "cant_presupuestos")
@@ -59,7 +57,6 @@ public class OperacionEgreso extends Operacion {
         this.detalle = detalle;
         this.medioDePago = medioDePago;
         this.revisores = new ArrayList<>();
-        this.estaAsociado = false;
         this.presupuestos = new ArrayList<>();
         this.ingreso = ingreso;
         this.cantPresupuestos = cantPresupuestos;
@@ -69,7 +66,6 @@ public class OperacionEgreso extends Operacion {
         this.detalle = detalle;
         this.medioDePago = medioDePago;
         this.revisores = new ArrayList<>();
-        this.estaAsociado = false;
         this.presupuestos = new ArrayList<>();
         this.ingreso = ingreso;
         this.cantPresupuestos = cantPresupuestos;
@@ -126,14 +122,6 @@ public class OperacionEgreso extends Operacion {
         this.montoTotal = monto;
     }
 
-    public Boolean getEstaAsociado() {
-        return estaAsociado;
-    }
-
-    public void setEstaAsociado(Boolean estaAsociado) {
-        this.estaAsociado = estaAsociado;
-    }
-
     public void setPresupuestos(List<Presupuesto> presupuestos) {
         this.presupuestos = presupuestos;
     }
@@ -144,6 +132,7 @@ public class OperacionEgreso extends Operacion {
 
     public void setIngreso(OperacionIngreso ingreso) {
         this.ingreso = ingreso;
+        this.marcateComoAsociado();
     }
 
     public List<Categoria> getCategorias() {
@@ -182,7 +171,6 @@ public class OperacionEgreso extends Operacion {
         this.revisores.remove(unRevisor);
     }
 
-
     public void notificaRevisores(Mensaje unMensaje) {
         RepositorioDeUsuarios repo = FactoryRepoUsuario.get();
         this.revisores.forEach(usuario -> {
@@ -204,11 +192,9 @@ public class OperacionEgreso extends Operacion {
     }
 
     public void marcateComoAsociado() {
-        this.estaAsociado = true;
     }
-
-    public Boolean estaAsociado() {
-        return this.estaAsociado;
+    public Boolean estaAsociado(){
+        return null != this.ingreso;
     }
 
     public List<Item> getItems() {
@@ -216,7 +202,7 @@ public class OperacionEgreso extends Operacion {
     }
 
     public Boolean podesVincularteSegunFecha(LocalDate fechaMax) {
-        return this.fecha.isBefore(fechaMax) && !this.estaAsociado ;
+        return this.tenesFechaIgualOAnterior(fechaMax) && !this.estaAsociado() ;
     }
 
     public Boolean tenesFechaIgualOAnterior(LocalDate fechaMax){

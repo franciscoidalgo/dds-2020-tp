@@ -1,15 +1,15 @@
 package controllers.DTO;
 
-import java.time.LocalDate;
-
 public class IngresoDTO {
 
-    public int id;
-    public String tipoPedido;
-    public LocalDate fechaRealizada;
-    public LocalDate fechaAceptacion;
-    public String descripcion;
-    public Double monto;
+
+    private int id;
+    private int idTipoIngreso;
+    private String fechaRealizada;
+    private String fechaAceptacion;
+    private String descripcion;
+    private Double monto;
+    private int[] listaEgresos;
 
 
     public int getId() {
@@ -19,28 +19,27 @@ public class IngresoDTO {
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getTipoPedido() {
-        return tipoPedido;
+    public Integer getIdTipoIngreso() {
+        return idTipoIngreso;
     }
 
-    public void setTipoPedido(String tipoPedido) {
-        this.tipoPedido = tipoPedido;
+    public void setIdTipoIngreso(int idTipoIngreso) {
+        this.idTipoIngreso = idTipoIngreso;
     }
 
-    public LocalDate getFechaRealizada() {
+    public String getFechaRealizada() {
         return fechaRealizada;
     }
 
-    public void setFechaRealizada(LocalDate fechaRealizada) {
+    public void setFechaRealizada(String fechaRealizada) {
         this.fechaRealizada = fechaRealizada;
     }
 
-    public LocalDate getFechaAceptacion() {
+    public String getFechaAceptacion() {
         return fechaAceptacion;
     }
 
-    public void setFechaAceptacion(LocalDate fechaAceptacion) {
+    public void setFechaAceptacion(String fechaAceptacion) {
         this.fechaAceptacion = fechaAceptacion;
     }
 
@@ -58,5 +57,13 @@ public class IngresoDTO {
 
     public void setMonto(Double monto) {
         this.monto = monto;
+    }
+
+    public int[] getListaEgresos() {
+        return listaEgresos;
+    }
+
+    public void setListaEgresos(int[] listaEgresos) {
+        this.listaEgresos = listaEgresos;
     }
 }

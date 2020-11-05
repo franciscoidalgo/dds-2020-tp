@@ -16,10 +16,10 @@ public class Item extends EntidadPersistente {
 
 
     @Column(name = "precio_unitario")
-    private Float precioUnitario;
+    private Double precioUnitario;
 
     //Constructor
-     public Item(String descripcion, TipoDeItem tipoDeItem, Float precioUnitario) {
+     public Item(String descripcion, TipoDeItem tipoDeItem, Double precioUnitario) {
         this.descripcion = descripcion;
         this.tipoDeItem = tipoDeItem;
         this.precioUnitario = precioUnitario;
@@ -30,8 +30,8 @@ public class Item extends EntidadPersistente {
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public String getDescripcion() { return descripcion; }
 
-    public Float getPrecioUnitario() {return precioUnitario;}
-    public void setPrecioUnitario(Float precioUnitario) {this.precioUnitario = precioUnitario;}
+    public Double getPrecioUnitario() {return precioUnitario;}
+    public void setPrecioUnitario(Double precioUnitario) {this.precioUnitario = precioUnitario;}
 
     public TipoDeItem getTipoDeItem() {return tipoDeItem;}
 

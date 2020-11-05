@@ -5,6 +5,7 @@ import domain.Entidad.EntidadPersistente;
 import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
+import domain.Operacion.Operacion;
 
 import javax.persistence.*;
 
@@ -134,4 +135,7 @@ public class Usuario extends EntidadPersistente {
         this.bandejaDeMensajes.agregateMensaje(unMensaje);
     }
 
+    public void realizaOperacion(Operacion operacion) {
+        this.entidadPertenece.realizaOperacion(operacion);
+    }
 }

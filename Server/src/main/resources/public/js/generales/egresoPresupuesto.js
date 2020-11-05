@@ -1,6 +1,7 @@
 import {agregateFilaEnTablaSimpleConBorrador, tablaTieneElementos} from './tabla.js';
 import {
-    agregaContenidoEnDesplegable, cleanDesplegable,
+    agregaContenidoEnDesplegable,
+    cleanDesplegable,
     contenidoDesplegableEs,
     contenidoSeleccionadoEn,
     sacarDelDesplegableEscondiendo,
@@ -73,7 +74,7 @@ const seccion = {
 /** JSON **/
 let idProveedorSeleccionado = -1;// -1 (Selecciono en Nuevo) --- !=-1 (Selecciono en desplegable)
 
-let montoTotal = 0;
+let montoTotal = 0.00;
 let jPedido = {pedido: []}
 let jCategorias = {idCategorias: []}
 
@@ -166,7 +167,7 @@ function cargarDesplegableDesdeAPIML(desplegable, url) {
 
     function cargarEnDesplegable(dataAPIML) {
         cleanDesplegable(desplegable);
-        for(let i = 0 ; i< dataAPIML.length; i++){
+        for (let i = 0; i < dataAPIML.length; i++) {
             agregaContenidoEnDesplegable(desplegable, dataAPIML[i].name, false);
         }
     }
@@ -199,7 +200,7 @@ function habilitarBtnAgregarTabla() {
         return elementoHTML === "";
     }
 
-    boton.agregarTabla.hidden = (entrada.cantidad.value <= 0 || entrada.precioUnitario.value <= 0) || estaVacio(bien);
+    boton.agregarTabla.hidden = (entrada.cantidad.value <= 0 || entrada.precioUnitario.value <= 0) || estaVacio(bien) || estaVacio(desplegable.tipoDeItem.value);
 
 }
 
@@ -259,17 +260,15 @@ function hayCategoriasSeleccionadas(nodoCategoria) {
 
 function manejadorEliminar(nodoObjetivo, desplegable) {
     let contenido = nodoObjetivo.firstElementChild.textContent;
-    //TODO QUE NO TOME REPETIDOS
     agregaContenidoEnDesplegable(desplegable, contenido, false);
     nodoObjetivo.remove();
 }
 
 function getProveedor() {
-    let jProveedor = {proveedor:{}}
-    let esTextboxRazonSocial = desplegable.razonSocial.hasAttribute("type", "text");
-    let valorRazonSocial =esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : desplegable.razonSocial.value
+    let jProveedor = {proveedor: {}}
+    let esTextboxRazonSocial = document.getElementById("razon-social").hasAttribute("type", "text");
 
-    jProveedor.proveedor.razonSocial = valorRazonSocial;
+    jProveedor.proveedor.razonSocial = !esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : desplegable.razonSocial.value;
     jProveedor.proveedor.cuit = entrada.cuit.value;
     jProveedor.proveedor.pais = contenidoSeleccionadoEn(desplegable.pais).innerText;
     jProveedor.proveedor.provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText;
@@ -284,16 +283,16 @@ function getProveedor() {
 }
 
 function getComprobante() {
-    let jComprobante = {comprobante:{}}
+    let jComprobante = {comprobante: {}}
 
-    jComprobante.comprobante.tipoComprobante =  desplegable.comprobante.value;
-    jComprobante.comprobante.path =contenidoDesplegableEs(desplegable.comprobante, 'Ninguno') ? "" : entrada.path.value;
+    jComprobante.comprobante.tipoComprobante = desplegable.comprobante.value;
+    jComprobante.comprobante.path = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno') ? "" : entrada.path.value;
 
     return jComprobante.comprobante;
 
 }
 
-function getTemplateJson(){
+function getTemplateJson() {
     let jsonTemplate = {}
 
     jsonTemplate.fecha = entrada.fecha.value;
@@ -303,6 +302,7 @@ function getTemplateJson(){
     jsonTemplate.comprobante = getComprobante();
     return jsonTemplate;
 }
+
 /** Eventos **/
 
 
@@ -352,14 +352,18 @@ boton.agregarTabla.onclick = () => {
         item.nombre = bien.value
     }
     item.idTipo = tipo.value
-    item.precioUnitario = precioUnitario.value
-    item.cantidad = cantidad.value
+    item.precioUnitario = parseFloat(precioUnitario.value).toFixed(2)
+    item.cantidad = Math.round(cantidad.value)
     btnAgregarTabla.hidden = true;
+    desplegable.tipoDeItem.value = "";
+
+    entrada.precioUnitario.value = "";
+    entrada.cantidad.value = "";
     bien.disabled = true;
     jPedido.pedido.push(item);
 
-    montoTotal += precioUnitario.value * cantidad.value;
-    entrada.montoTotal.innerText = montoTotal;
+    montoTotal += item.precioUnitario * item.cantidad;
+    entrada.montoTotal.innerText =montoTotal ;
 
 }
 
@@ -420,13 +424,18 @@ desplegable.provincia.onchange = () => {
 
 window.eliminarFila = (nodoFila, itemSeleccionado) => {
     manejadorEliminar(nodoFila, desplegable.bien);
-    jPedido.pedido.pop(itemSeleccionado);
+
+    montoTotal -= itemSeleccionado.cantidad * itemSeleccionado.precioUnitario;
+    console.log(montoTotal);
+    entrada.montoTotal.innerText =montoTotal ;
+
+    jPedido.pedido = jPedido.pedido.filter(value => value !== itemSeleccionado);
     esconderMostrandoOpuestosSegun(seccion.tablaDetalle, seccion.msgTablaVacia, tablaTieneElementos);
 }
 
 window.eliminaCategoria = (nodoCategoria, idCategoria) => {
     manejadorEliminar(nodoCategoria, desplegable.categoria);
-    jCategorias.idCategorias.pop(idCategoria);
+    jCategorias.idCategorias = jCategorias.idCategorias.filter(value => value !== idCategoria);
     esconderMostrandoOpuestosSegun(seccion.categoria, seccion.msgCategoriasVacia, hayCategoriasSeleccionadas);
 }
 

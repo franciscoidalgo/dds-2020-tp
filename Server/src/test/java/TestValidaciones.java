@@ -15,6 +15,8 @@ import repositorios.RepositorioDeUsuarios;
 import repositorios.factories.FactoryRepo;
 import repositorios.factories.FactoryRepoUsuario;
 
+import java.time.LocalDate;
+
 
 public class TestValidaciones {
 
@@ -48,31 +50,31 @@ public class TestValidaciones {
         simon = new Proveedor("Simon SRL",777777777,dir);
 
         /* Inicializo Detalles*/
-        TipoDeItem tipo = new TipoDeItem("test");
+        TipoDeItem tipo = new TipoDeItem("Producto");
         pedidoP1 = new DetalleOperacion();
         pedidoP2 = new DetalleOperacion();
         pedidoP3 = new DetalleOperacion();
         pedidoEgreso = new DetalleOperacion();
 
         pedidoP1.setProveedor(pedro);
-        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)200),300));
-        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 25),200));
-        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 25),25));
+        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",tipo, (double)200),300));
+        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (double) 25),200));
+        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",tipo, (double) 25),25));
 
         pedidoP2.setProveedor(pablo);
-        pedidoP2.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)500),300));
-        pedidoP2.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 200),200));
-        pedidoP2.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 200),25));
+        pedidoP2.agregaPedido(new Pedido(new Item("Hojas",tipo, (double)500),300));
+        pedidoP2.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (double) 200),200));
+        pedidoP2.agregaPedido(new Pedido(new Item("Carpetas",tipo, (double) 200),25));
 
         pedidoP3.setProveedor(simon);
-        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)400),300));
-        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 25),200));
-        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 25),25));
+        pedidoP1.agregaPedido(new Pedido(new Item("Hojas",tipo, (double)400),300));
+        pedidoP1.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (double) 25),200));
+        pedidoP1.agregaPedido(new Pedido(new Item("Carpetas",tipo, (double) 25),25));
 
         pedidoEgreso.setProveedor(pedro);
-        pedidoEgreso.agregaPedido(new Pedido(new Item("Hojas",tipo, (float)200),300));
-        pedidoEgreso.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (float) 25),200));
-        pedidoEgreso.agregaPedido(new Pedido(new Item("Carpetas",tipo, (float) 25),25));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Hojas",tipo, (double)200),300));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Lapiceras",tipo, (double) 25),200));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("Carpetas",tipo, (double) 25),25));
 
         /*Inicializo Presupuestos*/
         presupuesto1 = new Presupuesto(pedidoP1,1000);
@@ -86,7 +88,7 @@ public class TestValidaciones {
         unEgreso.agregaPresupuesto(presupuesto1);
         unEgreso.agregaPresupuesto(presupuesto2);
         unEgreso.agregaPresupuesto(presupuesto3);
-
+        unEgreso.setFecha(LocalDate.now());
 
         /*Inicializo Validador de transparencia*/
         validadorDeTransparencia = ValidadorDeTransparencia.instancia();
@@ -148,7 +150,7 @@ public class TestValidaciones {
 
     @Test
     public void testTransparencia_EgresoNoTieneMismosItemsQueSusPresupuestos() throws Exception {
-        pedidoEgreso.agregaPedido(new Pedido(new Item("zapatos",new TipoDeItem("Producto"), (float)200),300));
+        pedidoEgreso.agregaPedido(new Pedido(new Item("zapatos",new TipoDeItem("Producto"), (double)200),300));
 
         Assert.assertFalse(validadorDeTransparencia.validaEgreso(unEgreso));
     }

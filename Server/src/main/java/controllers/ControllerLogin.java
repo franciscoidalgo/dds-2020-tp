@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class ControllerLogin {
 
-    private SessionManageMethod sessionManageMethod;
+    private final SessionManageMethod sessionManageMethod;
 
     public ControllerLogin(SessionManageMethod sessionManageMethod){
         this.sessionManageMethod = sessionManageMethod;

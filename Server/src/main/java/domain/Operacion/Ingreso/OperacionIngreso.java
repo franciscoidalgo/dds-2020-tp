@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "operacion_ingreso")
-@PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
+@PrimaryKeyJoinColumn(name = "operacion_id", referencedColumnName = "id")
 public class OperacionIngreso extends Operacion {
 
     @Column(name = "descripcion")
@@ -28,7 +28,7 @@ public class OperacionIngreso extends Operacion {
     @JoinColumn(name = "tipo_ingreso")
     private TipoIngreso tipoIngreso;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "ingreso")
     private List<OperacionEgreso> egresosVinculados;
 
 
@@ -40,21 +40,34 @@ public class OperacionIngreso extends Operacion {
     }
 
     public OperacionIngreso() {
+
         this.egresosVinculados = new ArrayList<>();
     }
 
     //Getter Setter
-    public String getDescripcion() { return descripcion; }
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-    public LocalDate getFechaAceptabilidad() {return fechaAceptabilidad;}
+    public LocalDate getFechaAceptabilidad() {
+        return fechaAceptabilidad;
+    }
 
-    public void setFechaAceptabilidad(LocalDate fechaAceptabilidad) {this.fechaAceptabilidad = fechaAceptabilidad;}
+    public void setFechaAceptabilidad(LocalDate fechaAceptabilidad) {
+        this.fechaAceptabilidad = fechaAceptabilidad;
+    }
 
-    public TipoIngreso getTipoIngreso() {return tipoIngreso;}
+    public TipoIngreso getTipoIngreso() {
+        return tipoIngreso;
+    }
 
-    public void setTipoIngreso(TipoIngreso tipoIngreso) {this.tipoIngreso = tipoIngreso;}
+    public void setTipoIngreso(TipoIngreso tipoIngreso) {
+        this.tipoIngreso = tipoIngreso;
+    }
 
     public List<OperacionEgreso> getEgresosVinculados() {
         return egresosVinculados;
@@ -65,7 +78,9 @@ public class OperacionIngreso extends Operacion {
     }
 //Funcionalidad
 
-    public void setMontoTotal(double montoTotal) {this.montoTotal = montoTotal;}
+    public void setMontoTotal(double montoTotal) {
+        this.montoTotal = montoTotal;
+    }
 
     @Override
     public double montoTotal() {
@@ -74,15 +89,15 @@ public class OperacionIngreso extends Operacion {
 
     public void agregarEgreso(OperacionEgreso operacionEgreso) throws Exception {
 
-        if(!puedeAgregarEgreso(operacionEgreso)){
+        if (!puedeAgregarEgreso(operacionEgreso)) {
             throw new Exception("No se puede cargar un egreso. Supera al saldo");
         }
         this.egresosVinculados.add(operacionEgreso);
 
     }
 
-    private Boolean puedeAgregarEgreso(OperacionEgreso operacionEgreso){
-        return this.montoTotal - operacionEgreso.montoTotal() > 0 && !operacionEgreso.getEstaAsociado();
+    private Boolean puedeAgregarEgreso(OperacionEgreso operacionEgreso) {
+        return this.montoTotal - operacionEgreso.montoTotal() >= 0 && !operacionEgreso.estaAsociado();
     }
 
 }

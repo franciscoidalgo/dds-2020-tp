@@ -3,15 +3,21 @@ package controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import controllers.DTO.IngresoSubmitDTO;
+import controllers.DTO.IngresoDTO;
 import controllers.convertersDTO.ConverterIngresoSubmit;
+import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Ingreso.TipoIngreso;
 import repositorios.Repositorio;
+import repositorios.RepositorioDeUsuarios;
 import repositorios.factories.FactoryRepo;
+import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
+import spark.servlet.SparkFilter;
+import spark.utils.SparkUtils;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -28,17 +34,23 @@ public class ControllerIngreso {
         return new ModelAndView(parametros, "ingreso.hbs");
     }
 
-    public Object submitIngreso(Request request, Response response){
+    public Object submitIngreso(Request request, Response response) throws Exception {
         Gson gson = new Gson();
-        Repositorio<OperacionIngreso> repositorio = FactoryRepo.get(OperacionIngreso.class);
+        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
+        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
         JsonObject mensajeRta = new JsonObject();
+
         String jsonRespuesta;
 
-        try {
-            IngresoSubmitDTO ingresoSubmitDTO = gson.fromJson(request.body(), IngresoSubmitDTO.class);
-            OperacionIngreso operacionIngreso = ConverterIngresoSubmit.toModel(ingresoSubmitDTO);
-            repositorio.agregar(operacionIngreso);
+        //try {
 
+            IngresoDTO ingresoDTO = gson.fromJson(request.body(), IngresoDTO.class);
+
+            OperacionIngreso operacionIngreso = ConverterIngresoSubmit.fromModel(ingresoDTO);
+            usuario.realizaOperacion(operacionIngreso);
+            FactoryRepo.get(OperacionIngreso.class).agregar(operacionIngreso);
+
+            //Response
             mensajeRta.addProperty("idIngreso", ""+operacionIngreso.getId());
             jsonRespuesta =gson.toJson(mensajeRta);
 
@@ -47,12 +59,12 @@ public class ControllerIngreso {
 
             return jsonRespuesta;
 
-        } catch (Exception e) {
-            mensajeRta.addProperty("mensaje", "No se pudo cargar ingreso");
-            jsonRespuesta =gson.toJson(mensajeRta);
-            response.status(404);
-            response.type("application/json");
-            return  jsonRespuesta;
-        }
+       // } catch (Exception e) {
+       //     mensajeRta.addProperty("mensaje", "No se pudo cargar ingreso");
+       //     jsonRespuesta =gson.toJson(mensajeRta);
+       //     response.status(404);
+       //     response.type("application/json");
+       //    return  jsonRespuesta;
+       // }
     }
 }

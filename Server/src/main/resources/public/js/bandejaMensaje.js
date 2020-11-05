@@ -1,5 +1,5 @@
-import {generaCategoria} from './categoria.js';
-import {agregateFilaEnTablaDetalleSimple} from "./tabla.js";
+import {generaCategoria} from './generales/categoria.js';
+import {agregateFilaEnTablaDetalleSimple} from "./generales/tabla.js";
 
 var countRender = 0;
 var btnSiguiente = document.getElementById("siguiente");
@@ -68,7 +68,7 @@ function buildTemplateMensaje(egreso, esValida) {
     const proveedor = egreso.detalle.proveedor;
     const direccion = proveedor.dirPostal;
     let medioDePago = egreso.medioDePago;
-    let faltanPresupuestos = egreso.cantPresupuestos > 0?egreso.cantPresupuestosFaltantes===0:egreso.cantPresupuestos===0;
+    let faltanPresupuestos = egreso.cantPresupuestos > 0 ? egreso.cantPresupuestosFaltantes === 0 : egreso.cantPresupuestos === 0;
     const template = `
         <header>
             <div class="d-flex jc-sb ai-center fw-700">
@@ -152,9 +152,10 @@ function buildTablaDetalle(vectorItems) {
         let subtotal = item.precioUnitario * pedido.cantidad;
 
         //agregateContenidoEnTablaSimple(tabla, descripcion,tipo,cantidad,precioUnitario,item)
-        agregateFilaEnTablaDetalleSimple(tabla, item.descripcion, item.tipoDeItem.nombre,pedido.cantidad, item.precioUnitario);
+        agregateFilaEnTablaDetalleSimple(tabla, item.descripcion, item.tipoDeItem.nombre, pedido.cantidad, item.precioUnitario);
         contadorMontos += subtotal;
     }
+
     console.log(vectorItems);
     for (let i = 0; i < vectorItems.length; i++) {
         console.log(vectorItems[i]);

@@ -17,13 +17,12 @@ public class EgresoDTO {
 
     public List<Pedido> pedido;
 
-    //private Boolean estaAsociado = false;
     //private List<Presupuesto> presupuestos;
     //private OperacionIngreso ingreso;
     public Integer cantPresupuestos;
 
     public Integer cantPresupuestosFaltantes;
-    public LocalDate fecha;
+    public String fecha;
     public double montoTotal;
     public List<Categoria> categorias;
 
@@ -72,11 +71,11 @@ public class EgresoDTO {
         return cantPresupuestos;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
     public double getMontoTotal() {

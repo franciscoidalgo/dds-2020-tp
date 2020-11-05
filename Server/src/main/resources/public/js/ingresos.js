@@ -1,6 +1,6 @@
-import {Burbuja, Desplegable} from "./burbuja.js";
-import {generaModalAlert, generaBoton, generarModalOK, generarModalFail} from "./modal.js"
-import {cleanDesplegable, contenidoDesplegableEs, contenidoSeleccionadoEn} from "./desplegable.js"
+import {Burbuja, Desplegable} from "./generales/burbuja.js";
+import {generaBoton, generaModalAlert, generarModalFail, generarModalOK} from "./generales/modal.js"
+import {cleanDesplegable, contenidoSeleccionadoEn} from "./generales/desplegable.js"
 
 
 const burbujas = [
@@ -13,6 +13,34 @@ const habilitadores = [
     new Desplegable('monto-total', 'descripcion')
 ];
 
+const input = {
+    monto: document.getElementById("monto-total"),
+    fechaAceptacion: document.getElementById("fecha-aceptabilidad"),
+    fecha: document.getElementById("fecha"),
+    descripcion: document.getElementById("descripcion"),
+
+}
+const desplegable = {
+    seleccionEgreso: document.getElementById("seleccion-egresos"),
+    tipoPedido: document.getElementById("tipo-ingreso")
+}
+
+const boton = {
+    vincularAuto: document.getElementById("vincular-auto"),
+    vincularManual: document.getElementById("agregar-egreso")
+}
+
+const seccion = {
+    estaVacio: document.getElementById("msg-egreso-vacia"),
+    egresosSeleccionados: document.getElementById("egresos-seleccionados"),
+    saldo: document.getElementById("saldo-total")
+}
+
+
+var dataEgresosCargados = [];
+var egresosSeleccionados = [];
+var saldoTotal = 0;
+
 /*Funciones!*/
 
 function generaBotonera() {
@@ -22,7 +50,7 @@ function generaBotonera() {
 }
 
 function generarOptionEgreso(data) {
-    let template = `Egreso #${data.id} (proveedor: ${data.detalle.proveedor.razonSocial}, fecha: ${data.fecha.day}-${data.fecha.month}-${data.fecha.year}, monto: ${data.montoTotal})`
+    let template = `Egreso #${data.id} (proveedor: ${data.detalle.proveedor.razonSocial}, fecha: ${data.fecha}, monto: ${data.montoTotal})`
     let option = document.createElement("option");
     option.id = data.id
     option.value = data.id;
@@ -31,27 +59,17 @@ function generarOptionEgreso(data) {
     return option;
 }
 
-function cargarDesplegableCon(data) {
-    let desplegableEgreso = document.getElementById("seleccion-egresos");
-    console.log(data);
-    for (let i = 0; i < data.length; i++) {
-        desplegableEgreso.appendChild(generarOptionEgreso(data[i]));
-    }
-}
 
-function cleanDesplegableEgreso() {
-    let desplegableEgreso = document.getElementById("seleccion-egresos");
-    cleanDesplegable(desplegableEgreso);
-    desplegableEgreso.innerHTML = '<option value="" disabled selected>-- Seleccione --</option> <option value="">Ninguno</option>'
-}
-
-function agregarEgresoALista(egreso, posicion) {
-    let seccion = document.getElementById("egresos-seleccionados");
+function agregarEgresoALista(desplegableEgreso, indexDataEgreso) {
     let contenido = document.createElement("li");
     let btn = document.createElement("button");
+    let optionSeleccionado = desplegableEgreso.selectedOptions[0];
+    let dataEgresoSeleccionado = dataEgresosCargados[indexDataEgreso];
+    let indexAux = 0;
 
-    contenido.innerText = contenidoSeleccionadoEn(egreso).innerText;
-    contenido.id = egreso.value;
+    //Cargo LI
+    contenido.innerText = contenidoSeleccionadoEn(desplegableEgreso).innerText;
+    contenido.id = desplegableEgreso.value;
     contenido.appendChild(btn)
     btn.value = "Quitar";
     btn.innerText = "Quitar";
@@ -60,19 +78,126 @@ function agregarEgresoALista(egreso, posicion) {
     contenido.style.fontSize = "1.4rem";
     contenido.style.fontWeight = "bold";
 
-    btn.onclick = () => {
-        egresosSeleccionados.splice(posicion, 1);
-        auxSeleccionados.splice(posicion, 1);
+    //Saco del desplegable
+    optionSeleccionado.remove();
+
+    //cargo el saldo
+    saldoTotal -= dataEgresoSeleccionado.montoTotal;
+    renderSaldo();
+
+    //cargo en auxiliar sacando del DataEgreso, me guardo el id para deshacer la operacion
+    egresosSeleccionados.push(dataEgresosCargados[indexDataEgreso]);
+    dataEgresosCargados.splice(indexDataEgreso, 1);
+
+    function undo() {
+        let costSeleccionado = dataEgresoSeleccionado.montoTotal;
+        //Escondo y calculo el saldo
+        boton.vincularManual.hidden = true;
+        saldoTotal += costSeleccionado;
+        renderSaldo();
+        console.log("indice aux----->" + indexAux)
+        //Saco del axiliar para colocarlo en el dataEgresos
+        dataEgresosCargados.push(egresosSeleccionados[indexAux]);
+        egresosSeleccionados.splice(indexAux, 1)
+        //Saco LI
         contenido.remove();
+        //Agrego en el desplegable el que se saco
+        desplegable.seleccionEgreso.appendChild(optionSeleccionado);
+        desplegable.seleccionEgreso.value = "";
+
+
     }
 
-    //TODO AGREGAR BORRAR
-    seccion.appendChild(contenido);
+    btn.addEventListener("click", () => undo());
+    seccion.egresosSeleccionados.appendChild(contenido);
 
 }
 
-var egresosSeleccionados = [];
-var auxSeleccionados = [];
+function getIngresoJSON() {
+    let ingresoJSON = {}
+
+    ingresoJSON.monto = input.monto.value;
+    ingresoJSON.descripcion = input.descripcion.value;
+    ingresoJSON.listaEgresos = egresosSeleccionados.map(value => value.id);
+    ingresoJSON.fechaRealizada = input.fecha.value;
+    ingresoJSON.fechaAceptacion = input.fechaAceptacion.value;
+    ingresoJSON.idTipoIngreso = desplegable.tipoPedido.value;
+    console.log(ingresoJSON.listaEgresos)
+    return ingresoJSON;
+}
+
+async function postIngreso(url, init) {
+
+    const response = await fetch(url, init);
+    if (response.status === 200) {
+        const json = await response.json();
+        return json;
+    } else {
+        generarModalFail('No se pudo registrar el ingreso. Verifique que todos los campos esten completos. En caso de haber vinculado manualmente, verifique que los egresos seleccionado no superen al costo del ingreso')
+    }
+
+}
+
+function enviarIngreso() {
+    let url = "/ingreso";
+    let jsonIngreso = getIngresoJSON();
+
+    let init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonIngreso)
+    }
+
+    postIngreso(url, init).then(data => {
+        generarModalOK("Se registro el ingreso correctamente en el sistema. Podras identificarlo como Ingreso#" + data.idIngreso);
+    })
+
+}
+
+async function getEgresosVinculables(url) {
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+}
+
+function renderEgresosEnDesplegable() {
+
+    let url = `/api/get-egresos-vincular/${input.fechaAceptacion.value}`
+
+    getEgresosVinculables(url).then(data => {
+        cleanDesplegable(desplegable.seleccionEgreso);
+        for (let i = 0; i < data.length; i++) {
+            desplegable.seleccionEgreso.appendChild(generarOptionEgreso(data[i]));
+        }
+
+        desplegable.seleccionEgreso.disabled = false;
+        dataEgresosCargados = data;
+    });
+
+}
+
+function cleanInfoEgreso() {
+    seccion.estaVacio.hidden = false;
+    seccion.egresosSeleccionados.innerHTML = "";
+    desplegable.seleccionEgreso.value = "";
+    desplegable.seleccionEgreso.disabled = true;
+
+    input.fechaAceptacion.value = "";
+    input.fechaAceptacion.disabled = true;
+    input.fecha.value = "";
+
+    egresosSeleccionados = []
+    dataEgresosCargados = []
+}
+
+function renderSaldo() {
+    seccion.saldo.innerText = saldoTotal;
+    seccion.saldo.className = saldoTotal < 0 ? "invalido" : "valido";
+    seccion.estaVacio.hidden = !(saldoTotal === input.monto || egresosSeleccionados.length === 0);
+
+}
 
 /*Eventos!*/
 burbujas.forEach((b) => {
@@ -84,36 +209,24 @@ habilitadores.forEach((d) => {
 });
 
 
-document.getElementById("fecha").onchange = () => {
-    let monto = document.getElementById("monto-total").value;
-    let fechaAceptabilidad = document.getElementById("fecha-aceptabilidad");
-    let desplegableEgreso = document.getElementById("seleccion-egresos");
+input.fecha.onchange = () => {
+    let monto = input.monto.value;
 
     if (monto > 0) {
-        desplegableEgreso.disabled = true;
-        fechaAceptabilidad.disabled = false;
-        fechaAceptabilidad.value = "";
+        desplegable.seleccionEgreso.disabled = true;
+        input.fechaAceptacion.disabled = false;
+        input.fechaAceptacion.value = "";
     }
 }
 
-
-document.getElementById("fecha-aceptabilidad").onchange = () => {
-    let fechaMax = document.getElementById("fecha-aceptabilidad").value;
-    let desplegableEgreso = document.getElementById("seleccion-egresos");
-    cleanDesplegableEgreso();
-    let url = `/api/get-egresos-vincular/${fechaMax}`;
-    console.log(url);
-    fetch(url)
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(data => cargarDesplegableCon(data));
-
-    desplegableEgreso.disabled = false;
-
+input.descripcion.onkeyup = () => {
+    let descripcion = input.descripcion.value;
+    input.fechaAceptacion.disabled = descripcion.value === ""
 }
 
+input.fechaAceptacion.onchange = () => renderEgresosEnDesplegable();
 
-document.getElementById("vincular-auto").onclick = () => {
+boton.vincularAuto.onclick = () => {
     let modal = generaModalAlert("Realizar Vinculacion Automatica", "No se vincularan los Egresos seleccionados manualmente, ¿esta seguro de continuar?")
     let botonera = generaBotonera();
     let boton = generaBoton("Cancelar", eventoCancelar);
@@ -133,6 +246,28 @@ document.getElementById("vincular-auto").onclick = () => {
     form.onsubmit;
 }
 
+desplegable.seleccionEgreso.onchange = () => {
+    boton.vincularManual.hidden = false;
+}
+
+boton.vincularManual.onclick = () => {
+    let seleccionado = desplegable.seleccionEgreso;
+
+    let indexDataEgreso = desplegable.seleccionEgreso.selectedIndex - 1;
+
+    agregarEgresoALista(seleccionado, indexDataEgreso);
+    renderSaldo();
+
+}
+
+input.monto.onkeyup = () => {
+    let montoIngresado = input.monto.value;
+    let tieneValorMonto = montoIngresado !== "";
+    cleanInfoEgreso();
+    saldoTotal = tieneValorMonto ? montoIngresado : 0;
+    renderSaldo();
+}
+
 window.eventoVincular = () => {
     alert("Magia para vincular!");
     vincular();
@@ -145,63 +280,6 @@ window.eventoCancelar = () => {
     modal.remove();
 }
 
-document.getElementById("agregar-egreso").onclick = () => {
-    var seleccionado = document.getElementById("seleccion-egresos");
-    if (seleccionado.value !== "") {
-        egresosSeleccionados.push(seleccionado.value);
-    }
-    let posicion = egresosSeleccionados.length;
-    agregarEgresoALista(seleccionado, posicion);
-
-}
-
-function getIngresoJSON() {
-    let montoTotal = document.getElementById("monto-total");
-    let descripcion = document.getElementById("descripcion");
-    let fecha = document.getElementById("fecha");
-    let fechaAceptabilidad = document.getElementById("fecha-aceptabilidad");
-    let tipoPedido = document.getElementById("tipo-ingreso");
-    let ingresoJSON = {}
-
-    ingresoJSON.monto = montoTotal.value;
-    ingresoJSON.descripcion = descripcion.value;
-    ingresoJSON.listaEgresos = egresosSeleccionados;
-    ingresoJSON.fechaRealizada = fecha.value;
-    ingresoJSON.fechaAceptacion = fechaAceptabilidad.value;
-    ingresoJSON.tipoPedido = tipoPedido.value;
-
-    return ingresoJSON;
-}
-
-
-document.getElementById("operacion-ingreso").onsubmit = (e) => {
-    let url = "/ingreso";
-    let jsonIngreso = getIngresoJSON();
-
-    console.log(jsonIngreso);
-    e.preventDefault();
-
-    let init = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(jsonIngreso)
-    }
-
-    fetch(url, init)
-        .then(response => {
-            if (response.status === 200) {
-                return response.json()
-            } else {
-                throw 'No se pudo registrar el ingreso. Verifique que todos los campos esten completos. En caso de haber vinculado manualmente, verifique que los egresos seleccionado no superen al costo del ingreso'
-            }
-        })
-        .then(data => generarModalOK("Se registro el ingreso correctamente en el sistema. Podras identificarlo como Ingreso#" + data.idIngreso))
-        .catch(reason => generarModalFail(reason))
-
-}
-
 window.cerrarModal = () => {
     let modal = document.querySelector(".modal");
     modal.remove();
@@ -212,4 +290,15 @@ window.recargarPagina = () => {
     inicio.focus();
     inicio.scrollIntoView({behavior: "smooth"});
     window.location.reload(true);
+}
+
+document.getElementById("operacion-ingreso").onsubmit = (e) => {
+    e.preventDefault();
+
+    if (saldoTotal < 0) {
+        generarModalFail("No puede cargar una operacion de ingreso con saldo inferior a 0. Verifique que el monto ingresado sea el correcto. Si realiza una verificacion manual, verifique que el egreso a asociar no supere al monto ingresado")
+        return;
+    }
+
+    enviarIngreso();
 }

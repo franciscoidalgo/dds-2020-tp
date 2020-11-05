@@ -15,16 +15,13 @@ public abstract class Operacion extends EntidadPersistente {
 
     @Column(columnDefinition = "DATE")
     protected LocalDate fecha;
-
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected Entidad entidad;
 
     @Column(name = "monto_total")
     protected double  montoTotal;
 
-    public Operacion() {
-        this.fecha = LocalDate.now();
-    }
+    public Operacion() {}
 
     public Operacion(LocalDate fecha,double montoTotal,Entidad entidad) {
         this.fecha = fecha;
@@ -44,7 +41,16 @@ public abstract class Operacion extends EntidadPersistente {
     public double getMontoTotal(){
         return montoTotal;
     }
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
+    }
+    public Entidad getEntidad() {
+        return entidad;
+    }
 
+    public void setMontoTotal(double montoTotal) {
+        this.montoTotal = montoTotal;
+    }
     //Funcionalidad
     protected abstract double montoTotal();
 }
