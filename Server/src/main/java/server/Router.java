@@ -1,9 +1,9 @@
 package server;
 
 import APIMercadoLibre.InfoMercadoLibre;
+import Persistencia.EntityManagerHelper;
 import config.ConfiguracionMercadoLibre;
 import controllers.*;
-import domain.Validadores.ValidadorDeTransparencia;
 import middleware.AuthMiddleware;
 import middleware.sessionManager.SessionManageSessionAttribute;
 import spark.Spark;
@@ -36,6 +36,7 @@ public class Router {
         ControllerIngreso controllerIngreso = new ControllerIngreso();
         ControllerMensajes controllerMensajes = new ControllerMensajes();
         ControllerBusquedaOperacion controllerBusquedaOperacion = new ControllerBusquedaOperacion();
+        ControllerPersistance controllerPersistance = new ControllerPersistance();
         ApiRest apiRest = new ApiRest();
 
         if(ConfiguracionMercadoLibre.usarApi){
@@ -46,6 +47,7 @@ public class Router {
         AuthMiddleware authMiddleware = new AuthMiddleware(new SessionManageSessionAttribute());
 
         Spark.before("*", authMiddleware::verificarSesion);
+        Spark.before("*", controllerPersistance::abrirEm);
 
 
         Spark.get("/auth", controllerLogin::inicio, Router.engine);
@@ -91,6 +93,7 @@ public class Router {
 
         Spark.get("/busquedaOperacion", controllerBusquedaOperacion::mostrarBusquedaOperacion,Router.engine);
 
+        Spark.after("*", controllerPersistance::cerrarEm);
 
     }
 }
