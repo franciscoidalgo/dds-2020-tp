@@ -6,22 +6,22 @@ export class Burbuja {
         this.nodoIcono = this.elemento.children[1].children[0];
     }
 
-    ocultaBurbuja(){
-      this.nodoIcono.className = this.iconoSegunExpansion();
-      this.elementoObjetivo.hidden = !this.elementoObjetivo.hidden;
-      this.enfocarElemento()
+    ocultaBurbuja() {
+        this.nodoIcono.className = this.iconoSegunExpansion();
+        this.elementoObjetivo.hidden = !this.elementoObjetivo.hidden;
+        this.enfocarElemento()
 
     }
 
 
-    enfocarElemento(){
+    enfocarElemento() {
         this.elementoObjetivo.focus();
-        this.elementoObjetivo.scrollIntoView({ behavior: "smooth" });
+        this.elementoObjetivo.scrollIntoView({behavior: "smooth"});
     }
 
 
-    iconoSegunExpansion(){
-        return this.elementoObjetivo.hidden ?  "fas fa-minus":"fas fa-plus" ;
+    iconoSegunExpansion() {
+        return this.elementoObjetivo.hidden ? "fas fa-minus" : "fas fa-plus";
     }
 }
 
@@ -31,11 +31,11 @@ export class Desplegable {
         this.elementoObjetivo = document.getElementById(idElementoObjetivo);
     }
 
-    mostraObjetivo(){
+    mostraObjetivo() {
         this.elementoObjetivo.hidden = false;
     }
 
-    habilitaObjetivo(){
+    habilitaObjetivo() {
         this.elementoObjetivo.disabled = false;
     }
 

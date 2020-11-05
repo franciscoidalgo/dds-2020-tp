@@ -1,6 +1,6 @@
 package repositorios;
 
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import repositorios.daos.DAO;
 
 import javax.persistence.criteria.CriteriaBuilder;

@@ -22,30 +22,36 @@ function tieneSeleccionables(desplegable) {
     return desplegable.options.length > 1;
 }
 
-function agregaContenidoEnDesplegable(desplegable,contenido,setSeleccion){
+function agregaContenidoEnDesplegable(desplegable, contenido, setSeleccion) {
     let option = document.createElement("option");
-    option.value=contenido;
-    option.id=contenido;
-    option.innerText=contenido;
+    option.value = contenido;
+    option.id = contenido;
+    option.innerText = contenido;
     desplegable.appendChild(option);
     option.selected = setSeleccion;
 }
 
-function cleanDesplegable(desplegable){
-    var options = desplegable.children;
-
-    for(let i=0; i<options.length;i++){
-        options[i].remove();
-    }
-    agregaContenidoEnDesplegable(desplegable,"",true);
-    options[0].disable=true;
-    options[0].innerText="-- Seleccione --";
-
+function cleanDesplegable(desplegable) {
+    desplegable.innerHTML = ""
+    agregaContenidoEnDesplegable(desplegable, "-- Seleccione --", true);
+    desplegable.children[0].setAttribute("disabled", "true");
+    desplegable.children[0].value = "";
 }
-export { contenidoSeleccionadoEn,
+
+function crearOptionEgreso(desplegable, data) {
+    let template = ` <option value= ${data.id}> Egreso #${data.id} proveedor: ${data.detalle.proveedor.razonSocial},
+        fecha: ${data.fecha.day}-${data.fecha.month}-${data.fecha.year}, Faltan ${data.cantPresupuestosFaltantes} presupuestos , monto:$ ${data.montoTotal}
+    </option>`
+    desplegable.innerHTML += template;
+}
+
+export {
+    contenidoSeleccionadoEn,
     seleccionarValorPara,
     contenidoDesplegableEs,
     sacarDelDesplegableEscondiendo,
     tieneSeleccionables,
     agregaContenidoEnDesplegable,
-    cleanDesplegable };
+    cleanDesplegable,
+    crearOptionEgreso
+};

@@ -1,6 +1,6 @@
 package controllers;
 
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import repositorios.RepositorioDeUsuarios;
 import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;

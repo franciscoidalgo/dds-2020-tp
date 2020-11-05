@@ -1,7 +1,7 @@
 package middleware;
 
 import domain.Entidad.EntidadPersistente;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import repositorios.RepositorioDeTokens;
 import repositorios.factories.FactoryRepoTokens;
 

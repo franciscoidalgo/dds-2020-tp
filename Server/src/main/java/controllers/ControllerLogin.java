@@ -1,6 +1,6 @@
 package controllers;
 
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import middleware.sessionManager.SessionManageMethod;
 import passwordHasher.PasswordHasher;
 import repositorios.RepositorioDeUsuarios;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class ControllerLogin {
 
-    private SessionManageMethod sessionManageMethod;
+    private final SessionManageMethod sessionManageMethod;
 
     public ControllerLogin(SessionManageMethod sessionManageMethod){
         this.sessionManageMethod = sessionManageMethod;

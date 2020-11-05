@@ -9,7 +9,7 @@ import static spark.Spark.halt;
 
 public class AuthMiddleware {
 
-    private SessionManageMethod sessionManageMethod;
+    private final SessionManageMethod sessionManageMethod;
 
     public AuthMiddleware(SessionManageMethod sessionManageMethod){
         this.sessionManageMethod = sessionManageMethod;

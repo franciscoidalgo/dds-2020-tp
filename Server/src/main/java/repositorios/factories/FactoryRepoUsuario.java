@@ -1,7 +1,7 @@
 package repositorios.factories;
 
 import config.ConfiguracionPersistencia;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import repositorios.RepositorioDeUsuarios;
 import repositorios.TestUsuariosEnMemoria;
 import repositorios.daos.DAOHibernate;

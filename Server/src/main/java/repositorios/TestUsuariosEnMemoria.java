@@ -1,10 +1,8 @@
 package repositorios;
 
-import domain.DireccionPostal.DireccionPostal;
 import domain.Entidad.EntidadPersistente;
-import domain.Entidad.OrganizacionSocial;
-import domain.Entidad.Usuario.RolAdministrador;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.RolAdministrador;
+import domain.Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;

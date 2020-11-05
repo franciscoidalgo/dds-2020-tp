@@ -9,6 +9,7 @@ import domain.Operacion.Operacion;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "entidad")
@@ -17,7 +18,6 @@ import java.util.List;
 public abstract class Entidad extends EntidadPersistente{
 
     @ManyToOne
-    @JoinColumn( referencedColumnName = "id")
     protected Organizacion organizacion;
 
     @OneToMany(mappedBy = "entidad",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -74,6 +74,7 @@ public abstract class Entidad extends EntidadPersistente{
     //Funcionalidades!
     public void realizaOperacion(Operacion unaOperacion) {
         this.operaciones.add(unaOperacion);
+        unaOperacion.setEntidad(this);
     }
 
     public void agregaCriterio(Criterio unCriterio) {
@@ -86,11 +87,11 @@ public abstract class Entidad extends EntidadPersistente{
 
 
     public List<OperacionEgreso> getOperacionesEgreso(){
-        return (List<OperacionEgreso>) this.operaciones.stream().filter(operacion -> operacion instanceof OperacionEgreso);
+        return  this.operaciones.stream().filter(operacion -> operacion instanceof OperacionEgreso).map(operacion -> (OperacionEgreso) operacion).collect(Collectors.toList());
     }
 
-    public List<OperacionEgreso> getOperacionesIngreso(){
-        return (List<OperacionEgreso>) this.operaciones.stream().filter(operacion -> operacion instanceof OperacionIngreso);
+    public List<OperacionIngreso> getOperacionesIngreso(){
+        return this.operaciones.stream().filter(operacion -> operacion instanceof OperacionIngreso).map(operacion -> (OperacionIngreso) operacion).collect(Collectors.toList());
     }
 
 }

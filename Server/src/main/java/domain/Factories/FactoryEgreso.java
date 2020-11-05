@@ -34,7 +34,7 @@ public class FactoryEgreso {
         operacionEgreso.setCantPresupuestos(cantPresupuestos);
         operacionEgreso.setMedioDePago(medioDePago);
         operacionEgreso.setFecha(fecha);
-        operacionEgreso.setMontoTotal(5000);//TODO CAMBIAR ESTO
+        operacionEgreso.setMontoTotal(operacionEgreso.montoTotal());
 
 
         return  operacionEgreso;

@@ -28,7 +28,7 @@ public class TestEgreso {
         unEgreso = new OperacionEgreso();
         unEgreso.setMontoTotal(1500);
         detalleOperacion = new DetalleOperacion();
-        detalleOperacion.agregaPedido(new Pedido(new Item("lapicera",new TipoDeItem("Producto"), (float) 20.50),100));
+        detalleOperacion.agregaPedido(new Pedido(new Item("lapicera",new TipoDeItem("Producto"), 20.50),100));
         unEgreso.setDetalle(detalleOperacion);
     }
 

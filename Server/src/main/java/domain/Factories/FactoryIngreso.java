@@ -1,17 +1,6 @@
 package domain.Factories;
 
-import com.google.gson.Gson;
-import domain.Entidad.Usuario.Usuario;
-import domain.Operacion.Egreso.OperacionEgreso;
-import domain.Operacion.Ingreso.OperacionIngreso;
-import repositorios.Repositorio;
-import repositorios.factories.FactoryRepo;
-import spark.Request;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-
+/*
 public class FactoryIngreso {
     public static OperacionIngreso get(Request request) {
         Gson gson = new Gson();
@@ -29,3 +18,5 @@ public class FactoryIngreso {
         return  operacionIngreso;
     }
 }
+
+*/

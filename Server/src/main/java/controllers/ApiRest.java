@@ -4,10 +4,13 @@ package controllers;
 import Persistencia.TypeAdapterHibernate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
-import domain.Entidad.Usuario.Mensaje;
-import domain.Entidad.Usuario.Usuario;
+import controllers.convertersDTO.ConverterIngresoSubmit;
+import domain.Usuario.BandejaMensaje.BandejaMensaje;
+import domain.Usuario.BandejaMensaje.Mensaje;
+import domain.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
 
 import domain.Operacion.Ingreso.OperacionIngreso;
@@ -41,25 +44,31 @@ public class ApiRest {
         RepositorioDeUsuarios repositorioDeUsuarios = FactoryRepoUsuario.get();
         Usuario usuarioLogueado = repositorioDeUsuarios.buscar(request.session().attribute("userId"));
         Gson gson = new Gson();
-        List<Mensaje> listaMensajes = usuarioLogueado.getBandejaDeMensajes().getMensajes();
-        String jMensajes = gson.toJson(listaMensajes);
+        //TODO BUSCAR POR MAX Y MIN MENSAJES ----> GANAR EN OPTIMIZACION
+        BandejaMensaje bandejaMensaje =usuarioLogueado.getBandejaDeMensajes();
+        String jMensajes = gson.toJson(bandejaMensaje.toDTO());
         response.type("application/json");
         return jMensajes;
     }
 
-    public String pasarEgresos(Request request, Response response) {
-        Gson gson;
-        Repositorio<OperacionEgreso> repositorioEgreso;
+    public String pasarEgresosSegunID(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        Repositorio<Mensaje> repositorioMensaje = FactoryRepo.get(Mensaje.class);
         Integer idEgreso;
+        Integer idMensaje;
+        Mensaje mensaje;
         OperacionEgreso egreso;
         EgresoDTO egresoDTO;
-
         String jsonEgreso;
 
-        gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-        idEgreso = Integer.parseInt(request.params("id"));
-        repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        idEgreso = Integer.parseInt(request.params("idEgreso"));
+        idMensaje = Integer.parseInt(request.params("idMensaje"));
 
+        mensaje = repositorioMensaje.buscar(idMensaje);
+        mensaje.actualizateLeido();
+
+        repositorioMensaje.modificar(mensaje);
         egreso = repositorioEgreso.buscar(idEgreso);
         egresoDTO = generarEgresoDTO(egreso);
 
@@ -69,10 +78,32 @@ public class ApiRest {
         return jsonEgreso;
     }
 
+    public String sacarRevisor(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        Repositorio<OperacionEgreso> repositorioEgreso;
+        Usuario usuario = FactoryRepo.get(Usuario.class).buscar(request.session().attribute("userId"));
+        Integer idEgreso;
+        OperacionEgreso egreso;
+        JsonObject mensajeRta = new JsonObject();
+
+
+        idEgreso = Integer.parseInt(request.params("idEgreso"));
+        repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        egreso = repositorioEgreso.buscar(idEgreso);
+        List<Mensaje>mensajesBorrar =usuario.darseDeBajaEn(egreso);
+        FactoryRepo.get(Usuario.class).modificar(usuario);
+
+        mensajesBorrar.forEach(mensaje ->FactoryRepo.get(Mensaje.class).eliminar(mensaje));
+
+        mensajeRta.addProperty("mensaje","Operacion Realizada");
+        response.type("application/json");
+
+        return gson.toJson(mensajeRta);
+    }
+
     public String pasarEgresosNoVinculados(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
 
-        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
         RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
         Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
         List<EgresoDTO> egresoDTOList = new ArrayList<>();
@@ -80,10 +111,8 @@ public class ApiRest {
 
         LocalDate fechaMax = LocalDate.parse(request.params("fechaMax"));
 
-        //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
-        List<OperacionEgreso> egresos = repositorioEgreso.buscarTodos();
-
-        egresos = egresos.stream().filter(egreso -> egreso.faltaVinculacion(fechaMax)).collect(Collectors.toList());
+        List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();
+        egresos = egresos.stream().filter(egreso -> egreso.podesVincularteSegunFecha(LocalDate.from(fechaMax))).collect(Collectors.toList());
 
         egresos.forEach(egreso -> {
             EgresoDTO egresoDTO = generarEgresoDTO(egreso);
@@ -95,18 +124,38 @@ public class ApiRest {
         return jsonEgreso;
     }
 
-    public String pasarTodosEgresos(Request request,Response response){
-
+    public String pasarEgresosSegunFecha(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-
-        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
         RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
         Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
         List<EgresoDTO> egresoDTOList = new ArrayList<>();
         String jsonEgreso;
 
-        //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
-        List<OperacionEgreso> egresos = repositorioEgreso.buscarTodos();
+        LocalDate fechaMax = LocalDate.parse(request.params("fechaMax"));
+        System.out.println("----------------------------->");
+        List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();
+        System.out.println("----------------------------->");
+        egresos = egresos.stream().filter(egreso -> egreso.tenesFechaIgualOAnterior(LocalDate.from(fechaMax))).collect(Collectors.toList());
+        System.out.println("----------------------------->" + egresos.isEmpty());
+        egresos.forEach(egreso -> {
+            EgresoDTO egresoDTO = generarEgresoDTO(egreso);
+            egresoDTOList.add(egresoDTO);
+        });
+        System.out.println("----------------------------->");
+        jsonEgreso = gson.toJson(egresoDTOList);
+        response.type("application/json");
+        return jsonEgreso;
+    }
+
+    public String pasarTodosEgresos(Request request, Response response) {
+
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
+        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
+        List<EgresoDTO> egresoDTOList = new ArrayList<>();
+        String jsonEgreso;
+
+        List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();
 
         egresos.forEach(egreso -> {
             EgresoDTO egresoDTO = generarEgresoDTO(egreso);
@@ -118,20 +167,18 @@ public class ApiRest {
         return jsonEgreso;
     }
 
-    public String pasarTodosIngresos(Request request,Response response){
+    public String pasarTodosIngresos(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
 
-        Repositorio<OperacionIngreso> repositorioIngreso = FactoryRepo.get(OperacionIngreso.class);
         RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
         Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
         List<IngresoDTO> ingresoDTOList = new ArrayList<>();
         String jsonEgreso;
 
-        //List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();//TODO <--- ESTO TIENE QUE FUNCIONAR
-        List<OperacionIngreso> ingresosList =repositorioIngreso.buscarTodos();
+        List<OperacionIngreso> ingresosList = usuario.getEntidadPertenece().getOperacionesIngreso();
 
         ingresosList.forEach(ingreso -> {
-            ingresoDTOList.add(generarIngresoDTO(ingreso));
+            ingresoDTOList.add(ConverterIngresoSubmit.toDTO(ingreso));
         });
 
         jsonEgreso = gson.toJson(ingresoDTOList);
@@ -171,12 +218,10 @@ public class ApiRest {
         Repositorio<TipoDeItem> tipoDeItemRepositorio = FactoryRepo.get(TipoDeItem.class);
 
         try {
-            idTipoItem = Integer.parseInt(request.params("id"));
-
+            idTipoItem = Integer.parseInt(request.params("idTipoItem"));
             tipoDeItems = tipoDeItemRepositorio.buscar(idTipoItem);
 
             items = itemRepositorio.buscarTodos().stream().filter(item -> item.getTipoDeItem().equals(tipoDeItems)).collect(Collectors.toList());
-
             jsonProveedor = gson.toJson(items);
 
             response.type("application/json");
@@ -185,32 +230,25 @@ public class ApiRest {
             return jsonProveedor;
         } catch (Exception e) {
             response.status(404);
-           return "No se encontro proveedor";
+            return "No se encontro proveedor";
         }
     }
 
-    private EgresoDTO generarEgresoDTO(OperacionEgreso egreso){
+    private EgresoDTO generarEgresoDTO(OperacionEgreso egreso) {
         EgresoDTO egresoDTO = new EgresoDTO();
+
+
         egresoDTO.setId(egreso.getId());
-        egresoDTO.setItems(egreso.getItems());
+        egresoDTO.setPedido(egreso.getDetalle().getPedidos());
         egresoDTO.setCantPresupuestos(egreso.getCantPresupuestos());
         egresoDTO.setDetalle(egreso.getDetalle());
         egresoDTO.setMedioDePago(egreso.getMedioDePago());
         egresoDTO.setMontoTotal(egreso.montoTotal());
         egresoDTO.setCategorias(egreso.getCategorias());
-        egresoDTO.setFecha(egreso.getFecha());
+        egresoDTO.setFecha(egreso.getFecha().toString());
+        egresoDTO.setCantPresupuestosFaltantes(egreso.cantPresupuestosFaltantes());
 
         return egresoDTO;
     }
 
-    private IngresoDTO generarIngresoDTO(OperacionIngreso ingreso){
-        IngresoDTO ingresoDTO = new IngresoDTO();
-        ingresoDTO.setId(ingreso.getId());
-        ingresoDTO.setDescripcion(ingreso.getDescripcion());
-        ingresoDTO.setFechaAceptacion(ingreso.getFechaAceptabilidad());
-        ingresoDTO.setFechaRealizada(ingreso.getFecha());
-        ingresoDTO.setMonto(ingreso.montoTotal());
-
-        return ingresoDTO;
-    }
 }

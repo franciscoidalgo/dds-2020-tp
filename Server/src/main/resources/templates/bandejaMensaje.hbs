@@ -13,6 +13,9 @@
 </head>
 
 <body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
 <header class="contenedor-barra d-flex jc-sb">
     <!--Menu Hamb -->
     <button id="btn-menu"><i class="fas fa-bars"></i></button>
@@ -26,8 +29,7 @@
             <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
             <li><a href="egreso"><i class="fas fa-file-invoice"></i>Nuevo Egreso</a></li>
             <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
-            <li><a href="#"><i class="fas fa-file-import"></i>Buscar Ingresos</a></li>
-            <li><a href="#"><i class="fas fa-file-export"></i>Buscar Egresos</a></li>
+            <li><a href="busquedaOperacion"><i class="fas fa-file-import"></i>Buscar Operacion</a></li>
             <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
         </ul>
     </nav>
@@ -69,7 +71,7 @@
         <a id="anterior" href="#"><i class="far fa-arrow-alt-circle-left"></i></a>
         <a id="siguiente" href="#"><i class="far fa-arrow-alt-circle-right"></i></a>
     </nav>
-    <!-- Tabla -->
+    <!-- Tabla Mensajes-->
     <table class="txt-centrado tabla tabla-bandeja">
         <tbody id="seccion-mensajes">
         </tbody>
@@ -79,9 +81,7 @@
     <article id="mensaje-detalle" class="seccion">
     </article>
 </main>
-<script type="module" src="js/generales.js"></script>
-<script type="module" src="js/bandejaMensaje.js"></script>
-<script type="module" src="js/categoria.js"></script>
 </body>
-
+<script type="module" src="js/bandejaMensaje.js"></script>
+<script type="module" src="js/generales.js"></script>
 </html>

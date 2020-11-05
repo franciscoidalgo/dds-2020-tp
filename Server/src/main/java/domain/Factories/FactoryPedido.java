@@ -31,7 +31,7 @@ public class FactoryPedido {
 
             Item item = new Item();
             item.setDescripcion(field.get("nombre").getAsString());
-            item.setPrecioUnitario(field.get("precioUnitario").getAsFloat());
+            item.setPrecioUnitario(field.get("precioUnitario").getAsDouble());
             item.setTipoDeItem(tipoDeItem);
 
             pedido.setCantidad(field.get("cantidad").getAsInt());
