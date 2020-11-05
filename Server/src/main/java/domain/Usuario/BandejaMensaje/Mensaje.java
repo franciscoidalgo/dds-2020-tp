@@ -1,4 +1,4 @@
-package domain.Entidad.Usuario;
+package domain.Usuario.BandejaMensaje;
 
 import domain.Entidad.EntidadPersistente;
 import domain.Operacion.Egreso.DetalleOperacion;

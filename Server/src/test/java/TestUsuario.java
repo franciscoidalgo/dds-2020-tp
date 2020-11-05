@@ -2,9 +2,9 @@
 import domain.Entidad.CategorizacionOperacion.Criterio;
 import domain.Entidad.Empresa;
 import domain.Entidad.EntidadJuridica;
-import domain.Entidad.Usuario.RolAdministrador;
-import domain.Entidad.Usuario.RolEstandar;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.RolAdministrador;
+import domain.Usuario.RolEstandar;
+import domain.Usuario.Usuario;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Validadores.CriterioValidacionCantidadPresupuesto;

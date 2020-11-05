@@ -7,8 +7,8 @@ import com.google.gson.GsonBuilder;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 import controllers.convertersDTO.ConverterIngresoSubmit;
-import domain.Entidad.Usuario.Mensaje;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.BandejaMensaje.Mensaje;
+import domain.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
 
 import domain.Operacion.Ingreso.OperacionIngreso;
@@ -22,7 +22,6 @@ import spark.Request;
 import spark.Response;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -187,7 +186,7 @@ public class ApiRest {
         Repositorio<TipoDeItem> tipoDeItemRepositorio = FactoryRepo.get(TipoDeItem.class);
 
         try {
-            idTipoItem = Integer.parseInt(request.params("id"));
+            idTipoItem = Integer.parseInt(request.params("idTipoItem"));
             tipoDeItems = tipoDeItemRepositorio.buscar(idTipoItem);
 
             items = itemRepositorio.buscarTodos().stream().filter(item -> item.getTipoDeItem().equals(tipoDeItems)).collect(Collectors.toList());

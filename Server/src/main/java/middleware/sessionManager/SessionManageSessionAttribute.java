@@ -1,6 +1,6 @@
 package middleware.sessionManager;
 
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import spark.Request;
 import spark.Response;
 

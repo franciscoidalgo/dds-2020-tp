@@ -419,13 +419,13 @@ main {
 
 .navbar {
     position: fixed;
-    left: -300%;
+    left: -50%;
     top: 0;
     color: white;
     width: max-content;
     height: 100vh;
     background-color: rgba(85, 85, 85, 0.95);
-    transition: left 3s ease-in;
+    transition: left 0.5s ease-out;
     z-index: 1;
 }
 
@@ -436,7 +436,7 @@ main {
 
 .navbar-on {
     left: 0;
-    transition: left 3s ease-in;
+    transition: left 0.5s ease-in;
 }
 
 .contenido-navbar {
@@ -777,7 +777,7 @@ tr {
 .tooltiptext-invalida::after {
     border-color: transparent #f04b5e transparent transparent;
 }
-/************************************/
+/*Loader*/
 #loader{
     position: fixed;
     width: 100%;

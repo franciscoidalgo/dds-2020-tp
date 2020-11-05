@@ -1,6 +1,7 @@
 import {Burbuja, Desplegable} from "./generales/burbuja.js";
 import {generaBoton, generaModalAlert, generarModalFail, generarModalOK} from "./generales/modal.js"
 import {cleanDesplegable, contenidoSeleccionadoEn} from "./generales/desplegable.js"
+import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 
 
 const burbujas = [
@@ -95,7 +96,6 @@ function agregarEgresoALista(desplegableEgreso, indexDataEgreso) {
         boton.vincularManual.hidden = true;
         saldoTotal += costSeleccionado;
         renderSaldo();
-        console.log("indice aux----->" + indexAux)
         //Saco del axiliar para colocarlo en el dataEgresos
         dataEgresosCargados.push(egresosSeleccionados[indexAux]);
         egresosSeleccionados.splice(indexAux, 1)
@@ -104,8 +104,6 @@ function agregarEgresoALista(desplegableEgreso, indexDataEgreso) {
         //Agrego en el desplegable el que se saco
         desplegable.seleccionEgreso.appendChild(optionSeleccionado);
         desplegable.seleccionEgreso.value = "";
-
-
     }
 
     btn.addEventListener("click", () => undo());
@@ -127,13 +125,14 @@ function getIngresoJSON() {
 }
 
 async function postIngreso(url, init) {
-
+    mostrarLoader();
     const response = await fetch(url, init);
     if (response.status === 200) {
         const json = await response.json();
         return json;
     } else {
-        generarModalFail('No se pudo registrar el ingreso. Verifique que todos los campos esten completos. En caso de haber vinculado manualmente, verifique que los egresos seleccionado no superen al costo del ingreso')
+        generarModalFail('No se pudo registrar el ingreso. Verifique que todos los campos esten completos. En caso de haber vinculado manualmente, verifique que los egresos seleccionado no superen al costo del ingreso');
+        esconderLoader()
     }
 
 }
@@ -152,6 +151,7 @@ function enviarIngreso() {
 
     postIngreso(url, init).then(data => {
         generarModalOK("Se registro el ingreso correctamente en el sistema. Podras identificarlo como Ingreso#" + data.idIngreso);
+        esconderLoader()
     })
 
 }

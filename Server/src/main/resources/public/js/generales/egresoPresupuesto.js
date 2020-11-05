@@ -83,7 +83,7 @@ let jCategorias = {idCategorias: []}
 /** Proveedor **/
 function getProveedoresFromAPI() {
     let idProveedor = document.getElementById("razon-social").value;
-    let url = "/api/get-proveedor/" + idProveedor;
+    let url = "/api/proveedor/" + idProveedor;
 
     fetch(url)
         .then(response => response.json())
@@ -221,7 +221,7 @@ function cargarDesplegableItems(dataAPIItems) {
 function getItemsFromAPI() {
     let idTipo = desplegable.tipoDeItem.value;
     let esTextboxSeleccionBien = desplegable.bien.hasAttribute("type", "text");
-    let url = "/api/get-item-segun-tipo/" + idTipo;
+    let url = "/api/items/" + idTipo;
 
     if (!esTextboxSeleccionBien) {
         fetch(url)
@@ -409,15 +409,15 @@ desplegable.bien.onchange = () => habilitarBtnAgregarTabla()
 desplegable.tipoDeItem.onchange = () => getItemsFromAPI();
 
 desplegable.pais.onchange = () => {
-    let provincia = contenidoSeleccionadoEn(desplegable.pais).innerText;
-    let url = "/api/get-lista-de-provincias/" + provincia;
+    let pais = contenidoSeleccionadoEn(desplegable.pais).innerText;
+    let url = "/api/provincias/" + pais;
     cargarDesplegableDesdeAPIML(desplegable.provincia, url);
     desplegable.provincia.disabled = false;
 }
 
 desplegable.provincia.onchange = () => {
     let provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText;
-    let url = "/api/get-lista-de-ciudades/" + provincia;
+    let url = "/api/ciudades/" + provincia;
     cargarDesplegableDesdeAPIML(desplegable.ciudad, url);
     desplegable.ciudad.disabled = false;
 }
@@ -439,4 +439,4 @@ window.eliminaCategoria = (nodoCategoria, idCategoria) => {
     esconderMostrandoOpuestosSegun(seccion.categoria, seccion.msgCategoriasVacia, hayCategoriasSeleccionadas);
 }
 
-export {getTemplateJson};
+export {getTemplateJson,montoTotal};

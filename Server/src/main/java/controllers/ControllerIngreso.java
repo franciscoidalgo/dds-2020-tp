@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controllers.DTO.IngresoDTO;
 import controllers.convertersDTO.ConverterIngresoSubmit;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Ingreso.TipoIngreso;
 import repositorios.Repositorio;
@@ -15,9 +15,6 @@ import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Spark;
-import spark.servlet.SparkFilter;
-import spark.utils.SparkUtils;
 
 import java.time.LocalDate;
 import java.util.*;

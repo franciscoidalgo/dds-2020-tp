@@ -1,6 +1,6 @@
 package controllers;
 
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import middleware.sessionManager.SessionManageMethod;
 import passwordHasher.PasswordHasher;
 import repositorios.RepositorioDeUsuarios;

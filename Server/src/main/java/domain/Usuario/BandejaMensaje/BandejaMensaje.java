@@ -1,4 +1,4 @@
-package domain.Entidad.Usuario;
+package domain.Usuario.BandejaMensaje;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 public class BandejaMensaje {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private final List<Mensaje> mensajes;
+    private List<Mensaje> mensajes;
+
+
 
     //Constructors
     public BandejaMensaje() {
@@ -20,21 +22,20 @@ public class BandejaMensaje {
 
     //Funcionalidades
 
-    public void filtraPorLeido(){
-        this.mensajes.stream()
+    public List<Mensaje> filtraPorLeido(){
+        return this.mensajes.stream()
                 .sorted(Comparator.comparing(Mensaje::getFechaLeido))
                 .collect(Collectors.toList());
     }
 
-    public void filtraPorEnvio(){
-        this.mensajes.stream()
+    public List<Mensaje> filtraPorEnvio(){
+        return this.mensajes.stream()
                 .sorted((Comparator.comparing(Mensaje::getFechaEnvio)))
                 .collect(Collectors.toList());
     }
 
     public void agregateMensaje(Mensaje unMensaje){
         this.mensajes.add(unMensaje);
-        this.mensajes.stream().collect(Collectors.toSet());
     }
 
     public void borrarMensaje(Mensaje unMensaje){
@@ -49,4 +50,5 @@ public class BandejaMensaje {
     public List<Mensaje> getMensajes() {
         return mensajes;
     }
+
 }

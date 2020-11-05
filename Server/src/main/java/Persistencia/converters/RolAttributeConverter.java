@@ -1,8 +1,8 @@
 package Persistencia.converters;
 
-import domain.Entidad.Usuario.Rol;
-import domain.Entidad.Usuario.RolAdministrador;
-import domain.Entidad.Usuario.RolEstandar;
+import domain.Usuario.Rol;
+import domain.Usuario.RolAdministrador;
+import domain.Usuario.RolEstandar;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

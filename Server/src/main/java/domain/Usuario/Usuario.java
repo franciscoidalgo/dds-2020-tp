@@ -1,11 +1,11 @@
-package domain.Entidad.Usuario;
+package domain.Usuario;
 
 import domain.Entidad.Entidad;
 import domain.Entidad.EntidadPersistente;
-import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
-import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Operacion;
+import domain.Usuario.BandejaMensaje.BandejaMensaje;
+import domain.Usuario.BandejaMensaje.Mensaje;
 
 import javax.persistence.*;
 
@@ -64,7 +64,8 @@ public class Usuario extends EntidadPersistente {
         this.entidadPertenece = entidadPertenece;
         this.bandejaDeMensajes = new BandejaMensaje();
     }
-//Getters-Setters
+
+    //Getters-Setters
 
     public String getNombre() {
         return nombre;
@@ -121,6 +122,7 @@ public class Usuario extends EntidadPersistente {
     public void setEntidadPertenece(Entidad entidadPertenece) {
         this.entidadPertenece = entidadPertenece;
     }
+
     //Funcionalidades
 
     public void darseDeAltaEn(OperacionEgreso unEgreso){

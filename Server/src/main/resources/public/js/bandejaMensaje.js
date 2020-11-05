@@ -1,5 +1,6 @@
 import {generaCategoria} from './generales/categoria.js';
 import {agregateFilaEnTablaDetalleSimple} from "./generales/tabla.js";
+import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 
 var countRender = 0;
 var btnSiguiente = document.getElementById("siguiente");
@@ -77,7 +78,7 @@ function buildTemplateMensaje(egreso, esValida) {
                     <div id="mensaje-resultado" class="tooltiptext tooltiptext-${esValida ? "valida" : "invalida"}">
                     </div>
                 </div>
-                <p>Fecha: ${egreso.fecha.day}-${egreso.fecha.month}-${egreso.fecha.year}</p> 
+                <p>Fecha: ${egreso.fecha}</p> 
             </div>
             <div id='contenedor-categorias' class="d-flex contenedor-categorias">
             </div>
@@ -191,9 +192,10 @@ function mostrarMensaje(egreso, esValida, detalleValidacion) {
 
 function renderTabla(data) {
     var paginaHTML = document.getElementById("cant-paginas");
+    console.log(data)
     cleanTabla();
 
-    for (var i = countRender, j = 10; j > 0 && i < data.length; i++, j--) {
+    for (let i = countRender, j = 10; j > 0 && i < data.length; i++, j--) {
         buildFila(data[i]);
         countRender = i + 1;
     }
@@ -218,17 +220,18 @@ function setToStringCantPaginas(size) {
 
 /* Eventos */
 
-window.onload = () => {
-    var url = "/getMensajes";
+window.addEventListener("load",() => {
+    let url = "/mensajes/todos";
+    mostrarLoader();
+    console.log(url)
     fetch(url)
         .then(response => response.json())
-        .then(data => renderTabla(data))
+        .then(data => {renderTabla(data);esconderLoader();})
         .catch(reason => console.log(reason));
-};
+})
 
 function getMensajeDesdeApi(id, esValida, detalleValidacion) {
     var url = "/api/get-egreso/" + id;
-
     fetch(url)
         .then(response => response.json())
         .then(data => mostrarMensaje(data, esValida, detalleValidacion))
@@ -236,14 +239,6 @@ function getMensajeDesdeApi(id, esValida, detalleValidacion) {
 }
 
 
-window.onload = () => {
-    //renderTabla(dataJson)
-    var url = "/getMensajes";
-    fetch(url)
-        .then(response => response.json())
-        .then(data => renderTabla(data))
-        .catch(reason => console.log(reason));
-};
 
 btnSiguiente.onclick = () => renderTabla(dataJson)
 

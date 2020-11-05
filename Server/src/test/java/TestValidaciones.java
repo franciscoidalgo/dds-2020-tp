@@ -1,10 +1,7 @@
-import com.google.gson.Gson;
 import domain.DireccionPostal.DireccionPostal;
-import domain.Entidad.Entidad;
-import domain.Entidad.EntidadJuridica;
 import domain.Entidad.Organizacion;
 import domain.Entidad.OrganizacionSocial;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
 import domain.Validadores.*;
 import org.junit.Assert;

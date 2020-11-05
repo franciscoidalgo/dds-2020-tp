@@ -2,11 +2,8 @@ package domain.Operacion.Ingreso;
 
 
 import domain.Entidad.Entidad;
-import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
-import domain.Operacion.Egreso.TipoComprobante;
 import domain.Operacion.Operacion;
-import domain.Entidad.Usuario.Usuario;
 
 import javax.persistence.*;
 import java.time.LocalDate;

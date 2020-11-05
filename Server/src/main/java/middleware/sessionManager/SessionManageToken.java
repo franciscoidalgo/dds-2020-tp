@@ -1,7 +1,7 @@
 package middleware.sessionManager;
 
 import com.google.common.annotations.Beta;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.Usuario;
 import middleware.LoginToken;
 import repositorios.RepositorioDeTokens;
 import repositorios.factories.FactoryRepoTokens;

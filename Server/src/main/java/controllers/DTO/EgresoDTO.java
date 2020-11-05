@@ -1,12 +1,8 @@
 package controllers.DTO;
 
 import domain.Entidad.CategorizacionEmpresa.Categoria;
-import domain.Entidad.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
-import domain.Operacion.Ingreso.OperacionIngreso;
 
-import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 public class EgresoDTO {

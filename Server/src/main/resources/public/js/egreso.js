@@ -1,4 +1,4 @@
-import {getTemplateJson} from "./generales/egresoPresupuesto.js";
+import {getTemplateJson, montoTotal} from "./generales/egresoPresupuesto.js";
 import {contenidoSeleccionadoEn} from "./generales/desplegable.js";
 import {generarModalFail, generarModalOK} from "./generales/modal.js";
 import {esconderLoader, mostrarLoader} from "./generales/loader.js";
@@ -31,6 +31,7 @@ async function postEgreso(url, init) {
         return json;
     } else {
         generarModalFail("No se pudo registrar el egreso. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle")
+        esconderLoader();
     }
 
 }
@@ -46,7 +47,9 @@ document.getElementById("operacion-egreso").onsubmit = (e) => {
         },
         body: JSON.stringify(jsonEgreso)
     }
-
+    if(montoTotal<=0){
+        generarModalFail("No se pudo registrar el egreso. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle")
+    }
     postEgreso(url, init).then(data => {
         generarModalOK("Se registro el egreso correctamente en el sistema. Podras identificarlo como Egreso#" + data.idEgreso)
         esconderLoader();
