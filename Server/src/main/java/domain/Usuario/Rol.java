@@ -1,6 +1,6 @@
 package domain.Usuario;
 
-import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Operacion.CategorizacionOperacion.Criterio;
 
 public interface Rol {
     //Metodos

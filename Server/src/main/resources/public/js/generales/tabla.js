@@ -91,7 +91,7 @@ function settearFilaEgreso(tbody, data) {
 
     let td = `  <td>${data.id}</td>
                 <td>${data.detalle.proveedor.razonSocial}</td>
-                <td>${data.fecha.day}-${data.fecha.month}-${data.fecha.year}</td>
+                <td>${data.fecha}</td>
                 <td>${data.cantPresupuestos}</td>
                 <td>${data.montoTotal}</td>`
     tr.innerHTML = td;
@@ -103,8 +103,8 @@ function settearFilaIngresos(tbody, data) {
 
     let td = `  <td>${data.id}</td>
                 <td>${data.descripcion}</td>
-                <td>${data.fechaRealizada.day}-${data.fechaRealizada.month}-${data.fechaRealizada.year}</td>
-                <td>${data.fechaAceptacion.day}-${data.fechaAceptacion.month}-${data.fechaAceptacion.year}</td>
+                <td>${data.fechaRealizada}</td>
+                <td>${data.fechaAceptacion}</td>
                 <td>${data.monto}</td>`
     tr.innerHTML = td;
     tbody.appendChild(tr);

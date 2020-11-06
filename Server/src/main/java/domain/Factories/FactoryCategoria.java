@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import repositorios.Repositorio;
 import repositorios.factories.FactoryRepo;
 import spark.Request;
@@ -23,12 +23,11 @@ public class FactoryCategoria {
         JsonArray jCategorias = rootObject.getAsJsonArray("idCategorias");
 
         for (JsonElement columnElement : jCategorias) {
-
             JsonObject field = columnElement.getAsJsonObject();
-            CategoriaOperacion  categoriaOperacion = categoriaRepositorio.buscar(field.get("id").getAsInt());
+            System.out.println(field.get("idCategoria").getAsInt());
+            CategoriaOperacion  categoriaOperacion = categoriaRepositorio.buscar(field.get("idCategoria").getAsInt());
             categorias.add(categoriaOperacion);
         }
-
         return categorias;
     }
 }

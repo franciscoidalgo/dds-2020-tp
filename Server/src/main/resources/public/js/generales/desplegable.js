@@ -30,6 +30,14 @@ function agregaContenidoEnDesplegable(desplegable, contenido, setSeleccion) {
     desplegable.appendChild(option);
     option.selected = setSeleccion;
 }
+function agregaContenidoEnDesplegableConID(id,desplegable, contenido, setSeleccion) {
+    let option = document.createElement("option");
+    option.value = contenido;
+    option.id = id;
+    option.innerText = contenido;
+    desplegable.appendChild(option);
+    option.selected = setSeleccion;
+}
 
 function cleanDesplegable(desplegable) {
     desplegable.innerHTML = ""
@@ -53,5 +61,6 @@ export {
     tieneSeleccionables,
     agregaContenidoEnDesplegable,
     cleanDesplegable,
-    crearOptionEgreso
+    crearOptionEgreso,
+    agregaContenidoEnDesplegableConID
 };

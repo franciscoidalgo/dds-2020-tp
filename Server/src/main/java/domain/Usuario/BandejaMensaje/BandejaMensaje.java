@@ -74,9 +74,7 @@ public class BandejaMensaje {
     }
 
     public List<Mensaje> getMensajes() {
-        List<Mensaje> mensajesMostrar = mensajes;
-        Collections.reverse(mensajesMostrar);
-        return mensajesMostrar;
+        return this.filtraPorEnvio();
 
     }
 

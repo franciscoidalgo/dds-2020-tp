@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 import controllers.convertersDTO.ConverterIngresoSubmit;
+import domain.Operacion.CategorizacionOperacion.Criterio;
 import domain.Usuario.BandejaMensaje.BandejaMensaje;
 import domain.Usuario.BandejaMensaje.Mensaje;
 import domain.Usuario.Usuario;
@@ -234,17 +235,44 @@ public class ApiRest {
         }
     }
 
+
+    public String pasarCategoriasSegunCriterio(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        String jsonProveedor;
+        Integer idCriterio;
+        Criterio criterioSeleccionado;
+        Repositorio<Criterio> criterioRepositorio = FactoryRepo.get(Criterio.class);
+
+        try {
+            idCriterio = Integer.parseInt(request.params("idCriterio"));
+            criterioSeleccionado = criterioRepositorio.buscar(idCriterio);
+
+            jsonProveedor = gson.toJson(criterioSeleccionado);
+
+            response.type("application/json");
+            response.status(200);
+
+            return jsonProveedor;
+        } catch (Exception e) {
+            response.status(404);
+            return "No se encontro proveedor";
+        }
+    }
+
+
+
+
+
+
+
     private EgresoDTO generarEgresoDTO(OperacionEgreso egreso) {
         EgresoDTO egresoDTO = new EgresoDTO();
-
-
         egresoDTO.setId(egreso.getId());
         egresoDTO.setPedido(egreso.getDetalle().getPedidos());
         egresoDTO.setCantPresupuestos(egreso.getCantPresupuestos());
         egresoDTO.setDetalle(egreso.getDetalle());
         egresoDTO.setMedioDePago(egreso.getMedioDePago());
         egresoDTO.setMontoTotal(egreso.montoTotal());
-        egresoDTO.setCategorias(egreso.getCategorias());
         egresoDTO.setFecha(egreso.getFecha().toString());
         egresoDTO.setCantPresupuestosFaltantes(egreso.cantPresupuestosFaltantes());
 

@@ -6,7 +6,7 @@ import APIMercadoLibre.modelos.Provincia;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import config.ConfiguracionMercadoLibre;
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Usuario.Usuario;
 import domain.Factories.FactoryEgreso;
 import domain.Operacion.Egreso.*;

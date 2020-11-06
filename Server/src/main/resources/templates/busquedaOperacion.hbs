@@ -45,7 +45,7 @@
 <main class="seccion">
     <h1>Busqueda de Operacion</h1>
     <section class="burbuja">
-        <div>
+        <div class="contenedor-entrada">
             <h4>Operacion</h4>
             <!-- Seleccion Operacion-->
             <label for="seleccion-operacion">Tipo de operacion </label><br>
@@ -54,22 +54,34 @@
                 <option value="egreso">Egreso</option>
                 <option value="ingreso">Ingreso</option>
             </select>
-            <input id="btn-seleccion"type="button" value="Buscar" class="btn btn-primario float-r" hidden>
+            <input id="btn-seleccion" type="button" value="Buscar" class="btn btn-formulario" hidden>
         </div>
         <hr>
         <!-- Seleccion Criterios-->
-        <div id="seccion-seleccion-criterio" hidden>
-            <h4>Criterios</h4>
+        <div id="seccion-seleccion-criterio" class="contenedor-entrada" hidden>
+            <h4>Criterios/Categorias</h4>
+            <br>
+            <label for="criterio">Criterio</label>
+            <br>
             <select name="criterio" id="criterio">
                 <option value="" disabled selected>-- Seleccione --</option>
-                <option value="">Economico</option>
-                <option value="">Proyecto</option>
-                <option value="">Alcance</option>
+                {{#each criterios}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
             </select>
             <br>
+            <div>
+                <label for="categorias">Categorias</label>
+                <br>
+                <select name="categorias" id="categorias" disabled>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                </select>
+            </div>
 
+            <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
+            <input id="todas" type="button" class="btn btn-formulario-danger" value="Ver Todos">
         </div>
-
+        <hr>
         <div id="seccion-seleccion-categoria" hidden>
             <h4>Seleccione Categorias</h4>
 
@@ -116,12 +128,10 @@
         <hr>
         <br>
         <div id="operacion"></div>
-
     </section>
 </main>
 </body>
 <script type="module" src="js/loader.js"></script>
 <script type="module" src="js/generales.js"></script>
 <script type="module" src="js/busquedaOperacion.js"></script>
-<script type="module" src="js/tabla.js"></script>
 </html>

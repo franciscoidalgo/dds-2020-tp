@@ -47,9 +47,6 @@ public class OperacionEgreso extends Operacion {
     @Column(name = "cant_presupuestos")
     private Integer cantPresupuestos;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<Categoria> categorias;
-
 
     //Constructor
     public OperacionEgreso(LocalDate fecha, double montoTotal, EntidadJuridica entidadJuridica, DetalleOperacion detalle, MedioDePago medioDePago, OperacionIngreso ingreso, Integer cantPresupuestos) {
@@ -133,14 +130,6 @@ public class OperacionEgreso extends Operacion {
     public void setIngreso(OperacionIngreso ingreso) {
         this.ingreso = ingreso;
         this.marcateComoAsociado();
-    }
-
-    public List<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
     }
 
     /*Funcionales*/

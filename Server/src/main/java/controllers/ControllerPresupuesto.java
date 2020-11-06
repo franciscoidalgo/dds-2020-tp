@@ -3,7 +3,7 @@ package controllers;
 import APIMercadoLibre.InfoMercadoLibre;
 import com.google.gson.*;
 import config.ConfiguracionMercadoLibre;
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Factories.FactoryDetalle;
 import domain.Operacion.Egreso.*;
 import repositorios.Repositorio;

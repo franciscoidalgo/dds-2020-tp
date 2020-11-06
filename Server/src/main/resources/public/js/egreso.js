@@ -17,6 +17,7 @@ function getJsonEgreso() {
     medioDePago.idTipoDePago = idTipoDePago;
     template.medioDePago = medioDePago;
 
+    console.log(template);
     return template
 
 }

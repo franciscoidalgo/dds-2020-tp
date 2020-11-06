@@ -2,13 +2,9 @@ package domain.Entidad;
 
 
 import domain.DireccionPostal.DireccionPostal;
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
-import domain.Entidad.CategorizacionOperacion.Criterio;
-import domain.Operacion.Operacion;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 @Entity
 @DiscriminatorValue("juridica")
 public abstract class EntidadJuridica extends Entidad {

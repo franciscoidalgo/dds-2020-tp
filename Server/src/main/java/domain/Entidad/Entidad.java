@@ -1,7 +1,7 @@
 package domain.Entidad;
 
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
-import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.CategorizacionOperacion.Criterio;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Operacion;

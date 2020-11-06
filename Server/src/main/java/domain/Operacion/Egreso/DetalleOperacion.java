@@ -1,6 +1,6 @@
 package domain.Operacion.Egreso;
 
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
@@ -50,9 +50,6 @@ public class DetalleOperacion extends EntidadPersistente {
 
     //Getter and Setter
 
-    public List<CategoriaOperacion> getCriterio() {
-        return categorias;
-    }
 
     public void setCategoriaOperacion(List<CategoriaOperacion> categorias) {
         this.categorias = categorias;

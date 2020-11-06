@@ -1,4 +1,4 @@
-package domain.Entidad.CategorizacionOperacion;
+package domain.Operacion.CategorizacionOperacion;
 
 import domain.Entidad.EntidadPersistente;
 

@@ -6,10 +6,12 @@ import {
     contenidoSeleccionadoEn,
     sacarDelDesplegableEscondiendo,
     seleccionarValorPara,
+    agregaContenidoEnDesplegableConID
 } from './desplegable.js';
 import {generaCategoria} from './categoria.js';
 import {generaTextbox} from './textbox.js';
 import {Burbuja, Desplegable} from "./burbuja.js";
+
 
 
 /** Constantes **/
@@ -237,8 +239,8 @@ function getItemsFromAPI() {
 function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
     let nodoContenido = contenidoSeleccionadoEn(desplegable);
     let contenido = nodoContenido.innerHTML;
-    let categoria = generaCategoria(contenido, true);
     let idCategoria = desplegable.value;
+    let categoria = generaCategoria(idCategoria,contenido, true);
     let jCategoria = {idCategoria};
 
     sacarContenidoSeteandoInicial(desplegable, nodoContenido, disparador);
@@ -260,7 +262,8 @@ function hayCategoriasSeleccionadas(nodoCategoria) {
 
 function manejadorEliminar(nodoObjetivo, desplegable) {
     let contenido = nodoObjetivo.firstElementChild.textContent;
-    agregaContenidoEnDesplegable(desplegable, contenido, false);
+    let id = nodoObjetivo.firstElementChild.id;
+    agregaContenidoEnDesplegableConID(id,desplegable, contenido, false);
     nodoObjetivo.remove();
 }
 

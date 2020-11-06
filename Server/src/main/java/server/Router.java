@@ -56,8 +56,11 @@ public class Router {
 
         AuthMiddleware authMiddleware = new AuthMiddleware(new SessionManageSessionAttribute());
 
-        Spark.before("*", authMiddleware::verificarSesion);
-        Spark.before("*", controllerPersistance::abrirEm);
+        Spark.before("*",(request, response) -> {
+            controllerPersistance.abrirEm(request,response);
+            authMiddleware.verificarSesion(request,response);
+
+        });
 
 
         Spark.get("/auth", controllerLogin::inicio, Router.engine);
@@ -77,8 +80,10 @@ public class Router {
             Spark.get("/ciudades/:nombreProvincia", controllerEgresos::pasarCiudades);
             Spark.get("/proveedor/:id", apiRest::mostrarProveedores);
             Spark.get("/items/:idTipoItem", apiRest::mostraItemsSegunTipo);
+            Spark.get("/ingreso/todos", apiRest::pasarTodosIngresos);
+            Spark.get("/egresos/todos", apiRest::pasarTodosEgresos);
+            Spark.get("/categoria/:idCriterio", apiRest::pasarCategoriasSegunCriterio);
             Spark.delete("/revisor/delete/:idEgreso", apiRest::sacarRevisor);
-
         });
 
 
@@ -94,8 +99,8 @@ public class Router {
         Spark.get("/api/get-egreso-segun-fecha/:fechaMax", apiRest::pasarEgresosSegunFecha);
         Spark.get("/api/get-egresos-vincular/:fechaMax", apiRest::pasarEgresosNoVinculados);
 
-        Spark.get("/api/get-egresos", apiRest::pasarTodosEgresos);
-        Spark.get("/api/get-ingreso", apiRest::pasarTodosIngresos);
+
+
 
 
 
@@ -110,8 +115,7 @@ public class Router {
         Spark.post("/ingreso", controllerIngreso::submitIngreso);
 
         Spark.get("/busquedaOperacion", controllerBusquedaOperacion::mostrarBusquedaOperacion,Router.engine);
-
-        Spark.after("*", controllerPersistance::cerrarEm);
+        Spark.afterAfter("*", controllerPersistance::cerrarEm);
 
     }
 }

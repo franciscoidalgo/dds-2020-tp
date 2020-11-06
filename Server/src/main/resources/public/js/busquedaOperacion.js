@@ -1,26 +1,43 @@
 import {crearTablaEgresos, crearTablaIngresos} from './generales/tabla.js';
+import {esconderLoader, mostrarLoader} from "./generales/loader.js";
+import {
+    agregaContenidoEnDesplegableConID,
+    cleanDesplegable
+} from "./generales/desplegable.js";
 
+//SECCION
 const seccionSeleccionCategoria = document.getElementById("seccion-seleccion-categoria");
 const seccionSeleccionCriterio = document.getElementById("seccion-seleccion-criterio");
 const seccionOperacion = document.getElementById("operacion");
 
-function renderizarIngreso() {
-    let url = '/api/get-ingreso'
+const desplegable = {
+    criterio: document.getElementById("criterio"),
+    categorias: document.getElementById("categorias")
+}
 
+function renderizarIngreso() {
+    let url = '/api/ingreso/todos'
+    mostrarLoader()
     fetch(url)
         .then(response => response.json())
         .catch(reason => console.log(reason))
-        .then(data => armarIngreso(data));
+        .then(data => {
+            esconderLoader();
+            armarIngreso(data);
+        });
 
 }
 
 function renderizarEgreso() {
-    let url = '/api/get-egresos'
-
+    let url = '/api/egresos/todos'
+    mostrarLoader();
     fetch(url)
         .then(response => response.json())
         .catch(reason => console.log(reason))
-        .then(data => armarEgreso(data));
+        .then(data => {
+            esconderLoader();
+            armarEgreso(data)
+        });
 
 }
 
@@ -47,8 +64,8 @@ document.getElementById("btn-seleccion").onclick = () => {
 
     if (seleccion === "egreso") {
         console.log("debo buscar en la api criterios y categorias");
-        // seccionSeleccionCriterio.hidden = false;
-        // seccionSeleccionCategoria.hidden = false;
+        seccionSeleccionCriterio.hidden = false;
+        seccionSeleccionCategoria.hidden = false;
         renderizarEgreso();
     } else {
         renderizarIngreso();
@@ -58,3 +75,22 @@ document.getElementById("btn-seleccion").onclick = () => {
 
 
 
+
+desplegable.criterio.onchange = ()=>{
+    let url = "/api/categoria/"+desplegable.criterio.value;
+
+    function cargarEnDesplegable(dataCategoria) {
+        cleanDesplegable(desplegable.categorias);
+        console.log(dataCategoria);
+        for (let i = 0; i < dataCategoria.length; i++) {
+            agregaContenidoEnDesplegableConID(dataCategoria[i].id,desplegable.categorias, dataCategoria[i].descripcion, false);
+        }
+        esconderLoader();
+        desplegable.categorias.disabled = false;
+    }
+    mostrarLoader();
+    fetch(url)
+        .then(response => response.json())
+        .then(data => cargarEnDesplegable(data.categorias))
+
+}
