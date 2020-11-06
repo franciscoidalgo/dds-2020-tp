@@ -81,8 +81,12 @@ public class Router {
             Spark.get("/proveedor/:id", apiRest::mostrarProveedores);
             Spark.get("/items/:idTipoItem", apiRest::mostraItemsSegunTipo);
             Spark.get("/ingreso/todos", apiRest::pasarTodosIngresos);
-            Spark.get("/egresos/todos", apiRest::pasarTodosEgresos);
             Spark.get("/categoria/:idCriterio", apiRest::pasarCategoriasSegunCriterio);
+            Spark.path("/egresos",() -> {
+                Spark.get("/todos", apiRest::pasarTodosEgresos);
+                Spark.post("/segun-categorias", apiRest::pasarEgresosSegunCategorias);
+            });
+
             Spark.delete("/revisor/delete/:idEgreso", apiRest::sacarRevisor);
         });
 

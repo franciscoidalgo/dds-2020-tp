@@ -54,7 +54,7 @@
                 <option value="egreso">Egreso</option>
                 <option value="ingreso">Ingreso</option>
             </select>
-            <input id="btn-seleccion" type="button" value="Buscar" class="btn btn-formulario" hidden>
+            <input id="btn-ver-todas" type="button" class="btn btn-formulario-danger" value="Ver Todos" hidden>
         </div>
         <hr>
         <!-- Seleccion Criterios-->
@@ -76,54 +76,17 @@
                 <select name="categorias" id="categorias" disabled>
                     <option value="" disabled selected>-- Seleccione --</option>
                 </select>
+                <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
             </div>
-
-            <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
-            <input id="todas" type="button" class="btn btn-formulario-danger" value="Ver Todos">
         </div>
         <hr>
         <div id="seccion-seleccion-categoria" hidden>
             <h4>Seleccione Categorias</h4>
 
             <!--Categorias seleccionadas-->
-            <div class="d-flex m-0 contenedor-categorias">
-                <div class="categoria fw-700">
-                    <p>Economico</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Ejecutivo</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Directivo</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Barrial</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Comercio</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Construccion</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Cooperativa &quot;Somos una cooperativa &quot;</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Social</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Simple</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Internacional</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>unaCategoria</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>unaCategoria</p>
-                </div>
+            <div id="seccion-categoria-seleccionadas" class="d-flex m-0 contenedor-categorias">
             </div>
+            <input id="btn-busqueda-seleccionada" type="button" class="btn btn-formulario" value="Buscar Seleccionadas">
         </div>
         <hr>
         <br>

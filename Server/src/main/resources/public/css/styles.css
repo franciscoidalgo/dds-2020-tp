@@ -268,7 +268,8 @@ main {
     transition: color 1s, background-color 1s;
 }
 
-.btn-formulario:hover {
+.btn-formulario:hover,
+.btn-formulario-danger:hover {
     color: #555555;
     background-color: #e7e7e7;
     transition: color 1s, background-color 1s;

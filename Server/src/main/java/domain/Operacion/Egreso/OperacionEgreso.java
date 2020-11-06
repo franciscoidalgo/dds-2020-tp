@@ -4,6 +4,7 @@ package domain.Operacion.Egreso;
 
 import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Entidad.EntidadJuridica;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Operacion;
 import domain.Usuario.BandejaMensaje.Mensaje;
@@ -199,5 +200,9 @@ public class OperacionEgreso extends Operacion {
     }
     public int cantPresupuestosFaltantes(){
         return Math.max(this.cantPresupuestos - this.presupuestos.size(), 0);
+    }
+
+    public boolean tenesCategoria(CategoriaOperacion categoria){
+        return this.detalle.tenesCategoria(categoria);
     }
 }

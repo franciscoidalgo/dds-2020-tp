@@ -1,5 +1,6 @@
 package domain.Operacion.Egreso;
 
+import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Entidad.EntidadPersistente;
 
@@ -117,7 +118,13 @@ public class DetalleOperacion extends EntidadPersistente {
     }
 
     public List<Item> getItems(){
-        return this.getPedidos().stream().map(pedido -> pedido.getItem()).collect(Collectors.toList());
+        return this.getPedidos().stream()
+                .map(Pedido::getItem)
+                .collect(Collectors.toList());
     }
 
+    public boolean tenesCategoria(CategoriaOperacion categoria) {
+        return this.categorias.stream()
+                .anyMatch(categoriaOperacion -> categoriaOperacion.equals(categoria));
+    }
 }

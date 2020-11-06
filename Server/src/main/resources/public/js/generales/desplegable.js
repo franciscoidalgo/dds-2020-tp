@@ -32,7 +32,7 @@ function agregaContenidoEnDesplegable(desplegable, contenido, setSeleccion) {
 }
 function agregaContenidoEnDesplegableConID(id,desplegable, contenido, setSeleccion) {
     let option = document.createElement("option");
-    option.value = contenido;
+    option.value = id;
     option.id = id;
     option.innerText = contenido;
     desplegable.appendChild(option);
