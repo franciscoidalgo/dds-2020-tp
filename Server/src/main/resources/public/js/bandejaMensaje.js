@@ -1,5 +1,5 @@
 import {esconderLoader, mostrarLoader} from "./generales/loader.js";
-import {mostrarMensaje,setIconoValidoSegun} from "./generales/mensaje.js";
+import {mostrarMensaje, setIconoValidoSegun} from "./generales/mensaje.js";
 
 
 const boton = {
@@ -68,6 +68,7 @@ function esValidacion(cadena) {
 
     return "valida" === cadena || "invalida" === cadena;
 }
+
 function orderByID(a, b) {
     return a.egreso.id - b.egreso.id;
 }
@@ -82,7 +83,8 @@ function getMensajeDesdeApi(id, esValida, detalleValidacion, idMensaje) {
 }
 
 function renderTabla(data) {
-    var paginaHTML = document.getElementById("cant-paginas");
+    let paginaHTML = document.getElementById("cant-paginas");
+    let msjNoTieneMensajes = document.getElementById("no-mensajes");
     cleanTabla();
 
     for (let i = countRender, j = 10; j > 0 && i < data.length; i++, j--) {
@@ -94,6 +96,9 @@ function renderTabla(data) {
 
     boton.anterior.hidden = countRender <= 10;
     boton.siguiente.hidden = countRender >= cantMaxima;
+
+    msjNoTieneMensajes.hidden = data.length !== 0;
+
 
 }
 

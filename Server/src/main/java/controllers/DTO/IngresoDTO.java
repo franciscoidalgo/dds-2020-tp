@@ -1,15 +1,21 @@
 package controllers.DTO;
 
+import domain.Operacion.Ingreso.TipoIngreso;
+
+import java.util.List;
+
 public class IngresoDTO {
 
 
     private int id;
-    private int idTipoIngreso;
+    private TipoIngreso tipoIngreso;
     private String fechaRealizada;
     private String fechaAceptacion;
     private String descripcion;
     private Double monto;
-    private int[] listaEgresos;
+    private Double saldo;
+    private Double costo;
+    private List<Integer> listaEgresos;
 
 
     public int getId() {
@@ -19,12 +25,12 @@ public class IngresoDTO {
     public void setId(int id) {
         this.id = id;
     }
-    public Integer getIdTipoIngreso() {
-        return idTipoIngreso;
+    public TipoIngreso getTipoIngreso() {
+        return tipoIngreso;
     }
 
-    public void setIdTipoIngreso(int idTipoIngreso) {
-        this.idTipoIngreso = idTipoIngreso;
+    public void setTipoIngreso(TipoIngreso idTipoIngreso) {
+        this.tipoIngreso = idTipoIngreso;
     }
 
     public String getFechaRealizada() {
@@ -59,11 +65,27 @@ public class IngresoDTO {
         this.monto = monto;
     }
 
-    public int[] getListaEgresos() {
+    public List<Integer> getListaEgresos() {
         return listaEgresos;
     }
 
-    public void setListaEgresos(int[] listaEgresos) {
+    public void setListaEgresos(List<Integer> listaEgresos) {
         this.listaEgresos = listaEgresos;
+    }
+
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+
+    public Double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Double costo) {
+        this.costo = costo;
     }
 }

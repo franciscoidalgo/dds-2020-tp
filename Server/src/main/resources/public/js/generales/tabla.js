@@ -1,3 +1,6 @@
+import {renderizarEgresoDetallado} from "./templateEgreso.js";
+import {renderizarIngresoDetallado} from "./templateIngreso.js";
+
 function agregateFilaEnTablaSimpleConBorrador(tabla, descripcion, tipo, cantidad, precioUnitario, item) {
     let classDelete = "fas fa-minus-square";
     let icono = document.createElement("i");
@@ -63,7 +66,7 @@ function crearTablaEgresos(data) {
     let tr = document.createElement("tr");
 
     tablaIngresos.className = "txt-centrado tabla";
-    tablaHeader.className = "bg-primario fw-700 th-principal";
+    tablaHeader.className = "bg-primario fw-700 th-detalle";
 
     tablaIngresos.appendChild(tablaHeader);
     tablaHeader.appendChild(tr);
@@ -77,6 +80,9 @@ function crearTablaEgresos(data) {
     for (let i = 0; i < data.length; i++) {
         settearFilaEgreso(tablaBody, data[i]);
     }
+
+
+
     return tablaIngresos;
 }
 
@@ -96,6 +102,17 @@ function settearFilaEgreso(tbody, data) {
                 <td>${data.montoTotal}</td>`
     tr.innerHTML = td;
     tbody.appendChild(tr);
+
+    tr.onclick = () =>{
+            let url = `/api/get-egreso/${data.id}`;
+            let mensaje = document.getElementById("mensaje-detalle");
+            fetch(url)
+                .then(response => response.json())
+                .then(data => renderizarEgresoDetallado(data,mensaje))
+                .catch(reason => console.log(reason));
+
+    }
+
 }
 
 function settearFilaIngresos(tbody, data) {
@@ -108,7 +125,21 @@ function settearFilaIngresos(tbody, data) {
                 <td>${data.monto}</td>`
     tr.innerHTML = td;
     tbody.appendChild(tr);
+
+    tr.onclick = () =>{
+        let url = `/api/ingreso/${data.id}`;
+        let mensaje = document.getElementById("mensaje-detalle");
+        fetch(url)
+            .then(response => response.json())
+            .then(data => renderizarIngresoDetallado(data,mensaje))
+            .catch(reason => console.log(reason));
+
+    }
+
 }
+
+
+
 
 
 export {

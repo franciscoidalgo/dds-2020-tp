@@ -1,7 +1,7 @@
 import {cleanDesplegable, crearOptionEgreso} from "./generales/desplegable.js";
 import {getTemplateJson, montoTotal} from "./generales/egresoPresupuesto.js";
 import {generarModalFail, generarModalOK} from "./generales/modal.js";
-import {esconderLoader, mostrarLoader} from "./generales/loader";
+import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 
 const MENSAJE_ERROR="No se pudo registrar el presupuesto. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle";
 const MENSAJE_OK= "Se registro el presupuesto correctamente en el sistema. Podras verlo en la seccion de busqueda de operacion egreso#"

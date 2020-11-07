@@ -9,7 +9,7 @@ const seccion = {
     seleccionCategoria: document.getElementById("seccion-seleccion-categoria"),
     seleccionCriterio: document.getElementById("seccion-seleccion-criterio"),
     operacion: document.getElementById("operacion"),
-    categoriasSeleccionados: document.getElementById("seccion-categoria-seleccionadas")
+    categoriasSeleccionados: document.getElementById("seccion-categoria-seleccionadas"),
 }
 
 const desplegable = {
@@ -70,6 +70,9 @@ function agregarEnCategoria(idCategoria, idDesplegable, contenido) {
     };//comportamiento en window
 }
 
+
+
+
 desplegable.operacion.onchange = () => {
     let seleccionoEgreso = desplegable.operacion.value === "ingreso";
     boton.verTodas.hidden = false;
@@ -101,6 +104,8 @@ desplegable.criterio.onchange = () => {
         console.log(dataCategoria);
         for (let i = 0; i < dataCategoria.length; i++) {
             agregaContenidoEnDesplegableConID(dataCategoria[i].id, desplegable.categorias, dataCategoria[i].descripcion, false);
+            desplegable.categorias.disabled = false;
+            desplegable.categorias.hidden = false;
         }
         esconderLoader();
         desplegable.categorias.disabled = false;

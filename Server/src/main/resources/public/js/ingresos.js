@@ -113,13 +113,17 @@ function agregarEgresoALista(desplegableEgreso, indexDataEgreso) {
 
 function getIngresoJSON() {
     let ingresoJSON = {}
-
+    let tipoIngreso ={
+        id:desplegable.tipoPedido.value,
+        nombre:contenidoSeleccionadoEn(desplegable.tipoPedido).innerText
+    }
     ingresoJSON.monto = input.monto.value;
     ingresoJSON.descripcion = input.descripcion.value;
     ingresoJSON.listaEgresos = egresosSeleccionados.map(value => value.id);
     ingresoJSON.fechaRealizada = input.fecha.value;
     ingresoJSON.fechaAceptacion = input.fechaAceptacion.value;
-    ingresoJSON.idTipoIngreso = desplegable.tipoPedido.value;
+    ingresoJSON.tipoIngreso = tipoIngreso;
+
     console.log(ingresoJSON.listaEgresos)
     return ingresoJSON;
 }

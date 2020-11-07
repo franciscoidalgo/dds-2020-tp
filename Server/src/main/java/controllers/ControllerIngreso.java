@@ -4,7 +4,7 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controllers.DTO.IngresoDTO;
-import controllers.convertersDTO.ConverterIngresoSubmit;
+import controllers.convertersDTO.ConverterIngreso;
 import domain.Usuario.Usuario;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Operacion.Ingreso.TipoIngreso;
@@ -43,7 +43,7 @@ public class ControllerIngreso {
 
             IngresoDTO ingresoDTO = gson.fromJson(request.body(), IngresoDTO.class);
 
-            OperacionIngreso operacionIngreso = ConverterIngresoSubmit.fromModel(ingresoDTO);
+            OperacionIngreso operacionIngreso = ConverterIngreso.fromModel(ingresoDTO);
             usuario.realizaOperacion(operacionIngreso);
             FactoryRepo.get(OperacionIngreso.class).agregar(operacionIngreso);
 

@@ -69,15 +69,15 @@
                     <option value={{id}}>{{nombre}}</option>
                 {{/each}}
             </select>
+        </div>
+        <br>
+        <div class="contenedor-entrada">
+            <label for="categorias">Categorias</label>
             <br>
-            <div>
-                <label for="categorias">Categorias</label>
-                <br>
-                <select name="categorias" id="categorias" disabled>
-                    <option value="" disabled selected>-- Seleccione --</option>
-                </select>
-                <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
-            </div>
+            <select name="categorias" id="categorias" disabled>
+                <option value="" disabled selected>-- Seleccione --</option>
+            </select>
+            <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
         </div>
         <hr>
         <div id="seccion-seleccion-categoria" hidden>
@@ -92,6 +92,10 @@
         <br>
         <div id="operacion"></div>
     </section>
+    <!--Operaciones en detalle-->
+    <article id="mensaje-detalle" class="seccion">
+
+    </article>
 </main>
 </body>
 <script type="module" src="js/loader.js"></script>

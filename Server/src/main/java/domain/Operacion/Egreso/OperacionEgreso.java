@@ -1,8 +1,6 @@
 
 package domain.Operacion.Egreso;
 
-
-import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Entidad.EntidadJuridica;
 import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Operacion.Ingreso.OperacionIngreso;

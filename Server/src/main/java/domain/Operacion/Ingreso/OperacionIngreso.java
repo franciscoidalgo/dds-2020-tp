@@ -94,7 +94,15 @@ public class OperacionIngreso extends Operacion {
     }
 
     private Boolean puedeAgregarEgreso(OperacionEgreso operacionEgreso) {
-        return this.montoTotal - operacionEgreso.montoTotal() >= 0 && !operacionEgreso.estaAsociado();
+        return   this.saldo() - operacionEgreso.montoTotal() >= 0 && !operacionEgreso.estaAsociado();
+    }
+
+    public double costo(){
+        return this.egresosVinculados.stream().mapToDouble(OperacionEgreso::montoTotal).sum();
+    }
+
+    public Double saldo(){
+        return this.montoTotal - this.costo();
     }
 
 }

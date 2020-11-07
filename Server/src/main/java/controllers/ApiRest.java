@@ -5,7 +5,7 @@ import Persistencia.TypeAdapterHibernate;
 import com.google.gson.*;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
-import controllers.convertersDTO.ConverterIngresoSubmit;
+import controllers.convertersDTO.ConverterIngreso;
 import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Operacion.CategorizacionOperacion.Criterio;
 import domain.Usuario.BandejaMensaje.BandejaMensaje;
@@ -51,7 +51,30 @@ public class ApiRest {
         return jMensajes;
     }
 
+
+    //TODO REFACTORIZAR ESTO
     public String pasarEgresosSegunID(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        Integer idEgreso;
+        OperacionEgreso egreso;
+        EgresoDTO egresoDTO;
+        String jsonEgreso;
+
+        idEgreso = Integer.parseInt(request.params("idEgreso"));
+        egreso = repositorioEgreso.buscar(idEgreso);
+        egresoDTO = generarEgresoDTO(egreso);
+
+        jsonEgreso = gson.toJson(egresoDTO);
+        response.type("application/json");
+
+        return jsonEgreso;
+    }
+
+
+
+
+    public String pasarEgresosMensaje(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
         Repositorio<Mensaje> repositorioMensaje = FactoryRepo.get(Mensaje.class);
@@ -94,6 +117,27 @@ public class ApiRest {
         FactoryRepo.get(Usuario.class).modificar(usuario);
 
         mensajesBorrar.forEach(mensaje ->FactoryRepo.get(Mensaje.class).eliminar(mensaje));
+
+        mensajeRta.addProperty("mensaje","Operacion Realizada");
+        response.type("application/json");
+
+        return gson.toJson(mensajeRta);
+    }
+
+    public String agregarRevisor(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        Repositorio<OperacionEgreso> repositorioEgreso;
+        Usuario usuario = FactoryRepo.get(Usuario.class).buscar(request.session().attribute("userId"));
+        Integer idEgreso;
+        OperacionEgreso egreso;
+        JsonObject mensajeRta = new JsonObject();
+
+
+        idEgreso = Integer.parseInt(request.params("idEgreso"));
+        repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        egreso = repositorioEgreso.buscar(idEgreso);
+        usuario.darseDeAltaEn(egreso);
+        FactoryRepo.get(OperacionEgreso.class).modificar(egreso);
 
         mensajeRta.addProperty("mensaje","Operacion Realizada");
         response.type("application/json");
@@ -217,10 +261,30 @@ public class ApiRest {
         List<OperacionIngreso> ingresosList = usuario.getEntidadPertenece().getOperacionesIngreso();
 
         ingresosList.forEach(ingreso -> {
-            ingresoDTOList.add(ConverterIngresoSubmit.toDTO(ingreso));
+            ingresoDTOList.add(ConverterIngreso.toDTO(ingreso));
         });
 
         jsonEgreso = gson.toJson(ingresoDTOList);
+        response.type("application/json");
+        return jsonEgreso;
+    }
+    public String pasarIngresoSegunID(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+
+        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
+        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
+        IngresoDTO ingresoDTO;
+        Integer idIngreso;
+        String jsonEgreso;
+
+        idIngreso = Integer.parseInt(request.params("idIngreso"));
+        OperacionIngreso ingreso = usuario.getEntidadPertenece().getOperacionesIngreso().stream()
+                                            .filter(operacionIngreso -> idIngreso == operacionIngreso.getId())
+                                            .findFirst().get();
+
+        ingresoDTO = ConverterIngreso.toDTO(ingreso);
+
+        jsonEgreso = gson.toJson(ingresoDTO);
         response.type("application/json");
         return jsonEgreso;
     }
@@ -260,7 +324,9 @@ public class ApiRest {
             idTipoItem = Integer.parseInt(request.params("idTipoItem"));
             tipoDeItems = tipoDeItemRepositorio.buscar(idTipoItem);
 
-            items = itemRepositorio.buscarTodos().stream().filter(item -> item.getTipoDeItem().equals(tipoDeItems)).collect(Collectors.toList());
+            items = itemRepositorio.buscarTodos().stream()
+                    .filter(item -> item.getTipoDeItem().equals(tipoDeItems))
+                    .collect(Collectors.toList());
             jsonProveedor = gson.toJson(items);
 
             response.type("application/json");
