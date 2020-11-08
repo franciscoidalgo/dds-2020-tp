@@ -14,6 +14,9 @@
 </head>
 
 <body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
 <header class="contenedor-barra d-flex jc-sb">
     <!--Menu Hamb -->
     <button id="btn-menu"><i class="fas fa-bars"></i></button>
@@ -42,7 +45,7 @@
 <main class="seccion">
     <h1>Busqueda de Operacion</h1>
     <section class="burbuja">
-        <div>
+        <div class="contenedor-entrada">
             <h4>Operacion</h4>
             <!-- Seleccion Operacion-->
             <label for="seleccion-operacion">Tipo de operacion </label><br>
@@ -51,73 +54,51 @@
                 <option value="egreso">Egreso</option>
                 <option value="ingreso">Ingreso</option>
             </select>
-            <input id="btn-seleccion"type="button" value="Buscar" class="btn btn-primario float-r" hidden>
+            <input id="btn-ver-todas" type="button" class="btn btn-formulario-danger" value="Ver Todos" hidden>
         </div>
         <hr>
         <!-- Seleccion Criterios-->
-        <div id="seccion-seleccion-criterio" hidden>
-            <h4>Criterios</h4>
+        <div id="seccion-seleccion-criterio" class="contenedor-entrada" hidden>
+            <h4>Criterios/Categorias</h4>
+            <br>
+            <label for="criterio">Criterio</label>
+            <br>
             <select name="criterio" id="criterio">
                 <option value="" disabled selected>-- Seleccione --</option>
-                <option value="">Economico</option>
-                <option value="">Proyecto</option>
-                <option value="">Alcance</option>
+                {{#each criterios}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
             </select>
-            <br>
-
         </div>
-
+        <br>
+        <div class="contenedor-entrada">
+            <label for="categorias">Categorias</label>
+            <br>
+            <select name="categorias" id="categorias" disabled>
+                <option value="" disabled selected>-- Seleccione --</option>
+            </select>
+            <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
+        </div>
+        <hr>
         <div id="seccion-seleccion-categoria" hidden>
             <h4>Seleccione Categorias</h4>
 
             <!--Categorias seleccionadas-->
-            <div class="d-flex m-0 contenedor-categorias">
-                <div class="categoria fw-700">
-                    <p>Economico</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Ejecutivo</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Directivo</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Barrial</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Comercio</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Construccion</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Cooperativa &quot;Somos una cooperativa &quot;</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Social</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Simple</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>Internacional</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>unaCategoria</p>
-                </div>
-                <div class="categoria fw-700">
-                    <p>unaCategoria</p>
-                </div>
+            <div id="seccion-categoria-seleccionadas" class="d-flex m-0 contenedor-categorias">
             </div>
+            <input id="btn-busqueda-seleccionada" type="button" class="btn btn-formulario" value="Buscar Seleccionadas">
         </div>
         <hr>
         <br>
         <div id="operacion"></div>
-
     </section>
+    <!--Operaciones en detalle-->
+    <article id="mensaje-detalle" class="seccion">
+
+    </article>
 </main>
 </body>
+<script type="module" src="js/loader.js"></script>
 <script type="module" src="js/generales.js"></script>
 <script type="module" src="js/busquedaOperacion.js"></script>
-<script type="module" src="js/tabla.js"></script>
 </html>

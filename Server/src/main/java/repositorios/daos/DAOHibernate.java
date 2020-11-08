@@ -57,4 +57,16 @@ public class DAOHibernate<T> implements DAO<T> {
         EntityManagerHelper.getEntityManager().remove(unObjeto);
         EntityManagerHelper.getEntityManager().getTransaction().commit();
     }
+
+
+    public List<T> buscarTodosConLimite(int limInferior,int limSuperior) {
+        CriteriaBuilder builder = EntityManagerHelper.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> critera = builder.createQuery(this.type);
+        critera.from(type);
+        List<T> entities = EntityManagerHelper.getEntityManager().createQuery(critera)
+                                    .setFirstResult(limInferior)
+                                    .setMaxResults(limSuperior)
+                                    .getResultList();
+        return entities;
+    }
 }

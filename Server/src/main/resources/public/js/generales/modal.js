@@ -1,4 +1,4 @@
-function generaModalAlert(titulo,descripcion) {
+function generaModalAlert(titulo, descripcion) {
     let contenedor = document.createElement('div');
     let contenido = document.createElement('h1');
 
@@ -13,6 +13,8 @@ function generaModalAlert(titulo,descripcion) {
 
     //Class
     contenedor.className = "modal-contenido"
+    contenido.style.margin = "auto"
+    contenido.style.maxWidth = "70%"
 
     //Modal
     contenido = contenedor;
@@ -22,13 +24,15 @@ function generaModalAlert(titulo,descripcion) {
     return contenedor;
 }
 
-function generaBoton(descripcion,evento){
+function generaBoton(descripcion, evento) {
     let boton = document.createElement("button");
     boton.innerHTML = descripcion;
 
     boton.className = "btn btn-secundario";
     boton.id = descripcion;
-    boton.onclick = () => {evento()};
+    boton.onclick = () => {
+        evento()
+    };
     return boton;
 }
 
@@ -55,7 +59,7 @@ function generarModalOK(mensaje) {
 }
 
 function generarModalFail(mensaje) {
-    let modal = generaModalAlert("Ups...", mensaje);
+    let modal = generaModalAlert("Operacion Invalida", mensaje);
     let botonera = generaBotonera();
     let boton = generaBoton("Revisar", cerrarModal);
     let titulo = modal.firstChild.firstChild;
@@ -81,4 +85,4 @@ window.recargarPagina = () => {
     window.scrollIntoView({behavior: "smooth"});
 }
 
-export {generaModalAlert,generarModalFail,generarModalOK,generaBoton};
+export {generaModalAlert, generarModalFail, generarModalOK, generaBoton};

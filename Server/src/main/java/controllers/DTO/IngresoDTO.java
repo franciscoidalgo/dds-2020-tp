@@ -1,15 +1,21 @@
 package controllers.DTO;
 
-import java.time.LocalDate;
+import domain.Operacion.Ingreso.TipoIngreso;
+
+import java.util.List;
 
 public class IngresoDTO {
 
-    public int id;
-    public String tipoPedido;
-    public LocalDate fechaRealizada;
-    public LocalDate fechaAceptacion;
-    public String descripcion;
-    public Double monto;
+
+    private int id;
+    private TipoIngreso tipoIngreso;
+    private String fechaRealizada;
+    private String fechaAceptacion;
+    private String descripcion;
+    private Double monto;
+    private Double saldo;
+    private Double costo;
+    private List<EgresoDTO> listaEgresos;
 
 
     public int getId() {
@@ -19,28 +25,27 @@ public class IngresoDTO {
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getTipoPedido() {
-        return tipoPedido;
+    public TipoIngreso getTipoIngreso() {
+        return tipoIngreso;
     }
 
-    public void setTipoPedido(String tipoPedido) {
-        this.tipoPedido = tipoPedido;
+    public void setTipoIngreso(TipoIngreso idTipoIngreso) {
+        this.tipoIngreso = idTipoIngreso;
     }
 
-    public LocalDate getFechaRealizada() {
+    public String getFechaRealizada() {
         return fechaRealizada;
     }
 
-    public void setFechaRealizada(LocalDate fechaRealizada) {
+    public void setFechaRealizada(String fechaRealizada) {
         this.fechaRealizada = fechaRealizada;
     }
 
-    public LocalDate getFechaAceptacion() {
+    public String getFechaAceptacion() {
         return fechaAceptacion;
     }
 
-    public void setFechaAceptacion(LocalDate fechaAceptacion) {
+    public void setFechaAceptacion(String fechaAceptacion) {
         this.fechaAceptacion = fechaAceptacion;
     }
 
@@ -58,5 +63,29 @@ public class IngresoDTO {
 
     public void setMonto(Double monto) {
         this.monto = monto;
+    }
+
+    public List<EgresoDTO> getListaEgresos() {
+        return listaEgresos;
+    }
+
+    public void setListaEgresos(List<EgresoDTO> listaEgresos) {
+        this.listaEgresos = listaEgresos;
+    }
+
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+
+    public Double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Double costo) {
+        this.costo = costo;
     }
 }

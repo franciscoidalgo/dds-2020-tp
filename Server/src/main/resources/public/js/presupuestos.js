@@ -1,8 +1,10 @@
-import {cleanDesplegable, crearOptionEgreso} from "./desplegable.js";
-import {getTemplateJson} from "./egresoPresupuesto.js";
-import {generarModalFail, generarModalOK} from "./modal.js";
+import {cleanDesplegable, crearOptionEgreso} from "./generales/desplegable.js";
+import {getTemplateJson, montoTotal} from "./generales/egresoPresupuesto.js";
+import {generarModalFail, generarModalOK} from "./generales/modal.js";
+import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 
-
+const MENSAJE_ERROR="No se pudo registrar el presupuesto. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle";
+const MENSAJE_OK= "Se registro el presupuesto correctamente en el sistema. Podras verlo en la seccion de busqueda de operacion egreso#"
 /** Funciones **/
 function getJsonPresupuesto() {
 
@@ -13,15 +15,25 @@ function getJsonPresupuesto() {
     return template
 }
 
+async function postPresupuesto(url, init) {
+    mostrarLoader();
+    const response = await fetch(url, init);
+    if (response.status === 200) {
+        const json = await response.json();
+        return json;
+    } else {
+        generarModalFail(MENSAJE_ERROR);
+        esconderLoader();
+    }
 
-
+}
 /** Eventos **/
 
-document.getElementById("fecha").onchange = () =>{
-    function cargarDataEgresos(desplegable,dataAPIEgreso){
+document.getElementById("fecha").onchange = () => {
+    function cargarDataEgresos(desplegable, dataAPIEgreso) {
 
         cleanDesplegable(desplegable);
-        for(let i = 0 ; i< dataAPIEgreso.length; i++) {
+        for (let i = 0; i < dataAPIEgreso.length; i++) {
             console.log(dataAPIEgreso[i]);
             crearOptionEgreso(desplegable, dataAPIEgreso[i]);
         }
@@ -29,14 +41,14 @@ document.getElementById("fecha").onchange = () =>{
 
     let desplegableEgreso = document.getElementById("egreso-a-asociar");
     let fecha = document.getElementById("fecha");
-    let url ='/api/get-egreso-segun-fecha/'+ fecha.value;
+    let url = '/api/get-egreso-segun-fecha/' + fecha.value;
     console.log(fecha.value);
     desplegableEgreso.disabled = false;
-    desplegableEgreso.value ="";
-     fetch(url)
-         .then(response => response.json())
-         .then(dataAPIEgreso => cargarDataEgresos(desplegableEgreso,dataAPIEgreso))
-         .catch(reason => console.log(reason))
+    desplegableEgreso.value = "";
+    fetch(url)
+        .then(response => response.json())
+        .then(dataAPIEgreso => cargarDataEgresos(desplegableEgreso, dataAPIEgreso))
+        .catch(reason => console.log(reason))
 
 }
 
@@ -51,11 +63,17 @@ document.getElementById("presupuesto").onsubmit = (e) => {
         },
         body: JSON.stringify(jsonEgreso)
     }
+    if(montoTotal<=0){
+        mostrarLoader();
+    }
 
-    fetch(url, init)
-        .then(response => response.json())
-        .then(data => generarModalOK("Se registro el presupuesto correctamente en el sistema. Podras verlo en la seccion de busqueda de operacion egreso#"+data.idEgreso))
-        .catch(reason => generarModalFail("No se pudo registrar el presupuesto. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle"))
+    if(montoTotal<=0){
+        generarModalFail(MENSAJE_ERROR)
+    }
+    postPresupuesto(url, init).then(data => {
+        generarModalOK( MENSAJE_OK+ data.idEgreso)
+        esconderLoader();
+    })
 }
 
 

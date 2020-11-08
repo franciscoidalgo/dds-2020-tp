@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Ingreso</title>
+
+    <link rel="shortcut icon" href="/img/gsicon.png"/>
+
+</head>
+
+<body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
+<header class="contenedor-barra d-flex jc-sb">
+    <!--Menu Hamb -->
+    <button id="btn-menu"><i class="fas fa-bars"></i></button>
+    <nav id="navbar" class="navbar">
+        <ul class="d-flex f-dir-col contenido-navbar">
+            <div class="d-flex jc-sb ">
+                <h2 class="txt-centrado">Menu</h2>
+                <button id="btn-close" class="btn-primario"><i class="fas fa-times"></i></button>
+            </div>
+            <li><a href="#"><i class="fas fa-user"></i>Panel Personal</a></li>
+            <li><a href="egreso"><i class="fas fa-file-invoice"></i>Nuevo Egreso</a></li>
+            <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
+            <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
+            <li><a href="busquedaOperacion"><i class="fas fa-file-import"></i>Buscar Operacion</a></li>
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+        </ul>
+    </nav>
+    <!--Logo -->
+    <div class="ai-center txt-centrado">
+        <a href="dashboard">
+            <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
+        </a>
+    </div>
+</header>
+<main class="seccion">
+    <h1>Vinculacion Egreso-Ingreso</h1>
+        <!-- Seccion Asociar Egreso-->
+        <div id="burbuja-egreso" class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="fa fa-link"></i></p>
+                <h3>Asociar con Egresos</h3>
+            </div>
+            <p><i class="fas fa-plus"></i></p>
+        </div>
+        <!-- Desplegable Asociar Egreso-->
+        <fieldset id="igreso" class="burbuja ">
+            <div class="contenedor-entrada">
+                <label for="seleccion-ingreso">Ingreso</label><br>
+                <select name="seleccion-ingreso" id="seleccion-ingreso" >
+                    <option value="" disabled selected>-- Seleccione --</option>
+                </select>
+            </div>
+            <!-- Desplegable Asociar Egreso-->
+            <div class="contenedor-entrada">
+                <label for="seleccion-egresos">Egreso</label><br>
+                <select name="seleccion-egresos" id="seleccion-egresos" disabled>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                </select>
+
+                <input id="seleccionar-egreso" type="button" value="agregar" class="btn btn-formulario">
+            </div>
+            <hr>
+            <div class="contenedor-entrada">
+                <p><em>Saldo Total: </em>$<span id="saldo-total">0</span></p>
+            </div>
+            <hr>
+            <div class="contenedor-entrada">
+                <h3>Vinculacion Manual</h3>
+                <p id='msg-egreso-vacia'><em>No has seleccionado un egreso a vincular</em>.</p>
+                <ul id="egresos-seleccionados">
+                </ul>
+            </div>
+        </fieldset>
+        <input id="vincular-auto" type="button" value="Vincular Auto" class="btn btn-danger">
+
+        <button id="vincular-manual"  value="Siguiente" class="btn btn-formulario float-r">Vincular Manual</button>
+</main>
+<script type="module" src="js/vinculacion.js"></script>
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/loader.js"></script>
+
+</body>
+
+</html>

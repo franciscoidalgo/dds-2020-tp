@@ -2,10 +2,8 @@ package domain.Operacion.Ingreso;
 
 
 import domain.Entidad.Entidad;
-import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Operacion;
-import domain.Entidad.Usuario.Usuario;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "operacion_ingreso")
-@PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
+@PrimaryKeyJoinColumn(name = "operacion_id", referencedColumnName = "id")
 public class OperacionIngreso extends Operacion {
     //Atributos
     @Column(name = "descripcion")
@@ -22,6 +20,13 @@ public class OperacionIngreso extends Operacion {
 
     @Column(columnDefinition = "DATE")
     private LocalDate fechaAceptabilidad;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "tipo_ingreso")
+    private TipoIngreso tipoIngreso;
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "ingreso")
+    private List<OperacionEgreso> egresosVinculados;
 
 
     //Constructor
@@ -31,21 +36,75 @@ public class OperacionIngreso extends Operacion {
         this.fechaAceptabilidad = fechaAceptabilidad;
     }
 
-    public OperacionIngreso() {}
+    public OperacionIngreso() {
+
+        this.egresosVinculados = new ArrayList<>();
+    }
 
     //Getter Setter
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-    public LocalDate getFechaAceptabilidad() {return fechaAceptabilidad;}
-    public void setFechaAceptabilidad(LocalDate fechaAceptabilidad) {this.fechaAceptabilidad = fechaAceptabilidad;}
-    //Funcionalidad
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-    public void setMontoTotal(double montoTotal) {this.montoTotal = montoTotal;}
+    public LocalDate getFechaAceptabilidad() {
+        return fechaAceptabilidad;
+    }
+
+    public void setFechaAceptabilidad(LocalDate fechaAceptabilidad) {
+        this.fechaAceptabilidad = fechaAceptabilidad;
+    }
+
+    public TipoIngreso getTipoIngreso() {
+        return tipoIngreso;
+    }
+
+    public void setTipoIngreso(TipoIngreso tipoIngreso) {
+        this.tipoIngreso = tipoIngreso;
+    }
+
+    public List<OperacionEgreso> getEgresosVinculados() {
+        return egresosVinculados;
+    }
+
+    public void setEgresosVinculados(List<OperacionEgreso> egresosVinculados) {
+        this.egresosVinculados = egresosVinculados;
+    }
+//Funcionalidad
+
+    public void setMontoTotal(double montoTotal) {
+        this.montoTotal = montoTotal;
+    }
 
     @Override
     public double montoTotal() {
         return montoTotal;
+    }
+
+    public void agregarEgreso(OperacionEgreso operacionEgreso) throws Exception {
+
+        if (!puedeAgregarEgreso(operacionEgreso)) {
+            throw new Exception("No se puede cargar un egreso. Supera al saldo");
+        }
+        this.egresosVinculados.add(operacionEgreso);
+        operacionEgreso.setIngreso(this);
+
+
+    }
+
+    private Boolean puedeAgregarEgreso(OperacionEgreso operacionEgreso) {
+        return   this.saldo() - operacionEgreso.montoTotal() >= 0 && !operacionEgreso.estaAsociado();
+    }
+
+    public double costo(){
+        return this.egresosVinculados.stream().mapToDouble(OperacionEgreso::montoTotal).sum();
+    }
+
+    public Double saldo(){
+        return this.montoTotal - this.costo();
     }
 
 }

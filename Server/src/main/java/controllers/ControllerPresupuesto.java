@@ -3,11 +3,13 @@ package controllers;
 import APIMercadoLibre.InfoMercadoLibre;
 import com.google.gson.*;
 import config.ConfiguracionMercadoLibre;
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Factories.FactoryDetalle;
 import domain.Operacion.Egreso.*;
+import domain.Usuario.Usuario;
 import repositorios.Repositorio;
 import repositorios.factories.FactoryRepo;
+import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -23,14 +25,14 @@ public class ControllerPresupuesto {
     public ModelAndView mostrarPresupuestos(Request request, Response response) throws IOException {
         Map<String, Object> parametros = new HashMap<>();
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
-
         Repositorio<Proveedor> repoProveedores = FactoryRepo.get(Proveedor.class);
         Repositorio<TipoDeItem> repoTipoItem = FactoryRepo.get(TipoDeItem.class);
         Repositorio<TipoComprobante> repoTipoComprobante = FactoryRepo.get(TipoComprobante.class);
-        Repositorio<TipoDePago> repoTipoDePago = FactoryRepo.get(TipoDePago.class);
         Repositorio<CategoriaOperacion> repoCategorias = FactoryRepo.get(CategoriaOperacion.class);
+        Usuario usuario = FactoryRepoUsuario.get().buscar(request.session().attribute("userId"));
 
-        List<OperacionEgreso> egresosSinVincular =  repoEgreso.buscarTodos().stream().filter(egreso -> egreso.getCantPresupuestos() > egreso.getPresupuestos().size()).collect(Collectors.toList());
+        List<OperacionEgreso> egresosSinVincular =  usuario.getEntidadPertenece().getOperacionesEgreso().stream().filter(egreso -> egreso.getCantPresupuestos() > egreso.getPresupuestos().size()).collect(Collectors.toList());
+
         if(ConfiguracionMercadoLibre.usarApi){
             InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
             parametros.put("paises", infoMercadoLibre.getListaDePaises());
@@ -52,12 +54,11 @@ public class ControllerPresupuesto {
         Repositorio<OperacionEgreso> operacionEgresoRepositorio = FactoryRepo.get(OperacionEgreso.class);
         JsonParser parser = new JsonParser();
 
-
+        System.out.println("***********me llego la request el id");
         JsonObject mensajeRta = new JsonObject();
         try{
             JsonElement jsonElement = parser.parse(request.body());
             JsonObject rootObject = jsonElement.getAsJsonObject();
-            System.out.println("***********me llego la request el id");
             int idEgreso = rootObject.get("idEgreso").getAsInt();
             System.out.println("***********Tengo el id");
             DetalleOperacion detalleOperacion = FactoryDetalle.get(request);

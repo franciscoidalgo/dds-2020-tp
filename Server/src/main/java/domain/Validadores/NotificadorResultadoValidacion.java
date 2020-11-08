@@ -1,7 +1,7 @@
 package domain.Validadores;
 
 import domain.Operacion.Egreso.OperacionEgreso;
-import domain.Entidad.Usuario.Mensaje;
+import domain.Usuario.BandejaMensaje.Mensaje;
 
 public class NotificadorResultadoValidacion {
 

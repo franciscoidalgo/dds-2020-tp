@@ -22,32 +22,45 @@ function tieneSeleccionables(desplegable) {
     return desplegable.options.length > 1;
 }
 
-function agregaContenidoEnDesplegable(desplegable,contenido,setSeleccion){
+function agregaContenidoEnDesplegable(desplegable, contenido, setSeleccion) {
     let option = document.createElement("option");
-    option.value=contenido;
-    option.id=contenido;
-    option.innerText=contenido;
+    option.value = contenido;
+    option.id = contenido;
+    option.innerText = contenido;
+    desplegable.appendChild(option);
+    option.selected = setSeleccion;
+}
+function agregaContenidoEnDesplegableConID(id,desplegable, contenido, setSeleccion) {
+    let option = document.createElement("option");
+    option.value = id;
+    option.id = id;
+    option.innerText = contenido;
     desplegable.appendChild(option);
     option.selected = setSeleccion;
 }
 
-function cleanDesplegable(desplegable){
+function cleanDesplegable(desplegable) {
     desplegable.innerHTML = ""
-    agregaContenidoEnDesplegable(desplegable,"-- Seleccione --",true);
-    desplegable.children[0].disable=true;
+    agregaContenidoEnDesplegable(desplegable, "-- Seleccione --", true);
+    desplegable.children[0].setAttribute("disabled", "true");
+    desplegable.children[0].value = "";
 }
 
-function crearOptionEgreso(desplegable,data){
+function crearOptionEgreso(desplegable, data) {
     let template = ` <option value= ${data.id}> Egreso #${data.id} proveedor: ${data.detalle.proveedor.razonSocial},
-        fecha: ${data.fecha.day}-${data.fecha.month}-${data.fecha.year}, Faltan ${data.cantPresupuestosFaltantes} presupuestos , monto:$ ${data.montoTotal}
+        fecha: ${data.fecha}, Faltan ${data.cantPresupuestosFaltantes} presupuestos , monto:$ ${data.montoTotal}
     </option>`
     desplegable.innerHTML += template;
 }
-export { contenidoSeleccionadoEn,
+
+export {
+    contenidoSeleccionadoEn,
     seleccionarValorPara,
     contenidoDesplegableEs,
     sacarDelDesplegableEscondiendo,
     tieneSeleccionables,
     agregaContenidoEnDesplegable,
     cleanDesplegable,
-    crearOptionEgreso};
+    crearOptionEgreso,
+    agregaContenidoEnDesplegableConID
+};

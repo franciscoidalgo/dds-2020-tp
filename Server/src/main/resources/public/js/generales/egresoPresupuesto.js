@@ -1,14 +1,17 @@
-import {agregateContenidoEnTablaSimple, tablaTieneElementos} from './tabla.js';
+import {agregateFilaEnTablaSimpleConBorrador, tablaTieneElementos} from './tabla.js';
 import {
-    agregaContenidoEnDesplegable, cleanDesplegable,
+    agregaContenidoEnDesplegable,
+    cleanDesplegable,
     contenidoDesplegableEs,
     contenidoSeleccionadoEn,
     sacarDelDesplegableEscondiendo,
     seleccionarValorPara,
+    agregaContenidoEnDesplegableConID
 } from './desplegable.js';
 import {generaCategoria} from './categoria.js';
 import {generaTextbox} from './textbox.js';
 import {Burbuja, Desplegable} from "./burbuja.js";
+
 
 
 /** Constantes **/
@@ -73,7 +76,7 @@ const seccion = {
 /** JSON **/
 let idProveedorSeleccionado = -1;// -1 (Selecciono en Nuevo) --- !=-1 (Selecciono en desplegable)
 
-let montoTotal = 0;
+let montoTotal = 0.00;
 let jPedido = {pedido: []}
 let jCategorias = {idCategorias: []}
 
@@ -82,7 +85,7 @@ let jCategorias = {idCategorias: []}
 /** Proveedor **/
 function getProveedoresFromAPI() {
     let idProveedor = document.getElementById("razon-social").value;
-    let url = "/api/get-proveedor/" + idProveedor;
+    let url = "/api/proveedor/" + idProveedor;
 
     fetch(url)
         .then(response => response.json())
@@ -166,7 +169,7 @@ function cargarDesplegableDesdeAPIML(desplegable, url) {
 
     function cargarEnDesplegable(dataAPIML) {
         cleanDesplegable(desplegable);
-        for(let i = 0 ; i< dataAPIML.length; i++){
+        for (let i = 0; i < dataAPIML.length; i++) {
             agregaContenidoEnDesplegable(desplegable, dataAPIML[i].name, false);
         }
     }
@@ -199,7 +202,7 @@ function habilitarBtnAgregarTabla() {
         return elementoHTML === "";
     }
 
-    boton.agregarTabla.hidden = (entrada.cantidad.value <= 0 || entrada.precioUnitario.value <= 0) || estaVacio(bien);
+    boton.agregarTabla.hidden = (entrada.cantidad.value <= 0 || entrada.precioUnitario.value <= 0) || estaVacio(bien) || estaVacio(desplegable.tipoDeItem.value);
 
 }
 
@@ -220,7 +223,7 @@ function cargarDesplegableItems(dataAPIItems) {
 function getItemsFromAPI() {
     let idTipo = desplegable.tipoDeItem.value;
     let esTextboxSeleccionBien = desplegable.bien.hasAttribute("type", "text");
-    let url = "/api/get-item-segun-tipo/" + idTipo;
+    let url = "/api/items/" + idTipo;
 
     if (!esTextboxSeleccionBien) {
         fetch(url)
@@ -236,8 +239,8 @@ function getItemsFromAPI() {
 function agregaEnCategoriaValorDesplegable(disparador, seccion, desplegable) {
     let nodoContenido = contenidoSeleccionadoEn(desplegable);
     let contenido = nodoContenido.innerHTML;
-    let categoria = generaCategoria(contenido, true);
     let idCategoria = desplegable.value;
+    let categoria = generaCategoria(idCategoria,contenido, true);
     let jCategoria = {idCategoria};
 
     sacarContenidoSeteandoInicial(desplegable, nodoContenido, disparador);
@@ -259,17 +262,16 @@ function hayCategoriasSeleccionadas(nodoCategoria) {
 
 function manejadorEliminar(nodoObjetivo, desplegable) {
     let contenido = nodoObjetivo.firstElementChild.textContent;
-    //TODO QUE NO TOME REPETIDOS
-    agregaContenidoEnDesplegable(desplegable, contenido, false);
+    let id = nodoObjetivo.firstElementChild.id;
+    agregaContenidoEnDesplegableConID(id,desplegable, contenido, false);
     nodoObjetivo.remove();
 }
 
 function getProveedor() {
-    let jProveedor = {proveedor:{}}
-    let esTextboxRazonSocial = desplegable.razonSocial.hasAttribute("type", "text");
-    let valorRazonSocial =esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : desplegable.razonSocial.value
+    let jProveedor = {proveedor: {}}
+    let esTextboxRazonSocial = document.getElementById("razon-social").hasAttribute("type", "text");
 
-    jProveedor.proveedor.razonSocial = valorRazonSocial;
+    jProveedor.proveedor.razonSocial = !esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : desplegable.razonSocial.value;
     jProveedor.proveedor.cuit = entrada.cuit.value;
     jProveedor.proveedor.pais = contenidoSeleccionadoEn(desplegable.pais).innerText;
     jProveedor.proveedor.provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText;
@@ -284,16 +286,16 @@ function getProveedor() {
 }
 
 function getComprobante() {
-    let jComprobante = {comprobante:{}}
+    let jComprobante = {comprobante: {}}
 
-    jComprobante.comprobante.tipoComprobante =  desplegable.comprobante.value;
-    jComprobante.comprobante.path =contenidoDesplegableEs(desplegable.comprobante, 'Ninguno') ? "" : entrada.path.value;
+    jComprobante.comprobante.tipoComprobante = desplegable.comprobante.value;
+    jComprobante.comprobante.path = contenidoDesplegableEs(desplegable.comprobante, 'Ninguno') ? "" : entrada.path.value;
 
     return jComprobante.comprobante;
 
 }
 
-function getTemplateJson(){
+function getTemplateJson() {
     let jsonTemplate = {}
 
     jsonTemplate.fecha = entrada.fecha.value;
@@ -303,6 +305,7 @@ function getTemplateJson(){
     jsonTemplate.comprobante = getComprobante();
     return jsonTemplate;
 }
+
 /** Eventos **/
 
 
@@ -342,24 +345,28 @@ boton.agregarTabla.onclick = () => {
     escondeMostrandoA(seccion.msgTablaVacia, seccion.tablaDetalle);
 
     if (botonNuevo.value !== "Cancelar") {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
+        agregateFilaEnTablaSimpleConBorrador(seccion.tablaDetalle, contenidoSeleccionadoEn(bien).innerText, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
         item.nombre = contenidoSeleccionadoEn(bien).innerText
     } else {
-        agregateContenidoEnTablaSimple(seccion.tablaDetalle, bien.value, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
+        agregateFilaEnTablaSimpleConBorrador(seccion.tablaDetalle, bien.value, contenidoSeleccionadoEn(tipo).innerText, cantidad.value, precioUnitario.value, item)
         bien.remove();
         boton.nuevoItem.value = "Nuevo";
         contenedor.appendChild(desplegable.bien);
         item.nombre = bien.value
     }
     item.idTipo = tipo.value
-    item.precioUnitario = precioUnitario.value
-    item.cantidad = cantidad.value
+    item.precioUnitario = parseFloat(precioUnitario.value).toFixed(2)
+    item.cantidad = Math.round(cantidad.value)
     btnAgregarTabla.hidden = true;
+    desplegable.tipoDeItem.value = "";
+
+    entrada.precioUnitario.value = "";
+    entrada.cantidad.value = "";
     bien.disabled = true;
     jPedido.pedido.push(item);
 
-    montoTotal += precioUnitario.value * cantidad.value;
-    entrada.montoTotal.innerText = montoTotal;
+    montoTotal += item.precioUnitario * item.cantidad;
+    entrada.montoTotal.innerText =montoTotal ;
 
 }
 
@@ -405,29 +412,34 @@ desplegable.bien.onchange = () => habilitarBtnAgregarTabla()
 desplegable.tipoDeItem.onchange = () => getItemsFromAPI();
 
 desplegable.pais.onchange = () => {
-    let provincia = contenidoSeleccionadoEn(desplegable.pais).innerText;
-    let url = "/api/get-lista-de-provincias/" + provincia;
+    let pais = contenidoSeleccionadoEn(desplegable.pais).innerText;
+    let url = "/api/provincias/" + pais;
     cargarDesplegableDesdeAPIML(desplegable.provincia, url);
     desplegable.provincia.disabled = false;
 }
 
 desplegable.provincia.onchange = () => {
     let provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText;
-    let url = "/api/get-lista-de-ciudades/" + provincia;
+    let url = "/api/ciudades/" + provincia;
     cargarDesplegableDesdeAPIML(desplegable.ciudad, url);
     desplegable.ciudad.disabled = false;
 }
 
 window.eliminarFila = (nodoFila, itemSeleccionado) => {
     manejadorEliminar(nodoFila, desplegable.bien);
-    jPedido.pedido.pop(itemSeleccionado);
+
+    montoTotal -= itemSeleccionado.cantidad * itemSeleccionado.precioUnitario;
+    console.log(montoTotal);
+    entrada.montoTotal.innerText =montoTotal ;
+
+    jPedido.pedido = jPedido.pedido.filter(value => value !== itemSeleccionado);
     esconderMostrandoOpuestosSegun(seccion.tablaDetalle, seccion.msgTablaVacia, tablaTieneElementos);
 }
 
 window.eliminaCategoria = (nodoCategoria, idCategoria) => {
     manejadorEliminar(nodoCategoria, desplegable.categoria);
-    jCategorias.idCategorias.pop(idCategoria);
+    jCategorias.idCategorias = jCategorias.idCategorias.filter(value => value !== idCategoria);
     esconderMostrandoOpuestosSegun(seccion.categoria, seccion.msgCategoriasVacia, hayCategoriasSeleccionadas);
 }
 
-export {getTemplateJson};
+export {getTemplateJson,montoTotal};

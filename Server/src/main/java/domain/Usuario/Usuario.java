@@ -1,12 +1,14 @@
-package domain.Entidad.Usuario;
+package domain.Usuario;
 
 import domain.Entidad.Entidad;
 import domain.Entidad.EntidadPersistente;
-import domain.Entidad.EntidadJuridica;
 import domain.Operacion.Egreso.OperacionEgreso;
-import domain.Operacion.Ingreso.OperacionIngreso;
+import domain.Operacion.Operacion;
+import domain.Usuario.BandejaMensaje.BandejaMensaje;
+import domain.Usuario.BandejaMensaje.Mensaje;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -63,7 +65,8 @@ public class Usuario extends EntidadPersistente {
         this.entidadPertenece = entidadPertenece;
         this.bandejaDeMensajes = new BandejaMensaje();
     }
-//Getters-Setters
+
+    //Getters-Setters
 
     public String getNombre() {
         return nombre;
@@ -120,18 +123,24 @@ public class Usuario extends EntidadPersistente {
     public void setEntidadPertenece(Entidad entidadPertenece) {
         this.entidadPertenece = entidadPertenece;
     }
+
     //Funcionalidades
 
     public void darseDeAltaEn(OperacionEgreso unEgreso){
         unEgreso.agregateRevisor(this);
     }
 
-    public void darseDeBajaEn(OperacionEgreso unEgreso){
+    public List<Mensaje> darseDeBajaEn(OperacionEgreso unEgreso){
         unEgreso.sacaRevisor(this);
+        List<Mensaje>  mensajesBorrar=  bandejaDeMensajes.sacarMensajeRelacionadosA(unEgreso);
+       return mensajesBorrar;
     }
 
     public void recibiMensaje(Mensaje unMensaje){
         this.bandejaDeMensajes.agregateMensaje(unMensaje);
     }
 
+    public void realizaOperacion(Operacion operacion) {
+        this.entidadPertenece.realizaOperacion(operacion);
+    }
 }

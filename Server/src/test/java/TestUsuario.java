@@ -1,10 +1,9 @@
-/*
-import domain.Entidad.CategorizacionOperacion.Criterio;
+
+import domain.Operacion.CategorizacionOperacion.Criterio;
 import domain.Entidad.Empresa;
-import domain.Entidad.EntidadJuridica;
-import domain.Entidad.Usuario.RolAdministrador;
-import domain.Entidad.Usuario.RolEstandar;
-import domain.Entidad.Usuario.Usuario;
+import domain.Usuario.RolAdministrador;
+import domain.Usuario.RolEstandar;
+import domain.Usuario.Usuario;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Validadores.CriterioValidacionCantidadPresupuesto;
@@ -77,14 +76,14 @@ public class TestUsuario {
 
         Assert.assertEquals(unEgreso.getRevisores().get(0),unEstandar);
     }
-
+/*
     @Test
     public void testUsuario_AsociaEgresoAIngreso(){
         unEstandar.asociaEgresoAIngreso(unEgreso,unIngreso);
 
         Assert.assertEquals(unIngreso.getEgresos().size(),1);
     }
-
+*/
     @Test
     public void testUsuarioEstandar_NoPuedeModificarCriterio(){
 
@@ -113,4 +112,3 @@ public class TestUsuario {
     }
 
 }
- */

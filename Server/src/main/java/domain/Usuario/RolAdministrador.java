@@ -1,6 +1,6 @@
-package domain.Entidad.Usuario;
+package domain.Usuario;
 
-import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Operacion.CategorizacionOperacion.Criterio;
 
 public class RolAdministrador implements Rol {
     @Override

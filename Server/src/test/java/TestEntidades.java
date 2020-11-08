@@ -1,12 +1,10 @@
 
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
-import domain.Entidad.CategorizacionOperacion.Criterio;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.CategorizacionOperacion.Criterio;
 import domain.Entidad.Empresa;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class TestEntidades {
     Empresa empresa1;

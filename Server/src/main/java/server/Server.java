@@ -18,7 +18,7 @@ public class Server {
 
         Spark.port(9000);
         Router.init();
-        DebugScreen.enableDebugScreen();
+        //DebugScreen.enableDebugScreen();
     }
 
 }

@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="shortcut icon" href="/img/gsicon.png"/>
@@ -13,6 +15,9 @@
 </head>
 
 <body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
 <header class="contenedor-barra d-flex jc-sb">
     <!--Menu Hamb -->
     <button id="btn-menu"><i class="fas fa-bars"></i></button>
@@ -40,22 +45,28 @@
 <!--Filtros de busqueda-->
 <section class="seccion">
     <h1> Resultado de Validaciones </h1>
-    <div class="ai-center d-flex jc-sb">
-        <input type="text" name="busqueda" id="busqueda" placeholder="Buscar en bandeja de mensajes...">
-        <div class="contenedor-filtrado">
-            <p class="fw-700">Filtrar Por</p><br>
-
-            <input type="checkbox" name="visto" id="visto" value="visto" checked>
-            <label for="todas">Ver todas</label>
-
-            <input type="checkbox" name="todas" id="todas" value="todas" disabled>
-            <label for="visto">Vistos</label>
-
-            <input type="checkbox" name="transparentes" id="transparentes" value="transparentes" disabled>
-            <label for="transparentes">Transparentes</label>
-
-            <input type="checkbox" name="invalidas" id="invalidas" value="invalidas" disabled>
-            <label for="invalidas">Invalidas</label>
+    <div class="seccion">
+        <p class="fw-700">Filtrar Por</p><br>
+        <div class="ai-center d-flex jc-sb">
+            <div>
+                <label for="todas">Ver todas
+                    <input type="checkbox" name="todas" id="todas" value="todas" >
+                </label>
+                <label for="visto">Vistos
+                    <input type="checkbox" name="visto" id="visto" value="visto" >
+                </label>
+                <label for="no-visto">No Vistos
+                    <input type="checkbox" name="no-visto" id="no-visto" value="no-visto">
+                </label>
+            </div>
+            <div>
+                <label for="validas">Validas
+                    <input type="checkbox" name="validas" id="validas" value="validas" >
+                </label>
+                <label for="invalidas">Invalidas
+                    <input type="checkbox" name="invalidas" id="invalidas" value="invalidas">
+                </label>
+            </div>
         </div>
     </div>
     <hr>
@@ -68,7 +79,8 @@
         <a id="anterior" href="#"><i class="far fa-arrow-alt-circle-left"></i></a>
         <a id="siguiente" href="#"><i class="far fa-arrow-alt-circle-right"></i></a>
     </nav>
-    <!-- Tabla -->
+    <!-- Tabla Mensajes-->
+    <p id="no-mensajes"><em>No tienes mensajes, puedes seleccionarte como revisor de una operacion de egreso en la seccion busqueda</em></p>
     <table class="txt-centrado tabla tabla-bandeja">
         <tbody id="seccion-mensajes">
         </tbody>
@@ -78,9 +90,8 @@
     <article id="mensaje-detalle" class="seccion">
     </article>
 </main>
-<script type="module" src="js/generales.js"></script>
-<script type="module" src="js/bandejaMensaje.js"></script>
-<script type="module" src="js/categoria.js"></script>
 </body>
-
+<script type="module" src="js/bandejaMensaje.js"></script>
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/loader.js"></script>
 </html>

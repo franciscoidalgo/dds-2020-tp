@@ -41,7 +41,7 @@ public class Pedido extends EntidadPersistente {
     }
 
     //Funcionalidad
-    public Float precioTotal() {
+    public Double precioTotal() {
         return this.cantidad * this.item.getPrecioUnitario();
     }
 

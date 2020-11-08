@@ -23,6 +23,9 @@
 </head>
 
 <body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
 <header class="contenedor-barra d-flex jc-sb">
     <!--Menu Hamb -->
     <button id="btn-menu"><i class="fas fa-bars"></i></button>
@@ -177,14 +180,14 @@
                         <label for="cantidad">Cantidad</label>
                         <br>
                         <input type="number" name="cantidad" id="cantidad" min="1" step="1"
-                               placeholder="Ingrese cantidad... " required>
+                               placeholder="Ingrese cantidad... ">
                         <br>
                     </div>
                     <div>
                         <label for="precioUnitario">Precio Unitario</label>
                         <br>
                         <input type="number" name="precioUnitario" id="precioUnitario" min="0" step="0.01"
-                               placeholder="Ingrese precio... " required><br>
+                               placeholder="Ingrese precio... "><br>
                     </div>
                 </div>
                 <input id="nuevo-item" type="button" value="Nuevo" class="btn btn-formulario">
@@ -293,22 +296,17 @@
                 </div>
             </div>
         </fieldset>
-        <input type="submit" value="Siguiente" class="btn btn-primario float-r">
+        <input id="btn-submit" type="submit" value="Siguiente" class="btn btn-primario float-r">
     </form>
 </main>
-
-
-<script type="text/javascript" src="js/generales.js"></script>
-
+</body>
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/loader.js"></script>
 
 {{#if egreso}}
     <script type="module" src="js/egreso.js"></script>
 {{else}}
-
     <script type="module" src="js/presupuestos.js"></script>
-
 {{/if}}
-</body>
-
 
 </html>

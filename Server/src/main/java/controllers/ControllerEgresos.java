@@ -3,11 +3,12 @@ package controllers;
 import APIMercadoLibre.InfoMercadoLibre;
 import APIMercadoLibre.modelos.Ciudad;
 import APIMercadoLibre.modelos.Provincia;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import config.ConfiguracionMercadoLibre;
-import domain.Entidad.CategorizacionOperacion.CategoriaOperacion;
-import domain.Entidad.Usuario.Usuario;
-import domain.Factories.*;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
+import domain.Usuario.Usuario;
+import domain.Factories.FactoryEgreso;
 import domain.Operacion.Egreso.*;
 import repositorios.Repositorio;
 import repositorios.RepositorioDeUsuarios;
@@ -19,7 +20,10 @@ import spark.Response;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ControllerEgresos {
@@ -33,7 +37,7 @@ public class ControllerEgresos {
         Repositorio<TipoDePago> repoTipoDePago = FactoryRepo.get(TipoDePago.class);
         Repositorio<CategoriaOperacion> repoCategorias = FactoryRepo.get(CategoriaOperacion.class);
 
-        if(ConfiguracionMercadoLibre.usarApi){
+        if (ConfiguracionMercadoLibre.usarApi) {
             InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
             parametros.put("paises", infoMercadoLibre.getListaDePaises());
             parametros.put("monedas", infoMercadoLibre.getListaDeMonedas());
@@ -70,42 +74,38 @@ public class ControllerEgresos {
         return jCiudades;
     }
 
-    public String submitEgreso(Request request,Response response) {
+    public String submitEgreso(Request request, Response response) {
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         RepositorioDeUsuarios repoUsuarios = FactoryRepoUsuario.get();
         JsonObject mensajeRta = new JsonObject();
 
 
         try {
-
             Usuario usuarioLogueado = repoUsuarios.buscar(request.session().attribute("userId"));
             OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
-            usuarioLogueado.getEntidadPertenece().realizaOperacion(operacionEgreso);
-            //todo agregar usuario
+
+
+            usuarioLogueado.realizaOperacion(operacionEgreso);
             usuarioLogueado.darseDeAltaEn(operacionEgreso);
-            repoEgreso.agregar(operacionEgreso);
             operacionEgreso.validaOperacion();
-            repoUsuarios.modificar(usuarioLogueado);
+
+            repoEgreso.agregar(operacionEgreso);
             //Response
-            mensajeRta.addProperty("idEgreso", ""+operacionEgreso.getId());
+            mensajeRta.addProperty("idEgreso", "" + operacionEgreso.getId());
             response.status(200);
+
             response.type("application/json");
             return new Gson().toJson(mensajeRta);
-       }catch (Exception e){
+
+        } catch (Exception e) {
             response.status(404);
             mensajeRta.addProperty("mensaje", "No se pudo cargar operacion");
             response.type("application/json");
             return new Gson().toJson(mensajeRta);
-       }
+        }
 
 
     }
-
-
-
-
-
-
 
 
 }

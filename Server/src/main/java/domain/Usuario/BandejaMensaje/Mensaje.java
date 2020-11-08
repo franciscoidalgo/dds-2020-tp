@@ -1,4 +1,4 @@
-package domain.Entidad.Usuario;
+package domain.Usuario.BandejaMensaje;
 
 import domain.Entidad.EntidadPersistente;
 import domain.Operacion.Egreso.DetalleOperacion;
@@ -33,20 +33,23 @@ public class Mensaje extends EntidadPersistente {
     @Column(name = "mensaje")
     private String mensaje;
 
+    @Column(name = "idEgreso")
+    private int idEgreso;
+
     public Mensaje(String asunto, String mensaje) {
         this.asunto = asunto;
         this.mensaje = mensaje;
         this.fechaEnvio = LocalDate.now();
         this.horaEnvio = LocalTime.now();
-        this.fechaLeido = null;
-        this.horaLeido = null;
+        this.fechaLeido = LocalDate.now();
+        this.horaLeido = LocalTime.now();
     }
     public Mensaje( OperacionEgreso egreso,String resultadoValidacion,String detalleResultado) {
         this.fechaEnvio = LocalDate.now();
         this.horaEnvio = LocalTime.now();
-        this.fechaLeido = null;
-        this.horaLeido = null;
-
+        this.fechaLeido = LocalDate.now();
+        this.horaLeido = LocalTime.now();
+        this.idEgreso = egreso.getId();
         setSegunEgreso(egreso, resultadoValidacion,detalleResultado);
 
     }
@@ -73,8 +76,17 @@ public class Mensaje extends EntidadPersistente {
         return mensaje;
     }
 
+    public int getIdEgreso() {
+        return idEgreso;
+    }
+
+    public void setIdEgreso(int idEgreso) {
+        this.idEgreso = idEgreso;
+    }
+
     public void actualizateLeido(){
         this.fechaLeido = LocalDate.now();
+        this.horaLeido = LocalTime.now();
     }
 
     public void setSegunEgreso(OperacionEgreso egreso,String resultadoValidacion,String detalleResultado){
