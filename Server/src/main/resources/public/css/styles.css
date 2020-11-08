@@ -711,7 +711,7 @@ tr {
     background-color: red;
 }
 
-#mensaje-detalle p span {
+#mensaje-detalle p span,p span {
     font-weight: 700;
 }
 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Ingreso</title>
+
+    <link rel="shortcut icon" href="/img/gsicon.png"/>
+
+</head>
+
+<body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
+<header class="contenedor-barra d-flex jc-sb">
+    <!--Menu Hamb -->
+    <button id="btn-menu"><i class="fas fa-bars"></i></button>
+    <nav id="navbar" class="navbar">
+        <ul class="d-flex f-dir-col contenido-navbar">
+            <div class="d-flex jc-sb ">
+                <h2 class="txt-centrado">Menu</h2>
+                <button id="btn-close" class="btn-primario"><i class="fas fa-times"></i></button>
+            </div>
+            <li><a href="egreso"><i class="fas fa-file-invoice"></i>Nuevo Egreso</a></li>
+            <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
+            <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
+            <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
+            <li><a href="busquedaOperacion"><i class="fas fa-file-import"></i>Buscar Operacion</a></li>
+            <li><a href="vinculacion"><i class="fas fa-link"></i>Vincular</a></li>
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+        </ul>
+    </nav>
+    <!--Logo -->
+    <div class="ai-center txt-centrado">
+        <a href="dashboard">
+            <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
+        </a>
+    </div>
+</header>
+<main class="seccion">
+    <h1>Panel personal</h1>
+    <!-- Burbuja Usuario-->
+    <div class="burbuja  d-flex jc-sb ai-center">
+        <div class="d-flex jc-sb">
+            <p><i class="fa fa-user-tie"></i></p>
+            <h3>Configuracion del Usuario</h3>
+        </div>
+        <p><i class="fas fa-plus"></i></p>
+    </div>
+    <!-- Burbuja Usuario-->
+    <section class="burbuja">
+        <div class="contenedor-centrada">
+            <h3>Informacion del Usuario</h3>
+            <div class="d-flex jc-sb">
+                <div>
+                    <p><span>Usuario:</span> {{usuario.username}}</p>
+                </div>
+                <div>
+                    <p><span>Nombre:</span> {{usuario.nombre}}</p>
+                    <p><span>Apellido:</span> {{usuario.apellido}}</p>
+                    <p><span>Rol:</span> {{#if rol}}Administrador{{else}}Estandar{{/if}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Burbuja Organizacion-->
+    <div class="burbuja  d-flex jc-sb ai-center">
+        <div class="d-flex jc-sb">
+            <p><i class="fa fa-building"></i></p>
+            <h3>Informacion de la Organizacion</h3>
+        </div>
+        <p><i class="fas fa-plus"></i></p>
+    </div>
+    <!-- Burbuja Organizacion-->
+    <section class="burbuja">
+        <div class="contenedor-centrada">
+            <h3>Informacion de la Organizacion</h3>
+            <div class="d-flex jc-sb">
+                <div>
+                    <p><span>Organizacion:</span> {{organizacion.nombre}}</p>
+                    <p><span>Entidad Seleccionada:</span> {{entidad}}</p>
+                    <p><span>AQUI INFO DE LA ENTIDAD:</span> asdasdasdasd</p>
+                </div>
+                <div>
+                    <p><span>Otras Entidades:</span> {{#each otrasEntidades}}{{this}},{{/each}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Burbuja Cambios-->
+    <div class="burbuja  d-flex jc-sb ai-center">
+        <div class="d-flex jc-sb">
+            <p><i class="fa fa-sync"></i></p>
+            <h3>Actualizar Informacion</h3>
+        </div>
+        <p><i class="fas fa-plus"></i></p>
+    </div>
+    <!-- Burbuja Organizacion-->
+    <section class="burbuja">
+        <div class="contenedor-centrada">
+            <h3>Informacion de la Organizacion</h3>
+            <div class="d-flex jc-sb">
+                <div>
+                    <!-- Nombre-->
+                    <label for="nombre">Actualizar nombre</label>
+                    <br>
+                    <input type="text" name="nombre" id="nombre">
+                    <button id="btn-nombre" nombre="btn-nombre" class="btn btn-formulario">Cambiar</button>
+                    <br>
+                    <!-- Apellido-->
+                    <label for="apellido">Actualizar Apellido</label>
+                    <br>
+                    <input type="text" name="apellido" id="apellido">
+                    <button id="btn-apellido" nombre="btn-apellido" class="btn btn-formulario">Cambiar</button>
+                    <br>
+                    <!-- Password-->
+                    <label for="password">Actualizar contraseña</label>
+                    <br>
+                    <input type="password" name="password" id="password">
+                    <button id="btn-password" nombre="btn-password" class="btn btn-formulario">Cambiar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/loader.js"></script>
+
+</body>
+
+</html>

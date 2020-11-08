@@ -42,6 +42,7 @@ public class Router {
         ControllerBusquedaOperacion controllerBusquedaOperacion = new ControllerBusquedaOperacion();
         ControllerPersistance controllerPersistance = new ControllerPersistance();
         ControllerVinculacion controllerVinculacion = new ControllerVinculacion();
+        ControllerUsuario controllerUsuario = new ControllerUsuario();
 
         ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
 
@@ -104,13 +105,12 @@ public class Router {
             });
         });
 
-
         Spark.path("/mensajes",() -> {
             Spark.get("", controllerMensajes::mostrarBandeja, Router.engine);
             Spark.get("/todos", apiRest::mostrarMensajes);
         });
 
-
+        Spark.get("/usuario", controllerUsuario::mostrarUsuario, Router.engine);
 
         Spark.get("/api/get-egreso/:idEgreso", apiRest::pasarEgresosSegunID);
         Spark.get("/api/get-egreso/:idEgreso/:idMensaje", apiRest::pasarEgresosMensaje);

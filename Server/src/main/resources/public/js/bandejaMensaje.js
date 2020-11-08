@@ -1,6 +1,5 @@
-import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 import {mostrarMensaje, setIconoValidoSegun} from "./generales/mensaje.js";
-import {generarModalFail} from "./generales/modal";
+
 
 
 const boton = {
