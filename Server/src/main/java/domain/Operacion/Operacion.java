@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table
+@Table(name = "operacion")
 @Inheritance(strategy = InheritanceType.JOINED )
 public abstract class Operacion extends EntidadPersistente {
 

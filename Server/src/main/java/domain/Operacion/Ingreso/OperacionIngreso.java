@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "operacion_ingreso")
 @PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
 public class OperacionIngreso extends Operacion {
-
+    //Atributos
     @Column(name = "descripcion")
     private String descripcion;
 

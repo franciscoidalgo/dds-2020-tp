@@ -1,9 +1,9 @@
 package serverVinculador;
 
+import DTOs.DTOOperacionEgreso;
+import DTOs.DTOOperacionIngreso;
 import com.google.gson.Gson;
-import domain.criterio.CriterioAsociacion;
-import requiredModels.operacion.egreso.OperacionEgreso;
-import requiredModels.operacion.ingreso.OperacionIngreso;
+import Criterio.CriterioAsociacion;
 import spark.Request;
 import spark.Response;
 
@@ -14,8 +14,8 @@ import java.util.List;
 public class ControllerVinculacion {
     public String vincular (Request request, Response response){
         Gson gson = new Gson();
-        OperacionIngreso operacionIngreso = gson.fromJson(request.queryParams("ingreso"), OperacionIngreso.class);
-        List<OperacionEgreso> egresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), OperacionEgreso[].class));
+        DTOOperacionIngreso operacionIngreso = gson.fromJson(request.queryParams("ingreso"), DTOOperacionIngreso.class);
+        List<DTOOperacionEgreso> egresos = Arrays.asList(gson.fromJson(request.queryParams("listaEgresos"), DTOOperacionEgreso[].class));
         LocalDate fechaDesde = LocalDate.parse(request.queryParams("fechaDesde"));
         LocalDate fechaHasta = LocalDate.parse(request.queryParams("fechaHasta"));
         CriterioAsociacion criterio = new CriterioAsociacion();
