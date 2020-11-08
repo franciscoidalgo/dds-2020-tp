@@ -5,9 +5,11 @@ import Persistencia.TypeAdapterHibernate;
 import com.google.gson.*;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
+import controllers.convertersDTO.ConverterEgreso;
 import controllers.convertersDTO.ConverterIngreso;
 import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Operacion.CategorizacionOperacion.Criterio;
+import domain.Operacion.Operacion;
 import domain.Usuario.BandejaMensaje.BandejaMensaje;
 import domain.Usuario.BandejaMensaje.Mensaje;
 import domain.Usuario.Usuario;
@@ -23,6 +25,7 @@ import repositorios.factories.FactoryRepoUsuario;
 import spark.Request;
 import spark.Response;
 
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -249,7 +252,6 @@ public class ApiRest {
     }
 
 
-
     public String pasarTodosIngresos(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
 
@@ -265,6 +267,44 @@ public class ApiRest {
         });
 
         jsonEgreso = gson.toJson(ingresoDTOList);
+        response.type("application/json");
+        return jsonEgreso;
+    }
+
+
+    public String vincularIngresos(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        IngresoDTO ingresoVincular = gson.fromJson(request.body(),IngresoDTO.class);
+        Repositorio<OperacionIngreso> operacionIngresoRepositorio =FactoryRepo.get(OperacionIngreso.class) ;
+        OperacionIngreso ingreso = operacionIngresoRepositorio.buscar(ingresoVincular.getId());
+        List<OperacionEgreso> egresos = ingresoVincular.getListaEgresos().stream()
+                                                .map(egresoDTO -> FactoryRepo.get(OperacionEgreso.class)
+                                                            .buscar(egresoDTO.getId())).collect(Collectors.toList());
+
+        egresos.forEach(operacionEgreso -> {
+            try {
+                ingreso.agregarEgreso(operacionEgreso);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        operacionIngresoRepositorio.modificar(ingreso);
+        response.type("application/json");
+        return "{\"mensaje\":\"todo ok\"}";
+    }
+    public String pasarIngresoPorVincular(Request request, Response response) {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+
+        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
+        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
+        List<IngresoDTO> ingresosDTO;
+        String jsonEgreso;
+
+        List<OperacionIngreso> ingresos = usuario.getEntidadPertenece().getOperacionesIngreso().stream()
+                .filter(operacionIngreso -> operacionIngreso.saldo()>0).collect(Collectors.toList());
+
+        ingresosDTO = ingresos.stream().map(operacionIngreso -> ConverterIngreso.toDTO(operacionIngreso)).collect(Collectors.toList()); ;
+        jsonEgreso = gson.toJson(ingresosDTO);
         response.type("application/json");
         return jsonEgreso;
     }
@@ -363,13 +403,7 @@ public class ApiRest {
         }
     }
 
-
-
-
-
-
-
-    private EgresoDTO generarEgresoDTO(OperacionEgreso egreso) {
+    public EgresoDTO generarEgresoDTO(OperacionEgreso egreso) {
         EgresoDTO egresoDTO = new EgresoDTO();
         egresoDTO.setId(egreso.getId());
         egresoDTO.setPedido(egreso.getDetalle().getPedidos());

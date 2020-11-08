@@ -15,7 +15,7 @@ public class IngresoDTO {
     private Double monto;
     private Double saldo;
     private Double costo;
-    private List<Integer> listaEgresos;
+    private List<EgresoDTO> listaEgresos;
 
 
     public int getId() {
@@ -65,11 +65,11 @@ public class IngresoDTO {
         this.monto = monto;
     }
 
-    public List<Integer> getListaEgresos() {
+    public List<EgresoDTO> getListaEgresos() {
         return listaEgresos;
     }
 
-    public void setListaEgresos(List<Integer> listaEgresos) {
+    public void setListaEgresos(List<EgresoDTO> listaEgresos) {
         this.listaEgresos = listaEgresos;
     }
 

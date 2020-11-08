@@ -70,9 +70,6 @@ function agregarEnCategoria(idCategoria, idDesplegable, contenido) {
     };//comportamiento en window
 }
 
-
-
-
 desplegable.operacion.onchange = () => {
     let seleccionoEgreso = desplegable.operacion.value === "ingreso";
     boton.verTodas.hidden = false;
@@ -84,7 +81,7 @@ desplegable.operacion.onchange = () => {
 
 boton.verTodas.onclick = () => {
     let seleccion = desplegable.operacion.value;
-
+    seccion.operacion.innerHTML="";
     if (seleccion === "egreso") {
         seccion.seleccionCriterio.hidden = false;
         seccion.seleccionCategoria.hidden = false;
@@ -94,7 +91,6 @@ boton.verTodas.onclick = () => {
     }
 
 }
-
 
 desplegable.criterio.onchange = () => {
     let url = "/api/categoria/" + desplegable.criterio.value;
@@ -131,7 +127,6 @@ boton.seleccionCategoria.addEventListener("click", () => {
     //buscar en api
 })
 
-
 boton.buscarEgreso.onclick = () => {
     let url = "/api/egresos/segun-categorias";
     let init = {
@@ -141,6 +136,7 @@ boton.buscarEgreso.onclick = () => {
         },
         body: JSON.stringify(categoriasSeleccionadas)
     }
+    seccion.operacion.innerHTML="";
     mostrarLoader();
     fetch(url, init)
         .then(response => response.json())
@@ -151,11 +147,12 @@ boton.buscarEgreso.onclick = () => {
 
 }
 
-
 window.eliminaCategoria = (nodoCategoria, idDesplegable, idCategoria) => {
     let indice = categoriasSeleccionadas.idCategorias.indexOf(idCategoria);
-    //Lo vuelvo a mostrar en desplegable y lo saco de todos lados
     desplegable.categorias.options[idDesplegable].hidden = false;
     categoriasSeleccionadas.idCategorias.splice(indice, 1);
     nodoCategoria.remove();
 }
+
+
+//TODO ARREGLAR LA PARTE DE LAS TABLAS!

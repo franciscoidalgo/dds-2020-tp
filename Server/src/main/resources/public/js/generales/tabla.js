@@ -94,7 +94,6 @@ function settearEncabezado(tr, descripcion) {
 
 function settearFilaEgreso(tbody, data) {
     let tr = document.createElement("tr");
-
     let td = `  <td>${data.id}</td>
                 <td>${data.detalle.proveedor.razonSocial}</td>
                 <td>${data.fecha}</td>

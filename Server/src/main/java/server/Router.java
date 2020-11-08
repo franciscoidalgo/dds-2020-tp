@@ -41,6 +41,8 @@ public class Router {
         ControllerMensajes controllerMensajes = new ControllerMensajes();
         ControllerBusquedaOperacion controllerBusquedaOperacion = new ControllerBusquedaOperacion();
         ControllerPersistance controllerPersistance = new ControllerPersistance();
+        ControllerVinculacion controllerVinculacion = new ControllerVinculacion();
+
         ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
 
         validadorDeTransparencia.agregateCriterio(new CriterioValidacionCantidadPresupuesto());
@@ -83,7 +85,10 @@ public class Router {
 
             Spark.path("/ingreso",() -> {
                 Spark.get("/todos", apiRest::pasarTodosIngresos);
+                Spark.get("/por-vincular", apiRest::pasarIngresoPorVincular);
                 Spark.get("/:idIngreso", apiRest::pasarIngresoSegunID);
+                Spark.post("/vincular", apiRest::vincularIngresos);
+
             });
 
             Spark.get("/categoria/:idCriterio", apiRest::pasarCategoriasSegunCriterio);
@@ -116,9 +121,9 @@ public class Router {
 
 
 
-
-
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
+
+        Spark.get("/vinculacion", controllerVinculacion::mostrarVinculacion, Router.engine);
 
         Spark.get("/presupuesto", controllerPresupuesto::mostrarPresupuestos, Router.engine);
 

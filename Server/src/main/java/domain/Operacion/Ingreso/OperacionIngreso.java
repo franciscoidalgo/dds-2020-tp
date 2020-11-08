@@ -90,6 +90,8 @@ public class OperacionIngreso extends Operacion {
             throw new Exception("No se puede cargar un egreso. Supera al saldo");
         }
         this.egresosVinculados.add(operacionEgreso);
+        operacionEgreso.setIngreso(this);
+
 
     }
 

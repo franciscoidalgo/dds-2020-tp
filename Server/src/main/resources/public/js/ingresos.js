@@ -119,12 +119,12 @@ function getIngresoJSON() {
     }
     ingresoJSON.monto = input.monto.value;
     ingresoJSON.descripcion = input.descripcion.value;
-    ingresoJSON.listaEgresos = egresosSeleccionados.map(value => value.id);
+    ingresoJSON.listaEgresos = egresosSeleccionados.map(value => {return {id:value.id}});
     ingresoJSON.fechaRealizada = input.fecha.value;
     ingresoJSON.fechaAceptacion = input.fechaAceptacion.value;
     ingresoJSON.tipoIngreso = tipoIngreso;
 
-    console.log(ingresoJSON.listaEgresos)
+    console.log(ingresoJSON)
     return ingresoJSON;
 }
 

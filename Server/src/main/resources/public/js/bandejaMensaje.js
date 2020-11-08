@@ -1,5 +1,6 @@
 import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 import {mostrarMensaje, setIconoValidoSegun} from "./generales/mensaje.js";
+import {generarModalFail} from "./generales/modal";
 
 
 const boton = {
@@ -118,21 +119,6 @@ function setToStringCantPaginas() {
 }
 
 /* Eventos */
-
-window.addEventListener("load", () => {
-    let url = "/mensajes/todos";
-    mostrarLoader();
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            dataMensajes = data.mensajes;
-            cantMaxima = data.cantMensajes;
-            renderTabla(dataMensajes);
-            esconderLoader();
-        })
-        .catch(reason => console.log(reason));
-})
-
 boton.siguiente.onclick = () => {
     renderTabla(dataMensajes)
     countRender = Math.min(countRender, cantMaxima);

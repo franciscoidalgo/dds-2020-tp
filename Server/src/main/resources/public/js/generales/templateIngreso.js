@@ -1,5 +1,7 @@
+import {esconderLoader, mostrarLoader} from "./loader.js";
+import {crearTablaEgresos} from "./tabla.js";
+
 function buildTemplateIngreso(ingreso, contenedorHTML) {
-    console.log(ingreso)
     const template = `
         <header>
             <div class="d-flex jc-sb ai-center fw-700">
@@ -28,8 +30,8 @@ function buildTemplateIngreso(ingreso, contenedorHTML) {
                 </div>
             </section>
         </main>
-        <footer>
-            <button id="btn-ver-egresos" class="btn btn-formulario-danger">Ver Egresos vinculados</button>
+        <footer id="egresos-vinculados">
+           
         </footer>
     `
     contenedorHTML.innerHTML = template;
@@ -38,29 +40,14 @@ function buildTemplateIngreso(ingreso, contenedorHTML) {
 
 function renderizarIngresoDetallado(dataIngreso, contenedorHTML) {
     buildTemplateIngreso(dataIngreso, contenedorHTML);
-    buildBotonVerEgresosVinculados(dataIngreso);
-    console.log(dataIngreso);
-
-
+    buildTablaEgresosVinculados(dataIngreso.listaEgresos);
     contenedorHTML.scrollIntoView({behavior: "smooth"});
 }
 
-function buildBotonVerEgresosVinculados(egreso) {
-    let btn = document.getElementById("btn-ver-egresos");
-    btn.onclick = () => verEgresos(egreso.id);
-}
+function buildTablaEgresosVinculados(dataEgresos){
+    let seccionEgresosViculados = document.getElementById("egresos-vinculados");
+    seccionEgresosViculados.appendChild(crearTablaEgresos(dataEgresos));
 
-function verEgresos(egresoID) {
-    //let url = "/api/revisor/agregar/" + egresoID;
-    /*mostrarLoader();
-    fetch(url, {method: "PUT"})
-        .then(response => response.json())
-        .then(data => {
-            esconderLoader();
-        })
-        .catch(reason => console.log(reason));
-        */
-    console.log("Debo agregar la magia aca ")
 }
 
 export {renderizarIngresoDetallado}

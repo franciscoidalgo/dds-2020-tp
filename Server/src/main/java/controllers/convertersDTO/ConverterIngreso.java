@@ -1,5 +1,6 @@
 package controllers.convertersDTO;
 
+import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
@@ -16,7 +17,7 @@ public class ConverterIngreso {
     public static IngresoDTO toDTO(OperacionIngreso operacionIngreso) {
         IngresoDTO ingresoDTO = new IngresoDTO();
 
-        List<Integer> idOperacionesEgresos = operacionIngreso.getEgresosVinculados().stream().map(operacionEgreso -> operacionEgreso.getId()).collect(Collectors.toList());
+        List<EgresoDTO> operacionesEgresos = operacionIngreso.getEgresosVinculados().stream().map(operacionEgreso -> ConverterEgreso.generarEgresoDTO(operacionEgreso)).collect(Collectors.toList());
 
         ingresoDTO.setId(operacionIngreso.getId());
         ingresoDTO.setDescripcion(operacionIngreso.getDescripcion());
@@ -24,7 +25,7 @@ public class ConverterIngreso {
         ingresoDTO.setFechaRealizada(operacionIngreso.getFecha().toString());
         ingresoDTO.setMonto(operacionIngreso.montoTotal());
         ingresoDTO.setTipoIngreso(operacionIngreso.getTipoIngreso());
-        ingresoDTO.setListaEgresos(idOperacionesEgresos);
+        ingresoDTO.setListaEgresos(operacionesEgresos);
         ingresoDTO.setSaldo(operacionIngreso.saldo());
         ingresoDTO.setCosto(operacionIngreso.costo());
 
@@ -50,9 +51,12 @@ public class ConverterIngreso {
         if (ingresoDTO.getListaEgresos().size() == 0) {
             return operacionIngreso;
         }
-
+        System.out.println("***************************************");
         for (int i = 0; i < ingresoDTO.getListaEgresos().size(); i++) {
-            OperacionEgreso operacionEgreso = operacionEgresoRepositorio.buscar(ingresoDTO.getListaEgresos().get(i));
+            System.out.println("***************************************");
+            Integer idEgreso = ingresoDTO.getListaEgresos().get(i).getId();
+            System.out.println("-------------------------------->idEGRESO : " + idEgreso);
+            OperacionEgreso operacionEgreso = operacionEgresoRepositorio.buscar(idEgreso);
             if (null == operacionEgreso) {
                 throw new Exception("No se pudo cargar el egreso");
             }
