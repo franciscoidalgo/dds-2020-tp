@@ -3,23 +3,33 @@ import {contenidoSeleccionadoEn} from "./generales/desplegable.js";
 import {generarModalFail, generarModalOK} from "./generales/modal.js";
 import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 
+const form ={
+    egreso:document.getElementById("operacion-egreso")
+}
+
+const entrada = {
+    cantPresupuestos:document.getElementById("cantPresupuestos"),
+
+}
+const desplegable = {
+    moneda: document.getElementById("moneda"),
+    idTipoDePago:document.getElementById("tipo-pago")
+}
+
+const MENSAJE_OK = "Se registro el egreso correctamente en el sistema. Podras identificarlo como Egreso#"
+const MENSAJE_FAIL = "No se pudo registrar el egreso. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle";
+
 
 /** Funciones **/
 function getJsonEgreso() {
-
-    let cantPresupuestos = document.getElementById("cantPresupuestos").value;
-    let moneda = document.getElementById("moneda");
-    let idTipoDePago = document.getElementById("tipo-pago").value;
     let template = getTemplateJson();
     let medioDePago = {}
-    template.cantPresupuestos = cantPresupuestos;
-    medioDePago.moneda = contenidoSeleccionadoEn(moneda).innerText
-    medioDePago.idTipoDePago = idTipoDePago;
+    template.cantPresupuestos = entrada.cantPresupuestos.value;
+    medioDePago.moneda = contenidoSeleccionadoEn(desplegable.moneda).innerText
+    medioDePago.idTipoDePago = desplegable.idTipoDePago.value;
     template.medioDePago = medioDePago;
 
-    console.log(template);
     return template
-
 }
 
 
@@ -31,16 +41,15 @@ async function postEgreso(url, init) {
         const json = await response.json();
         return json;
     } else {
-        generarModalFail("No se pudo registrar el egreso. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle")
+        generarModalFail(MENSAJE_FAIL)
         esconderLoader();
     }
 
 }
 
-document.getElementById("operacion-egreso").onsubmit = (e) => {
-    let url = '/egreso';
+form.egreso.onsubmit = (e) => {
+    let url = '/egreso/nuevo';
     let jsonEgreso = getJsonEgreso();
-    e.preventDefault();
     let init = {
         method: 'POST',
         headers: {
@@ -48,15 +57,15 @@ document.getElementById("operacion-egreso").onsubmit = (e) => {
         },
         body: JSON.stringify(jsonEgreso)
     }
-    if(montoTotal<=0){
-        generarModalFail("No se pudo registrar el egreso. Verifique que todos los campos esten completos y que exista al menos, un bien  agregado al detalle")
+
+    e.preventDefault();
+
+    if (montoTotal <= 0) {
+        generarModalFail(MENSAJE_FAIL);
+    } else {
+        postEgreso(url, init).then(data => {
+            generarModalOK(MENSAJE_OK + data.idEgreso)
+            esconderLoader();
+        })
     }
-    postEgreso(url, init).then(data => {
-        generarModalOK("Se registro el egreso correctamente en el sistema. Podras identificarlo como Egreso#" + data.idEgreso)
-        esconderLoader();
-    })
-
 }
-
-
-

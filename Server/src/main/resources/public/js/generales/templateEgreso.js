@@ -65,8 +65,10 @@ function buildTemplateEgreso(egreso, contenedorHTML) {
                 </table>
             </section>
         </main>  
-        <footer>
-            <button id="btn-revisar" class="btn btn-formulario-danger">Revisar</button>
+        <footer class="d-flex jc-se">
+            <button id="btn-revisar" class="btn btn-formulario">Revisar</button>
+            <button id="btn-borrar" class="btn btn-formulario-danger">Borrar</button>
+            <button id="btn-editar" class="btn btn-formulario">Editar</button>
         </footer>  
     `
     contenedorHTML.innerHTML = template;
@@ -77,8 +79,13 @@ function buildBotonRevisar(egreso) {
     btn.onclick = () => revisarEgreso(egreso.id);
 }
 
+function buildBotonBorrar(egreso) {
+    let btn = document.getElementById("btn-borrar");
+    btn.onclick = () => borrarEgreso(egreso.id);
+}
+
 function revisarEgreso(egresoID) {
-    let url = "/api/revisor/agregar/" + egresoID;
+    let url = "/revisor/agregar/" + egresoID;
     mostrarLoader();
     fetch(url, {method: "PUT"})
         .then(response => response.json())
@@ -88,6 +95,20 @@ function revisarEgreso(egresoID) {
         })
         .catch(reason => console.log(reason));
 }
+
+function revisarEgreso(egresoID) {
+    let url = "/egreso/borrar/" + egresoID;
+    mostrarLoader();
+    fetch(url, {method: "DELETE"})
+        .then(response => response.json())
+        .then(data => {
+            esconderLoader();
+            generarModalOK(MENSAJE_REVISOR);
+        })
+        .catch(reason => console.log(reason));
+}
+
+
 
 function buildTablaDetalle(vectorItems) {
     let tabla = document.getElementById("tabla-detalle");

@@ -103,7 +103,7 @@ function settearFilaEgreso(tbody, data) {
     tbody.appendChild(tr);
 
     tr.onclick = () =>{
-            let url = `/api/get-egreso/${data.id}`;
+            let url = `/egreso/buscar/${data.id}`;
             let mensaje = document.getElementById("mensaje-detalle");
             fetch(url)
                 .then(response => response.json())

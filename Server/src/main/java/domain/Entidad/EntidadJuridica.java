@@ -25,7 +25,6 @@ public abstract class EntidadJuridica extends Entidad {
     @JoinColumn(name = "direccion_id")
     protected DireccionPostal direccionPostal;
 
-
     public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal) {
         this.razonSocial = razonSocial;
         this.nombre = nombre;

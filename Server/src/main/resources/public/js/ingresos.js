@@ -168,7 +168,7 @@ async function getEgresosVinculables(url) {
 
 function renderEgresosEnDesplegable() {
 
-    let url = `/api/get-egresos-vincular/${input.fechaAceptacion.value}`
+    let url = `/egreso/buscar/sin-vincular/${input.fechaAceptacion.value}`
 
     getEgresosVinculables(url).then(data => {
         cleanDesplegable(desplegable.seleccionEgreso);

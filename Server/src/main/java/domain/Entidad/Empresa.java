@@ -29,12 +29,111 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
-
-
-
     @Column(name = "cod_igj")
     private long codIGJ;
     //Constructor
+
+    public class EmpresaDTO{
+        private final String tipo = "Em";
+        private String nombre;
+        private String razonSocial;
+        private String descripcion;
+        private long CUIT;
+        private DireccionPostal direccionPostal;
+        private String actividad;
+        private Sector sector;
+        private int cantPersonal;
+        private int promVentasAnual;
+        private Categoria categoria;
+        private long codIGJ;
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getRazonSocial() {
+            return razonSocial;
+        }
+
+        public void setRazonSocial(String razonSocial) {
+            this.razonSocial = razonSocial;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+        }
+
+        public long getCUIT() {
+            return CUIT;
+        }
+
+        public void setCUIT(long CUIT) {
+            this.CUIT = CUIT;
+        }
+
+        public DireccionPostal getDireccionPostal() {
+            return direccionPostal;
+        }
+
+        public void setDireccionPostal(DireccionPostal direccionPostal) {
+            this.direccionPostal = direccionPostal;
+        }
+
+        public String getActividad() {
+            return actividad;
+        }
+
+        public void setActividad(String actividad) {
+            this.actividad = actividad;
+        }
+
+        public Sector getSector() {
+            return sector;
+        }
+
+        public void setSector(Sector sector) {
+            this.sector = sector;
+        }
+
+        public int getCantPersonal() {
+            return cantPersonal;
+        }
+
+        public void setCantPersonal(int cantPersonal) {
+            this.cantPersonal = cantPersonal;
+        }
+
+        public int getPromVentasAnual() {
+            return promVentasAnual;
+        }
+
+        public void setPromVentasAnual(int promVentasAnual) {
+            this.promVentasAnual = promVentasAnual;
+        }
+
+        public Categoria getCategoria() {
+            return categoria;
+        }
+
+        public void setCategoria(Categoria categoria) {
+            this.categoria = categoria;
+        }
+
+        public long getCodIGJ() {
+            return codIGJ;
+        }
+
+        public void setCodIGJ(long codIGJ) {
+            this.codIGJ = codIGJ;
+        }
+    }
 
     public Empresa(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ, String actividad, Sector sector, int cantPersonal, int promVentasAnual) {
         super(razonSocial, nombre, CUIT, descripcion, direccionPostal);
@@ -128,12 +227,37 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     }
 
     public String descripcion() {
-        return this.descripcion;
+        String template = "Una empresa "+this.actividad+
+                           "("+this.codIGJ+")"+
+                            "En la que trabaja "+this.cantPersonal+
+                            ", obteniendo un promedio de ventas de $"+this.promVentasAnual+"."+
+                           "Categorizada en la AFIP como "+this.sector.getNombre()+"-"+this.categoria.getNombre()+".";
+
+
+        return this.descripcion+ template;
     }
 
     private void recategorizate(){
         if(this.sector != null) {
             this.categoria = new Categorizador().categoriza(this);
         }
+    }
+
+
+    public EmpresaDTO toDTO(){
+        EmpresaDTO empresaDTO = new EmpresaDTO();
+        empresaDTO.setNombre(this.nombre());
+        empresaDTO.setCUIT(this.getCUIT());
+        empresaDTO.setDescripcion(this.getDescripcion());
+        empresaDTO.setDireccionPostal(this.getDireccionPostal());
+
+        empresaDTO.setActividad(this.getActividad());
+        empresaDTO.setSector(this.getSector());
+        empresaDTO.setCantPersonal(this.getCantPersonal());
+        empresaDTO.setPromVentasAnual(this.getPromVentasAnual());
+        empresaDTO.setCategoria(this.getCategoria());
+        empresaDTO.setCodIGJ(this.getCodIGJ());
+
+        return  empresaDTO;
     }
 }

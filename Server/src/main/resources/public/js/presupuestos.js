@@ -41,7 +41,7 @@ document.getElementById("fecha").onchange = () => {
 
     let desplegableEgreso = document.getElementById("egreso-a-asociar");
     let fecha = document.getElementById("fecha");
-    let url = '/api/get-egreso-segun-fecha/' + fecha.value;
+    let url = '/egreso/buscar/segun-fecha/' + fecha.value;
     console.log(fecha.value);
     desplegableEgreso.disabled = false;
     desplegableEgreso.value = "";

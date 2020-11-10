@@ -42,4 +42,7 @@ public class Organizacion extends EntidadPersistente{
     public void agregarEntidad(Entidad entidad){
         this.entidades.add(entidad);
     }
+    public void quitarEntidad(Entidad entidad){
+        this.entidades.remove(entidad);
+    }
 }

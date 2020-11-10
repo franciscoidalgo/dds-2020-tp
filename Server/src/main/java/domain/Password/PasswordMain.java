@@ -49,10 +49,11 @@ public class PasswordMain {
             System.out.println("domain.Password special character... NOT OK");
 
         // Test password capital letter
-        if (!validatePasswordDictionary.validatePassword(password))
+        if (validatePasswordDictionary.validatePassword(password))
             System.out.println("domain.Password dictionary... OK");
         else
             System.out.println("domain.Password dictionary... NOT OK");
+
 
     }
 }

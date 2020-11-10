@@ -12,10 +12,12 @@ import repositorios.Repositorio;
 import repositorios.factories.FactoryRepo;
 import spark.Request;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class FactoryPresupuesto {
-    public static Presupuesto get(Request request){
+    public static Presupuesto get(Request request) throws IOException, ServletException {
         JsonParser parser = new JsonParser();
         Presupuesto presupuesto = new Presupuesto();
         JsonElement jsonElement = parser.parse(request.body());

@@ -1,6 +1,8 @@
 package domain.Entidad;
 
 
+import domain.DireccionPostal.DireccionPostal;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -17,6 +19,28 @@ public class EntidadBase extends Entidad {
     @Column(name = "descripcion")
     private String descripcion;
     //Constructor
+
+    public class EntidadBaseDTO{
+        private final String tipo = "EB";
+        private String nombre;
+        private String descripcion;
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+        }
+    }
 
     public EntidadBase(String nombre, String descripcion){
         this.nombre=nombre;
@@ -42,7 +66,15 @@ public class EntidadBase extends Entidad {
 
     @Override
     public String descripcion() {
-        return descripcion;
+        String template = "Una organizacion base.";
+        return template + descripcion;
+
     }
 
+    public EntidadBaseDTO toDTO() {
+        EntidadBaseDTO entidadBaseDTO = new EntidadBaseDTO();
+        entidadBaseDTO.setDescripcion(this.descripcion());
+        entidadBaseDTO.setNombre(this.nombre());
+        return entidadBaseDTO;
+    }
 }

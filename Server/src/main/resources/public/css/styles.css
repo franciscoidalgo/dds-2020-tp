@@ -239,6 +239,7 @@ main {
     transition: color 1s, background-color 1s;
 }
 
+
 .btn-secundario:hover,
 .btn-icono:hover,
 .btn-danger:hover {
@@ -267,6 +268,8 @@ main {
     color: #c0012f;
     transition: color 1s, background-color 1s;
 }
+
+
 
 .btn-formulario:hover,
 .btn-formulario-danger:hover {

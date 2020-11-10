@@ -15,6 +15,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.CustomHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
 
+import java.io.File;
+
 public class Router {
     private static HandlebarsTemplateEngine engine;
 
@@ -42,8 +44,10 @@ public class Router {
         ControllerBusquedaOperacion controllerBusquedaOperacion = new ControllerBusquedaOperacion();
         ControllerPersistance controllerPersistance = new ControllerPersistance();
         ControllerVinculacion controllerVinculacion = new ControllerVinculacion();
+        ControllerOrganizacion controllerOrganizacion = new ControllerOrganizacion();
         ControllerUsuario controllerUsuario = new ControllerUsuario();
-
+        ControllerEntidad controllerEntidad = new ControllerEntidad();
+        ControllerNormalizaciones controllerNormalizaciones = new ControllerNormalizaciones();
         ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
 
         validadorDeTransparencia.agregateCriterio(new CriterioValidacionCantidadPresupuesto());
@@ -74,35 +78,44 @@ public class Router {
 
         Spark.get("/logout", controllerLogin::logout);
 
-        Spark.get("/egreso", controllerEgresos::mostrarEgresos, Router.engine);
+        Spark.path("/egreso",() -> {
+            /* ENVIO DE EGRESOS. */
+            Spark.get("", controllerEgresos::mostrarEgresos, Router.engine);
+            //todo "/modificar" "/borrar"
+            Spark.delete("/borrar", controllerEgresos::borrarEgreso);
+            Spark.post("/nuevo", controllerEgresos::submitEgreso);
 
-        Spark.post("/egreso", controllerEgresos::submitEgreso);
+            Spark.path("/buscar",() -> {
+                Spark.get("/segun-fecha/:fechaMax", controllerEgresos::pasarEgresosSegunFecha);
+                Spark.get("/sin-vincular/:fechaMax", controllerEgresos::pasarEgresosNoVinculados);
+                Spark.get("/todos", controllerEgresos::pasarTodosEgresos);
+                Spark.post("/segun-categorias", controllerEgresos::pasarEgresosSegunCategorias);
+                Spark.get("/:idEgreso", controllerEgresos::pasarEgresosSegunID);
+                Spark.get("/:idEgreso/:idMensaje", controllerEgresos::pasarEgresosMensaje);
+            });
+
+        });
+
+        Spark.path("/revisor",() -> {
+            Spark.delete("/delete/:idEgreso", controllerEgresos::sacarRevisor);
+            Spark.put("/agregar/:idEgreso", controllerEgresos::agregarRevisor);
+        });
 
         Spark.path("/api",() -> {
-            Spark.get("/provincias/:nombrePais", controllerEgresos::pasarProvincias);
-            Spark.get("/ciudades/:nombreProvincia", controllerEgresos::pasarCiudades);
+            Spark.get("/provincias/:nombrePais", controllerNormalizaciones::pasarProvincias);
+            Spark.get("/ciudades/:nombreProvincia", controllerNormalizaciones::pasarCiudades);
             Spark.get("/proveedor/:id", apiRest::mostrarProveedores);
             Spark.get("/items/:idTipoItem", apiRest::mostraItemsSegunTipo);
+            Spark.get("/entidades", apiRest::mostraEntidades);
 
             Spark.path("/ingreso",() -> {
                 Spark.get("/todos", apiRest::pasarTodosIngresos);
                 Spark.get("/por-vincular", apiRest::pasarIngresoPorVincular);
                 Spark.get("/:idIngreso", apiRest::pasarIngresoSegunID);
                 Spark.post("/vincular", apiRest::vincularIngresos);
-
             });
 
             Spark.get("/categoria/:idCriterio", apiRest::pasarCategoriasSegunCriterio);
-
-            Spark.path("/egresos",() -> {
-                Spark.get("/todos", apiRest::pasarTodosEgresos);
-                Spark.post("/segun-categorias", apiRest::pasarEgresosSegunCategorias);
-            });
-
-            Spark.path("/revisor",() -> {
-                Spark.delete("/delete/:idEgreso", apiRest::sacarRevisor);
-                Spark.put("/agregar/:idEgreso", apiRest::agregarRevisor);
-            });
         });
 
         Spark.path("/mensajes",() -> {
@@ -110,13 +123,18 @@ public class Router {
             Spark.get("/todos", apiRest::mostrarMensajes);
         });
 
-        Spark.get("/usuario", controllerUsuario::mostrarUsuario, Router.engine);
+        Spark.path("/usuario",() -> {
+            Spark.get("", controllerUsuario::mostrarUsuario, Router.engine);
+            Spark.post("/apellido", controllerUsuario::cambiarApellido);
+            Spark.post("/nombre", controllerUsuario::cambiarNombre);
+            Spark.post("/password", controllerUsuario::cambiarPassword);
+            Spark.get("/entidad/:idEntidad", controllerUsuario::cambiarEntidad);
+        });
 
-        Spark.get("/api/get-egreso/:idEgreso", apiRest::pasarEgresosSegunID);
-        Spark.get("/api/get-egreso/:idEgreso/:idMensaje", apiRest::pasarEgresosMensaje);
-
-        Spark.get("/api/get-egreso-segun-fecha/:fechaMax", apiRest::pasarEgresosSegunFecha);
-        Spark.get("/api/get-egresos-vincular/:fechaMax", apiRest::pasarEgresosNoVinculados);
+        Spark.path("/organizacion",() -> {
+            Spark.delete("/entidad/:id",controllerEntidad::eliminarEntidad);
+            Spark.post("/cambiar/nombre",controllerOrganizacion::cambiarNombre);
+        });
 
 
 
@@ -134,6 +152,7 @@ public class Router {
         Spark.post("/ingreso", controllerIngreso::submitIngreso);
 
         Spark.get("/busquedaOperacion", controllerBusquedaOperacion::mostrarBusquedaOperacion,Router.engine);
+
         Spark.afterAfter("*", controllerPersistance::cerrarEm);
 
     }

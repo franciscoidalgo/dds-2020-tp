@@ -1,4 +1,5 @@
 import {mostrarMensaje, setIconoValidoSegun} from "./generales/mensaje.js";
+import {esconderLoader,mostrarLoader} from "./generales/loader.js";
 
 
 
@@ -74,7 +75,7 @@ function orderByID(a, b) {
 }
 
 function getMensajeDesdeApi(id, esValida, detalleValidacion, idMensaje) {
-    let url = `/api/get-egreso/${id}/${idMensaje}`;
+    let url = `/egreso/buscar/${id}/${idMensaje}`;
 
     fetch(url)
         .then(response => response.json())
@@ -136,4 +137,16 @@ boton.anterior.onclick = () => {
     renderTabla(dataMensajes);
 }
 
-
+window.addEventListener("load", () => {
+    let url = "/mensajes/todos";
+    mostrarLoader();
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            dataMensajes = data.mensajes;
+            cantMaxima = data.cantMensajes;
+            renderTabla(dataMensajes);
+            esconderLoader();
+        })
+        .catch(reason => console.log(reason));
+})

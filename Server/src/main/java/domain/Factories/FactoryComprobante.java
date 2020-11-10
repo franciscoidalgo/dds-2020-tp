@@ -22,7 +22,6 @@ public class FactoryComprobante {
 
         comprobante.setTipoComprobante(tipoComprobante);
         comprobante.setPath(jComprobante.get("path").getAsString());//TODO CAMBIAR PARA QUE LLEGUE DESDE EL SERVER Y NOSOTROS LE PONGAMOS LA RUTA QUE QUEREMOs
-
-        return  comprobante;
+        return comprobante;
     }
 }

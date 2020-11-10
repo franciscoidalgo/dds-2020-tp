@@ -23,6 +23,6 @@ public class ValidatePasswordDictionary implements PasswordCriteria {
 
         bufReader.close();
 
-        return listOfLines.contains(password);
+        return !listOfLines.contains(password);
     }
 }

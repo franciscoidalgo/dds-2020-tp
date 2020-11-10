@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Gesoc, es un Saas de gestion comercial. En Gesoc puedes gestionar y controlar tus operacion y proyectos.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -33,9 +35,9 @@
             <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
             <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
             <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
-            <li><a href="busquedaOperacion"><i class="fas fa-file-import"></i>Buscar Operacion</a></li>
-            <li><a href="vinculacion"><i class="fas fa-link"></i>Vincular</a></li>
-            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+            <li><a href="busquedaOperacion"><i class="fas fa-file-import"></i>Buscar Operación</a></li>
+            <li><a href="vinculacion"><i class="fas fa-link"></i>Vincular Operaciones</a></li>
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a></li>
         </ul>
     </nav>
     <!--Logo -->
@@ -51,21 +53,21 @@
     <div class="burbuja  d-flex jc-sb ai-center">
         <div class="d-flex jc-sb">
             <p><i class="fa fa-user-tie"></i></p>
-            <h3>Configuracion del Usuario</h3>
+            <h3>Perfil del Usuario</h3>
         </div>
         <p><i class="fas fa-plus"></i></p>
     </div>
     <!-- Burbuja Usuario-->
-    <section class="burbuja">
+    <section class="seccion">
         <div class="contenedor-centrada">
-            <h3>Informacion del Usuario</h3>
+            <h3>Detalle del Usuario</h3>
             <div class="d-flex jc-sb">
-                <div>
-                    <p><span>Usuario:</span> {{usuario.username}}</p>
-                </div>
                 <div>
                     <p><span>Nombre:</span> {{usuario.nombre}}</p>
                     <p><span>Apellido:</span> {{usuario.apellido}}</p>
+                </div>
+                <div>
+                    <p><span>Usuario:</span> {{usuario.username}}</p>
                     <p><span>Rol:</span> {{#if rol}}Administrador{{else}}Estandar{{/if}}</p>
                 </div>
             </div>
@@ -75,65 +77,262 @@
     <div class="burbuja  d-flex jc-sb ai-center">
         <div class="d-flex jc-sb">
             <p><i class="fa fa-building"></i></p>
-            <h3>Informacion de la Organizacion</h3>
+            <h3>Sobre la Organización</h3>
         </div>
         <p><i class="fas fa-plus"></i></p>
     </div>
     <!-- Burbuja Organizacion-->
-    <section class="burbuja">
+    <section class="seccion">
         <div class="contenedor-centrada">
-            <h3>Informacion de la Organizacion</h3>
+            <h3>Detalle de la Organización</h3>
             <div class="d-flex jc-sb">
                 <div>
                     <p><span>Organizacion:</span> {{organizacion.nombre}}</p>
-                    <p><span>Entidad Seleccionada:</span> {{entidad}}</p>
-                    <p><span>AQUI INFO DE LA ENTIDAD:</span> asdasdasdasd</p>
+                    <p><span>Entidad Seleccionada:</span> {{seleccionadaNombre}}</p>
+                    <p><span>Descripcion:</span>{{seleccionadaDescripcion}}</p>
                 </div>
                 <div>
-                    <p><span>Otras Entidades:</span> {{#each otrasEntidades}}{{this}},{{/each}}</p>
-                </div>
+                    <p><span>Todas las Entidades:</span><br>{{seleccionadaNombre}}
+                        {{#each entidades}}<br>{{nombre}}{{/each}}</p></div>
             </div>
         </div>
     </section>
     <!-- Burbuja Cambios-->
     <div class="burbuja  d-flex jc-sb ai-center">
         <div class="d-flex jc-sb">
-            <p><i class="fa fa-sync"></i></p>
-            <h3>Actualizar Informacion</h3>
+            <p><i class="far fa-address-book"></i></p>
+            <h3>Configuración del Perfil</h3>
         </div>
         <p><i class="fas fa-plus"></i></p>
     </div>
     <!-- Burbuja Organizacion-->
-    <section class="burbuja">
-        <div class="contenedor-centrada">
-            <h3>Informacion de la Organizacion</h3>
+    <section class="seccion">
+        <h3>Actualiza tu Perfil</h3>
+        <div class="contenedor-entrada">
             <div class="d-flex jc-sb">
                 <div>
                     <!-- Nombre-->
-                    <label for="nombre">Actualizar nombre</label>
-                    <br>
-                    <input type="text" name="nombre" id="nombre">
-                    <button id="btn-nombre" nombre="btn-nombre" class="btn btn-formulario">Cambiar</button>
+                    <form id="cambiar-nombre">
+                        <label for="nombre">Nombre</label>
+                        <br>
+                        <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre...">
+                        <input type="submit" id="btn-nombre" name="btn-nombre" class="btn btn-formulario"
+                               value="Cambiar">
+                    </form>
                     <br>
                     <!-- Apellido-->
-                    <label for="apellido">Actualizar Apellido</label>
-                    <br>
-                    <input type="text" name="apellido" id="apellido">
-                    <button id="btn-apellido" nombre="btn-apellido" class="btn btn-formulario">Cambiar</button>
-                    <br>
+                    <form id="cambiar-apellido">
+                        <label for="apellido">Apellido</label>
+                        <br>
+                        <input type="text" name="apellido" id="apellido" placeholder="Ingrese su apellido...">
+                        <input type="submit" id="btn-apellido" name="btn-apellido" class="btn btn-formulario"
+                               value="Cambiar">
+                        <br>
+                    </form>
                     <!-- Password-->
-                    <label for="password">Actualizar contraseña</label>
-                    <br>
-                    <input type="password" name="password" id="password">
-                    <button id="btn-password" nombre="btn-password" class="btn btn-formulario">Cambiar</button>
+                    <form id="cambiar-password">
+                        <label for="password">Contraseña</label>
+                        <br>
+                        <input type="password" name="password" id="password" placeholder="Ingrese nueva contraseña...">
+                        <input type="submit" id="btn-password" name="btn-password" class="btn btn-formulario"
+                               value="Cambiar">
+                    </form>
                 </div>
             </div>
         </div>
     </section>
+    <!-- Seccion ADMIN -->
+    {{#if rol}}
+        <div class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="fas fa-briefcase"></i></p>
+                <h3>Configuracion de la Organización</h3>
+            </div>
+            <p><i class="fas fa-plus"></i></p>
+        </div>
+        <!-- Organizacion-->
+
+        <section class="seccion">
+            <div class="contenedor-centrada">
+                <h3>Actualizar Organizacion</h3>
+                <div class="d-flex jc-sb">
+                    <div class="contenedor-entrada">
+                        <!-- Organizacion-->
+                        <form id="cambiar-nombre-organizacion">
+                            <label for="nombre-organizacion">Nombre Organizacion</label>
+                            <br>
+                            <input type="text" name="nombre-organizacion" id="nombre-organizacion"
+                                   placeholder="Ingrese nombre de la organizacion...">
+                            <input type="submit" id="btn-nombre-organizacion" name="btn-nombre-organizacion"
+                                   class="btn btn-formulario"
+                                   value="Cambiar">
+                        </form>
+                    </div>
+                </div>
+                <hr>
+                <h3>Actualizar Entidades</h3>
+                <div>
+                    <div class="contenedor-entrada">
+                        <!-- Entidad-->
+                        <form id="cambiar-entidad-organizacion">
+                            <label for="entidad-organizacion">Entidades</label>
+                            <br>
+                            <select id="seleccion-entidad-organizacion" name="seleccion-entidad-organizacion">
+                                <option value="" disabled selected>-- Seleccione --</option>
+                                <option value={{seleccionadaId}}>{{seleccionadaNombre}}</option>
+                                {{#each entidades}}
+                                    <option value={{id}}>{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                            <input type="submit" id="btn-editar-entidad" name="btn-editar-entidad"
+                                   class="btn btn-formulario"
+                                   value="Editar"><br>
+                            <div class="d-flex">
+                                <input type="button" id="btn-borrar-entidad" name="btn-borrar-entidad"
+                                       class="btn btn-formulario-danger"
+                                       value="Borrar">
+
+                                <input type="button" id="btn-nuevo-entidad" name="btn-nuevo-entidad"
+                                       class="btn btn-formulario"
+                                       value="Nuevo">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Burbuja Criterio -->
+        <div class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="fas fa-tags"></i></p>
+                <h3>Gestion de Criterios/Categorias</h3>
+            </div>
+            <p><i class="fas fa-plus"></i></p>
+        </div>
+        <!-- Criterios/Categorias -->
+        <section class="seccion">
+            <div class="contenedor-centrada">
+                <h3>Configuración Criterios</h3>
+                <!-- Criterios -->
+                <div class="d-flex jc-sb">
+                    <div class="contenedor-entrada">
+                        <form id="cambiar-criterios">
+                            <label for="seleccion-entidad-criterios">Entidad</label>
+                            <br>
+                            <select name="seleccion-entidad-criterios" id="seleccion-entidad-criterios">
+                                <option value="" disabled selected>-- Seleccione --</option>
+                                <option value={{seleccionadaId}}>{{seleccionadaNombre}}</option>
+                                {{#each entidades}}
+                                    <option value={{id}}>{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                            <br>
+                            <label for="criterios">Criterio</label>
+                            <br>
+                            <select name="criterios" id="criterios">
+                                <option value="" disabled selected>-- Seleccione --</option>
+                            </select>
+                            <input type="submit" id="btn-editar-criterios" name="btn-editar-criterios"
+                                   class="btn btn-formulario"
+                                   value="Editar">
+                            <br>
+                            <div class="d-flex">
+                                <input type="button" id="btn-borrar-criterios" name="btn-borrar-criterios"
+                                       class="btn btn-formulario-danger"
+                                       value="Borrar">
+
+                                <input type="button" id="btn-nuevo-criterios" name="btn-nuevo-criterios"
+                                       class="btn btn-formulario"
+                                       value="Nuevo">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <hr>
+                <!-- Categorias -->
+
+                <h3>Configuración Categorias</h3>
+                <div class="d-flex jc-sb">
+                    <div class="contenedor-entrada">
+                        <form id="cambiar-categorias">
+                            <label for="categorias">Categoria</label>
+                            <br>
+                            <select name="categorias" id="categorias">
+                                <option value="" disabled selected>-- Seleccione --</option>
+                            </select>
+                            <input type="submit" id="btn-editar-categorias" name="btn-editar-categorias"
+                                   class="btn btn-formulario"
+                                   value="Editar">
+                            <br>
+                            <div class="d-flex">
+                                <input type="button" id="btn-borrar-categorias" name="btn-borrar-categorias"
+                                       class="btn btn-formulario-danger"
+                                       value="Borrar">
+
+                                <input type="button" id="btn-nuevo-categorias" name="btn-nuevo-categorias"
+                                       class="btn btn-formulario"
+                                       value="Nuevo">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Burbuja Usuario -->
+        <div class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="far fa-address-card"></i></p>
+                <h3>Gestion de Usuarios</h3>
+            </div>
+            <p><i class="fas fa-plus"></i></p>
+        </div>
+        <!-- Usuario -->
+        <section class="seccion">
+            <div class="contenedor-centrada">
+                <h3>Configuración de Usuarios</h3>
+                <div class="d-flex jc-sb">
+                    <div class="contenedor-entrada">
+                        <form id="cambiar-usuarios-organizacion">
+                            <label for="usuarios-organizacion">Usuarios</label>
+                            <br>
+                            <select name="usuarios-organizacion" id="usuarios-organizacion">
+                                <option>blabla</option>
+                                <option>blabla</option>
+                                <option>blabla</option>
+                                <option>blabla</option>
+                                <option>blabla</option>
+                                <option>blabla</option>
+                            </select>
+                            <input type="submit" id="btn-editar-usuario" name="btn-editar-usuario"
+                                   class="btn btn-formulario"
+                                   value="Editar">
+                            <br>
+                            <div class="d-flex">
+                                <input type="button" id="btn-borrar-usuario" name="btn-borrar-usuario"
+                                       class="btn btn-formulario-danger"
+                                       value="Borrar">
+
+                                <input type="button" id="btn-nuevo-usuario" name="btn-nuevo-usuario"
+                                       class="btn btn-formulario"
+                                       value="Nuevo">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {{/if}}
 </main>
 
-<script type="module" src="js/generales.js"></script>
-<script type="module" src="js/loader.js"></script>
+{{#if rol}}
+    <script type="module" src="js/gestion/organizacion.js" defer></script>
+{{/if}}
+
+<script type="module" src="js/usuario.js" defer></script>
+<script type="module" src="js/generales.js" defer></script>
+<script type="module" src="js/loader.js" defer></script>
 
 </body>
 

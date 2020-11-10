@@ -40,7 +40,7 @@ function renderizarIngreso() {
 }
 
 function renderizarEgreso() {
-    let url = '/api/egresos/todos'
+    let url = '/egreso/buscar/todos'
     mostrarLoader();
     fetch(url)
         .then(response => response.json())
@@ -128,7 +128,7 @@ boton.seleccionCategoria.addEventListener("click", () => {
 })
 
 boton.buscarEgreso.onclick = () => {
-    let url = "/api/egresos/segun-categorias";
+    let url = "/egreso/buscar/segun-categorias";
     let init = {
         method: 'POST',
         headers: {

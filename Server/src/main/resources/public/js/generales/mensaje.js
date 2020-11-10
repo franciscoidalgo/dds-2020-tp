@@ -147,7 +147,7 @@ function buildBotonDejarRevisar(egreso) {
 }
 
 function dejarDeRevisar(egresoID) {
-    let url = "/api/revisor/delete/" + egresoID;
+    let url = "/revisor/delete/" + egresoID;
     mostrarLoader();
     fetch(url, {method: "DELETE"})
         .then(response => response.json())
