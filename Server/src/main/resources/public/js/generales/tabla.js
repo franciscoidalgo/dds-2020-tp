@@ -41,8 +41,8 @@ function crearTablaIngresos(data) {
     let tablaBody = document.createElement("tbody");
     let tr = document.createElement("tr");
 
-    tablaIngresos.className = "txt-centrado tabla";
-    tablaHeader.className = "bg-primario fw-700 th-principal";
+    tablaIngresos.className = "txt-centrado tabla tabla-detalle";
+    tablaHeader.className = "fw-700 th-principal";
 
     tablaIngresos.appendChild(tablaHeader);
     tablaHeader.appendChild(tr);
@@ -60,15 +60,15 @@ function crearTablaIngresos(data) {
 }
 
 function crearTablaEgresos(data) {
-    let tablaIngresos = document.createElement("table");
+    let tablaEgresos = document.createElement("table");
     let tablaHeader = document.createElement("thead");
     let tablaBody = document.createElement("tbody");
     let tr = document.createElement("tr");
 
-    tablaIngresos.className = "txt-centrado tabla";
-    tablaHeader.className = "bg-primario fw-700 th-detalle";
+    tablaEgresos.className = "txt-centrado tabla tabla-detalle";
+    tablaHeader.className = "fw-700 th-detalle";
 
-    tablaIngresos.appendChild(tablaHeader);
+    tablaEgresos.appendChild(tablaHeader);
     tablaHeader.appendChild(tr);
 
     settearEncabezado(tr, "#ID")
@@ -76,14 +76,14 @@ function crearTablaEgresos(data) {
     settearEncabezado(tr, "Fecha")
     settearEncabezado(tr, "Necesita Presupuestos")
     settearEncabezado(tr, "Monto")
-    tablaIngresos.appendChild(tablaBody);
+    tablaEgresos.appendChild(tablaBody);
     for (let i = 0; i < data.length; i++) {
         settearFilaEgreso(tablaBody, data[i]);
     }
 
 
 
-    return tablaIngresos;
+    return tablaEgresos;
 }
 
 function settearEncabezado(tr, descripcion) {

@@ -30,6 +30,7 @@ h3 {
 h4 {
     font-size: 1.75rem;
 }
+
 p,
 label,
 input,
@@ -131,7 +132,7 @@ main {
 }
 
 .txt-left {
-    text-align:left;
+    text-align: left;
 }
 
 .fw-400 {
@@ -258,6 +259,7 @@ main {
     color: #0187C0;
     transition: color 1s, background-color 1s;
 }
+
 .btn-formulario-danger {
     margin-left: 1rem;
     align-self: flex-end;
@@ -268,7 +270,6 @@ main {
     color: #c0012f;
     transition: color 1s, background-color 1s;
 }
-
 
 
 .btn-formulario:hover,
@@ -517,7 +518,7 @@ form div.burbuja {
     cursor: pointer;
 }
 
-.contenedor-entrada>input:not([type="button"]),
+.contenedor-entrada > input:not([type="button"]),
 .burbuja select {
     width: 418px;
     margin: 1rem 0;
@@ -548,34 +549,47 @@ form div.burbuja {
     resize: none;
 }
 
-#egresos-seleccionados{
+#egresos-seleccionados {
     padding: 0;
     margin: 0;
 }
+
 /*Tabla*/
 
 .th-principal th {
-    color: white;
     height: 3.5rem;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    padding: 1.2rem 0;
 }
 
 .tabla {
     width: 100%;
     font-size: 1.6rem;
+    margin-bottom: 3rem;
 }
 
 tr {
     height: 3rem;
 }
 
-.tabla-detalle th,
-.tabla-detalle td {
-    border: 1px solid #808080;
+.tabla-detalle th {
+    border-top: 2px solid #808080;
+    border-bottom: 2px solid #808080;
 }
 
-.tabla-detalle tr:nth-child(odd),
+.tabla-detalle tr {
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+}
+
+.th-principal tfoot tr {
+    border: none;
+}
+
+.tabla-detalle tbody tr:nth-child(odd),
 #seccion-mensajes tr:nth-child(odd) {
-    background-color: #D6E6EC;
+    background-color: #dbe4ed;
 }
 
 .nav-tabla {
@@ -680,12 +694,12 @@ tr {
 }
 
 .modal-fail i,
-.modal-fail h1{
+.modal-fail h1 {
     color: #d63447;
 }
 
 .modal-success i,
-.modal-success h1{
+.modal-success h1 {
     color: #559152;
 }
 
@@ -714,7 +728,7 @@ tr {
     background-color: red;
 }
 
-#mensaje-detalle p span,p span {
+#mensaje-detalle p span, p span {
     font-weight: 700;
 }
 
@@ -781,8 +795,9 @@ tr {
 .tooltiptext-invalida::after {
     border-color: transparent #f04b5e transparent transparent;
 }
+
 /*Loader*/
-#loader{
+#loader {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -793,6 +808,7 @@ tr {
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
 }
+
 .loader {
     position: fixed;
     bottom: 50%;
@@ -800,7 +816,7 @@ tr {
     border-radius: 50%;
     border-top: 16px solid #d63447;
     border-bottom: 16px solid #d63447;
-    border-left: 16px solid  transparent;/*#555555;*/
+    border-left: 16px solid transparent; /*#555555;*/
     border-right: 16px solid transparent;
     width: 80px;
     height: 80px;
@@ -809,11 +825,68 @@ tr {
 }
 
 @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
+/* ANIMACION FADE */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {
+        opacity: .4
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+    to {
+        opacity: 1
+    }
+}
+
+/* Carrusel */
+#carrusel-presupuestos {
+    border: none;
+    background-color: transparent;
+
+}
+#carrusel-presupuestos #anterior,
+#carrusel-presupuestos #siguiente,
+#carrusel-presupuestos #anterior:focus,
+#carrusel-presupuestos #siguiente:focus{
+    border:none;
+    padding: 0;
+    background-color:transparent;
+    color: #015B81;
+}
+#carrusel-presupuestos #anterior:hover,
+#carrusel-presupuestos #siguiente:hover {
+    border: none;
+    background-color: transparent;
+    color: black;
+}
+

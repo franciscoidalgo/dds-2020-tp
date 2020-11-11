@@ -15,7 +15,12 @@ public class ConverterEgreso {
         egresoDTO.setMontoTotal(egreso.montoTotal());
         egresoDTO.setFecha(egreso.getFecha().toString());
         egresoDTO.setCantPresupuestosFaltantes(egreso.cantPresupuestosFaltantes());
-
+        egresoDTO.setPresupuestos(egreso.getPresupuestos());
+        if (null != egreso.getIngreso()) {
+            egresoDTO.setIngreso(egreso.getIngreso().getId());
+        }else{
+            egresoDTO.setIngreso(-1);
+        }
         return egresoDTO;
     }
 }

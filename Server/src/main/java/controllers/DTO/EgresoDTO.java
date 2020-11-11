@@ -2,25 +2,26 @@ package controllers.DTO;
 
 import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Operacion.Egreso.*;
+import domain.Operacion.Ingreso.OperacionIngreso;
 
 import java.util.List;
 
 public class EgresoDTO {
 
-    public Integer id;
-    public DetalleOperacion detalle;
-    public MedioDePago medioDePago;
+    private Integer id;
+    private DetalleOperacion detalle;
+    private MedioDePago medioDePago;
 
-    public List<Pedido> pedido;
+    private List<Pedido> pedido;
 
-    //private List<Presupuesto> presupuestos;
-    //private OperacionIngreso ingreso;
-    public Integer cantPresupuestos;
+    private List<Presupuesto> presupuestos;
+    private Integer idIngreso;
+    private Integer cantPresupuestos;
 
-    public Integer cantPresupuestosFaltantes;
-    public String fecha;
-    public double montoTotal;
-    public List<Categoria> categorias;
+    private Integer cantPresupuestosFaltantes;
+    private String fecha;
+    private double montoTotal;
+    private List<Categoria> categorias;
 
     //Getters y setters
     public Integer getId() {
@@ -103,5 +104,21 @@ public class EgresoDTO {
 
     public void setPedido(List<Pedido> pedido) {
         this.pedido = pedido;
+    }
+
+    public List<Presupuesto> getPresupuestos() {
+        return presupuestos;
+    }
+
+    public void setPresupuestos(List<Presupuesto> presupuestos) {
+        this.presupuestos = presupuestos;
+    }
+
+    public Integer getIngreso() {
+        return idIngreso;
+    }
+
+    public void setIngreso(Integer ingreso) {
+        this.idIngreso = ingreso;
     }
 }

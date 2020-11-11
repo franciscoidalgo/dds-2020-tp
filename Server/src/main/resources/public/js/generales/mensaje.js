@@ -49,7 +49,7 @@ function buildTemplateMensaje(egreso, esValida) {
             <section>
                 <h3>  Detalle de pedidos </h3>
                  <table id="tabla-detalle" class="txt-centrado tabla">
-                    <thead class="bg-primario fw-700 th-principal">
+                    <thead class="fw-700 th-principal">
                     <tr>
                         <th>Bien</th>
                         <th>Tipo</th>

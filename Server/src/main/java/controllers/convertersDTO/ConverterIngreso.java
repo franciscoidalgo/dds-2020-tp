@@ -32,6 +32,7 @@ public class ConverterIngreso {
         return ingresoDTO;
     }
 
+
     public static OperacionIngreso fromModel(IngresoDTO ingresoDTO) throws Exception {
         Repositorio<TipoIngreso> tipoIngresoRepositorio = FactoryRepo.get(TipoIngreso.class);
         Repositorio<OperacionEgreso> operacionEgresoRepositorio = FactoryRepo.get(OperacionEgreso.class);
