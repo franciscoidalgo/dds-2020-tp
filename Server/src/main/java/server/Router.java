@@ -82,8 +82,8 @@ public class Router {
             /* ENVIO DE EGRESOS. */
             Spark.get("", controllerEgresos::mostrarEgresos, Router.engine);
             //todo "/modificar" "/borrar"
-            Spark.delete("/borrar", controllerEgresos::borrarEgreso);
             Spark.post("/nuevo", controllerEgresos::submitEgreso);
+            Spark.get("/editar/:idEgreso", controllerEgresos::editarEgreso);
 
             Spark.path("/buscar",() -> {
                 Spark.get("/segun-fecha/:fechaMax", controllerEgresos::pasarEgresosSegunFecha);

@@ -9,7 +9,6 @@ import controllers.DTO.IngresoDTO;
 import controllers.convertersDTO.ConverterIngreso;
 import domain.Operacion.CategorizacionOperacion.Criterio;
 import domain.Usuario.BandejaMensaje.BandejaMensaje;
-import domain.Usuario.BandejaMensaje.Mensaje;
 import domain.Usuario.Usuario;
 import domain.Operacion.Egreso.*;
 
@@ -23,13 +22,10 @@ import repositorios.factories.FactoryRepoUsuario;
 import spark.Request;
 import spark.Response;
 
-import java.lang.reflect.Type;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static controllers.convertersDTO.ConverterEgreso.generarEgresoDTO;
 
 public class ApiRest {
     public String mostrarUsuario(Request request, Response response) {

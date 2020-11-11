@@ -55,6 +55,7 @@ public class ControllerEgresos extends Controller{
         parametros.put("categorias", repoCategorias.buscarTodos());//TODO TOCAR PARA QUE SEA DE LA ORGANIZACION
         parametros.put("hoy", LocalDate.now());
 
+        parametros.put("numeroEgreso",request.session().attribute("idEgreso"));
 
         return new ModelAndView(parametros, "egreso.hbs");
     }
@@ -65,9 +66,33 @@ public class ControllerEgresos extends Controller{
         Usuario usuarioLogueado;
 
         try {
-            OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
-            usuarioLogueado = getUsuarioFromRequest(request);
 
+            OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
+
+            /*********************** EDICION **********************/
+            Integer idEgreso =request.session().attribute("idEgreso");
+            request.session().removeAttribute("idEgreso");
+            if(null != idEgreso){
+                OperacionEgreso operacionEgresoEdit = FactoryRepo.get(OperacionEgreso.class).buscar(idEgreso);
+
+                operacionEgresoEdit.setMedioDePago(operacionEgreso.getMedioDePago());
+                operacionEgresoEdit.setDetalle(operacionEgreso.getDetalle());
+                operacionEgresoEdit.setCantPresupuestos(operacionEgreso.getCantPresupuestos());
+
+                operacionEgresoEdit.setFecha(operacionEgreso.getFecha());
+                operacionEgresoEdit.setMontoTotal(operacionEgreso.getMontoTotal());
+                repoEgreso.modificar(operacionEgresoEdit);
+
+                mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
+                response.status(200);
+                response.type("application/json");
+
+                return new Gson().toJson(mensajeRta);
+            }
+
+
+
+            usuarioLogueado = getUsuarioFromRequest(request);
             usuarioLogueado.realizaOperacion(operacionEgreso);
             usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
@@ -86,35 +111,16 @@ public class ControllerEgresos extends Controller{
         }
 
     }
-    public String borrarEgreso(Request request, Response response) {
-        Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
+
+    public String editarEgreso(Request request,Response response) throws  IOException{
+        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
         JsonObject mensajeRta = new JsonObject();
-        Usuario usuarioLogueado;
-
-        try {
-            OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
-            usuarioLogueado = getUsuarioFromRequest(request);
-
-            usuarioLogueado.realizaOperacion(operacionEgreso);
-            usuarioLogueado.darseDeAltaEn(operacionEgreso);
-            repoEgreso.agregar(operacionEgreso);
-
-            //Response TODO GENERALIZAR ESTO
-            mensajeRta.addProperty("idEgreso", "" + operacionEgreso.getId());
-            response.status(200);
-            response.type("application/json");
-            return new Gson().toJson(mensajeRta);
-
-        } catch (Exception e) {
-            response.status(404);
-            mensajeRta.addProperty("mensaje", "No se pudo cargar operacion");
-            response.type("application/json");
-            return new Gson().toJson(mensajeRta);
-        }
-
+        request.session().attribute("idEgreso",idEgreso);
+        mensajeRta.addProperty("idEgreso", "");
+        response.status(200);
+        response.type("application/json");
+        return new Gson().toJson(mensajeRta);
     }
-
-
 
     //TODO REFACTORIZAR ESTO
 

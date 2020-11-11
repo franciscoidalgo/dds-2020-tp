@@ -64,10 +64,12 @@ function buildTemplateEgreso(egreso, contenedorHTML) {
                     </tfoot>                
                 </table>
             </section>
+            <section id="seccion-presupuestos">
+                <h1>Presupuestos</h1>
+            </section>
         </main>  
         <footer class="d-flex jc-se">
             <button id="btn-revisar" class="btn btn-formulario">Revisar</button>
-            <button id="btn-borrar" class="btn btn-formulario-danger">Borrar</button>
             <button id="btn-editar" class="btn btn-formulario">Editar</button>
         </footer>  
     `
@@ -79,22 +81,20 @@ function buildBotonRevisar(egreso) {
     btn.onclick = () => revisarEgreso(egreso.id);
 }
 
-function buildBotonBorrar(egreso) {
-    let btn = document.getElementById("btn-borrar");
-    btn.onclick = () => borrarEgreso(egreso.id);
+
+function buildBotonModificar(egreso) {
+    let btn = document.getElementById("btn-editar");
+    btn.onclick = () => editEgreso(egreso.id);
 }
 
-function revisarEgreso(egresoID) {
-    let url = "/revisor/agregar/" + egresoID;
+function editEgreso(egresoID) {
+    let url = "/egreso/editar/" + egresoID;
     mostrarLoader();
-    fetch(url, {method: "PUT"})
-        .then(response => response.json())
-        .then(data => {
-            esconderLoader();
-            generarModalOK(MENSAJE_REVISOR);
-        })
-        .catch(reason => console.log(reason));
+    fetch(url)
+        .then(r => r.json())
+        .then(value => window.location.href = "/egreso");
 }
+
 
 function revisarEgreso(egresoID) {
     let url = "/egreso/borrar/" + egresoID;
@@ -107,7 +107,6 @@ function revisarEgreso(egresoID) {
         })
         .catch(reason => console.log(reason));
 }
-
 
 
 function buildTablaDetalle(vectorItems) {
@@ -134,6 +133,7 @@ function buildTablaDetalle(vectorItems) {
 function renderizarEgresoDetallado(dataEgreso, contenedorHTML) {
     buildTemplateEgreso(dataEgreso, contenedorHTML);
     buildBotonRevisar(dataEgreso);
+    buildBotonModificar(dataEgreso);
     buildTablaDetalle(dataEgreso.detalle.pedidos);
 
     contenedorHTML.scrollIntoView({behavior: "smooth"});
