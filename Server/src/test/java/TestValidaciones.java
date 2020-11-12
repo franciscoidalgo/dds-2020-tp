@@ -126,7 +126,7 @@ public class TestValidaciones {
     @Test
     public void testPasaValidadoTransparencia() throws Exception {
 
-        Assert.assertTrue(validadorDeTransparencia.validaEgreso(unEgreso));
+        Assert.assertEquals(validadorDeTransparencia.validaEgreso(unEgreso),true);
     }
 
     @Test

@@ -5,12 +5,11 @@ import domain.Operacion.Egreso.OperacionEgreso;
 public class CriterioValidacionDetalle implements CriterioValidacion {
     @Override
     public Boolean validaEgreso(OperacionEgreso unEgreso) {
-        return this.requierePresupuesto(unEgreso) ? this.verificaDetalleEgresoConAlgunPresupuesto(unEgreso) : true;
+        return requierePresupuesto(unEgreso) ? verificaDetalleEgresoConAlgunPresupuesto(unEgreso) : true;
     }
 
 
     private Boolean requierePresupuesto(OperacionEgreso unEgreso) {
-
         return unEgreso.getCantPresupuestos() >0;
     }
 

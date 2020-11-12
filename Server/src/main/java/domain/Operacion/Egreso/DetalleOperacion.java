@@ -1,8 +1,7 @@
 package domain.Operacion.Egreso;
 
-import domain.Entidad.CategorizacionEmpresa.Categoria;
-import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Entidad.EntidadPersistente;
+import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,10 +12,10 @@ import java.util.stream.Collectors;
 @Table(name = "detalle_operacion")
 public class DetalleOperacion extends EntidadPersistente {
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pedido> pedidos;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "asociacion_categoria")
     private List<CategoriaOperacion> categorias;
 
@@ -87,37 +86,43 @@ public class DetalleOperacion extends EntidadPersistente {
 
     //Funcionalidad
 
-    public Boolean tieneItems(){
+    public Boolean tieneItems() {
         return !this.pedidos.isEmpty();
     }
 
-    public Boolean coincidenPedido(DetalleOperacion unDetalle){
+    public Boolean coincidenPedido(DetalleOperacion unDetalle) {
         return unDetalle.getPedidos().stream().
-                anyMatch(pedido -> pedido.coincidenPedidos(unDetalle.pedidos)) &&
-                          unDetalle.getPedidos().size() == this.getPedidos().size();
+                anyMatch(pedido -> (long) unDetalle.getPedidos().size() == (long) this.pedidos.size() &&
+                        pedido.coincidenPedidos(this.getPedidos())
+
+                );
     }
 
-    public Boolean coincidenProveedores(DetalleOperacion unDetalle){
-        return this.proveedor == unDetalle.getProveedor();
+    public Boolean coincidenProveedores(DetalleOperacion unDetalle) {
+        return this.proveedor.equals(unDetalle.getProveedor());
     }
 
-    public void agregaPedido(Pedido nuevoItem){
+    public void agregaPedido(Pedido nuevoItem) {
         this.pedidos.add(nuevoItem);
     }
 
-    public void removePedido(Pedido nuevoItem){
+    public void removePedido(Pedido nuevoItem) {
         this.pedidos.remove(nuevoItem);
     }
 
-    public void agregaCategoria(CategoriaOperacion unaCategoria){categorias.add(unaCategoria);}
+    public void agregaCategoria(CategoriaOperacion unaCategoria) {
+        categorias.add(unaCategoria);
+    }
 
-    public void removeCategoria(CategoriaOperacion unaCategoria){categorias.remove(unaCategoria);}
+    public void removeCategoria(CategoriaOperacion unaCategoria) {
+        categorias.remove(unaCategoria);
+    }
 
-    public double calcularMontoTotal(){
+    public double calcularMontoTotal() {
         return pedidos.stream().mapToDouble(Pedido::precioTotal).sum();
     }
 
-    public List<Item> getItems(){
+    public List<Item> getItems() {
         return this.getPedidos().stream()
                 .map(Pedido::getItem)
                 .collect(Collectors.toList());

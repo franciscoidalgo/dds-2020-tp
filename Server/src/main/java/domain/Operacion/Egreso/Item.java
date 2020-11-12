@@ -14,7 +14,6 @@ public class Item extends EntidadPersistente {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private TipoDeItem tipoDeItem;
 
-
     @Column(name = "precio_unitario")
     private Double precioUnitario;
 
@@ -28,10 +27,14 @@ public class Item extends EntidadPersistente {
 
     //Setters+Getters
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
     public String getDescripcion() { return descripcion; }
 
     public Double getPrecioUnitario() {return precioUnitario;}
-    public void setPrecioUnitario(Double precioUnitario) {this.precioUnitario = precioUnitario;}
+
+    public void setPrecioUnitario(Double precioUnitario){
+         this.precioUnitario = precioUnitario;
+     }
 
     public TipoDeItem getTipoDeItem() {return tipoDeItem;}
 
@@ -39,7 +42,9 @@ public class Item extends EntidadPersistente {
 
     //Funcionalidad
     public Boolean coincidenItems(Item otroItem) {
-        return this.getDescripcion().contentEquals(otroItem.getDescripcion()) && this.precioUnitario.equals(otroItem.getPrecioUnitario());
+        return this.tipoDeItem.getNombre().equalsIgnoreCase(otroItem.getTipoDeItem().getNombre()) &&
+                this.descripcion.equalsIgnoreCase(otroItem.getDescripcion()) &&
+                this.precioUnitario.equals(otroItem.getPrecioUnitario());
     }
 
 

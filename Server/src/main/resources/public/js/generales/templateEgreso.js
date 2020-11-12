@@ -125,9 +125,9 @@ function editEgreso(egresoID) {
 
 
 function revisarEgreso(egresoID) {
-    let url = "/egreso/borrar/" + egresoID;
+    let url = "/revisor/agregar/" + egresoID;
     mostrarLoader();
-    fetch(url, {method: "DELETE"})
+    fetch(url, {method: "PUT"})
         .then(response => response.json())
         .then(data => {
             esconderLoader();

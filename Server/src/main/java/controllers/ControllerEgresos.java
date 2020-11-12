@@ -72,22 +72,29 @@ public class ControllerEgresos extends Controller{
             /*********************** EDICION **********************/
             Integer idEgreso =request.session().attribute("idEgreso");
             request.session().removeAttribute("idEgreso");
-            if(null != idEgreso){
+            if(null != idEgreso){//Si tiene ese valor en el session => Edita
                 OperacionEgreso operacionEgresoEdit = FactoryRepo.get(OperacionEgreso.class).buscar(idEgreso);
+                if(puedeEditarse(operacionEgresoEdit,operacionEgreso)) {
+                    operacionEgresoEdit.setMedioDePago(operacionEgreso.getMedioDePago());
+                    operacionEgresoEdit.setDetalle(operacionEgreso.getDetalle());
+                    operacionEgresoEdit.setCantPresupuestos(operacionEgreso.getCantPresupuestos());
 
-                operacionEgresoEdit.setMedioDePago(operacionEgreso.getMedioDePago());
-                operacionEgresoEdit.setDetalle(operacionEgreso.getDetalle());
-                operacionEgresoEdit.setCantPresupuestos(operacionEgreso.getCantPresupuestos());
+                    operacionEgresoEdit.setFecha(operacionEgreso.getFecha());
+                    operacionEgresoEdit.setMontoTotal(operacionEgreso.getMontoTotal());
+                    repoEgreso.modificar(operacionEgresoEdit);
 
-                operacionEgresoEdit.setFecha(operacionEgreso.getFecha());
-                operacionEgresoEdit.setMontoTotal(operacionEgreso.getMontoTotal());
-                repoEgreso.modificar(operacionEgresoEdit);
+                    mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
+                    response.status(200);
+                    response.type("application/json");
 
-                mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
-                response.status(200);
-                response.type("application/json");
+                    return new Gson().toJson(mensajeRta);
+                }else{
+                    mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
+                    response.status(400);
+                    response.type("application/json");
 
-                return new Gson().toJson(mensajeRta);
+                    return new Gson().toJson(mensajeRta);
+                }
             }
 
 
@@ -312,6 +319,13 @@ public class ControllerEgresos extends Controller{
             egresoDTOList.add(egresoDTO);
         });
         return egresoDTOList;
+    }
+
+    private boolean puedeEditarse(OperacionEgreso operacionAEditar,OperacionEgreso operacionEditada){
+        //Tiene un ingreso asociado
+        return operacionAEditar.getIngreso() == null || operacionAEditar.getIngreso().saldo() + operacionAEditar.getMontoTotal()//obtengo el saldo sin el egreso a editar
+                - operacionEditada.getMontoTotal() > 0;
+
     }
 
 }

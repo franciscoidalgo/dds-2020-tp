@@ -10,10 +10,10 @@ import java.util.List;
 public class Pedido extends EntidadPersistente {
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    Item item;
+    private Item item;
 
     @Column(name = "cantidad")
-    Integer cantidad;
+    private Integer cantidad;
 
     //Constructor
     public Pedido(Item item, Integer cantidad) {
@@ -46,13 +46,11 @@ public class Pedido extends EntidadPersistente {
     }
 
     public Boolean coincidenPedidos(List<Pedido> pedidos) {
-        return  pedidos.stream().
-                anyMatch(unPedido -> sonPedidosIdenticos(this,unPedido));
+        return pedidos.stream().anyMatch(this::sosIdenticosA);
     }
 
-    private Boolean sonPedidosIdenticos(Pedido otroPedido,Pedido unPedido){
-      return   otroPedido.cantidad.equals(unPedido.cantidad) &&
-                otroPedido.item.coincidenItems(unPedido.getItem());
+    public Boolean sosIdenticosA(Pedido unPedido){
+      return   this.cantidad.equals(unPedido.getCantidad()) && this.item.coincidenItems(unPedido.getItem());
     }
 
 }
