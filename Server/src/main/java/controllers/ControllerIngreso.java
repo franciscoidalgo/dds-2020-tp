@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 
-public class ControllerIngreso {
+public class ControllerIngreso extends Controller{
     public ModelAndView mostrarIngresos(Request request, Response response) {
         Repositorio<TipoIngreso> tipoIngresoRepositorio = FactoryRepo.get(TipoIngreso.class);
         List<TipoIngreso> tipoIngresos = tipoIngresoRepositorio.buscarTodos();
@@ -33,12 +33,10 @@ public class ControllerIngreso {
 
     public Object submitIngreso(Request request, Response response) throws Exception {
         Gson gson = new Gson();
-        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
-        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
+        Usuario usuario = getUsuarioFromRequest(request);
         JsonObject mensajeRta = new JsonObject();
 
         String jsonRespuesta;
-
         //try {
 
             IngresoDTO ingresoDTO = gson.fromJson(request.body(), IngresoDTO.class);

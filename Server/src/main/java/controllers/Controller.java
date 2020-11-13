@@ -1,6 +1,7 @@
 package controllers;
 
 import domain.Entidad.Entidad;
+import domain.Entidad.Organizacion;
 import domain.Usuario.Usuario;
 import repositorios.RepositorioDeUsuarios;
 import repositorios.factories.FactoryRepoUsuario;
@@ -16,8 +17,11 @@ public abstract class Controller {
     }
 
     public Entidad getEntidadFromRequest(Request request){
-        Usuario usuario = getUsuarioFromRequest(request);
-        return usuario.getEntidadPertenece();
+        return getUsuarioFromRequest(request).getEntidadPertenece();
+    }
+
+    public Organizacion getOrganizacionFromRequest(Request request){
+        return getEntidadFromRequest(request).getOrganizacion();
     }
 
 }

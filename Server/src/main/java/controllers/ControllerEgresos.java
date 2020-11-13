@@ -6,15 +6,13 @@ import com.google.gson.*;
 import config.ConfiguracionMercadoLibre;
 import controllers.DTO.EgresoDTO;
 import domain.Entidad.Entidad;
+import domain.Factories.FactoryEgreso;
 import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
+import domain.Operacion.Egreso.*;
 import domain.Usuario.BandejaMensaje.Mensaje;
 import domain.Usuario.Usuario;
-import domain.Factories.FactoryEgreso;
-import domain.Operacion.Egreso.*;
 import repositorios.Repositorio;
-import repositorios.RepositorioDeUsuarios;
 import repositorios.factories.FactoryRepo;
-import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -27,12 +25,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static controllers.convertersDTO.ConverterEgreso.generarEgresoDTO;
 
-public class ControllerEgresos extends Controller{
+public class ControllerEgresos extends Controller {
+
+    private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+
 
     public ModelAndView mostrarEgresos(Request request, Response response) throws IOException {
         Map<String, Object> parametros = new HashMap<>();
@@ -58,7 +62,7 @@ public class ControllerEgresos extends Controller{
         parametros.put("categorias", repoCategorias.buscarTodos());//TODO TOCAR PARA QUE SEA DE LA ORGANIZACION
         parametros.put("hoy", LocalDate.now());
 
-        parametros.put("numeroEgreso",request.session().attribute("idEgreso"));
+        parametros.put("numeroEgreso", request.session().attribute("idEgreso"));
 
         return new ModelAndView(parametros, "egreso.hbs");
     }
@@ -66,18 +70,19 @@ public class ControllerEgresos extends Controller{
     public String submitEgreso(Request request, Response response) {
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         JsonObject mensajeRta = new JsonObject();
-        Usuario usuarioLogueado;
+        Usuario usuarioLogueado = getUsuarioFromRequest(request);
+        ;
 
         try {
 
             OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
 
             /*********************** EDICION **********************/
-            Integer idEgreso =request.session().attribute("idEgreso");
+            Integer idEgreso = request.session().attribute("idEgreso");
             request.session().removeAttribute("idEgreso");
-            if(null != idEgreso){//Si tiene ese valor en el session => Edita
-                OperacionEgreso operacionEgresoEdit = FactoryRepo.get(OperacionEgreso.class).buscar(idEgreso);
-                if(puedeEditarse(operacionEgresoEdit,operacionEgreso)) {
+            if (null != idEgreso) {//Si tiene ese valor en el session => Edita
+                OperacionEgreso operacionEgresoEdit = getEgresofromRequest(request);
+                if (puedeEditarse(operacionEgresoEdit, operacionEgreso)) {
                     operacionEgresoEdit.setMedioDePago(operacionEgreso.getMedioDePago());
                     operacionEgresoEdit.setDetalle(operacionEgreso.getDetalle());
                     operacionEgresoEdit.setCantPresupuestos(operacionEgreso.getCantPresupuestos());
@@ -88,21 +93,16 @@ public class ControllerEgresos extends Controller{
 
                     mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
                     response.status(200);
-                    response.type("application/json");
 
-                    return new Gson().toJson(mensajeRta);
-                }else{
+                } else {
                     mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
                     response.status(400);
-                    response.type("application/json");
 
-                    return new Gson().toJson(mensajeRta);
                 }
+                response.type("application/json");
+                return new Gson().toJson(mensajeRta);
             }
 
-
-
-            usuarioLogueado = getUsuarioFromRequest(request);
             usuarioLogueado.realizaOperacion(operacionEgreso);
             usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
@@ -112,61 +112,48 @@ public class ControllerEgresos extends Controller{
             mensajeRta.addProperty("idEgreso", "" + operacionEgreso.getId());
             response.status(200);
             response.type("application/json");
-            return new Gson().toJson(mensajeRta);
+            return gson.toJson(mensajeRta);
 
         } catch (Exception e) {
             response.status(404);
             mensajeRta.addProperty("mensaje", "No se pudo cargar operacion");
             response.type("application/json");
-            return new Gson().toJson(mensajeRta);
+            return gson.toJson(mensajeRta);
         }
 
     }
 
-    public String editarEgreso(Request request,Response response) throws  IOException{
+    public String editarEgreso(Request request, Response response) {
         Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
         JsonObject mensajeRta = new JsonObject();
-        request.session().attribute("idEgreso",idEgreso);
+
+        request.session().attribute("idEgreso", idEgreso);
         mensajeRta.addProperty("idEgreso", "");
+
         response.status(200);
         response.type("application/json");
         return new Gson().toJson(mensajeRta);
     }
 
-    //TODO REFACTORIZAR ESTO
-
     public String pasarEgresosSegunID(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
-        int idEgreso;
-        OperacionEgreso egreso;
-        EgresoDTO egresoDTO;
-        String jsonEgreso;
-
-        idEgreso = Integer.parseInt(request.params("idEgreso"));
-        egreso = repositorioEgreso.buscar(idEgreso);
-        egresoDTO = generarEgresoDTO(egreso);
-
-        jsonEgreso = gson.toJson(egresoDTO);
+        OperacionEgreso egreso = getEgresofromRequest(request);
+        EgresoDTO egresoDTO = generarEgresoDTO(egreso);
         response.type("application/json");
 
-        return jsonEgreso;
+        return gson.toJson(egresoDTO);
     }
 
     public String pasarEgresosSegunCategorias(Request request, Response response) {
-
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-
-        Entidad entidad = this.getEntidadFromRequest(request);
+        Entidad entidad = getEntidadFromRequest(request);
         List<OperacionEgreso> operacionEgresos = entidad.getOperacionesEgreso();
         List<CategoriaOperacion> categoriasSeleccionadas = new ArrayList<>();
         List<EgresoDTO> egresoDTOList;
-        String jsonEgreso;
+        //TODO Extraer esto
         //Trato el JSON
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(request.body());
         JsonObject rootObject = jsonElement.getAsJsonObject();
-        JsonArray jCategorias= rootObject.getAsJsonArray("idCategorias");
+        JsonArray jCategorias = rootObject.getAsJsonArray("idCategorias");
 
         //Agrego a la lista las categorias
         for (JsonElement columnElement : jCategorias) {
@@ -181,96 +168,67 @@ public class ControllerEgresos extends Controller{
                 .collect(Collectors.toList());
 
         egresoDTOList = convertirEgresosEnEgresosDTO(operacionEgresos);
-
-        jsonEgreso = gson.toJson(egresoDTOList);
         response.type("application/json");
-        return jsonEgreso;
+        return gson.toJson(egresoDTOList);
     }
 
     public String pasarTodosEgresos(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         Entidad entidad = this.getEntidadFromRequest(request);
-        List<EgresoDTO> egresoDTOList;
-        String jsonEgreso;
 
-        egresoDTOList = convertirEgresosEnEgresosDTO(entidad.getOperacionesEgreso());
+        List<EgresoDTO> egresoDTOList = convertirEgresosEnEgresosDTO(entidad.getOperacionesEgreso());
 
-        jsonEgreso = gson.toJson(egresoDTOList);
         response.type("application/json");
-        return jsonEgreso;
+        return gson.toJson(egresoDTOList);
     }
 
     public String pasarEgresosMensaje(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
         Repositorio<Mensaje> repositorioMensaje = FactoryRepo.get(Mensaje.class);
-        int idEgreso;
-        int idMensaje;
         Mensaje mensaje;
-        OperacionEgreso egreso;
         EgresoDTO egresoDTO;
-        String jsonEgreso;
 
-        idEgreso = Integer.parseInt(request.params("idEgreso"));
-        idMensaje = Integer.parseInt(request.params("idMensaje"));
-
-        mensaje = repositorioMensaje.buscar(idMensaje);
+        OperacionEgreso egreso = getEgresofromRequest(request);
+        mensaje = repositorioMensaje.buscar(egreso.getId());
         mensaje.actualizateLeido();
 
         repositorioMensaje.modificar(mensaje);
-        egreso = repositorioEgreso.buscar(idEgreso);
         egresoDTO = generarEgresoDTO(egreso);
 
-        jsonEgreso = gson.toJson(egresoDTO);
         response.type("application/json");
-
-        return jsonEgreso;
+        return gson.toJson(egresoDTO);
     }
 
     public String pasarEgresosSegunFecha(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
-        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
+        Entidad entidad = getEntidadFromRequest(request);
         List<EgresoDTO> egresoDTOList = new ArrayList<>();
-        String jsonEgreso;
-
         LocalDate fechaMax = LocalDate.parse(request.params("fechaMax"));
-        List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();
+        List<OperacionEgreso> egresos = entidad.getOperacionesEgreso();
 
         egresos = egresos.stream()
                 .filter(egreso -> egreso.tenesFechaIgualOAnterior(LocalDate.from(fechaMax)))
                 .collect(Collectors.toList());
 
-        egresos.forEach(egreso -> {
-            EgresoDTO egresoDTO = generarEgresoDTO(egreso);
-            egresoDTOList.add(egresoDTO);
-        });
-        jsonEgreso = gson.toJson(egresoDTOList);
+        egresos.forEach(egreso -> egresoDTOList.add(generarEgresoDTO(egreso)));
+
         response.type("application/json");
-        return jsonEgreso;
+
+        return gson.toJson(egresoDTOList);
     }
 
     public String pasarEgresosNoVinculados(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-
-        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
-        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
-        List<EgresoDTO> egresoDTOList = new ArrayList<>();
-        String jsonEgreso;
-
         LocalDate fechaMax = LocalDate.parse(request.params("fechaMax"));
+        List<EgresoDTO> egresoDTOList = new ArrayList<>();
+        Entidad entidad = getEntidadFromRequest(request);
 
-        List<OperacionEgreso> egresos = usuario.getEntidadPertenece().getOperacionesEgreso();
-        egresos = egresos.stream().filter(egreso -> egreso.podesVincularteSegunFecha(LocalDate.from(fechaMax))).collect(Collectors.toList());
+        List<OperacionEgreso> egresos;
+        egresos = entidad.getOperacionesEgreso().stream()
+                .filter(egreso -> egreso.podesVincularteSegunFecha(LocalDate.from(fechaMax)))
+                .collect(Collectors.toList());
 
-        egresos.forEach(egreso -> {
-            EgresoDTO egresoDTO = generarEgresoDTO(egreso);
-            egresoDTOList.add(egresoDTO);
-        });
+        egresos.forEach(egreso -> egresoDTOList.add(generarEgresoDTO(egreso)));
 
-        jsonEgreso = gson.toJson(egresoDTOList);
         response.type("application/json");
-        return jsonEgreso;
+        return gson.toJson(egresoDTOList);
     }
 
     public String sacarRevisor(Request request, Response response) {
@@ -284,12 +242,12 @@ public class ControllerEgresos extends Controller{
         idEgreso = Integer.parseInt(request.params("idEgreso"));
         repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
         egreso = repositorioEgreso.buscar(idEgreso);
-        List<Mensaje>mensajesBorrar =usuario.darseDeBajaEn(egreso);
+        List<Mensaje> mensajesBorrar = usuario.darseDeBajaEn(egreso);
         FactoryRepo.get(Usuario.class).modificar(usuario);
 
-        mensajesBorrar.forEach(mensaje ->FactoryRepo.get(Mensaje.class).eliminar(mensaje));
+        mensajesBorrar.forEach(mensaje -> FactoryRepo.get(Mensaje.class).eliminar(mensaje));
 
-        mensajeRta.addProperty("mensaje","Operacion Realizada");
+        mensajeRta.addProperty("mensaje", "Operacion Realizada");
         response.type("application/json");
 
         return gson.toJson(mensajeRta);
@@ -301,22 +259,21 @@ public class ControllerEgresos extends Controller{
         Usuario usuario = FactoryRepo.get(Usuario.class).buscar(request.session().attribute("userId"));
         int idEgreso;
         OperacionEgreso egreso;
+        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        Usuario usuario = getUsuarioFromRequest(request);
+        OperacionEgreso egreso = getEgresofromRequest(request);
         JsonObject mensajeRta = new JsonObject();
 
-
-        idEgreso = Integer.parseInt(request.params("idEgreso"));
-        repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
-        egreso = repositorioEgreso.buscar(idEgreso);
         usuario.darseDeAltaEn(egreso);
-        FactoryRepo.get(OperacionEgreso.class).modificar(egreso);
+        repositorioEgreso.modificar(egreso);
 
-        mensajeRta.addProperty("mensaje","Operacion Realizada");
+        mensajeRta.addProperty("mensaje", "Operacion Realizada");
         response.type("application/json");
 
         return gson.toJson(mensajeRta);
     }
 
-    private List<EgresoDTO> convertirEgresosEnEgresosDTO(List<OperacionEgreso> egresos ){
+    private List<EgresoDTO> convertirEgresosEnEgresosDTO(List<OperacionEgreso> egresos) {
         List<EgresoDTO> egresoDTOList = new ArrayList<>();
         egresos.forEach(egreso -> {
             EgresoDTO egresoDTO = generarEgresoDTO(egreso);
@@ -325,11 +282,17 @@ public class ControllerEgresos extends Controller{
         return egresoDTOList;
     }
 
-    private boolean puedeEditarse(OperacionEgreso operacionAEditar,OperacionEgreso operacionEditada){
+    private boolean puedeEditarse(OperacionEgreso operacionAEditar, OperacionEgreso operacionEditada) {
         //Tiene un ingreso asociado
         return operacionAEditar.getIngreso() == null || operacionAEditar.getIngreso().saldo() + operacionAEditar.getMontoTotal()//obtengo el saldo sin el egreso a editar
                 - operacionEditada.getMontoTotal() > 0;
 
+    }
+
+    private OperacionEgreso getEgresofromRequest(Request request) {
+        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
+        return repositorioEgreso.buscar(idEgreso);
     }
 
     public Response submitImagen(Request request, Response response) throws IOException, ServletException {

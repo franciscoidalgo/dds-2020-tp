@@ -561,6 +561,8 @@ form div.burbuja {
     border-top: 2px solid black;
     border-bottom: 2px solid black;
     padding: 1.2rem 0;
+    background: #015b81;
+    color: white;
 }
 
 .tabla {
@@ -574,14 +576,10 @@ tr {
 }
 
 .tabla-detalle th {
-    border-top: 2px solid #808080;
-    border-bottom: 2px solid #808080;
-}
-
-.tabla-detalle tr {
     border-top: 1px solid #808080;
     border-bottom: 1px solid #808080;
 }
+
 
 .th-principal tfoot tr {
     border: none;

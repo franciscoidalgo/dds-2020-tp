@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "operacion_egreso")
-@PrimaryKeyJoinColumn(name="operacion_id",referencedColumnName = "id")
+@PrimaryKeyJoinColumn(name = "operacion_id", referencedColumnName = "id")
 public class OperacionEgreso extends Operacion {
     //Atributos
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -110,16 +110,13 @@ public class OperacionEgreso extends Operacion {
         return presupuestos;
     }
 
-    public void setPresupuestos(ArrayList<Presupuesto> presupuestos) {
-        this.presupuestos = presupuestos;
-    }
-
-    public void setMontoTotal(double monto) {
-        this.montoTotal = monto;
-    }
-
     public void setPresupuestos(List<Presupuesto> presupuestos) {
         this.presupuestos = presupuestos;
+    }
+
+    @Override
+    public void setMontoTotal(double monto) {
+        this.montoTotal = monto;
     }
 
     public OperacionIngreso getIngreso() {
@@ -128,7 +125,6 @@ public class OperacionEgreso extends Operacion {
 
     public void setIngreso(OperacionIngreso ingreso) {
         this.ingreso = ingreso;
-        this.marcateComoAsociado();
     }
 
     /*Funcionales*/
@@ -152,7 +148,10 @@ public class OperacionEgreso extends Operacion {
     }
 
     public void agregateRevisor(Usuario unRevisor) {
-        this.revisores.add(unRevisor);
+        if (!this.revisores.contains(unRevisor)) {
+            this.revisores.add(unRevisor);
+        }
+
     }
 
     public void sacaRevisor(Usuario unRevisor) {
@@ -175,13 +174,12 @@ public class OperacionEgreso extends Operacion {
     }
 
 
-    private Boolean puedeAgregarPresupuesto() {
+    private boolean puedeAgregarPresupuesto() {
         return this.detalle.tieneItems();
     }
 
-    public void marcateComoAsociado() {
-    }
-    public Boolean estaAsociado(){
+
+    public boolean estaAsociado() {
         return null != this.ingreso;
     }
 
@@ -189,18 +187,19 @@ public class OperacionEgreso extends Operacion {
         return this.detalle.getItems();
     }
 
-    public Boolean podesVincularteSegunFecha(LocalDate fechaMax) {
-        return this.tenesFechaIgualOAnterior(fechaMax) && !this.estaAsociado() ;
+    public boolean podesVincularteSegunFecha(LocalDate fechaMax) {
+        return this.tenesFechaIgualOAnterior(fechaMax) && !this.estaAsociado();
     }
 
-    public Boolean tenesFechaIgualOAnterior(LocalDate fechaMax){
-        return this.fecha.isBefore(fechaMax) || this.fecha.isEqual(fechaMax) ;
+    public boolean tenesFechaIgualOAnterior(LocalDate fechaMax) {
+        return this.fecha.isBefore(fechaMax) || this.fecha.isEqual(fechaMax);
     }
-    public int cantPresupuestosFaltantes(){
+
+    public int cantPresupuestosFaltantes() {
         return Math.max(this.cantPresupuestos - this.presupuestos.size(), 0);
     }
 
-    public boolean tenesCategoria(CategoriaOperacion categoria){
+    public boolean tenesCategoria(CategoriaOperacion categoria) {
         return this.detalle.tenesCategoria(categoria);
     }
 }

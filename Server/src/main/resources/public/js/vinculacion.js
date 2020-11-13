@@ -62,7 +62,7 @@ function generarOptionEgreso(data) {
 
 function cargarDesplegableEgresoCon(ingresoSeleccionado) {
 
-    let url = `/api/get-egresos-vincular/${ingresoSeleccionado.fechaAceptacion}`
+    let url = `/egreso/buscar/sin-vincular/${ingresoSeleccionado.fechaAceptacion}`
     mostrarLoader();
     getEgresosVinculables(url).then(data => {
         cleanDesplegable(desplegable.seleccionEgreso);

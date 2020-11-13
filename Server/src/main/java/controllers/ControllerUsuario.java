@@ -11,20 +11,17 @@ import repositorios.factories.FactoryRepo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ControllerUsuario {
+public class ControllerUsuario extends Controller {
 
-    public ModelAndView mostrarUsuario(Request request, Response response) throws IOException {
+    public ModelAndView mostrarUsuario(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
-        Usuario usuario = FactoryRepo.get(Usuario.class).buscar(request.session().attribute("userId"));
-        Entidad entidad = usuario.getEntidadPertenece();
+        Usuario usuario = getUsuarioFromRequest(request);
+        Entidad entidad = getEntidadFromRequest(request);
         Organizacion organizacion = entidad.getOrganizacion();
 
         List<Entidad> entidades = organizacion.getEntidades().stream().filter(entidad1 -> entidad1 != entidad).collect(Collectors.toList());
@@ -44,7 +41,8 @@ public class ControllerUsuario {
     public String cambiarNombre(Request request, Response response) {
         Repositorio<Usuario> repositorio = FactoryRepo.get(Usuario.class);
         String nombre = request.body();
-        Usuario usuario = repositorio.buscar(request.session().attribute("userId"));
+        Usuario usuario = getUsuarioFromRequest(request);
+
         usuario.setNombre(nombre);
         repositorio.modificar(usuario);
         response.status(200);
@@ -55,36 +53,29 @@ public class ControllerUsuario {
     public String cambiarApellido(Request request, Response response) {
         Repositorio<Usuario> repositorio = FactoryRepo.get(Usuario.class);
         String apellido = request.body();
-        Usuario usuario = repositorio.buscar(request.session().attribute("userId"));
+        Usuario usuario = getUsuarioFromRequest(request);
+
         usuario.setApellido(apellido);
         repositorio.modificar(usuario);
         response.status(200);
+
         return "{\"mensaje\":\"ok\"}";
     }
 
     public String cambiarPassword(Request request, Response response) {
         Repositorio<Usuario> repositorio = FactoryRepo.get(Usuario.class);
+        Usuario usuario = getUsuarioFromRequest(request);
         String password = request.body();
         Guava256Hasher guava = new Guava256Hasher();
         String passwordHash = guava.hashPassword(password);
-        Usuario usuario = repositorio.buscar(request.session().attribute("userId"));
 
         //TODO INSTANCIAR ESTO EN OTRO LADO!
         ValidatePassword validatePassword = new ValidatePassword();
-        ValidatePasswordLength validatePasswordLength = new ValidatePasswordLength();
-        ValidatePasswordNumber validatePasswordNumber = new ValidatePasswordNumber();
-        ValidatePasswordCapitalLetter validatePasswordCapitalLetter = new ValidatePasswordCapitalLetter();
-        ValidatePasswordSpecialCharacter validatePasswordSpecialCharacter = new ValidatePasswordSpecialCharacter();
-        ValidatePasswordDictionary validatePasswordDictionary = new ValidatePasswordDictionary();
-
-        ArrayList<PasswordCriteria> passwordCriteria = new ArrayList<>();
-
-        passwordCriteria.add(validatePasswordLength);
-        passwordCriteria.add(validatePasswordNumber);
-        passwordCriteria.add(validatePasswordCapitalLetter);
-        passwordCriteria.add(validatePasswordSpecialCharacter);
-        passwordCriteria.add(validatePasswordDictionary);
-        validatePassword.passwordCriteria = passwordCriteria;
+        validatePassword.addCriteria(new ValidatePasswordLength());
+        validatePassword.addCriteria(new ValidatePasswordNumber());
+        validatePassword.addCriteria(new ValidatePasswordCapitalLetter());
+        validatePassword.addCriteria(new ValidatePasswordSpecialCharacter());
+        validatePassword.addCriteria(new ValidatePasswordDictionary());
 
         if (validatePassword.validatePassword(password)) {
             usuario.setPassword(passwordHash);
@@ -93,7 +84,6 @@ public class ControllerUsuario {
             return "{\"mensaje\":\"ok\"}";
         } else {
             response.status(400);
-
             return "{\"mensaje\":\"No se puede agregar\"}";
         }
 
