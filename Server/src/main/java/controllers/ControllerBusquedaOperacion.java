@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ControllerBusquedaOperacion {
-    public ModelAndView mostrarBusquedaOperacion(Request request, Response response) throws IOException {
+    public ModelAndView mostrarBusquedaOperacion(Request request, Response response){
         Map<String, Object> parametros = new HashMap<>();
         Usuario usuario = FactoryRepoUsuario.get().buscar(request.session().attribute("userId"));
         Entidad entidad = usuario.getEntidadPertenece();

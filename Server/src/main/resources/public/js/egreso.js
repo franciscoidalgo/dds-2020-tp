@@ -11,6 +11,7 @@ const entrada = {
     cantPresupuestos:document.getElementById("cantPresupuestos"),
 
 }
+
 const desplegable = {
     moneda: document.getElementById("moneda"),
     idTipoDePago:document.getElementById("tipo-pago")

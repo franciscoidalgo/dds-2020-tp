@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gesoc, es un Saas de gestion comercial. En Gesoc puedes gestionar y controlar tus operacion y proyectos.">
+    <meta name="description"
+          content="Gesoc, es un Saas de gestion comercial. En Gesoc puedes gestionar y controlar tus operacion y proyectos.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -72,28 +73,32 @@
                     <option value={{id}}>{{nombre}}</option>
                 {{/each}}
             </select>
+            <hr style="margin: 3rem 0rem">
         </div>
-        <br>
         <div class="contenedor-entrada">
-            <label for="categorias">Categorias</label>
-            <br>
-            <select name="categorias" id="categorias" disabled>
-                <option value="" disabled selected>-- Seleccione --</option>
-            </select>
-            <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
-        </div>
-        <hr>
-        <div id="seccion-seleccion-categoria" hidden>
-            <h4>Seleccione Categorias</h4>
-
-            <!--Categorias seleccionadas-->
-            <div id="seccion-categoria-seleccionadas" class="d-flex m-0 contenedor-categorias">
+            <div id="seccion-seleccion-categoria" hidden>
+                <h4>Seleccione Categorias</h4>
+                <div>
+                    <label for="categorias">Categorias</label>
+                    <br>
+                    <select name="categorias" id="categorias" disabled>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                    </select>
+                </div>
+                <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
+                <hr style="margin: 3rem 0rem">
+                <!--Categorias seleccionadas-->
+                <div id="seccion-categoria-seleccionadas" class="d-flex m-0 contenedor-categorias">
+                </div>
+                <input id="btn-busqueda-seleccionada" type="button" class="btn btn-formulario"
+                       value="Buscar Seleccionadas">
             </div>
-            <input id="btn-busqueda-seleccionada" type="button" class="btn btn-formulario" value="Buscar Seleccionadas">
+
         </div>
-        <hr>
+
         <br>
         <div id="operacion"></div>
+
     </section>
     <!--Operaciones en detalle-->
     <article id="mensaje-detalle" class="seccion">

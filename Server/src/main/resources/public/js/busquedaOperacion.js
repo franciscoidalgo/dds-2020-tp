@@ -77,6 +77,7 @@ desplegable.operacion.onchange = () => {
 
     seccion.seleccionCriterio.hidden = seleccionoEgreso;
     seccion.seleccionCategoria.hidden = seleccionoEgreso;
+    seccion.operacion.innerHTML = "";
 };
 
 boton.verTodas.onclick = () => {

@@ -1,10 +1,11 @@
 import {generaCategoria} from "./categoria.js";
 import {agregateFilaEnTablaDetalleSimple} from "./tabla.js";
 import {esconderLoader, mostrarLoader} from "./loader.js";
-import {generarModalOK} from "./modal.js";
+import {generarModalFail, generarModalOK} from "./modal.js";
 
 
 const MENSAJE_REVISOR = "Dejaste de ser revisor de esta operacion. Puedes volver a seleccionarte como revisor, en el panel de busqueda"
+
 function buildTemplateMensaje(egreso, esValida) {
     const contenedorHTML = document.getElementById("mensaje-detalle");
     const proveedor = egreso.detalle.proveedor;
@@ -81,7 +82,7 @@ function buildCategorias(vectorCategorias) {
     const contenedorHTML = document.getElementById("contenedor-categorias");
 
     for (var i = 0; i < vectorCategorias.length; i++) {
-        let contenido = generaCategoria(vectorCategorias[i].id,vectorCategorias[i].descripcion, true);
+        let contenido = generaCategoria(vectorCategorias[i].id, vectorCategorias[i].descripcion, true);
         contenedorHTML.appendChild(contenido);
     }
 }
@@ -114,7 +115,6 @@ function setIconoValidoSegun(cadena) {
 }
 
 
-
 function buildTooltip(resultadoMensaje) {
     const contenedorHTML = document.getElementById("mensaje-resultado");
     let vectorMsjResultado = resultadoMensaje.split("\n");
@@ -140,7 +140,6 @@ function mostrarMensaje(egreso, esValida, detalleValidacion) {
 }
 
 
-
 function buildBotonDejarRevisar(egreso) {
     let btn = document.getElementById("btn-no-revisar");
     btn.onclick = () => dejarDeRevisar(egreso.id);
@@ -150,14 +149,20 @@ function dejarDeRevisar(egresoID) {
     let url = "/revisor/delete/" + egresoID;
     mostrarLoader();
     fetch(url, {method: "DELETE"})
-        .then(response => response.json())
-        .then(data => {
-            esconderLoader();
-            generarModalOK(MENSAJE_REVISOR);
-        })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                generarModalFail(MENSAJE_FAIL)
+                esconderLoader();
+            }
+        }).then(data => {
+        esconderLoader();
+        generarModalOK(MENSAJE_REVISOR);
+    })
         .catch(reason => console.log(reason));
 
 
 }
 
-export {mostrarMensaje,setIconoValidoSegun}
+export {mostrarMensaje, setIconoValidoSegun}
