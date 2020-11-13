@@ -3,13 +3,13 @@ package controllers;
 import domain.Entidad.Entidad;
 import domain.Entidad.Organizacion;
 import domain.Usuario.Usuario;
-import repositorios.RepositorioDeUsuarios;
-import repositorios.factories.FactoryRepoUsuario;
+import repositorios.Repositorio;
+import repositorios.factories.FactoryRepo;
 import spark.Request;
 
 public abstract class Controller {
     public  Usuario getUsuarioFromRequest(Request request){
-        RepositorioDeUsuarios repositorioDeUsuarios = FactoryRepoUsuario.get();
+        Repositorio<Usuario> repositorioDeUsuarios = FactoryRepo.get(Usuario.class);
         Integer idUsuario = request.session().attribute("userId");
         Usuario usuarioLogueado = repositorioDeUsuarios.buscar(idUsuario);
 

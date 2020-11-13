@@ -46,8 +46,8 @@ public class Router {
         ControllerUsuario controllerUsuario = new ControllerUsuario();
         ControllerEntidad controllerEntidad = new ControllerEntidad();
         ControllerNormalizaciones controllerNormalizaciones = new ControllerNormalizaciones();
-        ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
 
+        ValidadorDeTransparencia validadorDeTransparencia = ValidadorDeTransparencia.instancia();
         validadorDeTransparencia.agregateCriterio(new CriterioValidacionCantidadPresupuesto());
         validadorDeTransparencia.agregateCriterio(new CriterioValidacionDetalle());
         validadorDeTransparencia.agregateCriterio(new CriterioValidacionSeleccion());
@@ -79,7 +79,6 @@ public class Router {
         Spark.path("/egreso",() -> {
             /* ENVIO DE EGRESOS. */
             Spark.get("", controllerEgresos::mostrarEgresos, Router.engine);
-            //todo "/modificar" "/borrar"
             Spark.post("/nuevo", controllerEgresos::submitEgreso);
             Spark.get("/editar/:idEgreso", controllerEgresos::editarEgreso);
 

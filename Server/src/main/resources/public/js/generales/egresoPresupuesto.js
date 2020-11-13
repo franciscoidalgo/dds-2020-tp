@@ -53,7 +53,7 @@ const entrada = {
     altura: document.getElementById("altura"),
     piso: document.getElementById("piso"),
     dpto: document.getElementById("dpto"),
-    path: document.getElementById("path"),
+    path: document.getElementById("comprobante"),
     fecha: document.getElementById("fecha"),
     montoTotal: document.getElementById("total") //No es un input en "limpio"
 };

@@ -45,36 +45,37 @@ async function postEgreso(url, init) {
         generarModalFail(MENSAJE_FAIL)
         esconderLoader();
     }
-
+return false;
 }
 
 form.egreso.onsubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     let url = '/egreso/nuevo';
     let jsonEgreso = getJsonEgreso();
     let init = {
         method: 'POST',
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
+        contentType:'multipart/form-data',
         body: JSON.stringify(jsonEgreso)
     }
 
-    e.preventDefault();
+
 
     if (montoTotal <= 0) {
         generarModalFail(MENSAJE_FAIL);
     } else {
         postEgreso(url, init).then(data => {
-            if($("#tipo-comprobante").val() != "Ninguno"){
-                postImage();
-            }
             generarModalOK(MENSAJE_OK + data.idEgreso)
             esconderLoader();
+           if(document.getElementById("tipo-comprobante").value !== "1"){
+                postImage();
+            }
         })
     }
+
 }
 
-function postImage(){
+function postImage() {
     var data = new FormData();
     var files = $('#comprobante')[0].files;
     if(files.length > 0){
@@ -82,9 +83,10 @@ function postImage(){
         $.ajax({
             url: "/imagen-comprobante",
             type: "POST",
-            data: data,
             contentType: false,
             processData: false,
+            data: data,
+            redirect:false
         });
     }else{
         console.log("No se selecciono ninguna imagen");

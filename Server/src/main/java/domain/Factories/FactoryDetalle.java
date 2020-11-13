@@ -7,10 +7,12 @@ import domain.Operacion.Egreso.Pedido;
 import domain.Operacion.Egreso.Proveedor;
 import spark.Request;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
 import java.util.List;
 
 public class FactoryDetalle {
-    public static DetalleOperacion get(Request request){
+    public static DetalleOperacion get(Request request) throws IOException, ServletException {
         DetalleOperacion detalleOperacion = new DetalleOperacion();
 
         List<Pedido> pedidos = FactoryPedido.get(request);

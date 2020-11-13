@@ -202,4 +202,8 @@ public class OperacionEgreso extends Operacion {
     public boolean tenesCategoria(CategoriaOperacion categoria) {
         return this.detalle.tenesCategoria(categoria);
     }
+
+    public void setPath(String path){
+        this.detalle.getComprobante().setPath(path);
+    }
 }

@@ -71,6 +71,7 @@ public class ControllerEgresos extends Controller {
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         JsonObject mensajeRta = new JsonObject();
         Usuario usuarioLogueado = getUsuarioFromRequest(request);
+
         try {
 
             OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
@@ -113,6 +114,7 @@ public class ControllerEgresos extends Controller {
             return gson.toJson(mensajeRta);
 
         } catch (Exception e) {
+            e.printStackTrace();
             response.status(404);
             mensajeRta.addProperty("mensaje", "No se pudo cargar operacion");
             response.type("application/json");
@@ -252,13 +254,13 @@ public class ControllerEgresos extends Controller {
     }
 
     public String agregarRevisor(Request request, Response response) {
-        Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         Usuario usuario = getUsuarioFromRequest(request);
         OperacionEgreso egreso = getEgresofromRequest(request);
         JsonObject mensajeRta = new JsonObject();
 
         usuario.darseDeAltaEn(egreso);
-        repositorioEgreso.modificar(egreso);
+        FactoryRepo.get(OperacionEgreso.class).modificar(egreso);
 
         mensajeRta.addProperty("mensaje", "Operacion Realizada");
         response.type("application/json");
@@ -284,7 +286,7 @@ public class ControllerEgresos extends Controller {
 
     private OperacionEgreso getEgresofromRequest(Request request) {
         Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
-        int idEgreso = Integer.parseInt(request.params("idEgreso"));
+        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
         return repositorioEgreso.buscar(idEgreso);
     }
 

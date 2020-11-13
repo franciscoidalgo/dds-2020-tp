@@ -9,8 +9,11 @@ import repositorios.Repositorio;
 import repositorios.factories.FactoryRepo;
 import spark.Request;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
+
 public class FactoryComprobante {
-    public static Comprobante get(Request request){
+    public static Comprobante get(Request request) throws IOException, ServletException {
         Repositorio<TipoComprobante> tipoComprobanteRepositorio = FactoryRepo.get(TipoComprobante.class);
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(request.body());
@@ -21,7 +24,10 @@ public class FactoryComprobante {
         TipoComprobante tipoComprobante = tipoComprobanteRepositorio.buscar(jComprobante.get("tipoComprobante").getAsInt());
 
         comprobante.setTipoComprobante(tipoComprobante);
-        comprobante.setPath(jComprobante.get("path").getAsString());//TODO CAMBIAR PARA QUE LLEGUE DESDE EL SERVER Y NOSOTROS LE PONGAMOS LA RUTA QUE QUEREMOs
+        comprobante.setPath(jComprobante.get("path").getAsString());
+
         return comprobante;
     }
+
+
 }
