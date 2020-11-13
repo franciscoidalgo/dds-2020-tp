@@ -33,7 +33,6 @@ public class ControllerEntidad {
 
          entidadRepositorio.eliminar(entidad);
 
-
         return "";
     }
 

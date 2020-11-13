@@ -1,7 +1,6 @@
 package server;
 
 import APIMercadoLibre.InfoMercadoLibre;
-import Persistencia.EntityManagerHelper;
 import config.ConfiguracionMercadoLibre;
 import controllers.*;
 import domain.Validadores.CriterioValidacionCantidadPresupuesto;

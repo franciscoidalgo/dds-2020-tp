@@ -3,7 +3,6 @@ package controllers;
 
 import Persistencia.TypeAdapterHibernate;
 import com.google.gson.*;
-import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 
 import controllers.convertersDTO.ConverterIngreso;
