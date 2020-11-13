@@ -71,8 +71,6 @@ public class ControllerEgresos extends Controller {
         Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
         JsonObject mensajeRta = new JsonObject();
         Usuario usuarioLogueado = getUsuarioFromRequest(request);
-        ;
-
         try {
 
             OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
@@ -254,11 +252,6 @@ public class ControllerEgresos extends Controller {
     }
 
     public String agregarRevisor(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-        Repositorio<OperacionEgreso> repositorioEgreso;
-        Usuario usuario = FactoryRepo.get(Usuario.class).buscar(request.session().attribute("userId"));
-        int idEgreso;
-        OperacionEgreso egreso;
         Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
         Usuario usuario = getUsuarioFromRequest(request);
         OperacionEgreso egreso = getEgresofromRequest(request);
@@ -291,7 +284,7 @@ public class ControllerEgresos extends Controller {
 
     private OperacionEgreso getEgresofromRequest(Request request) {
         Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
-        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
+        int idEgreso = Integer.parseInt(request.params("idEgreso"));
         return repositorioEgreso.buscar(idEgreso);
     }
 
