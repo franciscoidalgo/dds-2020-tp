@@ -17,10 +17,12 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import javax.imageio.ImageIO;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -308,7 +310,15 @@ public class ControllerEgresos extends Controller {
     }
 
     private String generarPath(String id){
-        return "src/main/resources/comprobantes/"+"egreso-"+ id +".png";
+        return "src/main/resources/comprobantes/"+"egreso-"+ id +".pdf";
+    }
+
+    public byte[] getImagenComprobante(Request request, Response response) throws IOException {
+        Path path = Paths.get(generarPath(request.params("id")));
+        byte[] archivo = Files.readAllBytes(path);
+        response.type("application/pdf");
+        response.header("Content-Disposition","attachment");
+        return archivo;
     }
 
 
