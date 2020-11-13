@@ -21,7 +21,7 @@ public class FactoryProveedor {
         JsonObject rootObject = jsonElement.getAsJsonObject();// pasando a objeto
         JsonObject jProveedor = rootObject.getAsJsonObject("proveedor");//busco en propiedad Proveedor
 
-        Integer idProveedor = jProveedor.get("id").getAsInt();
+        int idProveedor = jProveedor.get("id").getAsInt();
 
         System.out.println(idProveedor);
         Proveedor proveedor = proveedorRepositorio.buscar(idProveedor);

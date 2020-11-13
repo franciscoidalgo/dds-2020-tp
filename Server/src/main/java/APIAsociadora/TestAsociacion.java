@@ -9,7 +9,6 @@ import domain.Operacion.Ingreso.OperacionIngreso;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class TestAsociacion {
     public static void main(String[] args) throws IOException {

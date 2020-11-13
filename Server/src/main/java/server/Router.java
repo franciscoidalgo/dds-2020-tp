@@ -1,7 +1,6 @@
 package server;
 
 import APIMercadoLibre.InfoMercadoLibre;
-import Persistencia.EntityManagerHelper;
 import config.ConfiguracionMercadoLibre;
 import controllers.*;
 import domain.Validadores.CriterioValidacionCantidadPresupuesto;
@@ -15,7 +14,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.CustomHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
 
-import java.io.File;
 
 public class Router {
     private static HandlebarsTemplateEngine engine;
@@ -152,6 +150,8 @@ public class Router {
         Spark.post("/ingreso", controllerIngreso::submitIngreso);
 
         Spark.get("/busquedaOperacion", controllerBusquedaOperacion::mostrarBusquedaOperacion,Router.engine);
+
+        Spark.post("/imagen-comprobante", controllerEgresos::submitImagen);
 
         Spark.afterAfter("*", controllerPersistance::cerrarEm);
 

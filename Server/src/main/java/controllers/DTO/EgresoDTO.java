@@ -2,7 +2,6 @@ package controllers.DTO;
 
 import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Operacion.Egreso.*;
-import domain.Operacion.Ingreso.OperacionIngreso;
 
 import java.util.List;
 

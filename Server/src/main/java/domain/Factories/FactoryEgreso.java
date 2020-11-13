@@ -7,9 +7,6 @@ import domain.Operacion.Egreso.DetalleOperacion;
 import domain.Operacion.Egreso.MedioDePago;
 import domain.Operacion.Egreso.OperacionEgreso;
 import spark.Request;
-
-import javax.servlet.ServletException;
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class FactoryEgreso {

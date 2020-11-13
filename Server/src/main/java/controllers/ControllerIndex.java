@@ -2,10 +2,8 @@ package controllers;
 
 import domain.Entidad.Entidad;
 import domain.Entidad.Organizacion;
-import domain.Usuario.RolAdministrador;
 import domain.Usuario.Usuario;
 import repositorios.RepositorioDeUsuarios;
-import repositorios.factories.FactoryRepo;
 import repositorios.factories.FactoryRepoUsuario;
 import spark.ModelAndView;
 import spark.Request;

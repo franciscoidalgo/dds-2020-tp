@@ -65,8 +65,28 @@ form.egreso.onsubmit = (e) => {
         generarModalFail(MENSAJE_FAIL);
     } else {
         postEgreso(url, init).then(data => {
+            if($("#tipo-comprobante").val() != "Ninguno"){
+                postImage();
+            }
             generarModalOK(MENSAJE_OK + data.idEgreso)
             esconderLoader();
         })
     }
+}
+
+function postImage(){
+    var data = new FormData();
+    var files = $('#comprobante')[0].files;
+    if(files.length > 0){
+        data.append('file', files[0]);
+        $.ajax({
+            url: "/imagen-comprobante",
+            type: "POST",
+            data: data,
+            contentType: false,
+            processData: false,
+        });
+    }else{
+        console.log("No se selecciono ninguna imagen");
+    };
 }

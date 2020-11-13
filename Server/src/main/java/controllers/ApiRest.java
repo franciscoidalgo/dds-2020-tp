@@ -3,7 +3,6 @@ package controllers;
 
 import Persistencia.TypeAdapterHibernate;
 import com.google.gson.*;
-import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 
 import controllers.convertersDTO.ConverterIngreso;
@@ -102,7 +101,7 @@ public class ApiRest {
         List<OperacionIngreso> ingresos = usuario.getEntidadPertenece().getOperacionesIngreso().stream()
                 .filter(operacionIngreso -> operacionIngreso.saldo()>0).collect(Collectors.toList());
 
-        ingresosDTO = ingresos.stream().map(operacionIngreso -> ConverterIngreso.toDTO(operacionIngreso)).collect(Collectors.toList()); ;
+        ingresosDTO = ingresos.stream().map(operacionIngreso -> ConverterIngreso.toDTO(operacionIngreso)).collect(Collectors.toList());
         jsonEgreso = gson.toJson(ingresosDTO);
         response.type("application/json");
         return jsonEgreso;
@@ -114,7 +113,7 @@ public class ApiRest {
         RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
         Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
         IngresoDTO ingresoDTO;
-        Integer idIngreso;
+        int idIngreso;
         String jsonEgreso;
 
         idIngreso = Integer.parseInt(request.params("idIngreso"));
@@ -133,7 +132,7 @@ public class ApiRest {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         String jsonProveedor;
         Proveedor proveedor;
-        Integer idEgreso;
+        int idEgreso;
         Repositorio<Proveedor> proveedorRepositorio = FactoryRepo.get(Proveedor.class);
 
         try {
@@ -156,7 +155,7 @@ public class ApiRest {
         String jsonProveedor;
         List<Item> items;
         TipoDeItem tipoDeItems;
-        Integer idTipoItem;
+        int idTipoItem;
         Repositorio<Item> itemRepositorio = FactoryRepo.get(Item.class);
         Repositorio<TipoDeItem> tipoDeItemRepositorio = FactoryRepo.get(TipoDeItem.class);
 
@@ -184,7 +183,7 @@ public class ApiRest {
         String jsonProveedor;
         List<Item> items;
         TipoDeItem tipoDeItems;
-        Integer idTipoItem;
+        int idTipoItem;
         Repositorio<Item> itemRepositorio = FactoryRepo.get(Item.class);
         Repositorio<TipoDeItem> tipoDeItemRepositorio = FactoryRepo.get(TipoDeItem.class);
 
@@ -210,7 +209,7 @@ public class ApiRest {
     public String pasarCategoriasSegunCriterio(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         String jsonProveedor;
-        Integer idCriterio;
+        int idCriterio;
         Criterio criterioSeleccionado;
         Repositorio<Criterio> criterioRepositorio = FactoryRepo.get(Criterio.class);
 

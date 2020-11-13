@@ -37,7 +37,7 @@ public class RepositorioDeUsuarios extends Repositorio<Usuario> {
         usuarioQuery.where(condicionExisteUsuario);
 
         java.util.function.Predicate<Usuario> matcheoUsuarioContrasenia =
-                usuario -> usuario.getNombre().equals(nombreDeUsuario) && usuario.getPassword().equals(contrasenia);
+                usuario -> usuario.getUsername().equals(nombreDeUsuario) && usuario.getPassword().equals(contrasenia);
 
         return new BusquedaCondicional(matcheoUsuarioContrasenia, usuarioQuery);
     }

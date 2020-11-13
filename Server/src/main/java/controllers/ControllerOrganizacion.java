@@ -1,8 +1,6 @@
 package controllers;
 
-import Persistencia.TypeAdapterHibernate;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import domain.Entidad.*;
 import domain.Usuario.RolAdministrador;
 import domain.Usuario.Usuario;

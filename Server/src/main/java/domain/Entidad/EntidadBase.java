@@ -1,13 +1,11 @@
 package domain.Entidad;
 
 
-import domain.DireccionPostal.DireccionPostal;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.lang.annotation.Annotation;
+
 
 @Entity
 @DiscriminatorValue("base")

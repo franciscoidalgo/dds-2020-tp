@@ -8,7 +8,6 @@ import repositorios.factories.FactoryRepoTokens;
 import javax.persistence.*;
 import java.util.UUID;
 
-import static spark.Spark.halt;
 
 @Entity
 @Table(name = "login_token")

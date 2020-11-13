@@ -1,13 +1,10 @@
 package controllers;
 
 import APIMercadoLibre.InfoMercadoLibre;
-import APIMercadoLibre.modelos.Ciudad;
-import APIMercadoLibre.modelos.Provincia;
 import Persistencia.TypeAdapterHibernate;
 import com.google.gson.*;
 import config.ConfiguracionMercadoLibre;
 import controllers.DTO.EgresoDTO;
-import controllers.convertersDTO.ConverterEgreso;
 import domain.Entidad.Entidad;
 import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
 import domain.Usuario.BandejaMensaje.Mensaje;
@@ -22,7 +19,13 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -103,6 +106,7 @@ public class ControllerEgresos extends Controller{
             usuarioLogueado.realizaOperacion(operacionEgreso);
             usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
+            request.session().attribute("egreso_actual", operacionEgreso.getId());
 
             //Response TODO GENERALIZAR ESTO
             mensajeRta.addProperty("idEgreso", "" + operacionEgreso.getId());
@@ -134,7 +138,7 @@ public class ControllerEgresos extends Controller{
     public String pasarEgresosSegunID(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
-        Integer idEgreso;
+        int idEgreso;
         OperacionEgreso egreso;
         EgresoDTO egresoDTO;
         String jsonEgreso;
@@ -166,7 +170,7 @@ public class ControllerEgresos extends Controller{
 
         //Agrego a la lista las categorias
         for (JsonElement columnElement : jCategorias) {
-            Integer idCategoria = columnElement.getAsInt();
+            int idCategoria = columnElement.getAsInt();
             CategoriaOperacion categoriaOperacion = FactoryRepo.get(CategoriaOperacion.class).buscar(idCategoria);
             categoriasSeleccionadas.add(categoriaOperacion);
         }
@@ -200,8 +204,8 @@ public class ControllerEgresos extends Controller{
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         Repositorio<OperacionEgreso> repositorioEgreso = FactoryRepo.get(OperacionEgreso.class);
         Repositorio<Mensaje> repositorioMensaje = FactoryRepo.get(Mensaje.class);
-        Integer idEgreso;
-        Integer idMensaje;
+        int idEgreso;
+        int idMensaje;
         Mensaje mensaje;
         OperacionEgreso egreso;
         EgresoDTO egresoDTO;
@@ -273,7 +277,7 @@ public class ControllerEgresos extends Controller{
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         Repositorio<OperacionEgreso> repositorioEgreso;
         Usuario usuario = this.getUsuarioFromRequest(request);
-        Integer idEgreso;
+        int idEgreso;
         OperacionEgreso egreso;
         JsonObject mensajeRta = new JsonObject();
 
@@ -295,7 +299,7 @@ public class ControllerEgresos extends Controller{
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
         Repositorio<OperacionEgreso> repositorioEgreso;
         Usuario usuario = FactoryRepo.get(Usuario.class).buscar(request.session().attribute("userId"));
-        Integer idEgreso;
+        int idEgreso;
         OperacionEgreso egreso;
         JsonObject mensajeRta = new JsonObject();
 
@@ -327,5 +331,18 @@ public class ControllerEgresos extends Controller{
                 - operacionEditada.getMontoTotal() > 0;
 
     }
+
+    public Response submitImagen(Request request, Response response) throws IOException, ServletException {
+        if (request.raw().getAttribute("org.eclipse.jetty.multipartConfig") == null) {
+            MultipartConfigElement multipartConfigElement = new MultipartConfigElement(System.getProperty("java.io.tmpdir"));
+            request.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
+        }
+        Part part = request.raw().getPart("file");
+        Path filePath = Paths.get("src/main/resources/comprobantes/"+"egreso-"+request.session().attribute("egreso_actual")+".png");
+        Files.copy(part.getInputStream(), filePath);
+        return response;
+    }
+
+
 
 }
