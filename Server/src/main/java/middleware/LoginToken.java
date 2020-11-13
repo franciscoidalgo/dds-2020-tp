@@ -4,11 +4,9 @@ import domain.Entidad.EntidadPersistente;
 import domain.Entidad.Usuario.Usuario;
 import repositorios.RepositorioDeTokens;
 import repositorios.factories.FactoryRepoTokens;
-
 import javax.persistence.*;
 import java.util.UUID;
 
-import static spark.Spark.halt;
 
 @Entity
 @Table(name = "login_token")

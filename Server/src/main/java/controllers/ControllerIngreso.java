@@ -1,10 +1,6 @@
 package controllers;
 
-import APIAsociadora.ServicioAsociacion;
-import Persistencia.TypeAdapterHibernate;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import repositorios.Repositorio;
@@ -12,9 +8,6 @@ import repositorios.factories.FactoryRepo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 

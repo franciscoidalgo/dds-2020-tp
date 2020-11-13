@@ -1,6 +1,5 @@
 package config;
 
-import org.ocpsoft.prettytime.units.Second;
 
 public class ConfiguracionScheduler {
     public static int delay = 5;

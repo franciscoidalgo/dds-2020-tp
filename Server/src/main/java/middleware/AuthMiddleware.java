@@ -4,8 +4,6 @@ import middleware.sessionManager.SessionManageMethod;
 import spark.Request;
 import spark.Response;
 
-import static spark.Spark.halt;
-
 
 public class AuthMiddleware {
 

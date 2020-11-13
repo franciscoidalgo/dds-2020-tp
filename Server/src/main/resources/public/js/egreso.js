@@ -352,6 +352,9 @@ document.getElementById("operacion-egreso").onsubmit = (e) => {
             "montoTotal": $("#costo").val()
         },
         success: function(response){
+                    if($("#tipo-comprobante").val() != "Ninguno"){
+                        postImage();
+                    }
                     let modal = generaModalAlert("Operacion exitosa","El egreso se genero correctamente.");
                     let botonera = generaBotonera();
                     let boton = generaBoton("Ok",recargarPagina);
@@ -384,4 +387,21 @@ function generaBotonera(){
     let botonera = document.createElement("div");
     botonera.className = "d-flex jc-se"
     return botonera;
+}
+
+function postImage(){
+    var data = new FormData();
+    var files = $('#comprobante')[0].files;
+    if(files.length > 0){
+        data.append('file', files[0]);
+        $.ajax({
+            url: "/imagen-comprobante",
+            type: "POST",
+            data: data,
+            contentType: false,
+            processData: false,
+        });
+    }else{
+        console.log("No se selecciono ninguna imagen");
+    };
 }

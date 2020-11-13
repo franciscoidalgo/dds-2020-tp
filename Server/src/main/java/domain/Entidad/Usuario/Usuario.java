@@ -21,6 +21,9 @@ public class Usuario extends EntidadPersistente {
     @Column(name = "rol",columnDefinition = "CHAR")
     private Rol rol;
 
+    @Column(name = "username")
+    private String username;
+
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private EntidadJuridica entidadPertenece;
 
@@ -98,6 +101,14 @@ public class Usuario extends EntidadPersistente {
 
     public void setBandejaDeMensajes(BandejaMensaje bandejaDeMensajes) {
         this.bandejaDeMensajes = bandejaDeMensajes;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     //Funcionalidades

@@ -3,27 +3,14 @@ package server;
 import APIMercadoLibre.InfoMercadoLibre;
 import config.ConfiguracionMercadoLibre;
 import controllers.*;
-import domain.Entidad.Usuario.RolAdministrador;
-import domain.Entidad.Usuario.Usuario;
-import domain.Operacion.Egreso.*;
-import domain.Validadores.CriterioValidacionCantidadPresupuesto;
-import domain.Validadores.CriterioValidacionDetalle;
-import domain.Validadores.CriterioValidacionSeleccion;
 import domain.Validadores.ValidadorDeTransparencia;
 import middleware.AuthMiddleware;
 import middleware.sessionManager.SessionManageSessionAttribute;
-import repositorios.Repositorio;
-import repositorios.RepositorioDeUsuarios;
-import repositorios.factories.FactoryRepo;
-import repositorios.factories.FactoryRepoUsuario;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.CustomHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Router {
     private static HandlebarsTemplateEngine engine;
@@ -75,6 +62,8 @@ public class Router {
 
         Spark.post("/egreso", controllerEgresos::submitEgreso);
 
+        Spark.post("/imagen-comprobante", controllerEgresos::submitImagen);
+
         Spark.get("/api/get-lista-de-provincias/:nombrePais", controllerEgresos::pasarProvincias);
 
         Spark.get("/api/get-lista-de-ciudades/:nombreProvincia", controllerEgresos::pasarCiudades);
@@ -90,7 +79,6 @@ public class Router {
         Spark.get("/mensajes", controllerMensajes::mostrarMensajes, Router.engine);
 
         Spark.get("/getMensajes", apiRest::mostrarMensajes);
-
 
     }
 }
