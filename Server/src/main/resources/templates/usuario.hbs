@@ -175,7 +175,7 @@
                     <div class="contenedor-entrada">
                         <!-- Entidad-->
                         <form id="cambiar-entidad-organizacion">
-                            <label for="entidad-organizacion">Entidades</label>
+                            <label for="seleccion-entidad-organizacion">Entidad</label>
                             <br>
                             <select id="seleccion-entidad-organizacion" name="seleccion-entidad-organizacion">
                                 <option value="" disabled selected>-- Seleccione --</option>
@@ -184,17 +184,15 @@
                                     <option value={{id}}>{{nombre}}</option>
                                 {{/each}}
                             </select>
-                            <input type="submit" id="btn-editar-entidad" name="btn-editar-entidad"
-                                   class="btn btn-formulario"
-                                   value="Editar"><br>
+                            <a href="/entidad/nuevo" id="btn-nuevo-entidad" class="btn btn-formulario">Nuevo</a>
+                            <br>
                             <div class="d-flex">
                                 <input type="button" id="btn-borrar-entidad" name="btn-borrar-entidad"
                                        class="btn btn-formulario-danger"
-                                       value="Borrar">
-
-                                <input type="button" id="btn-nuevo-entidad" name="btn-nuevo-entidad"
+                                       value="Borrar" hidden>
+                                <input type="submit" id="btn-editar-entidad" name="btn-editar-entidad"
                                        class="btn btn-formulario"
-                                       value="Nuevo">
+                                       value="Editar" hidden>
                             </div>
                         </form>
                     </div>

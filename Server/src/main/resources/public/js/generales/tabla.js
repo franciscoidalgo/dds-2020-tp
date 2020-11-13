@@ -66,7 +66,7 @@ function crearTablaEgresos(data) {
     let tr = document.createElement("tr");
 
     tablaEgresos.className = "txt-centrado tabla tabla-detalle";
-    tablaHeader.className = "fw-700 th-detalle";
+    tablaHeader.className = "fw-700 th-principal";
 
     tablaEgresos.appendChild(tablaHeader);
     tablaHeader.appendChild(tr);

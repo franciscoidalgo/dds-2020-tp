@@ -135,7 +135,9 @@ public class Router {
             Spark.post("/cambiar/nombre",controllerOrganizacion::cambiarNombre);
         });
 
-
+        Spark.path("/entidad",() -> {
+            Spark.get("/nuevo",controllerEntidad::mostrarNuevaEntidad,Router.engine);
+        });
 
 
         Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
