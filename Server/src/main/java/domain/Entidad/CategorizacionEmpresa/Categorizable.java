@@ -3,7 +3,7 @@ package domain.Entidad.CategorizacionEmpresa;
 public interface Categorizable {
 
 
-    Integer promVentasAnual();
+    double promVentasAnual();
     Integer cantPersonal();
     Sector sector();
 }

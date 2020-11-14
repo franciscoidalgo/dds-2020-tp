@@ -23,6 +23,7 @@ public class ControllerVinculacion {
         operacionIngreso.agregarListaDeEgresos(egresos, criterio);
         String jIngreso = gson.toJson(operacionIngreso);
         System.out.println(jIngreso);
+
         response.type("application/json");
         return jIngreso;
     }

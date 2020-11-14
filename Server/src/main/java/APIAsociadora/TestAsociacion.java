@@ -2,6 +2,10 @@ package APIAsociadora;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controllers.DTO.DTOOperacionEgreso;
+import controllers.DTO.DTOOperacionIngreso;
+import controllers.convertersDTO.ConverterEgreso;
+import controllers.convertersDTO.ConverterIngreso;
 import domain.Operacion.Egreso.DetalleOperacion;
 import domain.Operacion.Egreso.OperacionEgreso;
 import domain.Operacion.Egreso.Proveedor;
@@ -9,6 +13,8 @@ import domain.Operacion.Ingreso.OperacionIngreso;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class TestAsociacion {
     public static void main(String[] args) throws IOException {
@@ -21,16 +27,17 @@ public class TestAsociacion {
         egreso1.setFecha(LocalDate.of(2020,9,29));
         egreso2.setFecha(LocalDate.of(2020,8,23));
         egreso3.setFecha(LocalDate.of(2020, 8, 24));
-        OperacionEgreso[] arrayEgresos = new OperacionEgreso[]{egreso1, egreso2, egreso3, egreso3};
 
 
+        DTOOperacionEgreso[] arrayEgresos = new DTOOperacionEgreso[]{ConverterEgreso.generarEgresoVinculadorDTO(egreso1), ConverterEgreso.generarEgresoVinculadorDTO(egreso2), ConverterEgreso.generarEgresoVinculadorDTO(egreso3)};
+        DTOOperacionIngreso dtoOperacionIngreso = ConverterIngreso.generarIngresoVinculadorDTO(operacionIngreso);
 
         //Prueba
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
-        OperacionIngreso ingresoAsociado = servicioAsociacion
-                .getIngresoAsociado(gson.toJson(operacionIngreso), gson.toJson(arrayEgresos), "2020-08-15", "2020-09-15");
+
+        OperacionIngreso ingresoAsociado = servicioAsociacion.getIngresoAsociado(gson.toJson(dtoOperacionIngreso), gson.toJson(arrayEgresos), "2020-08-15", "2020-09-15");
         System.out.println(gson.toJson(ingresoAsociado));
 
     }

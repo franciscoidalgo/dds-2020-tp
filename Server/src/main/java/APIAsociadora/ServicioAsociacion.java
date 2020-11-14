@@ -1,5 +1,7 @@
 package APIAsociadora;
 
+import controllers.DTO.DTOOperacionIngreso;
+import controllers.convertersDTO.ConverterIngreso;
 import domain.Operacion.Ingreso.OperacionIngreso;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -30,10 +32,12 @@ public class ServicioAsociacion {
 
     public OperacionIngreso getIngresoAsociado (String operacionIngreso, String listaEgresos, String fechaDesde, String fechaHasta) throws IOException {
         AsociadoraService asociadoraService = this.retrofit.create(AsociadoraService.class);
-        Call<OperacionIngreso> requestIngresoVinculado = asociadoraService.ingresoVinculado(operacionIngreso, listaEgresos, fechaDesde, fechaHasta);
-        Response<OperacionIngreso> responseIngresoVinculado = requestIngresoVinculado.execute();
-        OperacionIngreso ingresoAsociado = responseIngresoVinculado.body();
-        return ingresoAsociado;
+        Call<DTOOperacionIngreso> requestIngresoVinculado = asociadoraService.ingresoVinculado(operacionIngreso, listaEgresos, fechaDesde, fechaHasta);
+        Response<DTOOperacionIngreso> responseIngresoVinculado = requestIngresoVinculado.execute();
+        DTOOperacionIngreso ingresoAsociado = responseIngresoVinculado.body();
+        //OperacionIngreso ingresoAsociado = responseIngresoVinculado.body();
+
+        return ConverterIngreso.generarIngresoVinculadorModel(ingresoAsociado);
 
     }
 

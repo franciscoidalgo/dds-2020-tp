@@ -23,7 +23,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     private int cantPersonal;
 
     @Column(name = "prom_venta_anual")
-    private int promVentasAnual;
+    private double promVentasAnual;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
@@ -43,7 +43,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         private String actividad;
         private Sector sector;
         private int cantPersonal;
-        private int promVentasAnual;
+        private double promVentasAnual;
         private Categoria categoria;
         private long codIGJ;
         public String getNombre() {
@@ -110,11 +110,11 @@ public class Empresa extends EntidadJuridica implements Categorizable {
             this.cantPersonal = cantPersonal;
         }
 
-        public int getPromVentasAnual() {
+        public double getPromVentasAnual() {
             return promVentasAnual;
         }
 
-        public void setPromVentasAnual(int promVentasAnual) {
+        public void setPromVentasAnual(double promVentasAnual) {
             this.promVentasAnual = promVentasAnual;
         }
 
@@ -135,7 +135,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         }
     }
 
-    public Empresa(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ, String actividad, Sector sector, int cantPersonal, int promVentasAnual) {
+    public Empresa(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal, long codIGJ, String actividad, Sector sector, int cantPersonal, double promVentasAnual) {
         super(razonSocial, nombre, CUIT, descripcion, direccionPostal);
         this.actividad = actividad;
         this.sector = sector;
@@ -171,7 +171,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         this.cantPersonal = cantPersonal;
     }
 
-    public int getPromVentasAnual() {
+    public double getPromVentasAnual() {
         return promVentasAnual;
     }
 
@@ -209,11 +209,11 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     }
 
     @Override
-    public Integer promVentasAnual() {
+    public double promVentasAnual() {
         return promVentasAnual;
     }
 
-    public void setPromVentaAnual(Integer promVentasAnual) {
+    public void setPromVentaAnual(double promVentasAnual) {
         this.promVentasAnual = promVentasAnual;
         recategorizate();
     }

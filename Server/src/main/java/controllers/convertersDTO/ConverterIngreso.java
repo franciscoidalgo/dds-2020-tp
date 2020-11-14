@@ -1,5 +1,7 @@
 package controllers.convertersDTO;
 
+import controllers.DTO.DTOOperacionEgreso;
+import controllers.DTO.DTOOperacionIngreso;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
 import domain.Operacion.Egreso.OperacionEgreso;
@@ -68,5 +70,25 @@ public class ConverterIngreso {
 
         return operacionIngreso;
     }
+
+    public static DTOOperacionIngreso generarIngresoVinculadorDTO(OperacionIngreso operacionIngreso){
+        DTOOperacionIngreso dtoOperacionIngreso = new DTOOperacionIngreso();
+
+        dtoOperacionIngreso.setFecha(operacionIngreso.getFecha());
+        dtoOperacionIngreso.setFechaAceptabilidad(operacionIngreso.getFechaAceptabilidad());
+
+        dtoOperacionIngreso.setId(operacionIngreso.getId());
+        dtoOperacionIngreso.setMontoTotal(operacionIngreso.getMontoTotal());
+
+        return  dtoOperacionIngreso;
+
+    }
+
+    public static OperacionIngreso generarIngresoVinculadorModel(DTOOperacionIngreso dtoOperacionIngreso){
+        OperacionIngreso operacionIngreso = FactoryRepo.get(OperacionIngreso.class).buscar(dtoOperacionIngreso.getId());
+        return  operacionIngreso;
+
+    }
+
 
 }

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Gesoc, es un Saas de gestion comercial. En Gesoc puedes gestionar y controlar tus operacion y proyectos.">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Nueva Entidad</title>
+</head>
+
+<body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
+<header class="contenedor-barra d-flex jc-sb">
+    <!--Menu Hamb -->
+    <button id="btn-menu"><i class="fas fa-bars"></i></button>
+    <nav id="navbar" class="navbar">
+        <ul class="d-flex f-dir-col contenido-navbar">
+            <div class="d-flex jc-sb ">
+                <h2 class="txt-centrado">Menu</h2>
+                <button id="btn-close" class="btn-primario"><i class="fas fa-times"></i></button>
+            </div>
+            <li><a href="usuario"><i class="fas fa-user"></i>Panel Personal</a></li>
+            <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
+            <li><a href="egreso"><i class="fas fa-file-invoice"></i>Nuevo Egreso</a></li>
+            <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
+            <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
+            <li><a href="vinculacion"><i class="fas fa-link"></i>Vincular Operaciones</a></li>
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+
+        </ul>
+    </nav>
+    <!--Logo -->
+    <div class="ai-center txt-centrado">
+        <a href="dashboard">
+            <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
+        </a>
+    </div>
+</header>
+
+<main class="seccion">
+    <h1>Generar Nueva Entidad a {{organizacion.nombre}}</h1>
+    <div class="burbuja  d-flex jc-sb ai-center">
+        <div class="d-flex jc-sb">
+            <p><i class="fa fa-building"></i></p>
+            <h3>Informacion de la Entidad</h3>
+        </div>
+        <p><i class="fas fa-plus"></i></p>
+    </div>
+    <form method="get" action="/entidad/nueva">
+        <section class="burbuja">
+            <div class="contenedor-entrada">
+                <h4>Operacion</h4>
+                <!-- Seleccion Operacion-->
+                <label for="seleccion-tipo-entidad">Tipo de operacion </label><br>
+                <select name="seleccion-tipo-entidad" id="seleccion-tipo-entidad" required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    <option value="base">Entidad Base</option>
+                    <option value="empresa">Empresa</option>
+                    <option value="os">Organizacion Social</option>
+                </select>
+            </div>
+            <hr>
+            <div class="contenedor-entrada fade" hidden>
+                <h4>Detalle Entidad</h4>
+                <!-- ENTIDADES BASE/EMPRESA/OS-->
+                <label for="nombre-ficticio">Nombre Ficticio</label>
+                <br>
+                <input type="text" name="nombre-ficticio" id="nombre-ficticio" placeholder="Ingrese nombre..." disabled
+                       required>
+                <br>
+                <label for="descripcion">Descripcion</label>
+                <br>
+                <textarea name="descripcion" id="descripcion" placeholder="Ingrese descripcion..." disabled
+                          required></textarea>
+                <br>
+                <!-- EMPRESA/OS-->
+                <label for="razon-social">Razón Social</label>
+                <br>
+                <input type="text" name="razon-social" id="razon-social" placeholder="Ingrese razon social..." disabled
+                       required>
+                <br>
+                <label for="cuit">CUIT/CUIL/DNI</label>
+                <br>
+                <input type="number" name="cuit" id="cuit" placeholder="Ingrese CUIT, CUIL o DNI..." disabled required>
+                <br>
+                <!-- EMPRESA-->
+                <label for="igj">Código IGJ</label>
+                <br>
+                <input type="number" name="igj" id="igj" placeholder="Ingrese IGJ..." min="0" step="1" disabled
+                       required>
+                <br>
+                <label for="actividad">Actividad</label>
+                <br>
+                <input type="text" name="actividad" id="actividad" placeholder="Ingrese actividad..." disabled required>
+                <br>
+                <label for="sector">sector</label>
+                <br>
+                <select name="sector" id="sector" disabled required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each sectores}}
+                        <option value="{{id}}">{{nombre}}</option>
+                    {{/each}}
+                </select>
+                <br>
+                <label for="cant-personal">Cantidad Personal</label>
+                <br>
+                <input type="number" name="cant-personal" id="cant-personal"
+                       placeholder="Ingrese cantidad personal..."
+                       min="0" step="1" disabled
+                       required>
+                <br>
+                <label for="prom-venta">Promedio de venta anual</label>
+                <br>
+                <input type="number" name="prom-venta" id="prom-venta" min="0" step="0.01"
+                       placeholder="Ingrese promedio... " disabled required>
+                <br>
+            </div>
+            <hr>
+            <div class="contenedor-entrada fade" hidden>
+                <h4>Direccion Postal</h4>
+                <label for="pais">Pais</label><br>
+                <select name="pais" id="pais" required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each paises}}
+                        <option value={{nombre}} >{{nombre}}</option>
+                    {{/each}}
+                    <option value="algo">algo</option>
+                </select>
+                <br>
+                <label for="provincia">Provincia</label><br>
+                <select name="provincia" id="provincia" disabled required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    <option value="algo">algo</option>
+                </select><br>
+                <label for="ciudad">Ciudad</label><br>
+                <select name="ciudad" id="ciudad" disabled required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    <option value="algo">algo</option>
+                </select><br>
+                <label for="calle">Calle</label><br>
+                <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9\s]{1,}"
+                       title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... "
+                       required><br>
+                <div class="d-flex jc-sb contenedor-limitado">
+                    <div class="contenido-direccion">
+                        <label for="altura">Altura</label><br>
+                        <input type="number" name="altura" id="altura" min="0" placeholder="Altura... "
+                               required>
+                    </div>
+                    <div class="contenido-direccion">
+                        <label for="piso">Piso</label><br>
+                        <input type="text" name="piso" id="piso" placeholder="Piso... ">
+                    </div>
+                    <div class="contenido-direccion">
+                        <label for="dpto">Dpto</label><br>
+                        <input type="text" name="dpto" id="dpto" placeholder="Dpto... ">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <input id="btn-nueva" type="submit" class="btn btn-formulario" value="Crear">
+    </form>
+</main>
+</body>
+
+<script type="module" src="/js/loader.js" defer></script>
+<script type="module" src="/js/generales.js" defer></script>
+<script type="module" src="/js/gestion/entidades.js" defer></script>
+</html>

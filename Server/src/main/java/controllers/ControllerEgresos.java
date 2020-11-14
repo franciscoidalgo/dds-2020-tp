@@ -80,18 +80,19 @@ public class ControllerEgresos extends Controller {
 
             /*********************** EDICION **********************/
             Integer idEgreso = request.session().attribute("idEgreso");
-            request.session().removeAttribute("idEgreso");
+
             if (null != idEgreso) {//Si tiene ese valor en el session => Edita
                 OperacionEgreso operacionEgresoEdit = getEgresofromRequest(request);
                 if (puedeEditarse(operacionEgresoEdit, operacionEgreso)) {
+                    request.session().removeAttribute("idEgreso");
                     operacionEgresoEdit.setMedioDePago(operacionEgreso.getMedioDePago());
                     operacionEgresoEdit.setDetalle(operacionEgreso.getDetalle());
                     operacionEgresoEdit.setCantPresupuestos(operacionEgreso.getCantPresupuestos());
-
                     operacionEgresoEdit.setFecha(operacionEgreso.getFecha());
                     operacionEgresoEdit.setMontoTotal(operacionEgreso.getMontoTotal());
                     repoEgreso.modificar(operacionEgresoEdit);
 
+                    request.session().attribute("egreso_actual", operacionEgresoEdit.getId() );
                     mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
                     response.status(200);
 
@@ -108,7 +109,6 @@ public class ControllerEgresos extends Controller {
             usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
             request.session().attribute("egreso_actual", operacionEgreso.getId());
-
             //Response TODO GENERALIZAR ESTO
             mensajeRta.addProperty("idEgreso", "" + operacionEgreso.getId());
             response.status(200);
@@ -317,7 +317,7 @@ public class ControllerEgresos extends Controller {
         Path path = Paths.get(generarPath(request.params("id")));
         byte[] archivo = Files.readAllBytes(path);
         response.type("application/pdf");
-        response.header("Content-Disposition","attachment");
+        response.header("Content-Disposition","inline");
         return archivo;
     }
 

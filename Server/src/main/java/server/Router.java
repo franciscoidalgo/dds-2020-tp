@@ -134,7 +134,8 @@ public class Router {
         });
 
         Spark.path("/entidad",() -> {
-            Spark.get("/nuevo",controllerEntidad::mostrarNuevaEntidad,Router.engine);
+            Spark.get("",controllerEntidad::mostrarNuevaEntidad,Router.engine);
+            Spark.get("/nueva",controllerEntidad::nuevaEntidad);
         });
 
 
@@ -153,6 +154,8 @@ public class Router {
         Spark.get("/busquedaOperacion", controllerBusquedaOperacion::mostrarBusquedaOperacion,Router.engine);
 
         Spark.post("/imagen-comprobante", controllerEgresos::submitImagen);
+
+        Spark.get("/comprobante/:id", controllerEgresos::getImagenComprobante);
 
         Spark.afterAfter("*", controllerPersistance::cerrarEm);
 

@@ -1,5 +1,6 @@
 package controllers.convertersDTO;
 
+import controllers.DTO.DTOOperacionEgreso;
 import controllers.DTO.EgresoDTO;
 import domain.Operacion.Egreso.OperacionEgreso;
 
@@ -18,9 +19,22 @@ public class ConverterEgreso {
         egresoDTO.setPresupuestos(egreso.getPresupuestos());
         if (null != egreso.getIngreso()) {
             egresoDTO.setIngreso(egreso.getIngreso().getId());
-        }else{
+        } else {
             egresoDTO.setIngreso(-1);
         }
         return egresoDTO;
+    }
+
+    public static DTOOperacionEgreso generarEgresoVinculadorDTO(OperacionEgreso egreso) {
+        DTOOperacionEgreso dtoOperacionEgreso = new DTOOperacionEgreso();
+
+        dtoOperacionEgreso.setEstaAsociado(null != egreso.getIngreso());
+        dtoOperacionEgreso.setFecha(egreso.getFecha());
+        dtoOperacionEgreso.setId(egreso.getId());
+
+        dtoOperacionEgreso.setIngreso(ConverterIngreso.generarIngresoVinculadorDTO(egreso.getIngreso()));
+        dtoOperacionEgreso.setMontoTotal(egreso.getMontoTotal());
+
+        return dtoOperacionEgreso;
     }
 }

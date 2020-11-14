@@ -2,7 +2,9 @@ package controllers;
 
 import domain.Entidad.Entidad;
 import domain.Entidad.Organizacion;
+import domain.Usuario.RolAdministrador;
 import domain.Usuario.Usuario;
+import repositorios.factories.FactoryRepo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -27,6 +29,9 @@ public class ControllerIndex extends Controller {
         List<Entidad> entidadList = organizacion.getEntidades().stream()
                 .filter(entidad -> entidad != entidadSeleccionada)
                 .collect(Collectors.toList());
+
+        usuario.setRol(new RolAdministrador());
+        FactoryRepo.get(Usuario.class).modificar(usuario);
 
         parametros.put("usuario", usuario);
         parametros.put("idSeleccionada", entidadSeleccionada.getId());
