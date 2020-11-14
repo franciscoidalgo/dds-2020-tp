@@ -16,7 +16,7 @@ public class EgresoDTO {
     private List<Presupuesto> presupuestos;
     private Integer idIngreso;
     private Integer cantPresupuestos;
-
+    private String entidad;
     private Integer cantPresupuestosFaltantes;
     private String fecha;
     private double montoTotal;
@@ -119,5 +119,21 @@ public class EgresoDTO {
 
     public void setIngreso(Integer ingreso) {
         this.idIngreso = ingreso;
+    }
+
+    public Integer getIdIngreso() {
+        return idIngreso;
+    }
+
+    public void setIdIngreso(Integer idIngreso) {
+        this.idIngreso = idIngreso;
+    }
+
+    public String getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(String entidad) {
+        this.entidad = entidad;
     }
 }

@@ -43,11 +43,12 @@ function buildFila(data) {
     tr.style.fontWeight = fueLeido(data) ? "700" : "400";
     tr.onclick = () => {
         if (idEgreso !== "") {
-            getMensajeDesdeApi(idEgreso, esValida, data.mensaje, data.id)
+            getMensajeDesdeApi(idEgreso, esValida, data.mensaje, data.id,data.fechaEnvio)
             tr.style.fontWeight = "400";
 
         } else {
-            //render mensajeComun
+            //TODO render mensajeComun
+
         }
     };
     tbodyMensajes.appendChild(tr);
@@ -74,12 +75,12 @@ function orderByID(a, b) {
     return a.egreso.id - b.egreso.id;
 }
 
-function getMensajeDesdeApi(id, esValida, detalleValidacion, idMensaje) {
+function getMensajeDesdeApi(id, esValida, detalleValidacion, idMensaje,fechaEnvio) {
     let url = `/egreso/buscar/${id}/${idMensaje}`;
 
     fetch(url)
         .then(response => response.json())
-        .then(data => mostrarMensaje(data, esValida, detalleValidacion))
+        .then(data => mostrarMensaje(data, esValida, detalleValidacion,fechaEnvio))
         .catch(reason => console.log(reason));
 }
 
@@ -87,7 +88,6 @@ function renderTabla(data) {
     let paginaHTML = document.getElementById("cant-paginas");
     let msjNoTieneMensajes = document.getElementById("no-mensajes");
     cleanTabla();
-
     for (let i = countRender, j = 10; j > 0 && i < data.length; i++, j--) {
         buildFila(data[i]);
         countRender = i + 1;

@@ -96,7 +96,7 @@ public class Mensaje extends EntidadPersistente {
         this.asunto = " Egreso#"+ egreso.getId() +
                       "--" + proveedor.getRazonSocial() +
                       "--$" + egreso.montoTotal() +
-                      "--" + egreso.getFecha().toString()+
+                      "--" + fechaEnvio.toString()+
                       "--" + resultadoValidacion ;
         this.mensaje = detalleResultado;
     }

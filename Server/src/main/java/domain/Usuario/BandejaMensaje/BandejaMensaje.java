@@ -7,6 +7,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,9 +55,11 @@ public class BandejaMensaje {
     }
 
     public List<Mensaje> filtraPorEnvio() {
-        return this.mensajes.stream()
+        List<Mensaje> mensajes = this.mensajes.stream()
                 .sorted((Comparator.comparing(Mensaje::getFechaEnvio)))
                 .collect(Collectors.toList());
+        Collections.reverse(mensajes);
+        return mensajes;
     }
 
     public void agregateMensaje(Mensaje unMensaje) {

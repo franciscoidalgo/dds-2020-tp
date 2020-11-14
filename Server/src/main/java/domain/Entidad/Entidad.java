@@ -95,4 +95,8 @@ public abstract class Entidad extends EntidadPersistente{
         return this.operaciones.stream().filter(operacion -> operacion instanceof OperacionIngreso).map(operacion -> (OperacionIngreso) operacion).collect(Collectors.toList());
     }
 
+    public boolean realizasteOperacion(Operacion operacion){
+        return this.operaciones.contains(operacion);
+    }
+
 }

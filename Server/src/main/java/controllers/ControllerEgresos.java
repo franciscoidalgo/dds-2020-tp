@@ -188,13 +188,18 @@ public class ControllerEgresos extends Controller {
         Repositorio<Mensaje> repositorioMensaje = FactoryRepo.get(Mensaje.class);
         Mensaje mensaje;
         EgresoDTO egresoDTO;
+        Entidad entidad;
 
         OperacionEgreso egreso = getEgresofromRequest(request);
+        entidad = FactoryRepo.get(Entidad.class).buscarTodos().stream()
+                            .filter(entidad1 -> entidad1.realizasteOperacion(egreso)).findFirst().get();
+
         mensaje = repositorioMensaje.buscar(egreso.getId());
         mensaje.actualizateLeido();
 
         repositorioMensaje.modificar(mensaje);
         egresoDTO = generarEgresoDTO(egreso);
+        egresoDTO.setEntidad(entidad.nombre());
 
         response.type("application/json");
         return gson.toJson(egresoDTO);
