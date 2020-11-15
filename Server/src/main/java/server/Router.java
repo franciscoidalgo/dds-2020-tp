@@ -34,7 +34,7 @@ public class Router {
 
     private static void configure() throws Exception {
         ControllerLogin controllerLogin = new ControllerLogin(new SessionManageSessionAttribute());
-        ControllerIndex controllerIndex = new ControllerIndex();
+        ControllerDashboard controllerDashboard = new ControllerDashboard();
         ControllerEgresos controllerEgresos = new ControllerEgresos();
         ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
         ControllerIngreso controllerIngreso = new ControllerIngreso();
@@ -72,7 +72,7 @@ public class Router {
 
         Spark.post("/auth", controllerLogin::login);
 
-        Spark.get("/dashboard", controllerIndex::mostrarIndice, Router.engine);
+        Spark.get("/dashboard", controllerDashboard::mostrarIndice, Router.engine);
 
         Spark.get("/logout", controllerLogin::logout);
 
@@ -104,14 +104,6 @@ public class Router {
             Spark.get("/proveedor/:id", apiRest::mostrarProveedores);
             Spark.get("/items/:idTipoItem", apiRest::mostraItemsSegunTipo);
             Spark.get("/entidades", apiRest::mostraEntidades);
-
-            Spark.path("/ingreso",() -> {
-                Spark.get("/todos", apiRest::pasarTodosIngresos);
-                Spark.get("/por-vincular", apiRest::pasarIngresoPorVincular);
-                Spark.get("/:idIngreso", apiRest::pasarIngresoSegunID);
-                Spark.post("/vincular", apiRest::vincularIngresos);
-            });
-
             Spark.get("/categoria/:idCriterio", apiRest::pasarCategoriasSegunCriterio);
         });
 
@@ -138,8 +130,19 @@ public class Router {
             Spark.get("/nueva",controllerEntidad::nuevaEntidad);
         });
 
+        Spark.path("/ingreso",() -> {
+            Spark.get("", controllerIngreso::mostrarIngresos, Router.engine);
+            Spark.post("", controllerIngreso::submitIngreso);
+            Spark.path("/buscar",() -> {
+                Spark.get("/todos", controllerIngreso::pasarTodosIngresos);
+                Spark.get("/por-vincular", controllerIngreso::pasarIngresoPorVincular);
+                Spark.get("/:idIngreso", controllerIngreso::pasarIngresoSegunID);
+            });
+            Spark.post("/vincular", controllerIngreso::vincularIngresos);
+            Spark.get("/vincular-auto/:idIngreso", controllerIngreso::vincularAutoIngresos);
+        });
 
-        Spark.get("/ingreso", controllerIngreso::mostrarIngresos, Router.engine);
+
 
         Spark.get("/vinculacion", controllerVinculacion::mostrarVinculacion, Router.engine);
 
@@ -149,11 +152,11 @@ public class Router {
 
         Spark.get("/api/usuario/:id", apiRest::mostrarUsuario);
 
-        Spark.post("/ingreso", controllerIngreso::submitIngreso);
+
 
         Spark.get("/busquedaOperacion", controllerBusquedaOperacion::mostrarBusquedaOperacion,Router.engine);
 
-        Spark.post("/imagen-comprobante", controllerEgresos::submitImagen);
+        Spark.post("/imagen-comprobante", controllerEgresos::submitComprobante);
 
         Spark.get("/comprobante/:id", controllerEgresos::getImagenComprobante);
 

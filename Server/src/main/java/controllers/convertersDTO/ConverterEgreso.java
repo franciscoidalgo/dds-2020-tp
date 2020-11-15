@@ -32,7 +32,10 @@ public class ConverterEgreso {
         dtoOperacionEgreso.setFecha(egreso.getFecha());
         dtoOperacionEgreso.setId(egreso.getId());
 
-        dtoOperacionEgreso.setIngreso(ConverterIngreso.generarIngresoVinculadorDTO(egreso.getIngreso()));
+        if (null != egreso.getIngreso()) {
+            dtoOperacionEgreso.setIngreso(ConverterIngreso.generarIngresoVinculadorDTO(egreso.getIngreso()));
+        }
+
         dtoOperacionEgreso.setMontoTotal(egreso.getMontoTotal());
 
         return dtoOperacionEgreso;

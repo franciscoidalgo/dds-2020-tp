@@ -16,12 +16,9 @@ import repositorios.factories.FactoryRepo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import javax.imageio.ImageIO;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -82,22 +79,22 @@ public class ControllerEgresos extends Controller {
             Integer idEgreso = request.session().attribute("idEgreso");
 
             if (null != idEgreso) {//Si tiene ese valor en el session => Edita
-                OperacionEgreso operacionEgresoEdit = getEgresofromRequest(request);
-                if (puedeEditarse(operacionEgresoEdit, operacionEgreso)) {
+                OperacionEgreso egresoAEditar = getEgresofromRequest(request);
+                if (puedeEditarse(egresoAEditar, operacionEgreso)) {
                     request.session().removeAttribute("idEgreso");
-                    operacionEgresoEdit.setMedioDePago(operacionEgreso.getMedioDePago());
-                    operacionEgresoEdit.setDetalle(operacionEgreso.getDetalle());
-                    operacionEgresoEdit.setCantPresupuestos(operacionEgreso.getCantPresupuestos());
-                    operacionEgresoEdit.setFecha(operacionEgreso.getFecha());
-                    operacionEgresoEdit.setMontoTotal(operacionEgreso.getMontoTotal());
-                    repoEgreso.modificar(operacionEgresoEdit);
+                    egresoAEditar.setMedioDePago(operacionEgreso.getMedioDePago());
+                    egresoAEditar.setDetalle(operacionEgreso.getDetalle());
+                    egresoAEditar.setCantPresupuestos(operacionEgreso.getCantPresupuestos());
+                    egresoAEditar.setFecha(operacionEgreso.getFecha());
+                    egresoAEditar.setMontoTotal(operacionEgreso.getMontoTotal());
 
-                    request.session().attribute("egreso_actual", operacionEgresoEdit.getId() );
-                    mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
+                    repoEgreso.modificar(operacionEgreso);
+                    request.session().attribute("egreso_actual", egresoAEditar.getId() );
+                    mensajeRta.addProperty("idEgreso", "" + egresoAEditar.getId());
                     response.status(200);
 
                 } else {
-                    mensajeRta.addProperty("idEgreso", "" + operacionEgresoEdit.getId());
+                    mensajeRta.addProperty("idEgreso", "" + egresoAEditar.getId());
                     response.status(400);
 
                 }
@@ -106,7 +103,6 @@ public class ControllerEgresos extends Controller {
             }
 
             usuarioLogueado.realizaOperacion(operacionEgreso);
-            usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
             request.session().attribute("egreso_actual", operacionEgreso.getId());
             //Response TODO GENERALIZAR ESTO
@@ -199,7 +195,7 @@ public class ControllerEgresos extends Controller {
 
         repositorioMensaje.modificar(mensaje);
         egresoDTO = generarEgresoDTO(egreso);
-        egresoDTO.setEntidad(entidad.nombre());
+        egresoDTO.setEntidad(entidad.getNombre());
 
         response.type("application/json");
         return gson.toJson(egresoDTO);
@@ -267,8 +263,9 @@ public class ControllerEgresos extends Controller {
         JsonObject mensajeRta = new JsonObject();
 
         usuario.darseDeAltaEn(egreso);
+        egreso.validaOperacion();
+        FactoryRepo.get(Usuario.class).modificar(usuario);
         FactoryRepo.get(OperacionEgreso.class).modificar(egreso);
-
         mensajeRta.addProperty("mensaje", "Operacion Realizada");
         response.type("application/json");
 
@@ -297,7 +294,7 @@ public class ControllerEgresos extends Controller {
         return repositorioEgreso.buscar(idEgreso);
     }
 
-    public Response submitImagen(Request request, Response response) throws IOException, ServletException {
+    public Response submitComprobante(Request request, Response response) throws IOException, ServletException {
         int id = request.session().attribute("egreso_actual");
         if (request.raw().getAttribute("org.eclipse.jetty.multipartConfig") == null) {
             MultipartConfigElement multipartConfigElement = new MultipartConfigElement(System.getProperty("java.io.tmpdir"));

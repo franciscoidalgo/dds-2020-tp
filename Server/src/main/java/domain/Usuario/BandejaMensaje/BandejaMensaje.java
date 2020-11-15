@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Embeddable
 public class BandejaMensaje {
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Mensaje> mensajes;
 
 

@@ -126,7 +126,7 @@ function settearFilaIngresos(tbody, data) {
     tbody.appendChild(tr);
 
     tr.onclick = () =>{
-        let url = `/api/ingreso/${data.id}`;
+        let url = `/ingreso/buscar/${data.id}`;
         let mensaje = document.getElementById("mensaje-detalle");
         fetch(url)
             .then(response => response.json())

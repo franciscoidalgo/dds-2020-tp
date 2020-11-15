@@ -6,7 +6,7 @@ import {generarModalFail, generarModalOK} from "./modal.js";
 
 const MENSAJE_REVISOR = "Dejaste de ser revisor de esta operacion. Puedes volver a seleccionarte como revisor, en el panel de busqueda"
 
-function buildTemplateMensaje(egreso, esValida,fechaEnvio) {
+function buildTemplateMensaje(egreso, esValida, fechaEnvio) {
     const contenedorHTML = document.getElementById("mensaje-detalle");
     const proveedor = egreso.detalle.proveedor;
     const direccion = proveedor.dirPostal;
@@ -20,8 +20,10 @@ function buildTemplateMensaje(egreso, esValida,fechaEnvio) {
                     <div id="mensaje-resultado" class="tooltiptext tooltiptext-${esValida ? "valida" : "invalida"}">
                     </div>
                 </div>
-                <p>Fecha: ${egreso.fecha}</p> 
-                <p>Fecha Envio:${fechaEnvio.day}-${fechaEnvio.month}-${fechaEnvio.year}</p>
+                <div>
+                    <p>Fecha: ${egreso.fecha}</p> 
+                    <p>Fecha Envio:${fechaEnvio.day}-${fechaEnvio.month}-${fechaEnvio.year}</p>
+                </div>
             </div>
             <div id='contenedor-categorias' class="d-flex contenedor-categorias">
             </div>
@@ -128,12 +130,12 @@ function buildTooltip(resultadoMensaje) {
     }
 }
 
-function mostrarMensaje(egreso, esValida, detalleValidacion,fechaEnvio) {
+function mostrarMensaje(egreso, esValida, detalleValidacion, fechaEnvio) {
     const detalle = egreso.detalle;
 
     //const msjResultado = data.cuerpoMensaje;
 
-    buildTemplateMensaje(egreso, esValida,fechaEnvio);
+    buildTemplateMensaje(egreso, esValida, fechaEnvio);
     buildCategorias(egreso.detalle.categorias);
     buildTablaDetalle(detalle.pedidos);
     buildTooltip(detalleValidacion);

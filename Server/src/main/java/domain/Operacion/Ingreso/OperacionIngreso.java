@@ -25,7 +25,7 @@ public class OperacionIngreso extends Operacion {
     @JoinColumn(name = "tipo_ingreso")
     private TipoIngreso tipoIngreso;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "ingreso")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "ingreso")
     private List<OperacionEgreso> egresosVinculados;
 
 
@@ -89,21 +89,22 @@ public class OperacionIngreso extends Operacion {
         if (!puedeAgregarEgreso(operacionEgreso)) {
             throw new Exception("No se puede cargar un egreso. Supera al saldo");
         }
-        this.egresosVinculados.add(operacionEgreso);
-        operacionEgreso.setIngreso(this);
-
+        if (!this.egresosVinculados.contains(operacionEgreso)) {
+            this.egresosVinculados.add(operacionEgreso);
+            operacionEgreso.setIngreso(this);
+        }
 
     }
 
     private Boolean puedeAgregarEgreso(OperacionEgreso operacionEgreso) {
-        return   this.saldo() - operacionEgreso.montoTotal() >= 0 && !operacionEgreso.estaAsociado();
+        return this.saldo() - operacionEgreso.montoTotal() >= 0 && !operacionEgreso.estaAsociado();
     }
 
-    public double costo(){
+    public double costo() {
         return this.egresosVinculados.stream().mapToDouble(OperacionEgreso::montoTotal).sum();
     }
 
-    public Double saldo(){
+    public Double saldo() {
         return this.montoTotal - this.costo();
     }
 

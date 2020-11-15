@@ -1,6 +1,5 @@
 package controllers.convertersDTO;
 
-import controllers.DTO.DTOOperacionEgreso;
 import controllers.DTO.DTOOperacionIngreso;
 import controllers.DTO.EgresoDTO;
 import controllers.DTO.IngresoDTO;
@@ -11,6 +10,7 @@ import repositorios.Repositorio;
 import repositorios.factories.FactoryRepo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +71,7 @@ public class ConverterIngreso {
         return operacionIngreso;
     }
 
-    public static DTOOperacionIngreso generarIngresoVinculadorDTO(OperacionIngreso operacionIngreso){
+    public static DTOOperacionIngreso generarIngresoVinculadorDTO(OperacionIngreso operacionIngreso) {
         DTOOperacionIngreso dtoOperacionIngreso = new DTOOperacionIngreso();
 
         dtoOperacionIngreso.setFecha(operacionIngreso.getFecha());
@@ -79,14 +79,25 @@ public class ConverterIngreso {
 
         dtoOperacionIngreso.setId(operacionIngreso.getId());
         dtoOperacionIngreso.setMontoTotal(operacionIngreso.getMontoTotal());
+        dtoOperacionIngreso.setEgresos(new ArrayList<>());
 
-        return  dtoOperacionIngreso;
+        return dtoOperacionIngreso;
 
     }
 
-    public static OperacionIngreso generarIngresoVinculadorModel(DTOOperacionIngreso dtoOperacionIngreso){
+    public static OperacionIngreso generarIngresoVinculadorModel(DTOOperacionIngreso dtoOperacionIngreso) {
         OperacionIngreso operacionIngreso = FactoryRepo.get(OperacionIngreso.class).buscar(dtoOperacionIngreso.getId());
-        return  operacionIngreso;
+
+        dtoOperacionIngreso.getEgresos().forEach(dtoOperacionEgreso -> {
+                    OperacionEgreso egresoModel = FactoryRepo.get(OperacionEgreso.class).buscar(dtoOperacionEgreso.getId());
+                    try {
+                        operacionIngreso.agregarEgreso(egresoModel);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+        return operacionIngreso;
 
     }
 

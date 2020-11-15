@@ -16,19 +16,19 @@ public abstract class EntidadJuridica extends Entidad {
     protected String nombre;
 
     @Column(name = "cuit")
-    protected long CUIT;
+    protected long cuit;
 
     @Column(name = "descripcion")
     protected String descripcion;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "direccion_id")
     protected DireccionPostal direccionPostal;
 
-    public EntidadJuridica(String razonSocial, String nombre, long CUIT, String descripcion, DireccionPostal direccionPostal) {
+    public EntidadJuridica(String razonSocial, String nombre, long cuit, String descripcion, DireccionPostal direccionPostal) {
         this.razonSocial = razonSocial;
         this.nombre = nombre;
-        this.CUIT = CUIT;
+        this.cuit = cuit;
         this.descripcion = descripcion;
         this.direccionPostal = direccionPostal;
     }
@@ -46,6 +46,7 @@ public abstract class EntidadJuridica extends Entidad {
         this.razonSocial = razonSocial;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
@@ -54,14 +55,15 @@ public abstract class EntidadJuridica extends Entidad {
         this.nombre = nombre;
     }
 
-    public long getCUIT() {
-        return CUIT;
+    public long getCuit() {
+        return cuit;
     }
 
-    public void setCUIT(long CUIT) {
-        this.CUIT = CUIT;
+    public void setCuit(long CUIT) {
+        this.cuit = CUIT;
     }
 
+    @Override
     public String getDescripcion() {
         return descripcion;
     }

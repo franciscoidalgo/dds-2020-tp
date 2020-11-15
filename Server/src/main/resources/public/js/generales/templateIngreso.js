@@ -30,6 +30,8 @@ function buildTemplateIngreso(ingreso, contenedorHTML) {
                 </div>
             </section>
         </main>
+        <h3>Egresos Vinculados</h3>
+        <p><em>Puedes hacer click en el egreso para más detalle</em></p>
         <footer id="egresos-vinculados">
            
         </footer>

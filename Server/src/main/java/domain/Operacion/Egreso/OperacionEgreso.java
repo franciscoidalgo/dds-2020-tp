@@ -21,7 +21,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "operacion_id", referencedColumnName = "id")
 public class OperacionEgreso extends Operacion {
     //Atributos
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch =  FetchType.EAGER)
     @JoinColumn(name = "detalle_id")
     private DetalleOperacion detalle;
 
@@ -36,7 +36,7 @@ public class OperacionEgreso extends Operacion {
     )
     private List<Usuario> revisores;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<Presupuesto> presupuestos;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

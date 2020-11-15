@@ -38,8 +38,8 @@ public abstract class Entidad extends EntidadPersistente{
         this.criterios = criterios;
     }
 
-    public  String nombre(){return "";}
-    public  String descripcion(){return "";}
+    public  String getNombre(){return "";}
+    public  String getDescripcion(){return "";}
 
 
     public List<Operacion> getOperaciones() {

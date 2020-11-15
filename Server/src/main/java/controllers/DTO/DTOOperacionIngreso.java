@@ -1,12 +1,14 @@
 package controllers.DTO;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class DTOOperacionIngreso {
     private int id;
     private double montoTotal;
     private LocalDate fecha;
     private LocalDate fechaAceptabilidad;
+    private List<DTOOperacionEgreso> egresos;
 
     public int getId() {
         return id;
@@ -38,5 +40,13 @@ public class DTOOperacionIngreso {
 
     public void setFechaAceptabilidad(LocalDate fechaAceptabilidad) {
         this.fechaAceptabilidad = fechaAceptabilidad;
+    }
+
+    public List<DTOOperacionEgreso> getEgresos() {
+        return egresos;
+    }
+
+    public void setEgresos(List<DTOOperacionEgreso> egresos) {
+        this.egresos = egresos;
     }
 }

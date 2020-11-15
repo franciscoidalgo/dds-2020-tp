@@ -30,12 +30,13 @@ public class ServicioAsociacion {
     }
 
 
-    public OperacionIngreso getIngresoAsociado (String operacionIngreso, String listaEgresos, String fechaDesde, String fechaHasta) throws IOException {
+    public OperacionIngreso getIngresoAsociado (String operacionIngreso, String listaEgresos) throws IOException {
         AsociadoraService asociadoraService = this.retrofit.create(AsociadoraService.class);
-        Call<DTOOperacionIngreso> requestIngresoVinculado = asociadoraService.ingresoVinculado(operacionIngreso, listaEgresos, fechaDesde, fechaHasta);
+        Call<DTOOperacionIngreso> requestIngresoVinculado = asociadoraService.ingresoVinculado(operacionIngreso, listaEgresos,"ORDEN_VALOR_PRIMERO_EGRESO");
         Response<DTOOperacionIngreso> responseIngresoVinculado = requestIngresoVinculado.execute();
         DTOOperacionIngreso ingresoAsociado = responseIngresoVinculado.body();
-        //OperacionIngreso ingresoAsociado = responseIngresoVinculado.body();
+
+        System.out.println("INGRESO ESTA ASOCIANDOSE con id => "+ ingresoAsociado.getId());
 
         return ConverterIngreso.generarIngresoVinculadorModel(ingresoAsociado);
 

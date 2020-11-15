@@ -274,7 +274,7 @@ input.monto.onkeyup = () => {
 
 window.eventoVincular = () => {
     alert("Magia para vincular!");
-    vincular();
+    document.getElementById("operacion-ingreso").onsubmit;
     let modal = document.querySelector(".modal");
     modal.remove();
 }

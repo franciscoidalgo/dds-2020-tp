@@ -2,6 +2,7 @@ package DTOs;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DTOOperacionEgreso{
     //Atributos
@@ -9,7 +10,7 @@ public class DTOOperacionEgreso{
     protected double montoTotal;
     protected LocalDate fecha;
     private Boolean estaAsociado = false;
-    private DTOOperacionIngreso ingreso;
+    //private DTOOperacionIngreso ingreso;
 
 
     //Constructor
@@ -18,13 +19,13 @@ public class DTOOperacionEgreso{
     }
 
     public DTOOperacionEgreso(int id, double montoTotal,
-                              LocalDate fecha, Boolean estaAsociado,
-                              DTOOperacionIngreso ingreso){
+                              LocalDate fecha, Boolean estaAsociado/*,
+                              DTOOperacionIngreso ingreso*/){
         this.id = id;
         this.montoTotal = montoTotal;
         this.fecha = fecha;
         this.estaAsociado = estaAsociado;
-        this.ingreso = ingreso;
+        //this.ingreso = ingreso;
     }
 
     public DTOOperacionEgreso(DTOOperacionEgreso oe){
@@ -32,7 +33,7 @@ public class DTOOperacionEgreso{
         this.setMontoTotal(oe.getMontoTotal());
         this.setFecha(oe.getFecha());
         this.setEstaAsociado(oe.getEstaAsociado());
-        this.setIngreso(oe.getIngreso());
+        //this.setIngreso(oe.getIngreso());
     }
 
     //Getters & Setters
@@ -48,9 +49,9 @@ public class DTOOperacionEgreso{
     public Boolean getEstaAsociado() { return estaAsociado; }
     public void setEstaAsociado(Boolean estaAsociado) { this.estaAsociado = estaAsociado; }
 
-    public DTOOperacionIngreso getIngreso() { return ingreso; }
+   /* public DTOOperacionIngreso getIngreso() { return ingreso; }
     public void setIngreso(DTOOperacionIngreso ingreso) { this.ingreso = ingreso; }
-
+*/
 
     //Funcionalidades
     public Boolean podesVincularteSegunFecha(LocalDate fechaMax) {
@@ -62,11 +63,15 @@ public class DTOOperacionEgreso{
         e1.setMontoTotal(e2.getMontoTotal());
         e1.setFecha(e2.getFecha());
         e1.setEstaAsociado(e2.getEstaAsociado());
-        e1.setIngreso(e2.getIngreso());
+       // e1.setIngreso(e2.getIngreso());
     }
 
-    public static void ordenarPorMonto(List<DTOOperacionEgreso> egresos){
-        for(int i=0; i<egresos.size() - 1; i++){
+    public static List<DTOOperacionEgreso> ordenarPorMonto(List<DTOOperacionEgreso> egresos){
+
+        return egresos.stream()
+                .sorted((o1, o2) -> (int) Math.max(o1.getMontoTotal(),o2.getMontoTotal()))
+                .collect(Collectors.toList());
+        /*for(int i=0; i<egresos.size() - 1; i++){
             for(int j=0; j<egresos.size() - i - 1; j++){
                 if(egresos.get(j+1).getMontoTotal() > egresos.get(j).getMontoTotal()){
                     DTOOperacionEgreso auxEgreso = new DTOOperacionEgreso(egresos.get(j+1));
@@ -74,7 +79,7 @@ public class DTOOperacionEgreso{
                     DTOOperacionEgreso.reemplazar(egresos.get(j), auxEgreso);
                 }
             }
-        }
+        }*/
     }
 
     public Boolean tenesFechaSuperior(LocalDate fecha){
@@ -95,7 +100,7 @@ public class DTOOperacionEgreso{
 
     public boolean puedeVincularse(DTOOperacionEgreso egreso, DTOOperacionIngreso ingreso) {
         return (egreso.getEstaAsociado() == false
-                && egreso.getIngreso() == null
+               // && egreso.getIngreso() == null
                 && egreso.getFecha().isBefore(ingreso.getFechaAceptabilidad())
                 && egreso.getMontoTotal() < ingreso.getMontoTotal());
     }

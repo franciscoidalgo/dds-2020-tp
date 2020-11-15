@@ -4,6 +4,7 @@ import Criterio.CriterioAsociacion;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class DTOOperacionIngreso implements Serializable{
 
     //Constructor
     public DTOOperacionIngreso(){
-
+        this.egresos = new ArrayList<>();
     }
 
     public DTOOperacionIngreso(int id, double montoTotal,
@@ -29,6 +30,7 @@ public class DTOOperacionIngreso implements Serializable{
         this.montoTotal = montoTotal;
         this.fecha = fecha;
         this.fechaAceptabilidad = fechaAceptabilidad;
+        this.egresos = new ArrayList<>();
     }
 
     public DTOOperacionIngreso(DTOOperacionIngreso oi){

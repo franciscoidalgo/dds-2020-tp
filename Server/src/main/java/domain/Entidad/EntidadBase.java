@@ -1,7 +1,6 @@
 package domain.Entidad;
 
 
-
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -18,7 +17,7 @@ public class EntidadBase extends Entidad {
     private String descripcion;
     //Constructor
 
-    public class EntidadBaseDTO{
+    public class EntidadBaseDTO {
         private final String tipo = "EB";
         private String nombre;
         private String descripcion;
@@ -40,12 +39,13 @@ public class EntidadBase extends Entidad {
         }
     }
 
-    public EntidadBase(String nombre, String descripcion){
-        this.nombre=nombre;
-        this.descripcion= descripcion;
+    public EntidadBase(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
-    public EntidadBase() {}
+    public EntidadBase() {
+    }
 
     //Getters-Setters
 
@@ -53,26 +53,26 @@ public class EntidadBase extends Entidad {
         this.nombre = nombre;
     }
 
+    @Override
+    public String getNombre() {
+        return nombre;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    @Override
-    public String nombre() {
-        return nombre;
-    }
 
     @Override
-    public String descripcion() {
+    public String getDescripcion() {
         String template = "Una organizacion base.";
         return template + descripcion;
-
     }
 
     public EntidadBaseDTO toDTO() {
         EntidadBaseDTO entidadBaseDTO = new EntidadBaseDTO();
-        entidadBaseDTO.setDescripcion(this.descripcion());
-        entidadBaseDTO.setNombre(this.nombre());
+        entidadBaseDTO.setDescripcion(this.descripcion);
+        entidadBaseDTO.setNombre(this.nombre);
         return entidadBaseDTO;
     }
 }
