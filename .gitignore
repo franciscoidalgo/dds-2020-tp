@@ -1,11 +1,9 @@
 # Java
 # Compiled class file
-*.class
 # Log file
 *.log
 
 # Package files
-*.jar
 *.war
 *.nar
 *.ear
