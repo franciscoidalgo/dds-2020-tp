@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 @Table(name = "detalle_operacion")
 public class DetalleOperacion extends EntidadPersistente {
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Pedido> pedidos;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch =  FetchType.EAGER)
     @JoinTable(name = "asociacion_categoria")
     private List<CategoriaOperacion> categorias;
 

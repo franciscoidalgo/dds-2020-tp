@@ -3,6 +3,7 @@ package Vinculador;
 import DTOs.DTOOperacionEgreso;
 import DTOs.DTOOperacionIngreso;
 
+@Deprecated
 public class VinculadorManual{
     public static void vincular(DTOOperacionEgreso egreso,
                                 DTOOperacionIngreso ingreso){
@@ -18,7 +19,7 @@ public class VinculadorManual{
 
     private static void realizarVinculacion(DTOOperacionEgreso egreso, DTOOperacionIngreso ingreso) {
         egreso.setEstaAsociado(true);
-        egreso.setIngreso(ingreso);
+       // egreso.setIngreso(ingreso);
         ingreso.agregateEgreso(egreso);
     }
 

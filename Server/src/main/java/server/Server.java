@@ -11,7 +11,9 @@ import spark.Spark;
 public class Server {
     public static void main(String[] args) throws Exception {
         //iniciarCategoriasAFIP();
+
         Spark.port(Integer.parseInt(System.getenv("PORT")));
+        //Spark.port(9000);
         Router.init();
         //DebugScreen.enableDebugScreen();
     }

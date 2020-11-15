@@ -27,7 +27,7 @@ const boton = {
 let categoriasSeleccionadas = {idCategorias:[]}
 
 function renderizarIngreso() {
-    let url = '/api/ingreso/todos'
+    let url = '/ingreso/buscar/todos'
     mostrarLoader()
     fetch(url)
         .then(response => response.json())
@@ -77,7 +77,7 @@ desplegable.operacion.onchange = () => {
 
     seccion.seleccionCriterio.hidden = seleccionoEgreso;
     seccion.seleccionCategoria.hidden = seleccionoEgreso;
-    seccion.operacion.innerHTML = "";
+    document.getElementById("mensaje-detalle").innerHTML = "";
 };
 
 boton.verTodas.onclick = () => {

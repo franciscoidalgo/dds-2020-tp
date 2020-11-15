@@ -247,7 +247,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
     public EmpresaDTO toDTO(){
         EmpresaDTO empresaDTO = new EmpresaDTO();
         empresaDTO.setNombre(this.nombre());
-        empresaDTO.setCUIT(this.getCUIT());
+        empresaDTO.setCUIT(this.getCuit());
         empresaDTO.setDescripcion(this.getDescripcion());
         empresaDTO.setDireccionPostal(this.getDireccionPostal());
 

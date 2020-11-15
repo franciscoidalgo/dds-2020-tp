@@ -2,16 +2,18 @@ package controllers;
 
 
 import Persistencia.TypeAdapterHibernate;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controllers.DTO.IngresoDTO;
-
 import controllers.convertersDTO.ConverterIngreso;
 import domain.Operacion.CategorizacionOperacion.Criterio;
+import domain.Operacion.Egreso.Item;
+import domain.Operacion.Egreso.OperacionEgreso;
+import domain.Operacion.Egreso.Proveedor;
+import domain.Operacion.Egreso.TipoDeItem;
+import domain.Operacion.Ingreso.OperacionIngreso;
 import domain.Usuario.BandejaMensaje.BandejaMensaje;
 import domain.Usuario.Usuario;
-import domain.Operacion.Egreso.*;
-
-import domain.Operacion.Ingreso.OperacionIngreso;
 import repositorios.Repositorio;
 import repositorios.RepositorioDeUsuarios;
 import repositorios.TestUsuariosEnMemoria;
@@ -43,89 +45,10 @@ public class ApiRest {
         Usuario usuarioLogueado = repositorioDeUsuarios.buscar(request.session().attribute("userId"));
         Gson gson = new Gson();
         //TODO BUSCAR POR MAX Y MIN MENSAJES ----> GANAR EN OPTIMIZACION
-        BandejaMensaje bandejaMensaje =usuarioLogueado.getBandejaDeMensajes();
+        BandejaMensaje bandejaMensaje = usuarioLogueado.getBandejaDeMensajes();
         String jMensajes = gson.toJson(bandejaMensaje.toDTO());
         response.type("application/json");
         return jMensajes;
-    }
-
-    public String pasarTodosIngresos(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-
-        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
-        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
-        List<IngresoDTO> ingresoDTOList = new ArrayList<>();
-        String jsonEgreso;
-
-        List<OperacionIngreso> ingresosList = usuario.getEntidadPertenece().getOperacionesIngreso();
-
-        ingresosList.forEach(ingreso -> {
-            ingresoDTOList.add(ConverterIngreso.toDTO(ingreso));
-        });
-
-        jsonEgreso = gson.toJson(ingresoDTOList);
-        response.type("application/json");
-        return jsonEgreso;
-    }
-
-
-    public String vincularIngresos(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-        IngresoDTO ingresoVincular = gson.fromJson(request.body(),IngresoDTO.class);
-        Repositorio<OperacionIngreso> operacionIngresoRepositorio =FactoryRepo.get(OperacionIngreso.class) ;
-        OperacionIngreso ingreso = operacionIngresoRepositorio.buscar(ingresoVincular.getId());
-        List<OperacionEgreso> egresos = ingresoVincular.getListaEgresos().stream()
-                                                .map(egresoDTO -> FactoryRepo.get(OperacionEgreso.class)
-                                                            .buscar(egresoDTO.getId())).collect(Collectors.toList());
-
-        egresos.forEach(operacionEgreso -> {
-            try {
-                ingreso.agregarEgreso(operacionEgreso);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        operacionIngresoRepositorio.modificar(ingreso);
-        response.type("application/json");
-        return "{\"mensaje\":\"todo ok\"}";
-    }
-
-    public String pasarIngresoPorVincular(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-
-        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
-        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
-        List<IngresoDTO> ingresosDTO;
-        String jsonEgreso;
-
-        List<OperacionIngreso> ingresos = usuario.getEntidadPertenece().getOperacionesIngreso().stream()
-                .filter(operacionIngreso -> operacionIngreso.saldo()>0).collect(Collectors.toList());
-
-        ingresosDTO = ingresos.stream().map(operacionIngreso -> ConverterIngreso.toDTO(operacionIngreso)).collect(Collectors.toList());
-        jsonEgreso = gson.toJson(ingresosDTO);
-        response.type("application/json");
-        return jsonEgreso;
-    }
-
-    public String pasarIngresoSegunID(Request request, Response response) {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
-
-        RepositorioDeUsuarios repositorioUsuario = FactoryRepoUsuario.get();
-        Usuario usuario = repositorioUsuario.buscar(request.session().attribute("userId"));
-        IngresoDTO ingresoDTO;
-        int idIngreso;
-        String jsonEgreso;
-
-        idIngreso = Integer.parseInt(request.params("idIngreso"));
-        OperacionIngreso ingreso = usuario.getEntidadPertenece().getOperacionesIngreso().stream()
-                                            .filter(operacionIngreso -> idIngreso == operacionIngreso.getId())
-                                            .findFirst().get();
-
-        ingresoDTO = ConverterIngreso.toDTO(ingreso);
-
-        jsonEgreso = gson.toJson(ingresoDTO);
-        response.type("application/json");
-        return jsonEgreso;
     }
 
     public String mostrarProveedores(Request request, Response response) {

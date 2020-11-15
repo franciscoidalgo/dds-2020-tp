@@ -77,7 +77,7 @@ public class OrganizacionSocial extends EntidadJuridica{
     public OrganizacionSocialDTo toDTO() {
         OrganizacionSocialDTo dto = new OrganizacionSocialDTo();
         dto.setNombre(this.nombre());
-        dto.setCUIT(this.getCUIT());
+        dto.setCUIT(this.getCuit());
         dto.setDescripcion(this.getDescripcion());
         dto.setDireccionPostal(this.getDireccionPostal());
         return dto;

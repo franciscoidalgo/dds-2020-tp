@@ -30,10 +30,22 @@
     <div class="d-flex jc-sb ai-center">
         <label for="seleccion-entidad" style="color: white">Entidad seleccionada:</label>
         <select id="seleccion-entidad" name="seleccion-entidad">
-            {{#each entidades}}
-                <option value={{id}}>{{nombre}}</option>
-            {{/each}}
-            <option selected value={{idSeleccionada}}>{{nombreSeleccionada}}</option>
+            <option value="{{idSeleccionada}}"  selected disabled>{{nombreSeleccionada}}</option>
+            <optgroup label="Empresas">
+                {{#each empresas}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
+            </optgroup>
+            <optgroup label="Organizaciones Sociales">
+                {{#each orgSociales}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
+            </optgroup>
+            <optgroup label="Entidades Base">
+                {{#each entidadesBase}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
+            </optgroup>
         </select>
         <ul class="contenedor-menu d-flex jc-se">
             <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt" style="color:#dac5c7"></i></a></li>

@@ -1,5 +1,7 @@
 import {Desplegable} from "../generales/burbuja.js";
 import {agregaContenidoEnDesplegable, cleanDesplegable, contenidoSeleccionadoEn} from "../generales/desplegable.js";
+import {esconderLoader, mostrarLoader} from "../generales/loader.js";
+import {generarModalFail, generarModalOK} from "../generales/modal.js";
 
 const habilitadores = [
     new Desplegable('pais', 'provincia'),
@@ -24,6 +26,8 @@ const entrada = {
     cantPersonal: document.getElementById("cant-personal"),
     promVenta: document.getElementById("prom-venta")
 }
+const form = document.getElementById("form-entidad")
+
 
 let seccionesContenedoras = document.getElementsByClassName("contenedor-entrada");
 
@@ -37,6 +41,7 @@ function habilitarEntradaParaEntidad(value) {
     entrada.igj.disabled = value === "base";
     entrada.cuit.disabled = value === "base";
     entrada.razonSocial.disabled = value === "base";
+    desplegable.pais.disabled = value === "base";
 
     entrada.actividad.disabled = value === "base" || value === "os";
     entrada.cantPersonal.disabled = value === "base" || value === "os";
@@ -80,5 +85,38 @@ desplegable.seleccionEntidad.onchange = () => {
     let valorDesplegable = desplegable.seleccionEntidad.value;
     habilitarEntradaParaEntidad(valorDesplegable);
 }
+/*
+form.onsubmit = (e)=>{
+    let url="/entidad/nueva";
+    mostrarLoader();
+
+    let init = {
+        method: 'GET',
+        body: new FormData(form)
+    }
+    mostrarLoader();
+    fetch(url, init)
+        .then(response => {
+            if (response.status === 200) {
+                const json = response.json();
+                return json;
+            } else {
+                generarModalFail("No se ha podido actualizar tu informacion.");
+                esconderLoader();
+            }
+        })
+        .then(data => {
+            console.log(data);
+            esconderLoader();
+            generarModalOK("Se ha actualizado tu informacion satisfactoriamente");
+
+        })
+        .catch(err => {
+            console.log(err);
+            esconderLoader();
+            generarModalFail("No se ha podido actualizar tu informacion.");
+        });
+}
+*/
 
 

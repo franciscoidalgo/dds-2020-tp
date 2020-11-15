@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "pedido")
 public class Pedido extends EntidadPersistente {
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL,fetch =  FetchType.EAGER)
     private Item item;
 
     @Column(name = "cantidad")

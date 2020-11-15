@@ -12,8 +12,6 @@ public class Presupuesto extends EntidadPersistente {
     @JoinColumn(name = "detalle_id")
     private DetalleOperacion detalle;
 
-
-
     @Column(name = "monto_total")
     private double montoTotal;
 

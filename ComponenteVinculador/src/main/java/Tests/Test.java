@@ -1,4 +1,4 @@
-package Tests;
+/*package Tests;
 
 
 import DTOs.DTOOperacionEgreso;
@@ -247,7 +247,7 @@ public class Test {
         }
 
          */
-
+/*
 
         //PRUEBAS DE VINCULACIONES
         System.out.println("VINCULACIONES");
@@ -318,4 +318,4 @@ public class Test {
             System.out.println("ID: " + egreso.getId() + " MONTO: " + egreso.getMontoTotal() + " FECHA: " + egreso.getFecha() + " ASOCIADO: " + egreso.getEstaAsociado() + " ASOCIACION: " + (egreso.getIngreso() == null ? "NINGUNA" : egreso.getIngreso().getId()));
         }
     }
-}
+}*/

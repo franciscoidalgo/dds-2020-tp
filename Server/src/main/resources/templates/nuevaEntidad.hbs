@@ -34,6 +34,7 @@
             <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
             <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
             <li><a href="vinculacion"><i class="fas fa-link"></i>Vincular Operaciones</a></li>
+            <li><a href="busquedaOperacion"><i class="fas fa-file-import"></i>Buscar Operacion</a></li>
             <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
 
         </ul>
@@ -53,7 +54,7 @@
             <p><i class="fa fa-building"></i></p>
             <h3>Informacion de la Entidad</h3>
         </div>
-        <p><i class="fas fa-plus"></i></p>
+        <p><i class="fas fa-minus"></i></p>
     </div>
     <form method="get" action="/entidad/nueva">
         <section class="burbuja">
@@ -128,7 +129,7 @@
             <div class="contenedor-entrada fade" hidden>
                 <h4>Direccion Postal</h4>
                 <label for="pais">Pais</label><br>
-                <select name="pais" id="pais" required>
+                <select name="pais" id="pais" disabled required>
                     <option value="" disabled selected>-- Seleccione --</option>
                     {{#each paises}}
                         <option value={{nombre}} >{{nombre}}</option>

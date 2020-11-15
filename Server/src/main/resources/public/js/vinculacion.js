@@ -1,7 +1,6 @@
 import {esconderLoader, mostrarLoader} from "./generales/loader.js";
 import {cleanDesplegable, contenidoSeleccionadoEn} from "./generales/desplegable.js";
-import {generarModalFail, generarModalOK} from "./generales/modal.js";
-
+import {generaBoton, generaModalAlert, generarModalFail, generarModalOK} from "./generales/modal.js";
 
 
 const desplegable = {
@@ -31,6 +30,7 @@ function renderSaldo() {
     seccion.saldo.innerText = saldoTotal;
     seccion.saldo.className = saldoTotal < 0 ? "invalido" : "valido";
 }
+
 function construirOptionIngreso(ingreso) {
     return ` <option value= ${ingreso.id}> Ingreso #${ingreso.id} (${ingreso.fechaRealizada} al: ${ingreso.fechaAceptacion}
                             , tipo:${ingreso.tipoIngreso.nombre}, monto: ${ingreso.monto})
@@ -73,7 +73,7 @@ function cargarDesplegableEgresoCon(ingresoSeleccionado) {
         dataEgresoCargados = data;
     });
 
-    for (let i = 0; i < dataEgresoCargados .length; i++) {
+    for (let i = 0; i < dataEgresoCargados.length; i++) {
         let option = generarOptionEgreso(dataEgresoCargados [i]);
         desplegable.seleccionEgreso.innerHTML += option;
     }
@@ -95,10 +95,12 @@ async function postIngreso(url, init) {
 
 
 function enviarIngreso() {
-    let url = "/api/ingreso/vincular";
+    let url = "/ingreso/vincular";
     let jsonIngreso = {
         id: parseInt(desplegable.seleccionIngreso.value),
-        listaEgresos:egresosSeleccionados.map(value =>{ return {id:value.id}})
+        listaEgresos: egresosSeleccionados.map(value => {
+            return {id: value.id}
+        })
     };
 
     let init = {
@@ -117,7 +119,7 @@ function enviarIngreso() {
 
 }
 
-function mostrarSeleccionEgreso(egreso,egresoDescripcion,pos){
+function mostrarSeleccionEgreso(egreso, egresoDescripcion, pos) {
     let contenido = document.createElement("li");
     let btn = document.createElement("button");
 
@@ -132,14 +134,14 @@ function mostrarSeleccionEgreso(egreso,egresoDescripcion,pos){
     contenido.style.fontSize = "1.4rem";
     contenido.style.fontWeight = "bold";
 
-    btn.onclick = () =>{
-        desplegable.seleccionEgreso.options[pos+1].hidden=false
-        desplegable.seleccionEgreso.value ="";
+    btn.onclick = () => {
+        desplegable.seleccionEgreso.options[pos + 1].hidden = false
+        desplegable.seleccionEgreso.value = "";
         boton.seleccionEgreso.hidden = true;
 
         egresosSeleccionados = egresosSeleccionados.filter(value => value !== egreso);
         contenido.remove();
-        seccion.estaVacio.hidden = egresosSeleccionados.length !==0;
+        seccion.estaVacio.hidden = egresosSeleccionados.length !== 0;
         console.log(egresosSeleccionados);
         //Monto
         saldoTotal += egreso.montoTotal;
@@ -167,24 +169,24 @@ desplegable.seleccionIngreso.onchange = () => {
     desplegable.seleccionEgreso.hidden = false;
 }
 
-desplegable.seleccionEgreso.onchange = ()=>{
-    boton.seleccionEgreso.hidden=false;
+desplegable.seleccionEgreso.onchange = () => {
+    boton.seleccionEgreso.hidden = false;
 }
 
-boton.seleccionEgreso.onclick = ()=>{
+boton.seleccionEgreso.onclick = () => {
     let posicionSeleccionada = desplegable.seleccionEgreso.selectedIndex;
-    let unEgreso = dataEgresoCargados[posicionSeleccionada-1];
+    let unEgreso = dataEgresoCargados[posicionSeleccionada - 1];
     let descripcionUnEgreso = contenidoSeleccionadoEn(desplegable.seleccionEgreso).innerText;
 
     //Escondo y guardo
-    desplegable.seleccionEgreso.options[posicionSeleccionada].hidden= true;
-    desplegable.seleccionEgreso.value="";
+    desplegable.seleccionEgreso.options[posicionSeleccionada].hidden = true;
+    desplegable.seleccionEgreso.value = "";
     boton.seleccionEgreso.hidden = true;
     egresosSeleccionados.push(unEgreso);
 
     //Agregar LI y el boton undo
-    mostrarSeleccionEgreso(unEgreso,descripcionUnEgreso,posicionSeleccionada-1);
-    seccion.estaVacio.hidden = egresosSeleccionados.length !==0;
+    mostrarSeleccionEgreso(unEgreso, descripcionUnEgreso, posicionSeleccionada - 1);
+    seccion.estaVacio.hidden = egresosSeleccionados.length !== 0;
 
     //Agrego valor al costo
     saldoTotal -= unEgreso.montoTotal;
@@ -193,7 +195,7 @@ boton.seleccionEgreso.onclick = ()=>{
 }
 
 window.addEventListener("load", () => {
-    let url = "/api/ingreso/por-vincular";
+    let url = "/ingreso/buscar/por-vincular";
     mostrarLoader();
     fetch(url)
         .then(response => response.json())
@@ -214,4 +216,50 @@ document.getElementById("vincular-manual").onclick = (e) => {
     }
 
     enviarIngreso();
+}
+
+function generaBotonera() {
+    let botonera = document.createElement("div");
+    botonera.className = "d-flex jc-se"
+    return botonera;
+}
+
+
+
+window.eventoVincular = () => {
+    let modal = document.querySelector(".modal");
+    let url = "/ingreso/vincular-auto/"+desplegable.seleccionIngreso.value;
+    fetch(url)
+        .then(response => response.json())
+        .then(data=> console.log(data));
+    modal.remove();
+}
+
+window.eventoCancelar = () => {
+    let modal = document.querySelector(".modal");
+    modal.remove();
+}
+
+window.cerrarModal = () => {
+    let modal = document.querySelector(".modal");
+    modal.remove();
+}
+
+document.getElementById("vincular-auto").onclick = (e) => {
+    let modal = generaModalAlert("Realizar Vinculacion Automatica", "No se vincularan los Egresos seleccionados manualmente, ¿esta seguro de continuar?")
+    let botonera = generaBotonera();
+    let boton = generaBoton("Cancelar", eventoCancelar);
+    e.preventDefault();
+    //Agrego Boton a Botonera
+    boton.className = "btn btn-danger";
+    botonera.appendChild(boton);
+
+    //Agrego Boton a Botonera
+    boton = generaBoton("Vincular", eventoVincular);
+    botonera.appendChild(boton);
+
+    //Agrego Boton a Modal
+    modal.firstElementChild.appendChild(botonera);
+    document.body.appendChild(modal);
+
 }

@@ -1,7 +1,6 @@
 package controllers;
 
-import domain.Entidad.Entidad;
-import domain.Entidad.Organizacion;
+import domain.Entidad.*;
 import domain.Password.*;
 import domain.Usuario.RolAdministrador;
 import domain.Usuario.Usuario;
@@ -14,7 +13,6 @@ import spark.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ControllerUsuario extends Controller {
 
@@ -24,17 +22,33 @@ public class ControllerUsuario extends Controller {
         Entidad entidad = getEntidadFromRequest(request);
         Organizacion organizacion = entidad.getOrganizacion();
 
-        List<Entidad> entidades = organizacion.getEntidades().stream().filter(entidad1 -> entidad1 != entidad).collect(Collectors.toList());
+        List<Empresa> empresas = organizacion.getEmpresas();
+        List<OrganizacionSocial> organizacionesSociales = organizacion.getOrganizacionSociales();
+        List<EntidadBase> entidadBases = organizacion.getEntidadesBase();
+
+
+        //entidad instanceof EntidadBase no funca! => Sol trambolica
+        Empresa empresa = FactoryRepo.get(Empresa.class).buscar(entidad.getId());
+        EntidadBase entidadBase = FactoryRepo.get(EntidadBase.class).buscar(entidad.getId());
+        OrganizacionSocial organizacionSocial = FactoryRepo.get(OrganizacionSocial.class).buscar(entidad.getId());
+
+        if(null != empresa){
+            parametros.put("seleccionadaEmpresa", empresa);
+        }
+        if(null != entidadBase){
+            parametros.put("seleccionadaBase", entidadBase);
+        }
+        if(null != organizacionSocial){
+            parametros.put("seleccionadaOS", organizacionSocial);
+        }
 
         parametros.put("usuario", usuario);
         parametros.put("rol", usuario.getRol() instanceof RolAdministrador);
-        //Entidad Seleccionada
-        parametros.put("seleccionadaNombre", entidad.nombre());
-        parametros.put("seleccionadaDescripcion", entidad.descripcion());
-        parametros.put("seleccionadaId", entidad.getId());
-        //Organizacion-Entidades
         parametros.put("organizacion", organizacion);
-        parametros.put("entidades", entidades);
+        parametros.put("entidadSeleccionada",  entidad);
+        parametros.put("entidadesBase", entidadBases);
+        parametros.put("orgSociales", organizacionesSociales);
+        parametros.put("empresas", empresas);
         return new ModelAndView(parametros, "usuario.hbs");
     }
 
@@ -89,14 +103,13 @@ public class ControllerUsuario extends Controller {
 
     }
 
-
     public String cambiarEntidad(Request request, Response response) {
         Repositorio<Usuario> usuarioFactoryRepo = FactoryRepo.get(Usuario.class);
         Usuario usuario = usuarioFactoryRepo.buscar(request.session().attribute("userId"));
         Integer id;
 
         id = Integer.parseInt(request.params("idEntidad"));
-        Organizacion organizacion = usuario.getEntidadPertenece().getOrganizacion();
+        Organizacion organizacion = getOrganizacionFromRequest(request);
         Entidad entidad = organizacion.getEntidades().stream().filter(entidad1 -> id.equals(entidad1.getId())).findFirst().get();
 
 
@@ -106,5 +119,7 @@ public class ControllerUsuario extends Controller {
         return "{\"mensaje\":\"ok\"}";
 
     }
+
+
 
 }
