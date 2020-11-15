@@ -4,7 +4,6 @@ import domain.Entidad.EntidadPersistente;
 import domain.Usuario.Usuario;
 import repositorios.RepositorioDeTokens;
 import repositorios.factories.FactoryRepoTokens;
-
 import javax.persistence.*;
 import java.util.UUID;
 
