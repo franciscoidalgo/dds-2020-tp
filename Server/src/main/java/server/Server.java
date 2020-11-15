@@ -10,12 +10,13 @@ import spark.Spark;
 
 public class Server {
     public static void main(String[] args) throws Exception {
-        iniciarCategoriasAFIP();
+        //iniciarCategoriasAFIP();
         Spark.port(9000);
         Router.init();
         //DebugScreen.enableDebugScreen();
     }
 
+    /*
     private static void iniciarCategoriasAFIP() {
         Repositorio<Sector> sectorRepositorio = FactoryRepo.get(Sector.class);
         if (sectorRepositorio.buscarTodos().isEmpty()) {
@@ -60,4 +61,5 @@ public class Server {
             sectorRepositorio.agregar(sectorServicio);
         }
     }
+     */
 }
