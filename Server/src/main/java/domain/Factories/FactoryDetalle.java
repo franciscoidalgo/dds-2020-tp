@@ -19,10 +19,9 @@ public class FactoryDetalle {
         List<CategoriaOperacion> categorias = FactoryCategoria.get(request);
         Proveedor proveedor = FactoryProveedor.get(request);
         Comprobante comprobante = FactoryComprobante.get(request);
+
         detalleOperacion.setProveedor(proveedor);
-        categorias.forEach(categoriaOperacion -> System.out.println(categoriaOperacion.getDescripcion()));
         detalleOperacion.setCategoriaOperacion(categorias);
-        detalleOperacion.getCategorias().forEach(categoriaOperacion -> System.out.println(categoriaOperacion.getDescripcion()));
         detalleOperacion.setComprobante(comprobante);
         detalleOperacion.setPedidos(pedidos);
 

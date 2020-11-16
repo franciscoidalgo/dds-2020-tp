@@ -29,7 +29,7 @@ function getJsonEgreso() {
     medioDePago.moneda = contenidoSeleccionadoEn(desplegable.moneda).innerText
     medioDePago.idTipoDePago = desplegable.idTipoDePago.value;
     template.medioDePago = medioDePago;
-
+    console.log(template);
     return template
 }
 

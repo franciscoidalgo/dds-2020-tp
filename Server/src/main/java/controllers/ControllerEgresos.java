@@ -104,7 +104,7 @@ public class ControllerEgresos extends Controller {
             usuarioLogueado.realizaOperacion(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
             request.session().attribute("egreso_actual", operacionEgreso.getId());
-            //Response TODO GENERALIZAR ESTO
+
             mensajeRta.addProperty("idEgreso", "" + operacionEgreso.getId());
             response.status(200);
             response.type("application/json");
