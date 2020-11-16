@@ -14,20 +14,21 @@ export default function enviarInformacionSimple(url, evento, valor) {
                 const json = response.json();
                 return json;
             } else {
-                generarModalFail("No se ha podido actualizar tu informacion.");
+                generarModalFail("No se ha podido actualizar.");
                 esconderLoader();
             }
-        })
-        .then(data => {
-            console.log(data);
-            esconderLoader();
-            generarModalOK("Se ha actualizado tu informacion satisfactoriamente");
-
         })
         .catch(err => {
             console.log(data);
             esconderLoader();
-            generarModalFail("No se ha podido actualizar tu informacion.");
+            generarModalFail("No se ha podido actualizar.");
+        })
+        .then(data => {
+            console.log(data);
+            esconderLoader();
+            generarModalOK("Se ha actualizado satisfactoriamente");
+
         });
+
 
 }

@@ -20,6 +20,14 @@ public class ValidatePassword {
                 .reduce(Boolean::logicalAnd).get();
     }
 
+    public List<PasswordCriteria> getPasswordCriteria() {
+        return passwordCriteria;
+    }
+
+    public void setPasswordCriteria(List<PasswordCriteria> passwordCriteria) {
+        this.passwordCriteria = passwordCriteria;
+    }
+
     public void addCriteria(PasswordCriteria passwordCriteria) {
         this.passwordCriteria.add(passwordCriteria);
     }

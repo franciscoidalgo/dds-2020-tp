@@ -63,6 +63,5 @@ desplegable.entidades.onchange = () => {
     boton.entidades.editar.hidden = false;
 }
 
-// TODO FALTA CAMBIAR LAS DESCRIPCIONES DE LAS ENTIDADES
 // TODO FALTA CAMBIAR LOS CRITERIOS/CATEGORIA
 // TODO FALTA CAMBIAR LOS USUARIOS

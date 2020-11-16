@@ -44,8 +44,7 @@ public class ControllerEgresos extends Controller {
         Repositorio<TipoDeItem> repoTipoItem = FactoryRepo.get(TipoDeItem.class);
         Repositorio<TipoComprobante> repoTipoComprobante = FactoryRepo.get(TipoComprobante.class);
         Repositorio<TipoDePago> repoTipoDePago = FactoryRepo.get(TipoDePago.class);
-        Repositorio<CategoriaOperacion> repoCategorias = FactoryRepo.get(CategoriaOperacion.class);
-
+        Entidad entidad = getEntidadFromRequest(request);
         if (ConfiguracionMercadoLibre.usarApi) {
             InfoMercadoLibre infoMercadoLibre = InfoMercadoLibre.instancia();
             parametros.put("paises", infoMercadoLibre.getListaDePaises());
@@ -58,7 +57,7 @@ public class ControllerEgresos extends Controller {
         parametros.put("tipoItems", repoTipoItem.buscarTodos());
         parametros.put("tipoComprobante", repoTipoComprobante.buscarTodos());
         parametros.put("tipoPago", repoTipoDePago.buscarTodos());
-        parametros.put("categorias", repoCategorias.buscarTodos());//TODO TOCAR PARA QUE SEA DE LA ORGANIZACION
+        parametros.put("categorias", entidad.mostrarTodasCategorias());
         parametros.put("hoy", LocalDate.now());
 
         parametros.put("numeroEgreso", request.session().attribute("idEgreso"));

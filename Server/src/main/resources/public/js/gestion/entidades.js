@@ -12,7 +12,8 @@ const desplegable = {
     seleccionEntidad: document.getElementById("seleccion-tipo-entidad"),
     pais: document.getElementById('pais'),
     provincia: document.getElementById('provincia'),
-    ciudad: document.getElementById('ciudad')
+    ciudad: document.getElementById('ciudad'),
+    sector: document.getElementById('sector')
 }
 
 const entrada = {
@@ -20,6 +21,12 @@ const entrada = {
     descripcion: document.getElementById("descripcion"),
     razonSocial: document.getElementById("razon-social"),
     igj: document.getElementById("igj"),
+
+    calle: document.getElementById("calle"),
+    altura: document.getElementById("altura"),
+    piso: document.getElementById("piso"),
+    dpto: document.getElementById("dpto"),
+
 
     cuit: document.getElementById("cuit"),
     actividad: document.getElementById("actividad"),
@@ -43,9 +50,15 @@ function habilitarEntradaParaEntidad(value) {
     entrada.razonSocial.disabled = value === "base";
     desplegable.pais.disabled = value === "base";
 
+    desplegable.sector.disabled = value === "base" || value === "os";
     entrada.actividad.disabled = value === "base" || value === "os";
     entrada.cantPersonal.disabled = value === "base" || value === "os";
     entrada.promVenta.disabled = value === "base" || value === "os";
+    entrada.calle.disabled = value === "base" || value === "os";
+    entrada.altura.disabled = value === "base" || value === "os";
+    entrada.piso.disabled = value === "base" || value === "os";
+    entrada.dpto.disabled = value === "base" || value === "os";
+
 }
 
 function cargarDesplegableDesdeAPIML(desplegable, url) {

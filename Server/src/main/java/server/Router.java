@@ -128,6 +128,9 @@ public class Router {
         Spark.path("/entidad",() -> {
             Spark.get("",controllerEntidad::mostrarNuevaEntidad,Router.engine);
             Spark.get("/nueva",controllerEntidad::nuevaEntidad);
+            Spark.get("/criterio/nuevo/:idCriterio/:nombre",controllerEntidad::nuevoCriterio);
+            Spark.get("/categorias/:idCriterio",controllerEntidad::pasarCategoriasSegunCriterio);
+            Spark.get("/categoria/nuevo/:idCriterio/:nombre",controllerEntidad::nuevaCategoria);
         });
 
         Spark.path("/ingreso",() -> {

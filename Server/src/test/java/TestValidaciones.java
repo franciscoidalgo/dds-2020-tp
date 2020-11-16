@@ -162,21 +162,21 @@ public class TestValidaciones {
         OrganizacionSocial organizacionSocial = new OrganizacionSocial("Organizacion Social S.A","nombre ficticio",999317799,"una descri",new DireccionPostal("Argentina","CABA","Provincia","Av Independencia 9999",1234,"2","b"));
         Organizacion organizacion = new Organizacion("Organizacion");
 
-        organizacion.agregarEntidad(organizacionSocial);
-        unEstandar.setEntidadPertenece(organizacionSocial);
+      //  organizacion.agregarEntidad(organizacionSocial);
+       // unEstandar.setEntidadPertenece(organizacionSocial);
 
-        organizacionRepositorio.agregar(organizacion);
-        organizacionSocialRepositorio.agregar(organizacionSocial);
+       // organizacionRepositorio.agregar(organizacion);
+        //organizacionSocialRepositorio.agregar(organizacionSocial);
 
-        organizacionSocial.setOrganizacion(organizacion);
-        repoUsers.modificar(unEstandar);
+       organizacionSocial.setOrganizacion(organizacion);
+       repoUsers.modificar(unEstandar);
 
-        Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
+       // Repositorio<OperacionEgreso> repoEgreso = FactoryRepo.get(OperacionEgreso.class);
 
 
-        unEstandar.darseDeAltaEn(unEgreso);
-        repoEgreso.agregar(unEgreso);
-        unEgreso.validaOperacion();
+        //unEstandar.darseDeAltaEn(unEgreso);
+        //repoEgreso.agregar(unEgreso);
+        //unEgreso.validaOperacion();
 
 
         Thread.sleep(10000);

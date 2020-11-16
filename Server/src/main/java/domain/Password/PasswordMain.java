@@ -7,6 +7,7 @@ public class PasswordMain {
 
     public static void main(String[] args) throws IOException {
 
+        ValidatePassword validatePassword = new ValidatePassword();
         ValidatePasswordLength validatePasswordLength = new ValidatePasswordLength();
         ValidatePasswordNumber validatePasswordNumber = new ValidatePasswordNumber();
         ValidatePasswordCapitalLetter validatePasswordCapitalLetter = new ValidatePasswordCapitalLetter();
@@ -21,7 +22,15 @@ public class PasswordMain {
         passwordCriteria.add(validatePasswordSpecialCharacter);
         passwordCriteria.add(validatePasswordDictionary);
 
-        String password = "P4ssw0rd$";
+        validatePassword.setPasswordCriteria(passwordCriteria);
+        String password = "*_aroco20!-?";
+        //String password = "P4ssw0rd$";
+
+        if(validatePassword.validatePassword(password)){
+            System.out.println("domain.Password length... OK");
+        }else{
+            System.out.println("domain.Password length... NOT OK");
+        }
 
 
         // Test password length
