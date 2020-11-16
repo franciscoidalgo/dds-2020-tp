@@ -22,6 +22,7 @@ public class Organizacion extends EntidadPersistente {
     }
 
     public Organizacion() {
+        this.entidades = new ArrayList<>();
     }
 
     //getter y setters

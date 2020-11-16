@@ -11,13 +11,14 @@ import spark.Spark;
 public class Server {
     public static void main(String[] args) throws Exception {
         //iniciarCategoriasAFIP();
+
         //Spark.port(Integer.parseInt(System.getenv("PORT")));
         Spark.port(9000);
         Router.init();
         //DebugScreen.enableDebugScreen();
     }
 
-    /*
+
     private static void iniciarCategoriasAFIP() {
         Repositorio<Sector> sectorRepositorio = FactoryRepo.get(Sector.class);
         if (sectorRepositorio.buscarTodos().isEmpty()) {
@@ -55,12 +56,12 @@ public class Server {
 
             //Construccion
             Sector sectorConst = new Sector("Construccion", "Construccion");
-            sectorServicio.agregateCategoria(new Categoria(12, 19450000, "Micro"));
-            sectorServicio.agregateCategoria(new Categoria(45, 115370000, "Pequena"));
-            sectorServicio.agregateCategoria(new Categoria(200, 643710000, "Mediana - Tramo 1"));
-            sectorServicio.agregateCategoria(new Categoria(590, 965460000, "Mediana - Tramo 2"));
-            sectorRepositorio.agregar(sectorServicio);
+            sectorConst.agregateCategoria(new Categoria(12, 19450000, "Micro"));
+            sectorConst.agregateCategoria(new Categoria(45, 115370000, "Pequena"));
+            sectorConst.agregateCategoria(new Categoria(200, 643710000, "Mediana - Tramo 1"));
+            sectorConst.agregateCategoria(new Categoria(590, 965460000, "Mediana - Tramo 2"));
+            sectorRepositorio.agregar(sectorConst);
         }
     }
-     */
+
 }
