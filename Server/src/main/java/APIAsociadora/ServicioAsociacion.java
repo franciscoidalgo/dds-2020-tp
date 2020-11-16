@@ -17,7 +17,7 @@ public class ServicioAsociacion {
 
     private ServicioAsociacion (){
         this.retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:9001/")
+                .baseUrl("https://gesoc-vinculador.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
