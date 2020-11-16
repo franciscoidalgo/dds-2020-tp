@@ -16,10 +16,11 @@ import repositorios.factories.FactoryRepo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
-import java.io.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,7 +74,6 @@ public class ControllerEgresos extends Controller {
         try {
 
             OperacionEgreso operacionEgreso = FactoryEgreso.get(request);
-
             /*********************** EDICION **********************/
             Integer idEgreso = request.session().attribute("idEgreso");
 
@@ -88,7 +88,7 @@ public class ControllerEgresos extends Controller {
                     egresoAEditar.setMontoTotal(operacionEgreso.getMontoTotal());
 
                     repoEgreso.modificar(operacionEgreso);
-                    request.session().attribute("egreso_actual", egresoAEditar.getId() );
+                    request.session().attribute("egreso_actual", egresoAEditar.getId());
                     mensajeRta.addProperty("idEgreso", "" + egresoAEditar.getId());
                     response.status(200);
 
@@ -133,7 +133,12 @@ public class ControllerEgresos extends Controller {
     }
 
     public String pasarEgresosSegunID(Request request, Response response) {
-        OperacionEgreso egreso = getEgresofromRequest(request);
+        Entidad entidad = this.getEntidadFromRequest(request);
+        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
+        OperacionEgreso egreso = entidad.getOperacionesEgreso().stream()
+                .filter(operacionEgreso -> operacionEgreso.getId() == idEgreso)
+                .findFirst().get();
+
         EgresoDTO egresoDTO = generarEgresoDTO(egreso);
         response.type("application/json");
 
@@ -174,7 +179,6 @@ public class ControllerEgresos extends Controller {
         Entidad entidad = this.getEntidadFromRequest(request);
 
         List<EgresoDTO> egresoDTOList = convertirEgresosEnEgresosDTO(entidad.getOperacionesEgreso());
-
         response.type("application/json");
         return gson.toJson(egresoDTOList);
     }
@@ -187,7 +191,7 @@ public class ControllerEgresos extends Controller {
 
         OperacionEgreso egreso = getEgresofromRequest(request);
         entidad = FactoryRepo.get(Entidad.class).buscarTodos().stream()
-                            .filter(entidad1 -> entidad1.realizasteOperacion(egreso)).findFirst().get();
+                .filter(entidad1 -> entidad1.realizasteOperacion(egreso)).findFirst().get();
 
         mensaje = repositorioMensaje.buscar(egreso.getId());
         mensaje.actualizateLeido();
@@ -310,18 +314,17 @@ public class ControllerEgresos extends Controller {
         return response;
     }
 
-    private String generarPath(String id){
-        return "src/main/resources/comprobantes/"+"egreso-"+ id +".pdf";
+    private String generarPath(String id) {
+        return "src/main/resources/comprobantes/" + "egreso-" + id + ".pdf";
     }
 
     public byte[] getImagenComprobante(Request request, Response response) throws IOException {
         Path path = Paths.get(generarPath(request.params("id")));
         byte[] archivo = Files.readAllBytes(path);
         response.type("application/pdf");
-        response.header("Content-Disposition","inline");
+        response.header("Content-Disposition", "inline");
         return archivo;
     }
-
 
 
 }
