@@ -9,6 +9,10 @@ public class ConverterEgreso {
     public static EgresoDTO generarEgresoDTO(OperacionEgreso egreso) {
         EgresoDTO egresoDTO = new EgresoDTO();
         egresoDTO.setId(egreso.getId());
+
+        System.out.println("Converter ------>"+egreso.getDetalle().getPedidos().size()+"-----> id:" +egreso.getId());
+
+
         egresoDTO.setPedido(egreso.getDetalle().getPedidos());
         egresoDTO.setCantPresupuestos(egreso.getCantPresupuestos());
         egresoDTO.setDetalle(egreso.getDetalle());

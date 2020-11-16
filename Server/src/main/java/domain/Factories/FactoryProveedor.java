@@ -19,14 +19,13 @@ public class FactoryProveedor {
         JsonElement jsonElement = parser.parse(request.body());//Parseando la request
 
         JsonObject rootObject = jsonElement.getAsJsonObject();// pasando a objeto
-        JsonObject jProveedor = rootObject.getAsJsonObject("proveedor");//busco en propiedad Proveedor
+        JsonObject jProveedorAux = rootObject.getAsJsonObject("proveedor");//busco en propiedad Proveedor
 
-        int idProveedor = jProveedor.get("id").getAsInt();
-
-        System.out.println(idProveedor);
+        int idProveedor = jProveedorAux.get("id").getAsInt();
         Proveedor proveedor = proveedorRepositorio.buscar(idProveedor);
 
         if(proveedor == null || idProveedor<0){
+            JsonObject jProveedor = jProveedorAux.getAsJsonObject("proveedor");
             proveedor = new Proveedor();
             direccionPostal = new DireccionPostal();
             proveedor.setCUIT(jProveedor.get("cuit").getAsInt());

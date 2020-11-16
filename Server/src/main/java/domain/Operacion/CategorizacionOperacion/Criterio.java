@@ -1,5 +1,6 @@
 package domain.Operacion.CategorizacionOperacion;
 
+import domain.Entidad.CategorizacionEmpresa.Categoria;
 import domain.Entidad.EntidadPersistente;
 
 import javax.persistence.*;
@@ -21,6 +22,35 @@ public class Criterio extends EntidadPersistente {
     @JoinColumn(name = "criterio_id")
     private List<CategoriaOperacion> categorias;
 
+    public class CriterioDTO{
+        private int id;
+        private String nombre;
+        private List<CategoriaOperacion> categorias;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public List<CategoriaOperacion> getCategorias() {
+            return categorias;
+        }
+
+        public void setCategorias(List<CategoriaOperacion> categorias) {
+            this.categorias = categorias;
+        }
+    }
     //Constructores
     public Criterio(String nombre, Criterio criterioHijo) {
         this.nombre = nombre;
@@ -72,5 +102,11 @@ public class Criterio extends EntidadPersistente {
         this.categorias.remove(categoriaOperacion);
     }
 
-
+    public CriterioDTO toDTO(){
+        CriterioDTO criterioDTO = new CriterioDTO();
+        criterioDTO.setCategorias(this.categorias);
+        criterioDTO.setId(this.getId());
+        criterioDTO.setNombre(this.nombre);
+        return criterioDTO;
+    }
 }

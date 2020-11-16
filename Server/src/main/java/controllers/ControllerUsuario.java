@@ -1,6 +1,8 @@
 package controllers;
 
 import domain.Entidad.*;
+import domain.Entidad.CategorizacionEmpresa.Categoria;
+import domain.Operacion.CategorizacionOperacion.Criterio;
 import domain.Password.*;
 import domain.Usuario.RolAdministrador;
 import domain.Usuario.Usuario;
@@ -10,13 +12,15 @@ import repositorios.factories.FactoryRepo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ControllerUsuario extends Controller {
 
-    public ModelAndView mostrarUsuario(Request request, Response response){
+    public ModelAndView mostrarUsuario(Request request, Response response) {
         Map<String, Object> parametros = new HashMap<>();
         Usuario usuario = getUsuarioFromRequest(request);
         Entidad entidad = getEntidadFromRequest(request);
@@ -25,30 +29,32 @@ public class ControllerUsuario extends Controller {
         List<Empresa> empresas = organizacion.getEmpresas();
         List<OrganizacionSocial> organizacionesSociales = organizacion.getOrganizacionSociales();
         List<EntidadBase> entidadBases = organizacion.getEntidadesBase();
-
+        List<Criterio> criterios = entidad.mostrarTodosCriterios();
 
         //entidad instanceof EntidadBase no funca! => Sol trambolica
         Empresa empresa = FactoryRepo.get(Empresa.class).buscar(entidad.getId());
         EntidadBase entidadBase = FactoryRepo.get(EntidadBase.class).buscar(entidad.getId());
         OrganizacionSocial organizacionSocial = FactoryRepo.get(OrganizacionSocial.class).buscar(entidad.getId());
 
-        if(null != empresa){
+        if (null != empresa) {
             parametros.put("seleccionadaEmpresa", empresa);
         }
-        if(null != entidadBase){
+        if (null != entidadBase) {
             parametros.put("seleccionadaBase", entidadBase);
         }
-        if(null != organizacionSocial){
+        if (null != organizacionSocial) {
             parametros.put("seleccionadaOS", organizacionSocial);
         }
 
         parametros.put("usuario", usuario);
         parametros.put("rol", usuario.getRol() instanceof RolAdministrador);
         parametros.put("organizacion", organizacion);
-        parametros.put("entidadSeleccionada",  entidad);
+        parametros.put("entidadSeleccionada", entidad);
         parametros.put("entidadesBase", entidadBases);
         parametros.put("orgSociales", organizacionesSociales);
         parametros.put("empresas", empresas);
+
+        parametros.put("criterios", criterios);
         return new ModelAndView(parametros, "usuario.hbs");
     }
 
@@ -60,7 +66,7 @@ public class ControllerUsuario extends Controller {
         usuario.setNombre(nombre);
         repositorio.modificar(usuario);
         response.status(200);
-
+        response.type("application/json");
         return "{\"mensaje\":\"ok\"}";
     }
 
@@ -72,7 +78,7 @@ public class ControllerUsuario extends Controller {
         usuario.setApellido(apellido);
         repositorio.modificar(usuario);
         response.status(200);
-
+        response.type("application/json");
         return "{\"mensaje\":\"ok\"}";
     }
 
@@ -82,14 +88,9 @@ public class ControllerUsuario extends Controller {
         String password = request.body();
         Guava256Hasher guava = new Guava256Hasher();
         String passwordHash = guava.hashPassword(password);
+        ValidatePassword validatePassword = instanciarValidadorPassword();
 
-        //TODO INSTANCIAR ESTO EN OTRO LADO!
-        ValidatePassword validatePassword = new ValidatePassword();
-        validatePassword.addCriteria(new ValidatePasswordLength());
-        validatePassword.addCriteria(new ValidatePasswordNumber());
-        validatePassword.addCriteria(new ValidatePasswordCapitalLetter());
-        validatePassword.addCriteria(new ValidatePasswordSpecialCharacter());
-        validatePassword.addCriteria(new ValidatePasswordDictionary());
+        response.type("application/json");
 
         if (validatePassword.validatePassword(password)) {
             usuario.setPassword(passwordHash);
@@ -97,6 +98,7 @@ public class ControllerUsuario extends Controller {
             response.status(200);
             return "{\"mensaje\":\"ok\"}";
         } else {
+
             response.status(400);
             return "{\"mensaje\":\"No se puede agregar\"}";
         }
@@ -115,11 +117,31 @@ public class ControllerUsuario extends Controller {
 
         usuario.setEntidadPertenece(entidad);
         usuarioFactoryRepo.modificar(usuario);
+        response.type("application/json");
         response.status(200);
         return "{\"mensaje\":\"ok\"}";
 
     }
 
 
+    private ValidatePassword instanciarValidadorPassword() {
+        ValidatePassword validatePassword = new ValidatePassword();
+        ValidatePasswordLength validatePasswordLength = new ValidatePasswordLength();
+        ValidatePasswordNumber validatePasswordNumber = new ValidatePasswordNumber();
+        ValidatePasswordCapitalLetter validatePasswordCapitalLetter = new ValidatePasswordCapitalLetter();
+        ValidatePasswordSpecialCharacter validatePasswordSpecialCharacter = new ValidatePasswordSpecialCharacter();
+        ValidatePasswordDictionary validatePasswordDictionary = new ValidatePasswordDictionary();
 
+        ArrayList<PasswordCriteria> passwordCriteria = new ArrayList<>();
+
+        passwordCriteria.add(validatePasswordLength);
+        passwordCriteria.add(validatePasswordNumber);
+        passwordCriteria.add(validatePasswordCapitalLetter);
+        passwordCriteria.add(validatePasswordSpecialCharacter);
+        passwordCriteria.add(validatePasswordDictionary);
+
+        validatePassword.setPasswordCriteria(passwordCriteria);
+
+        return validatePassword;
+    }
 }

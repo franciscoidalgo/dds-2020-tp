@@ -120,7 +120,7 @@
                             <p><span>Sector:</span> {{seleccionadaEmpresa.sector.nombre}}</p>
                             <p><span>Categoria:</span> {{seleccionadaEmpresa.categoria.nombre}}</p>
                         {{/if}}
-                        <p><span>direccionPostal:</span>
+                        <p><span>Direccion:</span>
                             {{#if seleccionadaOS}}
                                 {{seleccionadaOS.direccionPostal.calle}} {{seleccionadaOS.direccionPostal.altura}} {{seleccionadaOS.direccionPostal.piso}} {{seleccionadaOS.direccionPostal.dpto}}
                                 ,{{seleccionadaOS.direccionPostal.ciudad}}, {{seleccionadaOS.direccionPostal.provincia}}
@@ -137,10 +137,12 @@
                         <div>
                             <p><span>CUIT:</span> {{seleccionadaOS.cuit}}{{seleccionadaEmpresa.cuit}}</p>
                             {{#if seleccionadaEmpresa}}
+                                <p><span>IGJ:</span>{{seleccionadaEmpresa.codIGJ}}</p>
                                 <p><span>Actividad:</span> {{seleccionadaEmpresa.actividad}}</p>
                                 <p><span>Cantidad de Personal:</span> {{seleccionadaEmpresa.cantPersonal}}</p>
                                 <p><span>Promedio de ventas:</span>{{seleccionadaEmpresa.promVentasAnual}}</p>
                             {{/if}}
+
                         </div>
                     {{/unless}}
                 </div>
@@ -286,53 +288,36 @@
                 <div class="d-flex jc-sb">
                     <div class="contenedor-entrada">
                         <form id="cambiar-criterios">
-                            <label for="seleccion-entidad-criterios">Entidad</label>
-                            <br>
-                            <select name="seleccion-entidad-criterios" id="seleccion-entidad-criterios">
-                                <option value="" disabled selected>-- Seleccione --</option>
-                                <optgroup label="Empresas">
-                                    {{#each empresas}}
-                                        <option value={{id}}>{{nombre}}</option>
-                                    {{/each}}
-                                </optgroup>
-                                <optgroup label="Organizaciones Sociales">
-                                    {{#each orgSociales}}
-                                        <option value={{id}}>{{nombre}}</option>
-                                    {{/each}}
-                                </optgroup>
-                                <optgroup label="Entidades Base">
-                                    {{#each entidadesBase}}
-                                        <option value={{id}}>{{nombre}}</option>
-                                    {{/each}}
-                                </optgroup>
-                            </select>
-                            <br>
-                            <label for="criterios">Criterio</label>
+                            <label for="criterios">Criterios de la entidad</label>
                             <br>
                             <select name="criterios" id="criterios">
                                 <option value="" disabled selected>-- Seleccione --</option>
+                                <option value="-1">Nuevo en raiz</option>
+                                {{#each criterios}}
+                                    <option value="{{id}}">{{nombre}}</option>
+                                {{/each}}
                             </select>
                             <input type="submit" id="btn-editar-criterios" name="btn-editar-criterios"
                                    class="btn btn-formulario"
-                                   value="Editar">
+                                   value="Cambiar nombre" hidden>
                             <br>
-                            <div class="d-flex">
-                                <input type="button" id="btn-borrar-criterios" name="btn-borrar-criterios"
-                                       class="btn btn-formulario-danger"
-                                       value="Borrar">
-
-                                <input type="button" id="btn-nuevo-criterios" name="btn-nuevo-criterios"
-                                       class="btn btn-formulario"
-                                       value="Nuevo">
-                            </div>
+                            <label for="nuevo-criterio">Criterio</label>
+                            <br>
+                            <p><em>Si seleccionas Nuevo, se agregara como hijo del criterio seleccionado en Criterio de
+                                la entidad</em></p>
+                            <br>
+                            <input type="text" name="nuevo-criterio" id="nuevo-criterio" minlength="1"
+                                   title="Ingrese nombre criterio" placeholder="Ingrese nombre criterio..."
+                            >
+                            <input type="button" id="btn-nuevo-criterios" name="btn-nuevo-criterios"
+                                   class="btn btn-formulario"
+                                   value="Nuevo criterio">
                         </form>
 
                     </div>
                 </div>
                 <hr>
                 <!-- Categorias -->
-
-                <h3>Configuración Categorias</h3>
                 <div class="d-flex jc-sb">
                     <div class="contenedor-entrada">
                         <form id="cambiar-categorias">
@@ -340,20 +325,22 @@
                             <br>
                             <select name="categorias" id="categorias">
                                 <option value="" disabled selected>-- Seleccione --</option>
+                                <option value="-1">Nueva categoria</option>
                             </select>
                             <input type="submit" id="btn-editar-categorias" name="btn-editar-categorias"
                                    class="btn btn-formulario"
                                    value="Editar">
                             <br>
-                            <div class="d-flex">
-                                <input type="button" id="btn-borrar-categorias" name="btn-borrar-categorias"
-                                       class="btn btn-formulario-danger"
-                                       value="Borrar">
-
-                                <input type="button" id="btn-nuevo-categorias" name="btn-nuevo-categorias"
-                                       class="btn btn-formulario"
-                                       value="Nuevo">
-                            </div>
+                            <p><em>Si seleccionas Nuevo, se agregara criterio seleccionado en Criterio de la
+                                entidad</em></p>
+                            <br>
+                            <label for="nueva-categoria">Nueva categoria</label>
+                            <br>
+                            <input type="text" name="nueva-categoria" id="nueva-categoria" minlength="1"
+                                   title="Ingrese nombre categoria" placeholder="Ingrese nombre categoria...">
+                            <input type="button" id="btn-nuevo-categoria" name="btn-nuevo-categoria"
+                                   class="btn btn-formulario"
+                                   value="Nueva categoria">
                         </form>
 
                     </div>
@@ -408,6 +395,7 @@
 
 {{#if rol}}
     <script type="module" src="js/gestion/organizacion.js" defer></script>
+    <script type="module" src="js/gestion/criterioCategoria.js" defer></script>
 {{/if}}
 
 <script type="module" src="js/usuario.js" defer></script>

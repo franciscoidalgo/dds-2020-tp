@@ -271,7 +271,7 @@ function getProveedor() {
     let jProveedor = {proveedor: {}}
     let esTextboxRazonSocial = document.getElementById("razon-social").hasAttribute("type", "text");
 
-    jProveedor.proveedor.razonSocial = !esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : desplegable.razonSocial.value;
+    jProveedor.proveedor.razonSocial = !esTextboxRazonSocial ? contenidoSeleccionadoEn(desplegable.razonSocial).innerText : document.getElementById("razon-social").value;
     jProveedor.proveedor.cuit = entrada.cuit.value;
     jProveedor.proveedor.pais = contenidoSeleccionadoEn(desplegable.pais).innerText;
     jProveedor.proveedor.provincia = contenidoSeleccionadoEn(desplegable.provincia).innerText;
@@ -303,6 +303,7 @@ function getTemplateJson() {
     jsonTemplate.idCategorias = jCategorias.idCategorias;
     jsonTemplate.proveedor = getProveedor();
     jsonTemplate.comprobante = getComprobante();
+
     return jsonTemplate;
 }
 

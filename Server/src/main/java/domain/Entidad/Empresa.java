@@ -222,19 +222,12 @@ public class Empresa extends EntidadJuridica implements Categorizable {
         return categoria;
     }
 
-    public String nombre() {
+    public String getNombre() {
         return this.nombre;
     }
 
-    public String descripcion() {
-        String template = "Una empresa "+this.actividad+
-                           "("+this.codIGJ+")"+
-                            "En la que trabaja "+this.cantPersonal+
-                            ", obteniendo un promedio de ventas de $"+this.promVentasAnual+"."+
-                           "Categorizada en la AFIP como "+this.sector.getNombre()+"-"+this.categoria.getNombre()+".";
-
-
-        return this.descripcion+ template;
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
     private void recategorizate(){
@@ -246,7 +239,7 @@ public class Empresa extends EntidadJuridica implements Categorizable {
 
     public EmpresaDTO toDTO(){
         EmpresaDTO empresaDTO = new EmpresaDTO();
-        empresaDTO.setNombre(this.nombre());
+        empresaDTO.setNombre(this.getNombre());
         empresaDTO.setCUIT(this.getCuit());
         empresaDTO.setDescripcion(this.getDescripcion());
         empresaDTO.setDireccionPostal(this.getDireccionPostal());
