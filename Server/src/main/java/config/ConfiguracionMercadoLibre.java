@@ -1,5 +1,5 @@
 package config;
 
 public class ConfiguracionMercadoLibre {
-    public static boolean usarApi =true;
+    public static boolean usarApi =false;
 }

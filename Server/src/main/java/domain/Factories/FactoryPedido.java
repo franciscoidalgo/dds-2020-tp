@@ -23,8 +23,6 @@ public class FactoryPedido {
         JsonElement jsonElement = parser.parse(request.body());
         JsonObject rootObject = jsonElement.getAsJsonObject();
         JsonArray jPedido = rootObject.getAsJsonArray("pedido");
-        System.out.println("----> Cantidad de pedidos: " + jPedido.size());
-
         for (JsonElement columnElement : jPedido) {
             Pedido pedido = new Pedido();
             JsonObject field = columnElement.getAsJsonObject();
