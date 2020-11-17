@@ -2,10 +2,14 @@ package domain.Operacion.Egreso;
 
 import domain.Entidad.EntidadPersistente;
 import domain.Operacion.CategorizacionOperacion.CategoriaOperacion;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -13,11 +17,11 @@ import java.util.stream.Collectors;
 public class DetalleOperacion extends EntidadPersistente {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Pedido> pedidos;
+    private Set<Pedido> pedidos;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch =  FetchType.EAGER)
     @JoinTable(name = "asociacion_categoria")
-    private List<CategoriaOperacion> categorias;
+    private Set<CategoriaOperacion> categorias;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "proveedor_id")
@@ -29,22 +33,22 @@ public class DetalleOperacion extends EntidadPersistente {
 
     //Constructors
     public DetalleOperacion(Proveedor proveedor) {
-        this.pedidos = new ArrayList<>();
-        this.categorias = new ArrayList<>();
+        this.pedidos = new HashSet<>();
+        this.categorias = new HashSet<>();
         this.proveedor = proveedor;
         this.comprobante = null;
     }
 
     public DetalleOperacion(Proveedor proveedor, List<Pedido> items, List<CategoriaOperacion> categoriaOperaciones, Comprobante comprobante) {
-        this.pedidos = items;
-        this.categorias = categoriaOperaciones;
+        this.pedidos = new HashSet<>(items);
+        this.categorias = new HashSet<>(categoriaOperaciones);
         this.proveedor = proveedor;
         this.comprobante = comprobante;
     }
 
     public DetalleOperacion() {
-        this.pedidos = new ArrayList<>();
-        this.categorias = new ArrayList<>();
+        this.pedidos = new HashSet<>();
+        this.categorias = new HashSet<>();
 
     }
 
@@ -52,7 +56,7 @@ public class DetalleOperacion extends EntidadPersistente {
 
 
     public void setCategoriaOperacion(List<CategoriaOperacion> categorias) {
-        this.categorias = categorias;
+        this.categorias = new HashSet<>(categorias);
     }
 
     public Proveedor getProveedor() {
@@ -72,15 +76,15 @@ public class DetalleOperacion extends EntidadPersistente {
     }
 
     public List<Pedido> getPedidos() {
-        return pedidos;
+        return new ArrayList<>(pedidos);
     }
 
     public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
+        this.pedidos = new HashSet<>(pedidos);
     }
 
     public List<CategoriaOperacion> getCategorias() {
-        return categorias;
+        return new ArrayList<>(categorias);
     }
 
 

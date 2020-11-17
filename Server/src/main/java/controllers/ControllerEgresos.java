@@ -137,12 +137,14 @@ public class ControllerEgresos extends Controller {
     }
 
     public String pasarEgresosSegunID(Request request, Response response) {
+        /*
         Entidad entidad = this.getEntidadFromRequest(request);
         Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
         OperacionEgreso egreso = entidad.getOperacionesEgreso().stream()
                 .filter(operacionEgreso -> operacionEgreso.getId() == idEgreso)
                 .findFirst().get();
-
+        */
+        OperacionEgreso egreso = FactoryRepo.get(OperacionEgreso.class).buscar(Integer.parseInt(request.params("idEgreso")));
         EgresoDTO egresoDTO = generarEgresoDTO(egreso);
         response.type("application/json");
 
@@ -271,13 +273,17 @@ public class ControllerEgresos extends Controller {
 
     public String agregarRevisor(Request request, Response response) {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(TypeAdapterHibernate.FACTORY).create();
+        Entidad entidad = this.getEntidadFromRequest(request);
+        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
+        OperacionEgreso egreso = entidad.getOperacionesEgreso().stream()
+                .filter(operacionEgreso -> operacionEgreso.getId() == idEgreso)
+                .findFirst().get();
+
         Usuario usuario = getUsuarioFromRequest(request);
-        OperacionEgreso egreso = getEgresofromRequest(request);
         JsonObject mensajeRta = new JsonObject();
 
-        usuario.darseDeAltaEn(egreso);
+        egreso.agregateRevisor(usuario);
         egreso.validaOperacion();
-        FactoryRepo.get(Usuario.class).modificar(usuario);
         FactoryRepo.get(OperacionEgreso.class).modificar(egreso);
         mensajeRta.addProperty("mensaje", "Operacion Realizada");
         response.type("application/json");

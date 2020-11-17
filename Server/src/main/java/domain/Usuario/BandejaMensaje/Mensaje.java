@@ -8,6 +8,7 @@ import domain.Operacion.Egreso.Proveedor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -95,7 +96,7 @@ public class Mensaje extends EntidadPersistente {
 
         this.asunto = " Egreso#"+ egreso.getId() +
                       "--" + proveedor.getRazonSocial() +
-                      "--$" + egreso.montoTotal() +
+                      "--$" + BigDecimal.valueOf(egreso.montoTotal()).setScale(2) +
                       "--" + fechaEnvio.toString()+
                       "--" + resultadoValidacion ;
         this.mensaje = detalleResultado;

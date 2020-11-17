@@ -75,5 +75,4 @@ desplegable.criterioPadre.onchange = () => {
     if (puedeBuscarCategoria) {
         cargarDesplegableCategoria()
     }
-    boton.editarCriterio.hidden = !puedeBuscarCategoria;
 }
