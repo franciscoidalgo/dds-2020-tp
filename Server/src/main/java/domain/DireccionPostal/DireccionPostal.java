@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Direccion")
+@Table(name = "direccion")
 public class DireccionPostal extends EntidadPersistente {
 
     @Column(name = "pais")
