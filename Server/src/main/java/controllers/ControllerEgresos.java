@@ -102,6 +102,7 @@ public class ControllerEgresos extends Controller {
             }
 
             usuarioLogueado.realizaOperacion(operacionEgreso);
+            usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
             request.session().attribute("egreso_actual", operacionEgreso.getId());
 
