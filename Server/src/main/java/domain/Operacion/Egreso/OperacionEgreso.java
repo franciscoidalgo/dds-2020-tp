@@ -36,7 +36,7 @@ public class OperacionEgreso extends Operacion {
     )
     private List<Usuario> revisores;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Presupuesto> presupuestos;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -193,6 +193,9 @@ public class OperacionEgreso extends Operacion {
 
     public boolean tenesFechaIgualOAnterior(LocalDate fechaMax) {
         return this.fecha.isBefore(fechaMax) || this.fecha.isEqual(fechaMax);
+    }
+    public boolean tenesFechaDespuesDe(LocalDate fechaMax) {
+        return this.fecha.isAfter(fechaMax) || this.fecha.isEqual(fechaMax);
     }
 
     public int cantPresupuestosFaltantes() {

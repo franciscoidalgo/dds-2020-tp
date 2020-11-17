@@ -78,7 +78,10 @@ public class ControllerEgresos extends Controller {
             Integer idEgreso = request.session().attribute("idEgreso");
 
             if (null != idEgreso) {//Si tiene ese valor en el session => Edita
-                OperacionEgreso egresoAEditar = getEgresofromRequest(request);
+                Entidad entidad = getEntidadFromRequest(request);
+
+                OperacionEgreso egresoAEditar = entidad.getOperacionesEgreso().stream().filter(operacionEgreso1 -> operacionEgreso1.getId() == idEgreso).findFirst().get();
+
                 if (puedeEditarse(egresoAEditar, operacionEgreso)) {
                     request.session().removeAttribute("idEgreso");
                     egresoAEditar.setMedioDePago(operacionEgreso.getMedioDePago());
@@ -212,7 +215,7 @@ public class ControllerEgresos extends Controller {
         List<OperacionEgreso> egresos = entidad.getOperacionesEgreso();
 
         egresos = egresos.stream()
-                .filter(egreso -> egreso.tenesFechaIgualOAnterior(LocalDate.from(fechaMax)))
+                .filter(egreso -> egreso.tenesFechaDespuesDe(LocalDate.from(fechaMax)))
                 .collect(Collectors.toList());
 
         egresos.forEach(egreso -> egresoDTOList.add(generarEgresoDTO(egreso)));
