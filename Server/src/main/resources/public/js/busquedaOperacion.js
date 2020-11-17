@@ -24,7 +24,7 @@ const boton = {
     verTodas: document.getElementById("btn-ver-todas")
 }
 
-let categoriasSeleccionadas = {idCategorias:[]}
+let categoriasSeleccionadas = {idCategorias: []}
 
 function renderizarIngreso() {
     let url = '/ingreso/buscar/todos'
@@ -54,12 +54,25 @@ function renderizarEgreso() {
 
 function armarIngreso(data) {
     let tablaIngresos = crearTablaIngresos(data);
-    seccion.operacion.appendChild(tablaIngresos);
+    if (data.length > 0) {
+        seccion.operacion.appendChild(tablaIngresos);
+    }else{
+        let mensaje = `<p><em>No se encontraron egresos</em></p>`
+        seccion.operacion.innerHTML += mensaje;
+    }
+    document.getElementById("mensaje-resultado").hidden=false
 }
 
 function armarEgreso(data) {
     let tablaEgresos = crearTablaEgresos(data);
-    seccion.operacion.appendChild(tablaEgresos);
+    if (data.length > 0) {
+        seccion.operacion.appendChild(tablaEgresos);
+    }else{
+
+        let mensaje = `<p><em>No se encontraron egresos</em></p>`
+        seccion.operacion.innerHTML += mensaje;
+    }
+    document.getElementById("mensaje-resultado").hidden=false
 }
 
 function agregarEnCategoria(idCategoria, idDesplegable, contenido) {
@@ -82,7 +95,7 @@ desplegable.operacion.onchange = () => {
 
 boton.verTodas.onclick = () => {
     let seleccion = desplegable.operacion.value;
-    seccion.operacion.innerHTML="";
+    seccion.operacion.innerHTML = "";
     if (seleccion === "egreso") {
         seccion.seleccionCriterio.hidden = false;
         seccion.seleccionCategoria.hidden = false;
@@ -137,7 +150,7 @@ boton.buscarEgreso.onclick = () => {
         },
         body: JSON.stringify(categoriasSeleccionadas)
     }
-    seccion.operacion.innerHTML="";
+    seccion.operacion.innerHTML = "";
     mostrarLoader();
     fetch(url, init)
         .then(response => response.json())

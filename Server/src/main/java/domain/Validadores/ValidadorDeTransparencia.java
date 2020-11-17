@@ -54,7 +54,7 @@ public class ValidadorDeTransparencia {
     }
 
     public Boolean validaEgreso(OperacionEgreso unEgreso) throws Exception {
-        /*
+        
         Optional<Boolean> resultado = this.criteriosValidadores.stream()
                 .map(unCriterio -> unCriterio.validaEgreso(unEgreso))
                 .reduce(Boolean::logicalAnd);
@@ -63,13 +63,14 @@ public class ValidadorDeTransparencia {
         }else{
             throw new Exception("Hubo un error al validar");
         }
-        */
+
+        /*
         Boolean resultadoAux = true;
         for(CriterioValidacion criterioValidacion : this.criteriosValidadores){
             resultadoAux = resultadoAux && criterioValidacion.validaEgreso(unEgreso);
         }
         return resultadoAux;
-
+*/
     }
 
     public void realizaValidacionAutomatica(OperacionEgreso unEgreso) {

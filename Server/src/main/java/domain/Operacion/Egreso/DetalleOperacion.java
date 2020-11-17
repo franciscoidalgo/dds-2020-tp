@@ -92,10 +92,7 @@ public class DetalleOperacion extends EntidadPersistente {
 
     public Boolean coincidenPedido(DetalleOperacion unDetalle) {
         return unDetalle.getPedidos().stream().
-                anyMatch(pedido -> (long) unDetalle.getPedidos().size() == (long) this.pedidos.size() &&
-                        pedido.coincidenPedidos(this.getPedidos())
-
-                );
+                anyMatch(pedido -> pedido.coincidenPedidos(this.getPedidos())) ;
     }
 
     public Boolean coincidenProveedores(DetalleOperacion unDetalle) {

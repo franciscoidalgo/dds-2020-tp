@@ -1,0 +1,8 @@
+serverVinculador\ServerVinculador.class
+Vinculador\VinculadorAutomatico.class
+Criterio\CriterioAsociacion.class
+DTOs\DTOOperacionEgreso.class
+DTOs\DTOOperacionIngreso.class
+serverVinculador\ControllerVinculacion.class
+serverVinculador\RouterVinculacion.class
+Vinculador\VinculadorManual.class

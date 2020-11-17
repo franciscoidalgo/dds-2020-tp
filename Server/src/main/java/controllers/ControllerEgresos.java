@@ -78,7 +78,10 @@ public class ControllerEgresos extends Controller {
             Integer idEgreso = request.session().attribute("idEgreso");
 
             if (null != idEgreso) {//Si tiene ese valor en el session => Edita
-                OperacionEgreso egresoAEditar = getEgresofromRequest(request);
+                Entidad entidad = getEntidadFromRequest(request);
+
+                OperacionEgreso egresoAEditar = entidad.getOperacionesEgreso().stream().filter(operacionEgreso1 -> operacionEgreso1.getId() == idEgreso).findFirst().get();
+
                 if (puedeEditarse(egresoAEditar, operacionEgreso)) {
                     request.session().removeAttribute("idEgreso");
                     egresoAEditar.setMedioDePago(operacionEgreso.getMedioDePago());
@@ -102,6 +105,7 @@ public class ControllerEgresos extends Controller {
             }
 
             usuarioLogueado.realizaOperacion(operacionEgreso);
+            usuarioLogueado.darseDeAltaEn(operacionEgreso);
             repoEgreso.agregar(operacionEgreso);
             request.session().attribute("egreso_actual", operacionEgreso.getId());
 
@@ -188,12 +192,18 @@ public class ControllerEgresos extends Controller {
         Mensaje mensaje;
         EgresoDTO egresoDTO;
         Entidad entidad;
+        Integer idMensaje = Integer.parseInt(request.params("idMensaje"));
+        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
 
-        OperacionEgreso egreso = getEgresofromRequest(request);
+        OperacionEgreso egreso = getEntidadFromRequest(request).getOperacionesEgreso().stream()
+                .filter(operacionEgreso -> operacionEgreso.getId() == idEgreso)
+                .findFirst().get();
+
         entidad = FactoryRepo.get(Entidad.class).buscarTodos().stream()
                 .filter(entidad1 -> entidad1.realizasteOperacion(egreso)).findFirst().get();
 
-        mensaje = repositorioMensaje.buscar(egreso.getId());
+        mensaje = repositorioMensaje.buscar(idMensaje);
+
         mensaje.actualizateLeido();
 
         repositorioMensaje.modificar(mensaje);
@@ -211,7 +221,7 @@ public class ControllerEgresos extends Controller {
         List<OperacionEgreso> egresos = entidad.getOperacionesEgreso();
 
         egresos = egresos.stream()
-                .filter(egreso -> egreso.tenesFechaIgualOAnterior(LocalDate.from(fechaMax)))
+                .filter(egreso -> egreso.tenesFechaDespuesDe(LocalDate.from(fechaMax)))
                 .collect(Collectors.toList());
 
         egresos.forEach(egreso -> egresoDTOList.add(generarEgresoDTO(egreso)));

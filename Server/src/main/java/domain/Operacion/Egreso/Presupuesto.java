@@ -46,7 +46,7 @@ public class Presupuesto extends EntidadPersistente {
     }
 
     public Boolean coincidenPedido(OperacionEgreso unEgreso){
-        return detalle.coincidenPedido(unEgreso.getDetalle());
+        return this.detalle.coincidenPedido(unEgreso.getDetalle());
     }
 
     public Boolean coincideProveedor(OperacionEgreso unEgreso){

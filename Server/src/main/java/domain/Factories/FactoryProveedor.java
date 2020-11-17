@@ -28,7 +28,7 @@ public class FactoryProveedor {
             JsonObject jProveedor = jProveedorAux.getAsJsonObject("proveedor");
             proveedor = new Proveedor();
             direccionPostal = new DireccionPostal();
-            proveedor.setCUIT(jProveedor.get("cuit").getAsInt());
+            proveedor.setCUIT(jProveedor.get("cuit").getAsLong());
             proveedor.setRazonSocial(jProveedor.get("razonSocial").getAsString());
             proveedor.setRazonSocial(jProveedor.get("razonSocial").getAsString());
 

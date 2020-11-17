@@ -1,6 +1,7 @@
 import {esconderLoader, mostrarLoader} from "./loader.js";
 import {generarModalOK} from "./modal.js";
 import {agregateFilaEnTablaDetalleSimple} from "./tabla.js";
+import {generaCategoria} from "./categoria.js";
 
 const MENSAJE_REVISOR = 'Te agregaste como revisor de este egreso. Cuando se ejecute la tarea de validacion, recibiras un mensaje en la seccion "Resultados de Validaciones" ';
 
@@ -43,6 +44,7 @@ function buildTemplateEgreso(egreso, contenedorHTML) {
                 <p><span>Comprobante</span>: ${egreso.detalle.comprobante.tipoComprobante.nombre ==="Ninguno"?"No se selecciono comprobante":`<a id='ver-comprobante' href='comprobante/${egreso.id}' target="_blank">ver comprobante</a>`}</p>
                 <p><span># Presupuestos necesarios: </span>${egreso.cantPresupuestos}</p>
                 <p><span># Presupuestos faltantes: </span>${egreso.cantPresupuestosFaltantes}</p>
+                <p><span># Ingreso vinculado: </span>${egreso.idIngreso ===-1?" No esta vinculado":egreso.idIngreso}</p>
             </section>
             <section>
                 <h3>  Detalle de pedidos </h3>
@@ -234,7 +236,14 @@ function renderPresupuesto() {
         msg.hidden=false
     }
 }
+function buildCategorias(vectorCategorias) {
+    const contenedorHTML = document.getElementById("contenedor-categorias");
 
+    for (var i = 0; i < vectorCategorias.length; i++) {
+        let contenido = generaCategoria(vectorCategorias[i].id, vectorCategorias[i].descripcion, true);
+        contenedorHTML.appendChild(contenido);
+    }
+}
 function renderizarEgresoDetallado(dataEgreso, contenedorHTML) {
     presupuestos = dataEgreso.presupuestos;
     cantTotalPresupuestos = presupuestos.length;
@@ -245,6 +254,7 @@ function renderizarEgresoDetallado(dataEgreso, contenedorHTML) {
     buildBotonRevisar(dataEgreso);
     buildBotonModificar(dataEgreso);
     buildTablaDetalle(dataEgreso.detalle.pedidos, tablaEgreso, total);
+    buildCategorias(dataEgreso.detalle.categorias);
     renderPresupuesto();
     buildBotonSiguiente();
     buildBotonAnterior();
