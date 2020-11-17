@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Gesoc, es un Saas de gestion comercial. En Gesoc puedes gestionar y controlar tus operacion y proyectos.">
+    <title>GeSoc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;500&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="shortcut icon" href="/img/gsicon.png"/>
+
+</head>
+
+<body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
+<header class="contenedor-barra d-flex jc-sb">
+    <div class="ai-center txt-centrado">
+        <a href="#">
+            <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
+        </a>
+    </div>
+    <div class="d-flex jc-sb ai-center">
+        <label for="seleccion-entidad" style="color: white">Entidad seleccionada:</label>
+        <select id="seleccion-entidad" name="seleccion-entidad">
+            <option value="{{idSeleccionada}}"  selected disabled>{{nombreSeleccionada}}</option>
+            <optgroup label="Empresas">
+                {{#each empresas}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
+            </optgroup>
+            <optgroup label="Organizaciones Sociales">
+                {{#each orgSociales}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
+            </optgroup>
+            <optgroup label="Entidades Base">
+                {{#each entidadesBase}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
+            </optgroup>
+        </select>
+        <ul class="contenedor-menu d-flex jc-se">
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt" style="color:#dac5c7"></i></a></li>
+        </ul>
+    </div>
+</header>
+
+<section class="seccion">
+    <h2 class="float-r" style="text-transform: capitalize">Bienvenido {{usuario.nombre}}! ¿Qué hacemos hoy?</h2>
+    <div class="contenedor-cartas">
+        <!--Carta Egreso-->
+        <div class="carta">
+            <img src="/img/LoginFondo.jpg" alt="img-egreso">
+            <div class="contenido-carta txt-centrado">
+                <h3>Realizar Egreso</h3>
+                <p>Realiza la carga de una nueva operación de egreso para la empresa.</p>
+                <a href="egreso" class="btn btn-primario">Ir a Egresos</a>
+            </div>
+        </div>
+        <!--Carta Ingreso-->
+        <div class="carta">
+            <img src="/img/ingreso1.jpg" alt="img-ingreso">
+            <div class="contenido-carta txt-centrado">
+                <h3>Realizar Ingreso</h3>
+                <p>Realiza la carga de una nueva operación de ingreso para la empresa.</p>
+                <a href="ingreso" class="btn btn-primario">Ir a Ingresos</a>
+            </div>
+        </div>
+        <!--Carta Asociar Presupuesto-->
+        <div class="carta">
+            <img src="/img/presupuesto.jpg" alt="img-presupuesto">
+            <div class="contenido-carta txt-centrado">
+                <h3>Realizar Prespuesto</h3>
+                <p>Realiza un nuevo presupuesto para luego vincularlo a su egreso correspondiente, si éste lo requiere.</p>
+                <a href="presupuesto" class="btn btn-primario">Ir a Presupuesto</a>
+            </div>
+        </div>
+        <!--Carta IngresoEgreso-->
+        <div class="carta">
+            <img src="/img/IngresoEgreso.jpg" alt="img-ingreso-ingreso-egreso">
+            <div class="contenido-carta txt-centrado">
+                <h3>Resultado de las validaciones </h3>
+                <p>Verifica si una operación egreso ha superado los controles de validación propuestos por tu organización.</p>
+                <a href="mensajes" class="btn btn-primario">Ir a Resultados</a>
+            </div>
+        </div>
+        <!--Proyecto-->
+        <div class="carta">
+            <img src="/img/proyecto.jpg" alt="img-vinculacion">
+            <div class="contenido-carta txt-centrado">
+                <h3>Realizar Vinculacion</h3>
+                <p>Vincula una operación de egreso con una de ingreso para auditar un mejor estado de los balances de tu organización.</p>
+                <a href="vinculacion" class="btn btn-primario">Ir a Vincular</a>
+            </div>
+        </div>
+        <!--BusquedaOperacion-->
+        <div class="carta">
+            <img src="/img/busquedaOperacion.jpg" alt="img-busqueda-operacion">
+            <div class="contenido-carta txt-centrado">
+                <h3>Buscar Operacion</h3>
+                <p>Busca una operación de tu organización en particular.</p>
+                <a href="busquedaOperacion" class="btn btn-primario">Ir a Buscar</a>
+            </div>
+        </div>
+        <div class="carta">
+            <img src="/img/user.jpg" alt="img-usuario">
+            <div class="contenido-carta txt-centrado">
+                <h3>Panel personal</h3>
+                <p>Modifica tu perfil dentro de la organización.</p>
+                <a href="usuario" class="btn btn-primario">Ir al Panel</a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script type="module" src="js/loader.js"></script>
+<script type="module" src="js/seleccionEntidad.js"></script>
+</html>

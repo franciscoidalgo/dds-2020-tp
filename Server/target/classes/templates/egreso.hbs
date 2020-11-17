@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Gesoc, es un Saas de gestion comercial. En Gesoc puedes gestionar y controlar tus operacion y proyectos.">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    {{#if egreso}}
+        <title>Egresos</title>
+    {{else}}
+        <title>Presupuesto</title>
+    {{/if}}
+
+
+    <link rel="shortcut icon" href="/img/gsicon.png"/>
+
+
+</head>
+
+<body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
+<header class="contenedor-barra d-flex jc-sb">
+    <!--Menu Hamb -->
+    <button id="btn-menu"><i class="fas fa-bars"></i></button>
+    <nav id="navbar" class="navbar">
+        <ul class="d-flex f-dir-col contenido-navbar">
+            <div class="d-flex jc-sb ">
+                <h2 class="txt-centrado">Menu</h2>
+                <button id="btn-close" class="btn-primario"><i class="fas fa-times"></i></button>
+            </div>
+            <li><a href="usuario"><i class="fas fa-user"></i>Panel Personal</a></li>
+            <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
+            <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
+            <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
+            <li><a href="busquedaOperacion"><i class="fas fa-file-import"></i>Buscar Operacion</a></li>
+            <li><a href="vinculacion"><i class="fas fa-link"></i>Vincular Operaciones</a></li>
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+        </ul>
+    </nav>
+    <!--Logo -->
+    <div class="ai-center txt-centrado">
+        <a href="dashboard">
+            <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
+        </a>
+    </div>
+</header>
+<main class="seccion">
+    {{#if egreso}}
+        {{#if numeroEgreso}}
+            <h1>Editando Operacion Egreso#{{numeroEgreso}}</h1>
+        {{else}}
+            <h1> Operacion Egreso</h1>
+        {{/if}}
+
+    {{else}}
+        <h1> Presupuesto </h1>
+    {{/if}}
+    <form      {{#if egreso}}id="operacion-egreso" {{else}}  id="presupuesto"    {{/if}}>
+        <!-- Seccion Proveedor-->
+        <div id="burbuja-proveedor" class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="fas fa-truck-moving"></i></p>
+                <h3>Seleccion de Proveedor</h3>
+            </div>
+            <p><i class="fas fa-minus"></i></p>
+        </div>
+        <!-- Formulario Proveedor-->
+        <fieldset id="proveedor" class="burbuja ">
+            <div class="contenedor-entrada">
+                <div class="d-flex ">
+                    <div>
+                        <label for="razon-social">Razon Social</label><br>
+                        <select name="razon-social" id="razon-social" required>
+                            <option value="" disabled selected>-- Seleccione --</option>
+                            {{#each proveedores}}
+                                <option value={{id}} >{{razonSocial}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <input id="nueva-razon-social" type="button" value="Nueva Razon Social" class="btn btn-formulario"
+                           required>
+                </div>
+                <label for="cuit">Cuil/Cuit</label><br>
+                <input type="number" name="cuit" id="cuit" placeholder="Ingrese cuil o CUIT..." min="999999" disabled
+                       required><br>
+            </div>
+            <hr/>
+            <div class="contenedor-entrada">
+                <label for="pais">Pais</label><br>
+                <select name="pais" id="pais" disabled required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each paises}}
+                        <option value={{nombre}} >{{nombre}}</option>
+                    {{/each}}
+                </select>
+                <br>
+                <label for="provincia">Provincia</label><br>
+                <select name="provincia" id="provincia" disabled required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                </select><br>
+                <label for="ciudad">Ciudad</label><br>
+                <select name="ciudad" id="ciudad" disabled required>
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    <!--<option value="algo"  >algo</option>-->
+                </select><br>
+                <label for="calle">Calle</label><br>
+                <input type="text" name="calle" id="calle" pattern="[A-Za-z0-9\s]{1,}"
+                       title="No debe contener caracteres especiales" placeholder="Ingrese Direccion... " disabled
+                       required><br>
+                <div class="d-flex jc-sb contenedor-limitado">
+                    <div class="contenido-direccion">
+                        <label for="altura">Altura</label><br>
+                        <input type="number" name="altura" id="altura" min="0" placeholder="Altura... " disabled
+                               required>
+                    </div>
+                    <div class="contenido-direccion">
+                        <label for="piso">Piso</label><br>
+                        <input type="text" name="piso" id="piso" placeholder="Piso... " disabled>
+                    </div>
+                    <div class="contenido-direccion">
+                        <label for="dpto">Dpto</label><br>
+                        <input type="text" name="dpto" id="dpto" placeholder="Dpto... " disabled>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <!-- Seccion Detalle compra-->
+        <div id="burbuja-compra" class="burbuja d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="fas fa-cart-arrow-down"></i></p>
+                <h3>Detalle compra</h3>
+            </div>
+            <p><i class="fas fa-minus"></i></p>
+        </div>
+        <!-- Formulario Detalle compra-->
+        <fieldset id="detalle-compra" class="burbuja ">
+            <h4> Elementos Seleccionados</h4>
+            <p id='msg-tabla-vacia'><em>No ha ingresado ningun valor</em>.</p>
+            <table id="tabla-detalle" class="txt-centrado tabla tabla-detalle" hidden>
+                <thead class="fw-700 th-principal">
+                <tr>
+                    <th>Bien</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="tabla-detalle"></tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4" style="text-align: right"><em>Total:</em></td>
+                    <td id="total"></td>
+                </tr>
+                </tfoot>
+            </table>
+            <hr/>
+            <div class="contenedor-entrada">
+                <label for="tipoDeItem">Tipo de Bien</label><br>
+                <select name="tipoDeItem" id="tipoDeItem">
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each tipoItems}}
+                        <option value={{id}} >{{nombre}}</option>
+                    {{/each}}
+                </select>
+                <div class="d-flex ">
+                    <div>
+                        <label for="bien">Bien</label><br>
+                        <select name="bien" id="bien" disabled>
+                            <option value="" disabled selected>-- Seleccione --</option>
+                        </select>
+                    </div>
+
+                </div>
+                <br>
+                <div class="d-flex">
+                    <div>
+                        <label for="cantidad">Cantidad</label>
+                        <br>
+                        <input type="number" name="cantidad" id="cantidad" min="1" step="1"
+                               placeholder="Ingrese cantidad... ">
+                        <br>
+                    </div>
+                    <div>
+                        <label for="precioUnitario">Precio Unitario</label>
+                        <br>
+                        <input type="number" name="precioUnitario" id="precioUnitario" min="0" step="0.01"
+                               placeholder="Ingrese precio... "><br>
+                    </div>
+                </div>
+                <input id="nuevo-item" type="button" value="Nuevo" class="btn btn-formulario">
+                <input id="agregar-tabla" type="button" value="Agregar" class="btn btn-formulario" hidden>
+            </div>
+        </fieldset>
+        <!-- Seccion Medio de Pago-->
+
+        <div id="burbuja-pago" class="burbuja d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="far fa-credit-card"></i></p>
+                {{#if egreso}}
+                    <h3>Seleccion de Medio de Pago</h3>
+                {{else}}
+                    <h3>Seleccion Documentacion</h3>
+                {{/if}}
+            </div>
+            <p><i class="fas fa-minus"></i></p>
+        </div>
+        <!-- Formulario Medio de Pago-->
+        <fieldset id="medio-de-pago" class="burbuja ">
+            <div class="contenedor-entrada">
+                {{#if egreso}}
+                    <label for="moneda">Moneda</label><br>
+                    <select name="moneda" id="moneda" required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        {{#each monedas}}
+                            <option value={{nombre}} >{{nombre}}</option>
+                        {{/each}}
+                        <option value="a">algoo</option>
+                    </select><br>
+                    <label for="tipo-pago">Tipo de pago</label><br>
+                    <select name="tipo-pago" id="tipo-pago" required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                        {{#each tipoPago}}
+                            <option value={{id}} >{{nombre}}</option>
+                        {{/each}}
+                    </select><br>
+                {{/if}}
+                <label for="tipo-comprobante">Tipo comprobante</label><br>
+                <select name="tipo-comprobante" id="tipo-comprobante">
+                    <option value="" disabled selected>-- Seleccione --</option>
+                    {{#each tipoComprobante}}
+                        <option value={{id}} >{{nombre}}</option>
+                    {{/each}}
+                </select><br>
+                <label for="comprobante">Comprobante</label><br>
+                <input type="file" name="comprobante" id="comprobante" placeholder="Ingrese comprobante... " accept="application/pdf"
+                       disabled>
+                <br>
+            </div>
+
+        </fieldset>
+        <!-- Seccion Configuracion-->
+        <div id="burbuja-configuracion" class="burbuja  d-flex jc-sb ai-center">
+            <div class="d-flex jc-sb">
+                <p><i class="far fa-file-alt"></i></p>
+                {{#if egreso}}
+                    <h3>Propiedades del Egreso</h3>
+                {{else}}
+                    <h3>Propiedades del Presupuesto</h3>
+                {{/if}}
+            </div>
+            <p><i class="fas fa-minus"></i></p>
+        </div>
+        <!-- Form Configuracion-->
+        <fieldset id="configuracion" class="burbuja ">
+            <div class="contenedor-entrada">
+                {{#if egreso}}
+                    <label for="cantPresupuestos">Necesita Presupuestos</label><br>
+                    <input type="number" name="cantPresupuestos" id="cantPresupuestos" min="0"
+                           placeholder="Cantidad de pruesupuestos..." required>
+                {{/if}}
+                <br>
+                <label for="fecha">Fecha</label><br>
+                <input type="date" name="fecha" id="fecha" required max={{hoy}}><br>
+                {{#unless egreso}}
+                    <label for="egreso-a-asociar">Seleccione Egreso</label><br>
+                    <select name="egreso-a-asociar" id="egreso-a-asociar" required>
+                        <option value="" disabled selected>-- Seleccione --</option>
+
+                    </select>
+                {{/unless}}
+
+                <div class="d-flex ">
+                    <div>
+                        <label for="categoria">Categoria</label><br>
+                        <select name="categoria" id="categoria">
+                            <option value="" disabled selected>-- Seleccione --</option>
+                            {{#each categorias}}
+                                <option value={{id}}>{{descripcion}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <input id="agregar-categoria" type="button" value="Seleccionar" class="btn btn-formulario" hidden>
+                </div>
+                <br>
+            </div>
+            <hr/>
+            <div class="seccion-categorias">
+                <h4> Categorias seleccionadas</h4>
+                <p>Para <strong>quitar</strong> una categoria, <em>haga click en la caja</em>.</p>
+                <!--Categorias seleccionadas-->
+                <div id='categorias-seleccionadas' class="d-flex m-0 contenedor-categorias">
+                    <p id='msg-categorias-vacia'><em>No ha ingresado ningun valor</em>.</p>
+                </div>
+            </div>
+        </fieldset>
+        <input id="btn-submit" type="submit" value="Siguiente" class="btn btn-primario float-r">
+    </form>
+</main>
+</body>
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+{{#if egreso}}
+    <script type="module" src="js/egreso.js"></script>
+{{else}}
+    <script type="module" src="js/presupuestos.js"></script>
+{{/if}}
+
+</html>

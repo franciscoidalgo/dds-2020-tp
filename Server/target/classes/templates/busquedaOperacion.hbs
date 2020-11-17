@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content="Gesoc, es un Saas de gestion comercial. En Gesoc puedes gestionar y controlar tus operacion y proyectos.">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Busqueda</title>
+</head>
+
+<body>
+<div id="loader">
+    <div class="loader"></div>
+</div>
+<header class="contenedor-barra d-flex jc-sb">
+    <!--Menu Hamb -->
+    <button id="btn-menu"><i class="fas fa-bars"></i></button>
+    <nav id="navbar" class="navbar">
+        <ul class="d-flex f-dir-col contenido-navbar">
+            <div class="d-flex jc-sb ">
+                <h2 class="txt-centrado">Menu</h2>
+                <button id="btn-close" class="btn-primario"><i class="fas fa-times"></i></button>
+            </div>
+            <li><a href="usuario"><i class="fas fa-user"></i>Panel Personal</a></li>
+            <li><a href="ingreso"><i class="fas fa-file-invoice-dollar"></i>Nuevo Ingreso</a></li>
+            <li><a href="egreso"><i class="fas fa-file-invoice"></i>Nuevo Egreso</a></li>
+            <li><a href="presupuesto"><i class="fas fa-comments-dollar"></i>Nuevo Presupuesto</a></li>
+            <li><a href="mensajes"><i class="fas fa-clipboard-check"></i>Resultado de Validaciones</a></li>
+            <li><a href="vinculacion"><i class="fas fa-link"></i>Vincular Operaciones</a></li>
+            <li><a href="logout" id="logoutButton"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a></li>
+
+        </ul>
+    </nav>
+    <!--Logo -->
+    <div class="ai-center txt-centrado">
+        <a href="dashboard">
+            <h1 id="logo" class="m-0 fw-700">Ge<span>Soc</span></h1>
+        </a>
+    </div>
+</header>
+
+<main class="seccion">
+    <h1>Busqueda de Operacion</h1>
+    <section class="burbuja">
+        <div class="contenedor-entrada">
+            <h4>Operacion</h4>
+            <!-- Seleccion Operacion-->
+            <label for="seleccion-operacion">Tipo de operacion </label><br>
+            <select name="seleccion-operacion" id="seleccion-operacion" required>
+                <option value="" disabled selected>-- Seleccione --</option>
+                <option value="egreso">Egreso</option>
+                <option value="ingreso">Ingreso</option>
+            </select>
+            <input id="btn-ver-todas" type="button" class="btn btn-formulario-danger" value="Ver Todos" hidden>
+        </div>
+        <hr>
+        <!-- Seleccion Criterios-->
+        <div id="seccion-seleccion-criterio" class="contenedor-entrada" hidden>
+            <h4>Criterios/Categorias</h4>
+            <br>
+            <label for="criterio">Criterio</label>
+            <br>
+            <select name="criterio" id="criterio">
+                <option value="" disabled selected>-- Seleccione --</option>
+                {{#each criterios}}
+                    <option value={{id}}>{{nombre}}</option>
+                {{/each}}
+            </select>
+            <hr style="margin: 3rem 0rem">
+        </div>
+        <div class="contenedor-entrada">
+            <div id="seccion-seleccion-categoria" hidden>
+                <h4>Seleccione Categorias</h4>
+                <div>
+                    <label for="categorias">Categorias</label>
+                    <br>
+                    <select name="categorias" id="categorias" disabled>
+                        <option value="" disabled selected>-- Seleccione --</option>
+                    </select>
+                </div>
+                <input id="btn-seleccionar" type="button" class="btn btn-formulario" value="Seleccionar">
+                <hr style="margin: 3rem 0rem">
+                <!--Categorias seleccionadas-->
+                <div id="seccion-categoria-seleccionadas" class="d-flex m-0 contenedor-categorias">
+                </div>
+                <input id="btn-busqueda-seleccionada" type="button" class="btn btn-formulario"
+                       value="Buscar Seleccionadas">
+            </div>
+
+        </div>
+
+        <br>
+        <div id="mensaje-resultado" hidden>
+            <h3>Resultado de la busqueda</h3>
+            <p><em>Si hay un resultado, puede hacer click para obtener más detalle</em></p>
+        </div>
+
+        <div id="operacion"></div>
+
+    </section>
+    <!--Operaciones en detalle-->
+    <article id="mensaje-detalle" class="seccion">
+    </article>
+</main>
+</body>
+<script type="module" src="js/loader.js"></script>
+<script type="module" src="js/generales.js"></script>
+<script type="module" src="js/busquedaOperacion.js"></script>
+</html>
