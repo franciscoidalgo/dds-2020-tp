@@ -36,7 +36,7 @@ public class OperacionEgreso extends Operacion {
     )
     private List<Usuario> revisores;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<Presupuesto> presupuestos;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

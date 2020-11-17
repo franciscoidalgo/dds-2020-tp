@@ -192,12 +192,18 @@ public class ControllerEgresos extends Controller {
         Mensaje mensaje;
         EgresoDTO egresoDTO;
         Entidad entidad;
+        Integer idMensaje = Integer.parseInt(request.params("idMensaje"));
+        Integer idEgreso = Integer.parseInt(request.params("idEgreso"));
 
-        OperacionEgreso egreso = getEgresofromRequest(request);
+        OperacionEgreso egreso = getEntidadFromRequest(request).getOperacionesEgreso().stream()
+                .filter(operacionEgreso -> operacionEgreso.getId() == idEgreso)
+                .findFirst().get();
+
         entidad = FactoryRepo.get(Entidad.class).buscarTodos().stream()
                 .filter(entidad1 -> entidad1.realizasteOperacion(egreso)).findFirst().get();
 
-        mensaje = repositorioMensaje.buscar(egreso.getId());
+        mensaje = repositorioMensaje.buscar(idMensaje);
+
         mensaje.actualizateLeido();
 
         repositorioMensaje.modificar(mensaje);
