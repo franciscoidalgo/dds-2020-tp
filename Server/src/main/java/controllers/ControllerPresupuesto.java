@@ -57,16 +57,22 @@ public class ControllerPresupuesto extends Controller {
         JsonParser parser = new JsonParser();
         JsonObject mensajeRta = new JsonObject();
         try{
+
             JsonElement jsonElement = parser.parse(request.body());
             JsonObject rootObject = jsonElement.getAsJsonObject();
             int idEgreso = rootObject.get("idEgreso").getAsInt();
+
+            OperacionEgreso operacionEgreso = operacionEgresoRepositorio.buscar(idEgreso);
+
             DetalleOperacion detalleOperacion = FactoryDetalle.get(request);
+
             Presupuesto presupuesto = new Presupuesto();
             presupuesto.setDetalle(detalleOperacion);
             presupuesto.setMontoTotal(presupuesto.montoTotal());
-            OperacionEgreso operacionEgreso = operacionEgresoRepositorio.buscar(idEgreso);
+
             operacionEgreso.agregaPresupuesto(presupuesto);
-            operacionEgresoRepositorio.modificar(operacionEgreso);
+            FactoryRepo.get(Presupuesto.class).agregar(presupuesto);
+
             //response
             mensajeRta.addProperty("idEgreso", ""+operacionEgreso.getId());
             response.status(200);

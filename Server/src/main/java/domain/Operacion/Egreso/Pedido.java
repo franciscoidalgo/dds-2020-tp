@@ -50,7 +50,7 @@ public class Pedido extends EntidadPersistente {
     }
 
     public Boolean sosIdenticosA(Pedido unPedido){
-      return   this.cantidad.equals(unPedido.getCantidad()) && this.item.coincidenItems(unPedido.getItem());
+      return this.cantidad.equals(unPedido.getCantidad()) && this.item.coincidenItems(unPedido.getItem());
     }
 
 }

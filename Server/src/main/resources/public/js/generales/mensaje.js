@@ -47,7 +47,7 @@ function buildTemplateMensaje(egreso, esValida, fechaEnvio) {
                 <p><span>Entidad:</span>${egreso.entidad}</p>
                 <p><span>Monto total:</span>$${egreso.montoTotal} (${medioDePago.tipoDePago.nombre} )</p>
                 <p><span>Tipo comprobante:</span> ${egreso.detalle.comprobante.tipoComprobante.nombre}</p>
-                <p><span>Comprobante</span>: <a id="ver-comprobante" href="tipo comprobante" target="blank">ver comprobante</a></p>
+                <p><span>Comprobante</span>: ${egreso.detalle.comprobante.tipoComprobante.nombre ==="Ninguno"?"No se selecciono comprobante":`<a id='ver-comprobante' href='comprobante/${egreso.id}' target="_blank">ver comprobante</a>`}</p>
                 <p><span># Presupuestos necesarios: </span>${egreso.cantPresupuestos}</p>
                 <p><span># Presupuestos faltantes: </span>${egreso.cantPresupuestosFaltantes} ${setIconoValidoSegun(faltanPresupuestos)}</p>
             </section>

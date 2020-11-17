@@ -194,6 +194,9 @@ public class OperacionEgreso extends Operacion {
     public boolean tenesFechaIgualOAnterior(LocalDate fechaMax) {
         return this.fecha.isBefore(fechaMax) || this.fecha.isEqual(fechaMax);
     }
+    public boolean tenesFechaDespuesDe(LocalDate fechaMax) {
+        return this.fecha.isAfter(fechaMax) || this.fecha.isEqual(fechaMax);
+    }
 
     public int cantPresupuestosFaltantes() {
         return Math.max(this.cantPresupuestos - this.presupuestos.size(), 0);
