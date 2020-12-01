@@ -5,6 +5,10 @@ html {
     color: #555555;
 }
 
+body{
+    background-color: #eceaea;
+}
+
 *,
 *:before,
 *:after {
@@ -38,6 +42,8 @@ th,
 textarea {
     font-family: 'Montserrat', sans-serif;
 }
+
+
 
 label,
 input,
